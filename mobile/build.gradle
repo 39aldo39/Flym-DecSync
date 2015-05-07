@@ -6,7 +6,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "net.fred.feedex"
+        applicationId "net.etuldan.sparss"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 57

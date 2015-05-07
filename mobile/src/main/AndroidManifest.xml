@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="net.fred.feedex"
+          package="net.etuldan.sparss"
           android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <permission
-        android:name="net.fred.feedex.provider.WRITE_PERMISSION"
+        android:name="net.etuldan.sparss.provider.WRITE_PERMISSION"
         android:protectionLevel="signature"/>
 
     <application
@@ -24,9 +24,9 @@
 
         <provider
             android:name=".provider.FeedDataContentProvider"
-            android:authorities="net.fred.feedex.provider.FeedData"
+            android:authorities="net.etuldan.sparss.provider.FeedData"
             android:exported="true"
-            android:writePermission="net.fred.feedex.provider.WRITE_PERMISSION"/>
+            android:writePermission="net.etuldan.sparss.provider.WRITE_PERMISSION"/>
 
         <activity
             android:name=".activity.HomeActivity"
@@ -43,7 +43,7 @@
             android:launchMode="singleTask"/>
         <activity
             android:name=".activity.AboutActivity"
-            android:label="@string/about_flym"
+            android:label="@string/about_spaRSS"
             android:launchMode="singleTask"/>
         <activity
             android:name=".activity.EditFeedsListActivity"
@@ -56,7 +56,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="vnd.android.cursor.item/vnd.flym.entry"/>
+                <data android:mimeType="vnd.android.cursor.item/vnd.spaRSS.entry"/>
             </intent-filter>
         </activity>
         <activity
@@ -74,12 +74,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.EDIT"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="vnd.android.cursor.item/vnd.flym.feed"/>
+                <data android:mimeType="vnd.android.cursor.item/vnd.spaRSS.feed"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.INSERT"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="vnd.android.cursor.dir/vnd.flym.feed"/>
+                <data android:mimeType="vnd.android.cursor.dir/vnd.spaRSS.feed"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND"/>

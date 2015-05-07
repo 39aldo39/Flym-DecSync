@@ -22,16 +22,16 @@
 <resources>
 
     <!-- GENERAL -->
-    <string name="app_name">Flym</string>
-    <string name="about_flym">Om Flym</string>
-    <string name="welcome_title">Välkommen till Flym. Skulle du vilja lägga till en feed?</string>
+    <string name="app_name">spaRSS</string>
+    <string name="about_spaRSS">Om spaRSS</string>
+    <string name="welcome_title">Välkommen till spaRSS. Skulle du vilja lägga till en feed?</string>
     <string name="never">aldrig</string>
     <string name="update">Uppdaterad</string>
     <string name="colon">:\u00A0</string>
     <string name="menu_settings">Inställningar</string>
     <string name="menu_refresh">Uppdatera</string>
     <string name="menu_all_read">Mark som läst</string>
-    <string name="flym_feeds">Flym feeds</string>
+    <string name="spaRSS_feeds">spaRSS feeds</string>
     <string name="error">Fel</string>
     <string name="network_error">Nätverket är inte tillgängligt</string>
     <string name="loading">Laddar…</string>
@@ -110,7 +110,7 @@
     <string name="menu_full_screen">Helskärm</string>
     <string name="menu_copy_clipboard">Kopiera länk</string>
     <string name="menu_mark_as_unread">Markera som oläst</string>
-    <string name="share_favorites_title">Flym: favoriter</string>
+    <string name="share_favorites_title">spaRSS: favoriter</string>
     <string name="copied_clipboard">Länk kopierad</string>
     <string name="get_full_text">Hämta hela texten</string>
     <string name="original_text">Visa originaltexten</string>

@@ -22,16 +22,16 @@
 <resources>
 
     <!-- GENERAL -->
-    <string name="app_name">Flym</string>
-    <string name="about_flym">Про Flym</string>
-    <string name="welcome_title">Welcome to Flym. Would you like to add one feed?</string>
+    <string name="app_name">spaRSS</string>
+    <string name="about_spaRSS">Про spaRSS</string>
+    <string name="welcome_title">Welcome to spaRSS. Would you like to add one feed?</string>
     <string name="never">никогда</string>
     <string name="update">Обновление</string>
     <string name="colon">:\u00A0</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_refresh">Обновить</string>
     <string name="menu_all_read">Пометить все как прочитанное</string>
-    <string name="flym_feeds">Flym ленты</string>
+    <string name="spaRSS_feeds">spaRSS ленты</string>
     <string name="error">Ошибка</string>
     <string name="network_error">Нет подключения к сети</string>
     <string name="loading">Загрузка…</string>
@@ -118,7 +118,7 @@
     <string name="menu_full_screen">Полный экран</string>
     <string name="menu_copy_clipboard">Скопировать ссылку</string>
     <string name="menu_mark_as_unread">Пометить как непрочитанное</string>
-    <string name="share_favorites_title">Flym: избранные новости</string>
+    <string name="share_favorites_title">spaRSS: избранные новости</string>
     <string name="copied_clipboard">Ссылка скопирована</string>
     <string name="get_full_text">Загрузить весь текст</string>
     <string name="original_text">Показать оригинальный текст</string>

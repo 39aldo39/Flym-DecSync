@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
+ Copyright (c) 2015 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
  Copyright (c) 2010-2012 Stefan Handschuh
  Copyright (c) 2014-2015 Jozef Jaroščiak
@@ -24,16 +25,16 @@
 <resources>
 
     <!-- GENERAL -->
-    <string name="app_name">Flym</string>
-    <string name="about_flym">O aplikácii Flym</string>
-    <string name="welcome_title">Vitajte v aplikácii Flym. Chcete pridať nový zdroj?</string>
+    <string name="app_name">spaRSS</string>
+    <string name="about_spaRSS">O aplikácii spaRSS</string>
+    <string name="welcome_title">Vitajte v aplikácii spaRSS. Chcete pridať nový zdroj?</string>
     <string name="never">nikdy</string>
     <string name="update">aktualizované</string>
     <string name="colon">:\u00A0</string>
     <string name="menu_settings">Nastavenia</string>
     <string name="menu_refresh">Obnoviť</string>
     <string name="menu_all_read">Označiť všetko ako prečítané</string>
-    <string name="flym_feeds">Flym zdroje</string>
+    <string name="spaRSS_feeds">spaRSS zdroje</string>
     <string name="error">Chyba</string>
     <string name="network_error">Sieť nie je nastavená</string>
     <string name="loading">Načítávam…</string>
@@ -112,7 +113,7 @@
     <string name="menu_full_screen">Na celú obrazovku</string>
     <string name="menu_copy_clipboard">Zkopírovať odkaz</string>
     <string name="menu_mark_as_unread">Označiť ako neprečítané</string>
-    <string name="share_favorites_title">Flym: označené články</string>
+    <string name="share_favorites_title">spaRSS: označené články</string>
     <string name="copied_clipboard">Link zkopírovaný</string>
     <string name="get_full_text">Stiahnúť celý text</string>
     <string name="original_text">Zobraziť originálny text</string>

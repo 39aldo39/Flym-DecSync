@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
+ Copyright (c) 2015 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
  Copyright (c) 2010-2012 Stefan Handschuh
 
@@ -24,7 +25,7 @@
 
     <!-- GENERAL -->
     <string name="app_name">Флим</string>
-    <string name="about_flym">О Флиму</string>
+    <string name="about_spaRSS">О Флиму</string>
     <string name="welcome_title">Добро дошли у Флим. Желите ли да додате довод?</string>
     <string name="never">никад</string>
     <string name="update">Ажурирано</string>
@@ -32,7 +33,7 @@
     <string name="menu_settings">Поставке</string>
     <string name="menu_refresh">Освежи</string>
     <string name="menu_all_read">Означи све прочитаним</string>
-    <string name="flym_feeds">Флимови доводи</string>
+    <string name="spaRSS_feeds">Флимови доводи</string>
     <string name="error">Грешка</string>
     <string name="network_error">Мрежа није постављена</string>
     <string name="loading">Учитавам…</string>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
+ Copyright (c) 2015 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
  Copyright (c) 2010-2012 Stefan Handschuh
 
@@ -23,16 +24,16 @@
 <resources>
 
     <!-- GENERAL -->
-    <string name="app_name">Flym</string>
-    <string name="about_flym">Flymi buruz</string>
-    <string name="welcome_title">Ongi etorri Flymera. Jario bat gehitu nahiko al zenuke?</string>
+    <string name="app_name">spaRSS</string>
+    <string name="about_spaRSS">spaRSSi buruz</string>
+    <string name="welcome_title">Ongi etorri spaRSSera. Jario bat gehitu nahiko al zenuke?</string>
     <string name="never">inoiz</string>
     <string name="update">Eguneraketa</string>
     <string name="colon">:\u00A0</string>
     <string name="menu_settings">Ezarpenak</string>
     <string name="menu_refresh">Freskatu</string>
     <string name="menu_all_read">Markatu dena irakurrita bezala</string>
-    <string name="flym_feeds">Flym jarioak</string>
+    <string name="spaRSS_feeds">spaRSS jarioak</string>
     <string name="error">Akatsa</string>
     <string name="network_error">Sarea ez dago konfiguratuta</string>
     <string name="loading">Kargatzen…</string>
@@ -119,7 +120,7 @@
     <string name="menu_full_screen">Pantaila osoa</string>
     <string name="menu_copy_clipboard">Esteka kopiatu</string>
     <string name="menu_mark_as_unread">Ez irakurrita bezala markatu</string>
-    <string name="share_favorites_title">Flym: sarrera gogokoenak</string>
+    <string name="share_favorites_title">spaRSS: sarrera gogokoenak</string>
     <string name="copied_clipboard">Esteka kopiatu da</string>
     <string name="get_full_text">Testu osoa eskuratu</string>
     <string name="original_text">Jatorrizko testua erakutsi</string>
