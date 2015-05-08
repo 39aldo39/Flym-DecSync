@@ -220,5 +220,8 @@
         <item>Len cez Wi-Fi</item>
         <item>Vždy</item>
     </string-array>
+    <string name="feed_cookie">Overovanie cookie</string>
+    <string name="cookiename">Názov</string>
+    <string name="cookievalue">Hodnota</string>
 
 </resources>

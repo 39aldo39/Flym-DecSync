@@ -212,5 +212,8 @@
         <item>Wi-Fi를 통해서만</item>
         <item>언제나</item>
     </string-array>
+    <string name="feed_cookie">인증 쿠키</string>
+    <string name="cookiename">이름</string>
+    <string name="cookievalue">값</string>
 
 </resources>

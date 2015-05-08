@@ -212,5 +212,8 @@
         <item>Endast via Wi-Fi</item>
         <item>Alltid</item>
     </string-array>
+    <string name="feed_cookie">Autentiseringscookien</string>
+    <string name="cookiename">Namn</string>
+    <string name="cookievalue">Värde</string>
 
 </resources>

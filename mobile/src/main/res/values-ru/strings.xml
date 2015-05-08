@@ -229,5 +229,8 @@
         <item>Only over Wi-Fi</item>
         <item>Always</item>
     </string-array>
+    <string name="cookievalue">значение</string>
+    <string name="cookiename">имя</string>
+    <string name="feed_cookie">печенье Аутентификация</string>
 
 </resources>

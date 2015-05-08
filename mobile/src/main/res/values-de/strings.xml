@@ -213,5 +213,8 @@
         <item>Nur über WLAN</item>
         <item>Immer</item>
     </string-array>
+    <string name="cookiename">Name</string>
+    <string name="feed_cookie">Authentifizierungscookie</string>
+    <string name="cookievalue">Wert</string>
 
 </resources>

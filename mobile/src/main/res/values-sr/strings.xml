@@ -215,5 +215,8 @@
         <item>Само преко бежичног</item>
         <item>Увек</item>
     </string-array>
+    <string name="cookievalue">вредност</string>
+    <string name="cookiename">име</string>
+    <string name="feed_cookie">Аутхентицатион Цоокие</string>
 
 </resources>

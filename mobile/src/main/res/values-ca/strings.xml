@@ -228,5 +228,8 @@
         <item>Only over Wi-Fi</item>
         <item>Always</item>
     </string-array>
+    <string name="cookiename">Nom</string>
+    <string name="cookievalue">Valor</string>
+    <string name="feed_cookie">Cookie d\'autenticació</string>
 
 </resources>

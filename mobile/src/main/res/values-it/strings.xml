@@ -228,5 +228,8 @@
         <item>Solo con Wi-Fi</item>
         <item>Sempre</item>
     </string-array>
+    <string name="cookiename">Nome</string>
+    <string name="cookievalue">Valore</string>
+    <string name="feed_cookie">Cookie di autenticazione</string>
 
 </resources>

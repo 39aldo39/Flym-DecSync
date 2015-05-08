@@ -234,5 +234,8 @@
         <item>En Wi-Fi uniquement</item>
         <item>Toujours</item>
     </string-array>
+    <string name="cookiename">Nom</string>
+    <string name="cookievalue">Valeur</string>
+    <string name="feed_cookie">Cookie d\'authentification</string>
 
 </resources>

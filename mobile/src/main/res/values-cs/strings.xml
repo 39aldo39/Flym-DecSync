@@ -233,5 +233,8 @@
         <item>Pouze přes Wi-Fi</item>
         <item>Vždy</item>
     </string-array>
+    <string name="cookiename">Název</string>
+    <string name="cookievalue">Význam</string>
+    <string name="feed_cookie">Ověřování cookie</string>
 
 </resources>
