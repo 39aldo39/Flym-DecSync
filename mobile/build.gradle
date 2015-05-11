@@ -44,7 +44,7 @@ android {
             applicationId 'net.etuldan.sparss.floss'
         }
         gplay {
-            applicationId 'net.etuldan.sparss.gplay'
+            applicationId 'net.etuldan.sparss'
         }
     }
 
