@@ -9,8 +9,8 @@ android {
         applicationId "net.etuldan.sparss"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 57
-        versionName "1.9.1"
+        versionCode 58
+        versionName "1.9.2"
     }
 
     compileOptions {
@@ -38,6 +38,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+        floss {
+            applicationId 'net.etuldan.sparss.floss'
+        }
+        gplay {
+            applicationId 'net.etuldan.sparss.gplay'
+        }
+    }
+
 }
 
 repositories {
@@ -50,7 +60,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //wearApp project(':wear')
     compile 'com.android.support:appcompat-v7:+'
-    compile 'com.google.android.gms:play-services-wearable:+'
+    gplayCompile 'com.google.android.gms:play-services-wearable:+'
     compile 'com.melnykov:floatingactionbutton:+'
     compile 'org.jsoup:jsoup:+'
     compile 'com.squareup.picasso:picasso:+'
