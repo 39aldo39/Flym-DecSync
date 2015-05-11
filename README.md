@@ -40,7 +40,7 @@ Il ne se synchronise pas avec les lecteurs RSS en ligne.
 
 Fonctionnalités :
 * ajout rapide de flux via GoogleNews et la fonctionnalité de recherche
-* ajout de flux par le menu partager des navigateur
+* ajout de flux par le menu partager des navigateurs
 * thèmes foncé et clair
 * lecteur hors-ligne des articles complets, avec images, y compris pour les site nécessitant un compte utilisateur.
 * import et export de la liste des flux au format OPLM
