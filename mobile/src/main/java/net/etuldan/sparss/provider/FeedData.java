@@ -2,8 +2,7 @@
  * spaRSS
  * <p/>
  * Copyright (c) 2015 Arnaud Renaud-Goud
- * Copyright (c) 2015 Arnaud Renaud-Goud
- Copyright (c) 2012-2015 Frederic Julian
+ * Copyright (c) 2012-2015 Frederic Julian
  * <p/>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
