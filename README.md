@@ -24,7 +24,8 @@ Feedly users: you can export your feeds to OPML at this address (http://cloud.fe
 
 GitHub project: https://github.com/Etuldan/spaRSS  
 PlayStore : https://play.google.com/store/apps/details?id=net.etuldan.sparss  
-spaRSS is a fork of [Flym](https://github.com/FredJul/Flym)
+F-Droid : https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss  
+spaRSS is a fork of [Flym](https://github.com/FredJul/Flym)  
 
 
 
@@ -53,4 +54,5 @@ Pour les utilisateurs de Feedly, l'export de vos flux RSS est possible en visita
 
 Projet GitHub : https://github.com/Etuldan/spaRSS  
 PlayStore : https://play.google.com/store/apps/details?id=net.etuldan.sparss  
-spaRSS est un fork de [Flym](https://github.com/FredJul/Flym)
+F-Droid : https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss  
+spaRSS est un fork de [Flym](https://github.com/FredJul/Flym)  

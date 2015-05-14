@@ -224,8 +224,7 @@ public class NetworkUtils {
     }
 
     public static HttpURLConnection setupConnection(String url) throws IOException {
-        String cookie = "";
-        return setupConnection(new URL(url), cookie);
+        return setupConnection(new URL(url), "");
     }
 
     public static HttpURLConnection setupConnection(URL url) throws IOException {
