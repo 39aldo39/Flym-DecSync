@@ -8,9 +8,9 @@ android {
     defaultConfig {
         applicationId "net.etuldan.sparss"
         minSdkVersion 15
-        targetSdkVersion 22
-        versionCode 58
-        versionName "1.9.2"
+        targetSdkVersion 21
+        versionCode 59
+        versionName "1.9.3"
     }
 
     compileOptions {
@@ -58,8 +58,8 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    //wearApp project(':wear')
-    compile 'com.android.support:appcompat-v7:+'
+    //wearApp project(':wear')\n' +
+    compile 'com.android.support:appcompat-v7:21.+'
     gplayCompile 'com.google.android.gms:play-services-wearable:+'
     compile 'com.melnykov:floatingactionbutton:+'
     compile 'org.jsoup:jsoup:+'
