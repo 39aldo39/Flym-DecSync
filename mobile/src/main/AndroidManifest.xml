@@ -44,7 +44,13 @@
         <activity
             android:name=".activity.AboutActivity"
             android:label="@string/about_spaRSS"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="about_activity_intent"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".activity.EditFeedsListActivity"
             android:label="@string/feeds"

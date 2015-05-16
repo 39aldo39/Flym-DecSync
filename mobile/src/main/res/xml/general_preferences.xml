@@ -7,11 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="@string/about_spaRSS">
-
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetClass="net.etuldan.sparss.activity.AboutActivity"
-            android:targetPackage="net.etuldan.sparss"/>
+        <intent android:action="about_activity_intent" />
     </PreferenceScreen>
 
     <PreferenceCategory
