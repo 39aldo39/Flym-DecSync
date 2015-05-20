@@ -3,11 +3,10 @@ spaRSS
 
 ENG
 -----
-RSS reader with all articles content in app  
+RSS reader with all articles content in app.
 
-
-spaRSS is a light, modern, totally free (no ads) and opensource project which keeps you inform by fetching your websites/blogs and displaying them in a mobile-optimized way. It is based on the "Flym" RSS reader.  
-It DOES NOT synchronize with any online feed reader.  
+spaRSS is a light, modern, totally free (no ads) and opensource project which keeps you inform by fetching your websites/blogs and displaying them in a mobile-optimized way. It is based on the "Flym" RSS reader.
+It DOES NOT synchronize with any online feed reader.
 
 Features:
 * easily add new feeds thanks to the Google News or search feature (you can also subscribe to a new one from the browser via the share feature)
@@ -18,26 +17,22 @@ Features:
 * star your favorite entries
 * search into your articles
 * filter your feed by keywords or regular expressions
-* custom widgets 
+* custom widgets
 
-Feedly users: you can export your feeds to OPML at this address (http://cloud.feedly.com/#opml) and then import them into spaRSS  
+Feedly users: you can export your feeds to OPML at this address (http://cloud.feedly.com/#opml) and then import them into spaRSS
 
-GitHub project: https://github.com/Etuldan/spaRSS  
-PlayStore : https://play.google.com/store/apps/details?id=net.etuldan.sparss  
-F-Droid : https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss  
-spaRSS is a fork of [Flym](https://github.com/FredJul/Flym)  
-
-
+GitHub project: https://github.com/Etuldan/spaRSS
+PlayStore: https://play.google.com/store/apps/details?id=net.etuldan.sparss
+F-Droid: https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss
+spaRSS is a fork of [Flym](https://github.com/FredJul/Flym)
 
 FRA
 ---
-Lecteur de flux RSS récupérant périodiquement le contenu des articles.  
-
+Lecteur de flux RSS récupérant périodiquement le contenu des articles.
 
 spaRSS est un lecteur de flux RSS qui permet la lecture d'article complet sans avoir à ouvrir un navigateur externe.
 Tout le contenu de vos site d'actualités préféré sera disponible directement dans l'application, sans avoir besoin d'être connecté à Internet au moment de la consultation.
 Il ne se synchronise pas avec les lecteurs RSS en ligne.
-
 
 Fonctionnalités :
 * ajout rapide de flux via GoogleNews et la fonctionnalité de recherche
@@ -50,9 +45,9 @@ Fonctionnalités :
 * filtre par mot clé ou expression régulière
 * widget
 
-Pour les utilisateurs de Feedly, l'export de vos flux RSS est possible en visitant : http://cloud.feedly.com/#opml  
+Pour les utilisateurs de Feedly, l'export de vos flux RSS est possible en visitant : http://cloud.feedly.com/#opml
 
-Projet GitHub : https://github.com/Etuldan/spaRSS  
-PlayStore : https://play.google.com/store/apps/details?id=net.etuldan.sparss  
-F-Droid : https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss  
-spaRSS est un fork de [Flym](https://github.com/FredJul/Flym)  
+Projet GitHub : https://github.com/Etuldan/spaRSS
+PlayStore : https://play.google.com/store/apps/details?id=net.etuldan.sparss
+F-Droid : https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss
+spaRSS est un fork de [Flym](https://github.com/FredJul/Flym)
