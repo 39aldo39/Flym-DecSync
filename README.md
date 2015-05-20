@@ -1,11 +1,11 @@
 spaRSS
 ======
 
-ENG
+EN
 -----
 RSS reader with all articles content in app.
 
-spaRSS is a light, modern, totally free (no ads) and opensource project which keeps you inform by fetching your websites/blogs and displaying them in a mobile-optimized way. It is based on the "Flym" RSS reader.
+spaRSS is a light, modern, totally free (no ads) and opensource project which keeps you inform by fetching your websites/blogs and displaying them in a mobile-optimized way. It is based on the "Flym" RSS reader.  
 It DOES NOT synchronize with any online feed reader.
 
 Features:
@@ -21,17 +21,17 @@ Features:
 
 Feedly users: you can export your feeds to OPML at this address (http://cloud.feedly.com/#opml) and then import them into spaRSS
 
-GitHub project: https://github.com/Etuldan/spaRSS
-PlayStore: https://play.google.com/store/apps/details?id=net.etuldan.sparss
-F-Droid: https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss
+GitHub project: https://github.com/Etuldan/spaRSS  
+PlayStore: https://play.google.com/store/apps/details?id=net.etuldan.sparss  
+F-Droid: https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss  
 spaRSS is a fork of [Flym](https://github.com/FredJul/Flym)
 
-FRA
+FR
 ---
 Lecteur de flux RSS récupérant périodiquement le contenu des articles.
 
-spaRSS est un lecteur de flux RSS qui permet la lecture d'article complet sans avoir à ouvrir un navigateur externe.
-Tout le contenu de vos site d'actualités préféré sera disponible directement dans l'application, sans avoir besoin d'être connecté à Internet au moment de la consultation.
+spaRSS est un lecteur de flux RSS qui permet la lecture d'article complet sans avoir à ouvrir un navigateur externe.  
+Tout le contenu de vos site d'actualités préféré sera disponible directement dans l'application, sans avoir besoin d'être connecté à Internet au moment de la consultation.  
 Il ne se synchronise pas avec les lecteurs RSS en ligne.
 
 Fonctionnalités :
@@ -47,7 +47,7 @@ Fonctionnalités :
 
 Pour les utilisateurs de Feedly, l'export de vos flux RSS est possible en visitant : http://cloud.feedly.com/#opml
 
-Projet GitHub : https://github.com/Etuldan/spaRSS
-PlayStore : https://play.google.com/store/apps/details?id=net.etuldan.sparss
-F-Droid : https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss
+Projet GitHub : https://github.com/Etuldan/spaRSS  
+PlayStore : https://play.google.com/store/apps/details?id=net.etuldan.sparss  
+F-Droid : https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss  
 spaRSS est un fork de [Flym](https://github.com/FredJul/Flym)
