@@ -114,15 +114,38 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/name_keep_times"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/feed_linear"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/settings_keep_time"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textStyle="bold"/>
+                    <Spinner
+                        android:id="@+id/settings_keep_times"
+                        android:layout_below="@+id/name_keep_times"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:defaultValue="4"
+                        android:entries="@array/settings_keep_times"
+                        android:entryValues="@array/settings_keep_time_values"
+                        android:inputType="number"
+                        android:key="keeptime"
+                        android:title="@string/settings_keep_time"/>
+
                     <CheckBox
                         android:id="@+id/retrieve_fulltext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_below="@+id/feed_linear"
+                        android:layout_below="@+id/settings_keep_times"
                         android:layout_marginRight="10dp"
                         android:text="@string/get_full_text"/>
-
 
                 </RelativeLayout>
 

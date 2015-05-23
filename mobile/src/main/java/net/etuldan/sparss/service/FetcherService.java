@@ -434,6 +434,18 @@ public class FetcherService extends IntentService {
             // Delete the entries, the cache files will be deleted by the content provider
             MainApplication.getContext().getContentResolver().delete(EntryColumns.CONTENT_URI, where, null);
         }
+        Cursor cursor = MainApplication.getContext().getContentResolver().query(FeedColumns.CONTENT_URI, new String[]{FeedColumns._ID, FeedColumns.KEEP_TIME},null, null, null);
+        while (cursor.moveToNext()) {
+            long feedid = cursor.getLong(0);
+            long keepTimeLocal = cursor.getLong(1) * 86400000l;
+            long keepDateBorderTimeLocal = keepTimeLocal > 0 ? System.currentTimeMillis() - keepTimeLocal : 0;
+            if(keepDateBorderTime > 0) {
+                String where = EntryColumns.DATE + '<' + keepDateBorderTimeLocal + Constants.DB_AND + EntryColumns.WHERE_NOT_FAVORITE + Constants.DB_AND + EntryColumns.FEED_ID + "=" + String.valueOf(feedid);
+                MainApplication.getContext().getContentResolver().delete(EntryColumns.CONTENT_URI, where, null);
+            }
+        }
+        cursor.close();
+
     }
 
     private int refreshFeeds(final long keepDateBorderTime) {
@@ -563,7 +575,6 @@ public class FetcherService extends IntentService {
 
                     if (contentType != null) {
                         int index = contentType.indexOf(CHARSET);
-
                         if (index > -1) {
                             int index2 = contentType.indexOf(';', index);
 
@@ -614,7 +625,6 @@ public class FetcherService extends IntentService {
                     case FETCHMODE_DIRECT: {
                         if (contentType != null) {
                             int index = contentType.indexOf(CHARSET);
-
                             int index2 = contentType.indexOf(';', index);
 
                             InputStream inputStream = connection.getInputStream();
@@ -651,7 +661,6 @@ public class FetcherService extends IntentService {
                             // use content type
                             if (contentType != null) {
                                 int index = contentType.indexOf(CHARSET);
-
                                 if (index > -1) {
                                     int index2 = contentType.indexOf(';', index);
 
