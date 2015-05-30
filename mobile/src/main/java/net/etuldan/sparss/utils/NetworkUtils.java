@@ -261,23 +261,34 @@ public class NetworkUtils {
             }
         }
 
-        HttpURLConnection connection = proxy == null ? (HttpURLConnection) url.openConnection() : (HttpURLConnection) url.openConnection(proxy);
-
+        HttpURLConnection connection = null;
         CookieManager cookieManager = new CookieManager();
         CookieHandler.setDefault(cookieManager);
+        int status = 0;
+        boolean first = true;
+        while(first || status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == HttpURLConnection.HTTP_SEE_OTHER) {
+            if(!first) {
+                url = new URL(connection.getHeaderField("Location"));
+            } else {
+                first = false;
+            }
+            connection = proxy == null ? (HttpURLConnection) url.openConnection() : (HttpURLConnection) url.openConnection(proxy);
 
-        connection.setRequestProperty("Cookie", cookie);
-        connection.setDoInput(true);
-        connection.setDoOutput(false);
-        connection.setRequestProperty("User-agent", "Mozilla/5.0 (compatible) AppleWebKit Chrome Safari"); // some feeds need this to work properly
-        connection.setConnectTimeout(30000);
-        connection.setReadTimeout(30000);
-        connection.setUseCaches(false);
-        connection.setInstanceFollowRedirects(true);
-        connection.setRequestProperty("accept", "*/*");
+            connection.setRequestProperty("Cookie", cookie);
+            connection.setDoInput(true);
+            connection.setDoOutput(false);
+            connection.setRequestProperty("User-agent", "Mozilla/5.0 (compatible) AppleWebKit Chrome Safari"); // some feeds need this to work properly
+            connection.setConnectTimeout(30000);
+            connection.setReadTimeout(30000);
+            connection.setUseCaches(false);
+            connection.setInstanceFollowRedirects(true);
+            connection.setRequestProperty("accept", "*/*");
 
-        COOKIE_MANAGER.getCookieStore().removeAll(); // Cookie is important for some sites, but we clean them each times
-        connection.connect();
+            COOKIE_MANAGER.getCookieStore().removeAll(); // Cookie is important for some sites, but we clean them each times
+
+            connection.connect();
+            status = connection.getResponseCode();
+        }
 
         return connection;
     }
