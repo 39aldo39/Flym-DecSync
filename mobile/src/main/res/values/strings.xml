@@ -163,6 +163,8 @@
     <string name="settings_category_content_presentation">Content presentation</string>
     <string name="settings_light_theme">Light theme</string>
     <string name="settings_light_theme_description">Use the light theme</string>
+    <string name="settings_left_panel">Left panel</string>
+    <string name="settings_left_panel_description">Display the left panel at startup of the application</string>
     <string name="settings_keep_time">Time that the entries will be kept</string>
     <string name="settings_display_images">Display images</string>
     <string name="settings_display_images_description">Display images in entries</string>

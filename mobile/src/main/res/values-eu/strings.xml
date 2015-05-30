@@ -234,5 +234,7 @@
     <string name="feed_cookie">Autentifikazioa cookiea</string>
     <string name="cookiename">Izen</string>
     <string name="cookievalue">Balio</string>
+    <string name="settings_left_panel_description">Erakutsi du ezker panel aplikazioaren abioan</string>
+    <string name="settings_left_panel">Ezker panel</string>
 
 </resources>

@@ -234,5 +234,7 @@
     <string name="cookievalue">Valor</string>
     <string name="cookiename">Designación</string>
     <string name="feed_cookie">Cookie de autenticación</string>
+    <string name="settings_left_panel">Panel izquierdo</string>
+    <string name="settings_left_panel_description"> Visualizar el panel de la izquierda en el inicio de la aplicación</string>
 
 </resources>

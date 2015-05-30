@@ -215,5 +215,7 @@
     <string name="feed_cookie">인증 쿠키</string>
     <string name="cookiename">이름</string>
     <string name="cookievalue">값</string>
+    <string name="settings_left_panel_description">왼쪽 패널</string>
+    <string name="settings_left_panel">응용 프로그램의 시작시 왼쪽 패널을 표시</string>
 
 </resources>

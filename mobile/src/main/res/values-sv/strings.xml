@@ -215,5 +215,7 @@
     <string name="feed_cookie">Autentiseringscookien</string>
     <string name="cookiename">Namn</string>
     <string name="cookievalue">Värde</string>
+    <string name="settings_left_panel">Vänster panel</string>
+    <string name="settings_left_panel_description">Visa den vänstra panelen vid start av programmet</string>
 
 </resources>

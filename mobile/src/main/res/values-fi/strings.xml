@@ -226,5 +226,7 @@
     <string name="cookievalue">Arvo</string>
     <string name="cookiename">Nimi</string>
     <string name="feed_cookie">varmennusevästeen</string>
+    <string name="settings_left_panel">vasen paneeli</string>
+    <string name="settings_left_panel_description"> Näytä vasen paneeli käynnistyksen sovelluksen</string>
 
 </resources>

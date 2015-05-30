@@ -237,5 +237,7 @@
     <string name="cookiename">Nom</string>
     <string name="cookievalue">Valeur</string>
     <string name="feed_cookie">Cookie d\'authentification</string>
+    <string name="settings_left_panel">Panneau de gauche</string>
+    <string name="settings_left_panel_description">Afficher le panneaude gauche au démarrage de l\'application</string>
 
 </resources>

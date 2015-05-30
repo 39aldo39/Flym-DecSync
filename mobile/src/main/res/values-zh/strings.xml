@@ -214,5 +214,7 @@
     <string name="cookievalue">值</string>
     <string name="cookiename">名字</string>
     <string name="feed_cookie">验证cookie</string>
+    <string name="settings_left_panel_description"> 显示左面板在应用程序的启动</string>
+    <string name="settings_left_panel">左图</string>
 
 </resources>

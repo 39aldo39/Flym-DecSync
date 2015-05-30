@@ -223,5 +223,7 @@
     <string name="feed_cookie">Overovanie cookie</string>
     <string name="cookiename">Názov</string>
     <string name="cookievalue">Hodnota</string>
+    <string name="settings_left_panel_description"> Zobraziť ľavý panel pri spustení aplikácie</string>
+    <string name="settings_left_panel">ľavý panel</string>
 
 </resources>

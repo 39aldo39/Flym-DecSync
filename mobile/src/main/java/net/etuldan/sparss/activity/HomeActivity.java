@@ -138,6 +138,10 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
 
             mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close);
             mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+            if (PrefUtils.getBoolean(PrefUtils.LEFT_PANEL, false)) {
+                mDrawerLayout.openDrawer(mLeftDrawer);
+            }
         }
 
         mDrawerHideReadButton = (FloatingActionButton) mLeftDrawer.findViewById(R.id.hide_read_button);

@@ -65,6 +65,15 @@
             android:summary="@string/settings_light_theme_description"
             android:title="@string/settings_light_theme"/>
 
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="false"
+            android:disableDependentsState="true"
+            android:key="leftpanel"
+            android:summary="@string/settings_left_panel_description"
+            android:title="@string/settings_left_panel"/>
+
         <net.etuldan.sparss.view.AutoSummaryListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
