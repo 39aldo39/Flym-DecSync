@@ -80,7 +80,9 @@ public class HtmlUtils {
             content = NON_HTTP_IMAGE_PATTERN.matcher(content).replaceAll(" $1=$2http://");
             // remove trailing BR & too much BR
             content = START_BR_PATTERN.matcher(content).replaceAll("");
-            content = END_BR_PATTERN.matcher(content).replaceAll("");
+            // TODO: quick (and dirty) fix for #11. I HAVE TO FIND ANOTHER SOLUTION !!
+            //content = END_BR_PATTERN.matcher(content).replaceAll("");
+            // TODO: end of fix for #11
             content = MULTIPLE_BR_PATTERN.matcher(content).replaceAll("<br><br>");
         }
 
