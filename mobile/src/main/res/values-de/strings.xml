@@ -213,10 +213,5 @@
         <item>Nur über WLAN</item>
         <item>Immer</item>
     </string-array>
-    <string name="cookiename">Name</string>
-    <string name="feed_cookie">Authentifizierungscookie</string>
-    <string name="cookievalue">Wert</string>
-    <string name="settings_left_panel_description">Zeigen Sie das linke Feld beim Start der Anwendung</string>
-    <string name="settings_left_panel"> linke Tafel</string>
 
 </resources>

@@ -228,10 +228,4 @@
         <item>Only over Wi-Fi</item>
         <item>Always</item>
     </string-array>
-    <string name="cookiename">Nom</string>
-    <string name="cookievalue">Valor</string>
-    <string name="feed_cookie">Cookie d\'autenticació</string>
-    <string name="settings_left_panel">Panell esquerre</string>
-    <string name="settings_left_panel_description">Visualitzar el panell de l\'esquerra en l\'inici de l\'aplicació</string>
-
 </resources>

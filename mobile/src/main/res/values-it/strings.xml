@@ -228,10 +228,5 @@
         <item>Solo con Wi-Fi</item>
         <item>Sempre</item>
     </string-array>
-    <string name="cookiename">Nome</string>
-    <string name="cookievalue">Valore</string>
-    <string name="feed_cookie">Cookie di autenticazione</string>
-    <string name="settings_left_panel_description">Visualizzare il pannello di sinistra all\'avvio dell\'applicazione</string>
-    <string name="settings_left_panel">pannello sinistro</string>
 
 </resources>

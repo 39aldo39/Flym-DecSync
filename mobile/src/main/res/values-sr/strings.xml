@@ -215,10 +215,5 @@
         <item>Само преко бежичног</item>
         <item>Увек</item>
     </string-array>
-    <string name="cookievalue">вредност</string>
-    <string name="cookiename">име</string>
-    <string name="feed_cookie">Аутхентицатион Цоокие</string>
-    <string name="settings_left_panel_description">Приказ левом панелу на покретању апликације</string>
-    <string name="settings_left_panel"> Лефт Панел</string>
 
 </resources>
