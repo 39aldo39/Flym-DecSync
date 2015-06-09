@@ -439,7 +439,7 @@ public class FetcherService extends IntentService {
             long feedid = cursor.getLong(0);
             long keepTimeLocal = cursor.getLong(1) * 86400000l;
             long keepDateBorderTimeLocal = keepTimeLocal > 0 ? System.currentTimeMillis() - keepTimeLocal : 0;
-            if(keepDateBorderTime > 0) {
+            if(keepDateBorderTimeLocal > 0) {
                 String where = EntryColumns.DATE + '<' + keepDateBorderTimeLocal + Constants.DB_AND + EntryColumns.WHERE_NOT_FAVORITE + Constants.DB_AND + EntryColumns.FEED_ID + "=" + String.valueOf(feedid);
                 MainApplication.getContext().getContentResolver().delete(EntryColumns.CONTENT_URI, where, null);
             }
@@ -671,7 +671,7 @@ public class FetcherService extends IntentService {
                                     } catch (Exception ignored) {
                                     }
                                 } else {
-                                    StringReader reader = new StringReader(new String(outputStream.toByteArray()));
+                                    StringReader reader = new StringReader(xmlText);
                                     Xml.parse(reader, handler);
                                 }
                             }
