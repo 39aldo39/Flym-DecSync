@@ -52,7 +52,7 @@ Table des matières
 
 ### Résumé
 spaRSS est un lecteur de flux RSS qui permet la lecture d'article complet sans avoir à ouvrir un navigateur externe.  
-Tout le contenu de vos site d'actualités préféré sera disponible directement dans l'application, sans avoir besoin d'être connecté à Internet au moment de la consultation.  
+Tout le contenu de vos sites d'actualités préférés sera disponible directement dans l'application, sans avoir besoin d'être connecté à Internet au moment de la consultation.  
 Il ne se synchronise pas avec les lecteurs RSS en ligne.
 
 ### Fonctionnalités

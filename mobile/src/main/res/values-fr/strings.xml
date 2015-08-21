@@ -228,6 +228,8 @@
         <item>+1</item>
         <item>+2</item>
         <item>+3</item>
+        <item>+4</item>
+        <item>+5</item>
     </string-array>
     <string-array name="settings_preload_image_modes">
         <item>Jamais</item>
@@ -238,6 +240,7 @@
     <string name="cookievalue">Valeur</string>
     <string name="feed_cookie">Cookie d\'authentification</string>
     <string name="settings_left_panel">Panneau de gauche</string>
-    <string name="settings_left_panel_description">Afficher le panneaude gauche au démarrage de l\'application</string>
+    <string name="settings_left_panel_description">Afficher le panneau de gauche au démarrage de l\'application</string>
+    <string name="tab_advanced_title">Avancé</string>
 
 </resources>
