@@ -255,6 +255,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
         mTabHost.setup();
         mTabHost.addTab(mTabHost.newTabSpec("feedTab").setIndicator(getString(R.string.tab_feed_title)).setContent(R.id.feed_tab));
         mTabHost.addTab(mTabHost.newTabSpec("filtersTab").setIndicator(getString(R.string.tab_filters_title)).setContent(R.id.filters_tab));
+        mTabHost.addTab(mTabHost.newTabSpec("advancedTab").setIndicator(getString(R.string.tab_advanced_title)).setContent(R.id.advanced_tab));
 
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override

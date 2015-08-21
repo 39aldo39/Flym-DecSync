@@ -85,6 +85,63 @@
                                 android:hint="@string/optional"
                                 android:singleLine="true"/>
 
+                        </LinearLayout>
+                     </ScrollView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/filters_tab"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:id="@+id/filter_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/feed_filters"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textStyle="bold"/>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/filter_textview"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+                        <TextView
+                            android:id="@android:id/empty"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="@string/no_filters"/>
+
+                        <ListView
+                            android:id="@android:id/list"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:choiceMode="singleChoice"/>
+                    </FrameLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/advanced_tab"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/scrollView_advanced_tab" >
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/name_cookieview"
                                 android:layout_width="wrap_content"
@@ -143,7 +200,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="20dp"
                                 android:defaultValue="4"
-                                android:entries="@array/settings_keep_times"
+                                android:entries="@array/settings_keep_times_per_feed"
                                 android:entryValues="@array/settings_keep_time_values"
                                 android:inputType="number"
                                 android:key="keeptime"
@@ -160,43 +217,6 @@
                         </LinearLayout>
                     </ScrollView>
 
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/filters_tab"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
-
-                    <TextView
-                        android:id="@+id/filter_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/feed_filters"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textStyle="bold"/>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/filter_textview"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
-
-                        <TextView
-                            android:id="@android:id/empty"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@string/no_filters"/>
-
-                        <ListView
-                            android:id="@android:id/list"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:choiceMode="singleChoice"/>
-                    </FrameLayout>
                 </RelativeLayout>
             </FrameLayout>
         </LinearLayout>

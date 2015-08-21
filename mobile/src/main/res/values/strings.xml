@@ -72,6 +72,7 @@
     <string name="cookievalue">Value</string>
     <string name="tab_feed_title">Feed</string>
     <string name="tab_filters_title">Filter</string>
+    <string name="tab_advanced_title">Advanced</string>
     <string name="feed_title">TITLE</string>
     <string name="feed_filters">FILTER RULES</string>
     <string name="filter_add_title">Add rule</string>
@@ -195,7 +196,8 @@
     <string name="settings_proxy_host">Host</string>
     <string name="settings_proxy_port">Port</string>
     <string name="settings_proxy_type">Type</string>
-
+    <string name="settings_mark_as_read">Display button "Mark all as read"</string>
+    <string name="settings_mark_as_read_description">Show / Hide the button (restart required)e</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">One new entry</item>
         <item quantity="other">%d new entries</item>
@@ -223,6 +225,17 @@
         <item>3 months</item>
         <item>Forever</item>
     </string-array>
+    <string-array name="settings_keep_times_per_feed">
+        <item>1 day</item>
+        <item>2 days</item>
+        <item>4 days</item>
+        <item>1 week</item>
+        <item>2 weeks</item>
+        <item>1 month</item>
+        <item>2 months</item>
+        <item>3 months</item>
+        <item>Default</item>
+    </string-array>
     <string-array name="settings_font_sizes">
         <item>-2</item>
         <item>-1</item>
@@ -230,6 +243,8 @@
         <item>+1</item>
         <item>+2</item>
         <item>+3</item>
+        <item>+4</item>
+        <item>+5</item>
     </string-array>
     <string-array name="settings_preload_image_modes">
         <item>Never</item>
