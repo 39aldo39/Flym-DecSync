@@ -23,7 +23,6 @@ package net.etuldan.sparss.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +34,7 @@ import net.etuldan.sparss.MainApplication;
 import net.etuldan.sparss.R;
 import net.etuldan.sparss.provider.FeedData;
 import net.etuldan.sparss.provider.FeedData.EntryColumns;
+import net.etuldan.sparss.utils.PrefUtils;
 import net.etuldan.sparss.utils.StringUtils;
 import net.etuldan.sparss.utils.UiUtils;
 
@@ -52,8 +52,8 @@ public class DrawerAdapter extends BaseAdapter {
     private static final int POS_ERROR = 6;
     private static final int POS_UNREAD = 7;
 
-    private static final int NORMAL_TEXT_COLOR = Color.parseColor("#EEEEEE");
-    private static final int GROUP_TEXT_COLOR = Color.parseColor("#BBBBBB");
+    //private static final int NORMAL_TEXT_COLOR = Color.parseColor("#EEEEEE");
+    //private static final int GROUP_TEXT_COLOR = Color.parseColor("#BBBBBB");
 
     private static final String COLON = MainApplication.getContext().getString(R.string.colon);
 
@@ -102,7 +102,10 @@ public class DrawerAdapter extends BaseAdapter {
         // default init
         holder.iconView.setImageDrawable(null);
         holder.titleTxt.setText("");
-        holder.titleTxt.setTextColor(NORMAL_TEXT_COLOR);
+        holder.titleTxt.setTextColor(mContext.getResources().getColor(R.color.dark_text));
+        if (PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true)) {
+            holder.titleTxt.setTextColor(mContext.getResources().getColor(R.color.light_text));
+        }
         holder.titleTxt.setAllCaps(false);
         holder.stateTxt.setVisibility(View.GONE);
         holder.unreadTxt.setText("");
@@ -112,6 +115,10 @@ public class DrawerAdapter extends BaseAdapter {
         if (position == 0 || position == 1) {
             holder.titleTxt.setText(position == 0 ? R.string.all : R.string.favorites);
             holder.iconView.setImageResource(position == 0 ? R.drawable.ic_statusbar_rss : R.drawable.rating_important);
+            holder.iconView.setColorFilter(mContext.getResources().getColor(R.color.dark_text));
+            if (PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true)) {
+                holder.iconView.setColorFilter(mContext.getResources().getColor(R.color.light_text));
+            }
 
             int unread = position == 0 ? mAllUnreadNumber : mFavoritesNumber;
             if (unread != 0) {
@@ -122,7 +129,7 @@ public class DrawerAdapter extends BaseAdapter {
             holder.titleTxt.setText((mFeedsCursor.isNull(POS_NAME) ? mFeedsCursor.getString(POS_URL) : mFeedsCursor.getString(POS_NAME)));
 
             if (mFeedsCursor.getInt(POS_IS_GROUP) == 1) {
-                holder.titleTxt.setTextColor(GROUP_TEXT_COLOR);
+                holder.titleTxt.setTextColor(mContext.getResources().getColor(R.color.group_text));
                 holder.titleTxt.setAllCaps(true);
                 holder.separator.setVisibility(View.VISIBLE);
             } else {

@@ -75,7 +75,7 @@ public class EntryView extends WebView {
 
     private static final String TEXT_HTML = "text/html";
     private static final String HTML_IMG_REGEX = "(?i)<[/]?[ ]?img(.|\n)*?>";
-    private static final String BACKGROUND_COLOR = PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? "#f6f6f6" : "#181b1f";
+    private static final String BACKGROUND_COLOR = PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? "#f6f6f6" : "#000000";
     private static final String QUOTE_BACKGROUND_COLOR = PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? "#e6e6e6" : "#383b3f";
     private static final String QUOTE_LEFT_COLOR = PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? "#a6a6a6" : "#686b6f";
     private static final String TEXT_COLOR = PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? "#000000" : "#C0C0C0";
@@ -86,8 +86,8 @@ public class EntryView extends WebView {
             + "body {max-width: 100%; margin: 0.3cm; font-family: sans-serif-light; color: " + TEXT_COLOR + "; background-color:" + BACKGROUND_COLOR + "; line-height: 150%} "
             + "* {max-width: 100%; word-break: break-word}"
             + "h1, h2 {font-weight: normal; line-height: 130%} "
-            + "h1 {font-size: 170%; margin-bottom: 0.1em} "
-            + "h2 {font-size: 140%} "
+            + "h1 {font-size: 140%; margin-bottom: 0.1em} "
+            + "h2 {font-size: 120%} "
             + "a {color: #0099CC}"
             + "h1 a {color: inherit; text-decoration: none}"
             + "img {height: auto} "

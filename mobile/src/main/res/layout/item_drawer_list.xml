@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
-            android:textColor="#EEEEEE"
             android:textIsSelectable="false"/>
 
         <TextView
@@ -41,7 +40,6 @@
             android:alpha="0.5"
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#EEEEEE"
             android:textIsSelectable="false"/>
     </LinearLayout>
 
@@ -55,13 +53,12 @@
         android:layout_marginRight="12dp"
         android:gravity="center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textColor="#EEEEEE"/>
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"/>
 
     <View
         android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_alignParentBottom="true"
-        android:background="#515151"/>
+        android:background="@color/separator" />
 </RelativeLayout>
