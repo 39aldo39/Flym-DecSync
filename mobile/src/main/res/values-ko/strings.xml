@@ -206,12 +206,12 @@
         <item>+1</item>
         <item>+2</item>
         <item>+3</item>
+        <item>+4</item>
+        <item>+5</item>
     </string-array>
     <string-array name="settings_preload_image_modes">
         <item>안 함</item>
         <item>Wi-Fi를 통해서만</item>
         <item>언제나</item>
     </string-array>
-    <string name="settings_left_panel"></string>
-
 </resources>
