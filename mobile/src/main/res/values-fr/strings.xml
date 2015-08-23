@@ -123,7 +123,7 @@
     <string name="share_favorites_title">spaRSS : articles favoris</string>
     <string name="copied_clipboard">Lien copié</string>
     <string name="get_full_text">Récupérer le texte complet</string>
-    <string name="original_text">Affiche le texte original</string>
+    <string name="original_text">Afficher le texte de base</string>
     <string name="see_enclosure">Voir le fichier joint</string>
     <string name="see_link">Ouvrir dans le navigateur web</string>
     <string name="cant_open_link">Aucune application trouvée pour ce lien</string>
