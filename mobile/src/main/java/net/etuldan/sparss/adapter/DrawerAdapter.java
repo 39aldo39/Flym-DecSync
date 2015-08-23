@@ -114,7 +114,7 @@ public class DrawerAdapter extends BaseAdapter {
 
         if (position == 0 || position == 1) {
             holder.titleTxt.setText(position == 0 ? R.string.all : R.string.favorites);
-            holder.iconView.setImageResource(position == 0 ? R.drawable.ic_statusbar_rss : R.drawable.rating_important);
+            holder.iconView.setImageResource(position == 0 ? R.drawable.ic_statusbar_rss : R.drawable.ic_star);
             holder.iconView.setColorFilter(mContext.getResources().getColor(R.color.dark_text));
             if (PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true)) {
                 holder.iconView.setColorFilter(mContext.getResources().getColor(R.color.light_text));

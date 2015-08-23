@@ -83,9 +83,9 @@ public class FeedsCursorAdapter extends CursorLoaderExpandableListAdapter {
             textView.setText(cursor.getString(mNamePos));
 
             if (isExpanded)
-                indicatorImage.setImageResource(R.drawable.group_expanded);
+                indicatorImage.setImageResource(R.drawable.ic_keyboard_arrow_down);
             else
-                indicatorImage.setImageResource(R.drawable.group_collapsed);
+                indicatorImage.setImageResource(R.drawable.ic_keyboard_arrow_right);
         } else {
             bindChildView(view, context, cursor);
             indicatorImage.setVisibility(View.GONE);

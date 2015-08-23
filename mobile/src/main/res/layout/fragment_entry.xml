@@ -18,7 +18,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/round_background"
-        android:src="@drawable/cancel_full_screen"
+        android:src="@drawable/ic_fullscreen_exit"
         android:visibility="gone"/>
 
     <FrameLayout

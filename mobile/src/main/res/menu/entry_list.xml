@@ -11,13 +11,13 @@
         tools:ignore="AlwaysShowAction"/>
     <item
         android:id="@+id/menu_all_read"
-        android:icon="@drawable/read_all"
+        android:icon="@drawable/ic_check"
         android:title="@string/menu_all_read"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction"/>
     <item
         android:id="@+id/menu_share_starred"
-        android:icon="@drawable/social_share"
+        android:icon="@drawable/ic_share"
         android:title="@string/context_menu_share_starred"
         app:showAsAction="always"/>
 
