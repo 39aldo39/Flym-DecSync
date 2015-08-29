@@ -185,7 +185,6 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
         }
 
         mListView = (ListView) rootView.findViewById(android.R.id.list);
-        mListView.setFastScrollEnabled(true);
         mListView.setOnTouchListener(new SwipeGestureListener(mListView.getContext()));
 
         if (PrefUtils.getBoolean(PrefUtils.DISPLAY_TIP, true)) {
@@ -196,7 +195,7 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
             header.setText(R.string.tip_sentence);
             header.setGravity(Gravity.CENTER_VERTICAL);
             header.setCompoundDrawablePadding(UiUtils.dpToPixel(5));
-            header.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_about, 0, R.drawable.ic_action_cancel, 0);
+            header.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_outline, 0, R.drawable.ic_cancel, 0);
             header.setClickable(true);
             header.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -303,7 +302,11 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear(); // This is needed to remove a bug on Android 4.0.3
 
-        inflater.inflate(R.menu.entry_list, menu);
+        if (PrefUtils.getBoolean(PrefUtils.MARK_AS_READ, true)) {
+            inflater.inflate(R.menu.entry_list, menu);
+        } else {
+            inflater.inflate(R.menu.entry_list_without_markasread, menu);
+        }
 
         if (EntryColumns.FAVORITES_CONTENT_URI.equals(mUri)) {
             menu.findItem(R.id.menu_refresh).setVisible(false);

@@ -132,6 +132,13 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
             }
         });
 
+        mLeftDrawer.setBackgroundColor(getResources().getColor(R.color.dark_theme_color_primary));
+        mDrawerList.setBackgroundColor(getResources().getColor(R.color.dark_background));
+        if (PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true)) {
+            mLeftDrawer.setBackgroundColor(getResources().getColor(R.color.light_theme_color_primary));
+            mDrawerList.setBackgroundColor(getResources().getColor(R.color.light_background));
+        }
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (mDrawerLayout != null) {
             mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -196,6 +203,13 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
 
     @Override
     public void finish() {
+        if (mDrawerLayout != null) {
+            if(mDrawerLayout.isDrawerOpen(mLeftDrawer)) {
+                mDrawerLayout.closeDrawer(mLeftDrawer);
+                return;
+            }
+        }
+
         if (mCanQuit) {
             super.finish();
             return;
@@ -377,7 +391,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         switch (mCurrentDrawerPos) {
             case SEARCH_DRAWER_POSITION:
                 getSupportActionBar().setTitle(android.R.string.search_go);
-                getSupportActionBar().setIcon(R.drawable.action_search);
+                getSupportActionBar().setIcon(R.drawable.ic_search);
                 break;
             case 0:
                 getSupportActionBar().setTitle(R.string.all);
@@ -385,7 +399,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
                 break;
             case 1:
                 getSupportActionBar().setTitle(R.string.favorites);
-                getSupportActionBar().setIcon(R.drawable.rating_important);
+                getSupportActionBar().setIcon(R.drawable.ic_star);
                 break;
             default:
                 getSupportActionBar().setTitle(mTitle);

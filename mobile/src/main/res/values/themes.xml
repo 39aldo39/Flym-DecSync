@@ -8,6 +8,8 @@
         <item name="colorPrimary">@color/light_theme_color_primary</item>
         <item name="colorPrimaryDark">@color/light_theme_color_primary_dark</item>
         <item name="colorAccent">@color/light_theme_color_primary</item>
+        <item name="android:colorBackground">@color/light_background</item>
+        <item name="android:windowBackground">@color/light_background</item>
     </style>
 
     <style name="Theme.Dark" parent="Theme.AppCompat">
@@ -16,6 +18,8 @@
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/dark_theme_color_primary</item>
         <item name="colorPrimaryDark">@color/dark_theme_color_primary_dark</item>
-        <item name="colorAccent">@color/light_theme_color_primary</item>
+        <item name="colorAccent">@color/dark_theme_color_primary</item>
+        <item name="android:colorBackground">@color/dark_background</item>
+        <item name="android:windowBackground">@color/dark_background</item>
     </style>
 </resources>

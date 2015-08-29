@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- GENERAL -->
     <string name="app_name">spaRSS</string>
@@ -67,11 +67,12 @@
     <string name="feed_url">URL address</string>
     <string name="optional">(optional)</string>
     <string name="website_or_feed">(website or feed)</string>
-    <string name="feed_cookie">Authentication Cookie</string>
-    <string name="cookiename">Name</string>
-    <string name="cookievalue">Value</string>
+    <string name="feed_cookie" tools:ignore="MissingTranslation">Authentication Cookie</string>
+    <string name="cookiename" tools:ignore="MissingTranslation">Name</string>
+    <string name="cookievalue" tools:ignore="MissingTranslation">Value</string>
     <string name="tab_feed_title">Feed</string>
     <string name="tab_filters_title">Filter</string>
+    <string name="tab_advanced_title" tools:ignore="MissingTranslation">Advanced</string>
     <string name="feed_title">TITLE</string>
     <string name="feed_filters">FILTER RULES</string>
     <string name="filter_add_title">Add rule</string>
@@ -126,7 +127,7 @@
     <string name="share_favorites_title">spaRSS: starred entries</string>
     <string name="copied_clipboard">Link copied</string>
     <string name="get_full_text">Retrieve the full text</string>
-    <string name="original_text">Show original text</string>
+    <string name="original_text">Show basic text</string>
     <string name="see_enclosure">See enclosure</string>
     <string name="see_link">See in browser</string>
     <string name="cant_open_link">No application found for this link</string>
@@ -163,8 +164,8 @@
     <string name="settings_category_content_presentation">Content presentation</string>
     <string name="settings_light_theme">Light theme</string>
     <string name="settings_light_theme_description">Use the light theme</string>
-    <string name="settings_left_panel">Left panel</string>
-    <string name="settings_left_panel_description">Display the left panel at startup of the application</string>
+    <string name="settings_left_panel" tools:ignore="MissingTranslation">Left panel</string>
+    <string name="settings_left_panel_description" tools:ignore="MissingTranslation">Display the left panel at startup of the application</string>
     <string name="settings_keep_time">Time that the entries will be kept</string>
     <string name="settings_display_images">Display images</string>
     <string name="settings_display_images_description">Display images in entries</string>
@@ -195,7 +196,8 @@
     <string name="settings_proxy_host">Host</string>
     <string name="settings_proxy_port">Port</string>
     <string name="settings_proxy_type">Type</string>
-
+    <string name="settings_mark_as_read" tools:ignore="MissingTranslation">Display button "Mark all as read"</string>
+    <string name="settings_mark_as_read_description" tools:ignore="MissingTranslation" >Show / Hide the button (restart required)</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">One new entry</item>
         <item quantity="other">%d new entries</item>
@@ -223,6 +225,17 @@
         <item>3 months</item>
         <item>Forever</item>
     </string-array>
+    <string-array name="settings_keep_times_per_feed" tools:ignore="MissingTranslation">
+        <item>1 day</item>
+        <item>2 days</item>
+        <item>4 days</item>
+        <item>1 week</item>
+        <item>2 weeks</item>
+        <item>1 month</item>
+        <item>2 months</item>
+        <item>3 months</item>
+        <item>Default</item>
+    </string-array>
     <string-array name="settings_font_sizes">
         <item>-2</item>
         <item>-1</item>
@@ -230,6 +243,8 @@
         <item>+1</item>
         <item>+2</item>
         <item>+3</item>
+        <item>+4</item>
+        <item>+5</item>
     </string-array>
     <string-array name="settings_preload_image_modes">
         <item>Never</item>

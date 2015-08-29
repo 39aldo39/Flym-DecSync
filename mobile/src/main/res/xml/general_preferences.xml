@@ -128,6 +128,14 @@
             android:key="display_entries_fullscreen"
             android:summary="@string/settings_display_entries_fullscreen_description"
             android:title="@string/settings_display_entries_fullscreen"/>
+
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="true"
+            android:key="display_mark_as_read"
+            android:summary="@string/settings_mark_as_read_description"
+            android:title="@string/settings_mark_as_read"/>
     </PreferenceCategory>
 
     <PreferenceCategory

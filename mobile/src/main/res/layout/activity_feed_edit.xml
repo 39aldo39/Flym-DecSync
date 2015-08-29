@@ -31,121 +31,62 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
 
-                    <TextView
-                        android:id="@+id/url_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/feed_url"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textStyle="bold"/>
-
-                    <EditText
-                        android:id="@+id/feed_url"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/url_textview"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
-                        android:hint="@string/website_or_feed"
-                        android:inputType="textUri"
-                        android:singleLine="true"/>
-
-                    <TextView
-                        android:id="@+id/name_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/feed_url"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/feed_title"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textStyle="bold"/>
-
-                    <EditText
-                        android:id="@+id/feed_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/name_textview"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
-                        android:hint="@string/optional"
-                        android:singleLine="true"/>
-
-                    <TextView
-                        android:id="@+id/name_cookieview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/feed_title"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/feed_cookie"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textStyle="bold"/>
-
-                    <LinearLayout
-                        android:id="@+id/feed_linear"
-                        android:orientation="horizontal"
+                    <ScrollView
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_below="@+id/name_cookieview"
-                        android:layout_alignLeft="@+id/name_cookieview"
-                        android:layout_alignStart="@+id/name_cookieview">
+                        android:layout_height="fill_parent"
+                        android:id="@+id/scrollView" >
 
-                        <EditText
-                            android:id="@+id/feed_cookiename"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/cookiename"
-                            android:singleLine="true"
-                            android:layout_weight="1"/>
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/feed_cookievalue"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/cookievalue"
-                            android:singleLine="true"
-                            android:layout_weight="1"/>
+                            <TextView
+                                android:id="@+id/url_textview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/feed_url"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textStyle="bold"/>
 
-                    </LinearLayout>
+                            <EditText
+                                android:id="@+id/feed_url"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/url_textview"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
+                                android:hint="@string/website_or_feed"
+                                android:inputType="textUri"
+                                android:singleLine="true"/>
 
-                    <TextView
-                        android:id="@+id/name_keep_times"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/feed_linear"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/settings_keep_time"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textStyle="bold"/>
-                    <Spinner
-                        android:id="@+id/settings_keep_times"
-                        android:layout_below="@+id/name_keep_times"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:defaultValue="4"
-                        android:entries="@array/settings_keep_times"
-                        android:entryValues="@array/settings_keep_time_values"
-                        android:inputType="number"
-                        android:key="keeptime"
-                        android:title="@string/settings_keep_time"/>
+                            <TextView
+                                android:id="@+id/name_textview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/feed_url"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/feed_title"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textStyle="bold"/>
 
-                    <CheckBox
-                        android:id="@+id/retrieve_fulltext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/settings_keep_times"
-                        android:layout_marginRight="10dp"
-                        android:text="@string/get_full_text"/>
+                            <EditText
+                                android:id="@+id/feed_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/name_textview"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
+                                android:hint="@string/optional"
+                                android:singleLine="true"/>
+
+                        </LinearLayout>
+                     </ScrollView>
 
                 </RelativeLayout>
 
@@ -184,6 +125,98 @@
                             android:layout_height="match_parent"
                             android:choiceMode="singleChoice"/>
                     </FrameLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/advanced_tab"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/scrollView_advanced_tab" >
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/name_cookieview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/feed_title"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/feed_cookie"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textStyle="bold"/>
+
+                            <LinearLayout
+                                android:id="@+id/feed_linear"
+                                android:orientation="horizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_below="@+id/name_cookieview"
+                                android:layout_alignLeft="@+id/name_cookieview"
+                                android:layout_alignStart="@+id/name_cookieview">
+
+                                <EditText
+                                    android:id="@+id/feed_cookiename"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/cookiename"
+                                    android:singleLine="true"
+                                    android:layout_weight="1"/>
+
+                                <EditText
+                                    android:id="@+id/feed_cookievalue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/cookievalue"
+                                    android:singleLine="true"
+                                    android:layout_weight="1"/>
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/name_keep_times"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/feed_linear"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/settings_keep_time"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textStyle="bold"/>
+
+                            <Spinner
+                                android:id="@+id/settings_keep_times"
+                                android:layout_below="@+id/name_keep_times"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="20dp"
+                                android:defaultValue="4"
+                                android:entries="@array/settings_keep_times_per_feed"
+                                android:entryValues="@array/settings_keep_time_values"
+                                android:inputType="number"
+                                android:key="keeptime"
+                                android:title="@string/settings_keep_time"/>
+
+                            <CheckBox
+                                android:id="@+id/retrieve_fulltext"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_below="@+id/settings_keep_times"
+                                android:layout_marginRight="10dp"
+                                android:text="@string/get_full_text"/>
+                        </LinearLayout>
+                    </ScrollView>
+
                 </RelativeLayout>
             </FrameLayout>
         </LinearLayout>
