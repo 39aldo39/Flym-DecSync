@@ -152,8 +152,8 @@
     <string name="settings_category_content_presentation">Приказ садржаја</string>
     <string name="settings_light_theme">Светла тема</string>
     <string name="settings_light_theme_description">Користи светлу тему</string>
-    <string name="settings_left_panel" tools:ignore="MissingTranslation">Леви панел</string>
-    <string name="settings_left_panel_description" tools:ignore="MissingTranslation">Приказ левог панела по покретању апликације</string>
+    <string name="settings_left_panel">Леви панел</string>
+    <string name="settings_left_panel_description">Приказ левог панела по покретању апликације</string>
     <string name="settings_keep_time">Време чувања уноса</string>
     <string name="settings_display_images">Прикажи слике</string>
     <string name="settings_display_images_description">Приказ слика у уносима</string>
@@ -179,8 +179,8 @@
     <string name="settings_proxy_host">Домаћин</string>
     <string name="settings_proxy_port">Порт</string>
     <string name="settings_proxy_type">Тип</string>
-    <string name="settings_mark_as_read" tools:ignore="MissingTranslation">Прикажи дугме "Означи све прочитаним"</string>
-    <string name="settings_mark_as_read_description" tools:ignore="MissingTranslation">Прикажи/сакриј дугме (потребан рестарт)</string>
+    <string name="settings_mark_as_read">Прикажи дугме "Означи све прочитаним"</string>
+    <string name="settings_mark_as_read_description">Прикажи/сакриј дугме (потребан рестарт)</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">%d нови унос</item>
         <item quantity="few">%d нових уноса</item>
@@ -209,7 +209,7 @@
         <item>3 месеца</item>
         <item>Заувек</item>
     </string-array>
-    <string-array name="settings_keep_times_per_feed" tools:ignore="MissingTranslation">
+    <string-array name="settings_keep_times_per_feed">
         <item>1 дан</item>
         <item>2 дана</item>
         <item>4 дана</item>
