@@ -162,8 +162,8 @@
     <string name="settings_light_theme">Thème clair</string>
     <string name="settings_light_theme_description">Utiliser le thème clair</string>
     <string name="settings_keep_time">Délai de conservation des flux</string>
-    <string name="settings_display_images">Display images</string>
-    <string name="settings_display_images_description">Display images in entries</string>
+    <string name="settings_display_images">Afficher les images</string>
+    <string name="settings_display_images_description">Afficher les images dans les articles</string>
     <string name="settings_preload_image_mode">Préchargement des images</string>
     <string name="settings_font_size">Taille du texte</string>
     <string name="settings_display_oldest_first">Ordre des articles</string>
@@ -193,7 +193,8 @@
     <string name="settings_proxy_host">Hôte</string>
     <string name="settings_proxy_port">Port</string>
     <string name="settings_proxy_type">Type</string>
-
+    <string name="settings_mark_as_read">Afficher le bouton "Marquer tout comme lu"</string>
+    <string name="settings_mark_as_read_description">Afficher / masquer le bouton (redémarrage requis)</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">%d nouvel article</item>
         <item quantity="other">%d nouveaux articles</item>
