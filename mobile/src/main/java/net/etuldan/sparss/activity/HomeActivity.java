@@ -142,8 +142,12 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (mDrawerLayout != null) {
             mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
-            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close);
+            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+                @Override
+                public void onDrawerSlide(View drawerView, float slideOffset) {
+                    super.onDrawerSlide(drawerView, 0);
+                }
+            };
             mDrawerLayout.setDrawerListener(mDrawerToggle);
 
             if (PrefUtils.getBoolean(PrefUtils.LEFT_PANEL, false)) {
