@@ -60,6 +60,7 @@ public class PrefUtils {
     public static final String KEEP_TIME = "keeptime";
 
     public static final String FONT_SIZE = "fontsize";
+    public static final String FONT_SERIF = "font_serif";
 
     public static final String LAST_SCHEDULED_REFRESH = "lastscheduledrefresh";
 

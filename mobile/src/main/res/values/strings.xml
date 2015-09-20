@@ -171,6 +171,8 @@
     <string name="settings_display_images_description">Display images in entries</string>
     <string name="settings_preload_image_mode">Preload images</string>
     <string name="settings_font_size">Text size</string>
+    <string name="settings_font_serif" tools:ignore="MissingTranslation">Use Serif Font</string>
+    <string name="settings_font_serif_description" tools:ignore="MissingTranslation">Use Serif Font instead of Sans-Serif in articles</string>
     <string name="settings_display_oldest_first">Entries order</string>
     <string name="settings_display_oldest_first_description">Display oldest entries first</string>
     <string name="settings_display_entries_fullscreen">Auto-fullscreen entries</string>

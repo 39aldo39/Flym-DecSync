@@ -74,6 +74,8 @@ import java.util.Date;
 public class EntryView extends WebView {
 
     private static final String TEXT_HTML = "text/html";
+    private static final String FONT_SANS_SERIF = "font-family: sans-serif;";
+    private static final String FONT_SERIF = "font-family: serif;";
     private static final String HTML_IMG_REGEX = "(?i)<[/]?[ ]?img(.|\n)*?>";
     private static final String BACKGROUND_COLOR = PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? "#f6f6f6" : "#000000";
     private static final String QUOTE_BACKGROUND_COLOR = PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? "#e6e6e6" : "#383b3f";
@@ -83,7 +85,7 @@ public class EntryView extends WebView {
     private static final String SUBTITLE_COLOR = PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? "#666666" : "#8c8c8c";
     private static final String SUBTITLE_BORDER_COLOR = PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? "solid #ddd" : "solid #303030";
     private static final String CSS = "<head><style type='text/css'> "
-            + "body {max-width: 100%; margin: 0.3cm; font-family: sans-serif-light; color: " + TEXT_COLOR + "; background-color:" + BACKGROUND_COLOR + "; line-height: 150%} "
+            + "body {max-width: 100%; margin: 0.3cm; "+  FONT_SANS_SERIF + " color: " + TEXT_COLOR + "; background-color:" + BACKGROUND_COLOR + "; line-height: 150%} "
             + "* {max-width: 100%; word-break: break-word}"
             + "h1, h2 {font-weight: normal; line-height: 130%} "
             + "h1 {font-size: 140%; margin-bottom: 0.1em} "
@@ -168,7 +170,11 @@ public class EntryView extends WebView {
     }
 
     private String generateHtmlContent(String title, String link, String contentText, String enclosure, String author, long timestamp, boolean preferFullText) {
-        StringBuilder content = new StringBuilder(CSS).append(BODY_START);
+        String finalCSS = CSS;
+        if(PrefUtils.getBoolean(PrefUtils.FONT_SERIF, false)) {
+            finalCSS=finalCSS.replaceFirst(FONT_SANS_SERIF, FONT_SERIF);
+        }
+        StringBuilder content = new StringBuilder(finalCSS).append(BODY_START);
 
         if (link == null) {
             link = "";
