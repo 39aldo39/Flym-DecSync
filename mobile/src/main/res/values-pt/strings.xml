@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+ Copyright (c) 2015 Arnaud Renaud-Goud
+ Copyright (c) 2012-2015 Frederic Julian
+ Copyright (c) 2010-2012 Stefan Handschuh
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- GENERAL -->
+    <string name="app_name">spaRSS</string>
+    <string name="about_spaRSS">Sobre o spaRSS</string>
+    <string name="welcome_title">Bem vindo ao spaRSS. Gostaria de adicionar um feed?</string>
+    <string name="never">nunca</string>
+    <string name="update">Atualizar</string>
+    <string name="colon">:\u00A0</string>
+    <string name="menu_settings">Opções</string>
+    <string name="menu_refresh">Atualizar</string>
+    <string name="menu_all_read">Marcar todos como lido</string>
+    <string name="spaRSS_feeds">spaRSS feeds</string>
+    <string name="error">Erro</string>
+    <string name="network_error">A rede não está configurada</string>
+    <string name="loading">Carregando…</string>
+    <string name="no_result">Não encontrado</string>
+    <string name="drawer_open">Abrir a aba de navegação</string>
+    <string name="drawer_close">Fechar a aba de navegação</string>
+    <string name="back_again_to_quit">Pressione novamente para sair</string>
+
+    <!-- FEEDS -->
+    <string name="feeds">Feeds</string>
+    <string name="menu_add_feed">Novo feed</string>
+    <string name="no_feeds">Nenhum feed</string>
+    <string name="no_filters">Nenhuma regra</string>
+    <string name="context_menu_delete">Excluir</string>
+    <string name="edit_feed_title">Editar feed</string>
+    <string name="new_feed_title">Novo feed</string>
+    <string name="context_menu_edit">Editar</string>
+    <string name="menu_add_group">Novo grupo</string>
+    <string name="menu_import">Importar OPML</string>
+    <string name="menu_export">Exportar OPML</string>
+    <string name="error_feed_error">O website do feed está inacessível.</string>
+    <string name="error_feed_process">O feed não pôde ser processado.</string>
+    <string name="error_feed_url_exists">O endereço já existe.</string>
+    <string name="error_feed_import">O arquivo selecionado não pôde ser importado.</string>
+    <string name="error_feed_export">A exportação falhou. Certifique-se de que o cartão SD esteja montado como gravável.</string>
+    <string name="error_external_storage_not_available">O armazenamento externo (ex. cartão SD) não está disponível.</string>
+    <string name="feed_url">Endereço / Url</string>
+    <string name="optional">(opcional)</string>
+    <string name="website_or_feed">(website ou feed)</string>
+    <string name="feed_cookie" tools:ignore="MissingTranslation">Cookie de autenticação</string>
+    <string name="cookiename" tools:ignore="MissingTranslation">Nome</string>
+    <string name="cookievalue" tools:ignore="MissingTranslation">Valor</string>
+    <string name="tab_feed_title">Feed</string>
+    <string name="tab_filters_title">Filtro</string>
+    <string name="tab_advanced_title" tools:ignore="MissingTranslation">Avançado</string>
+    <string name="feed_title">Título</string>
+    <string name="feed_filters">REGRAS DE FILTRO</string>
+    <string name="filter_add_title">Nova regra</string>
+    <string name="filter_delete_title">Excluir regra</string>
+    <string name="filter_edit_title">Alterar regra</string>
+    <string name="filter_is_regex">é uma expressão regular</string>
+    <string name="filter_apply_to_title">Aplicar ao título</string>
+    <string name="filter_apply_to_content">Aplicar ao conteúdo</string>
+    <string name="accept">ACEITAR</string>
+    <string name="reject">REJEITAR</string>
+    <string name="feed_search">Busca de feeds</string>
+    <string name="select_file">Selecionar o arquivo (SD-root)</string>
+    <string name="question_delete_feed">Tem certeza de que deseja excluir este feed?</string>
+    <string name="question_delete_group">Tem certeza de que deseja excluir este grupo e todos os seus feeds?</string>
+    <string name="question_delete_filter">Tem certeza de que deseja excluir este filtro?</string>
+    <string name="add_group_title">Escolha um nome para o grupo</string>
+    <string name="edit_group_title">Altere o nome do grupo</string>
+    <string name="message_exported_to">Exportado em %s.</string>
+    <string name="to_group_title">Ação ao mover um feed</string>
+    <string name="to_group_message">Você pode mover este feed para dentro ou acima deste grupo. O que deseja fazer?</string>
+    <string name="to_group_above">Acima do grupo</string>
+    <string name="to_group_into">Dentro do grupo</string>
+    <string name="add_custom_feed">Adicione ou busque um feed</string>
+    <string name="google_news_title">Adicione um tópico do Google News</string>
+    <string name="google_news_indicator">Selecione um ou mais tópicos para adicionar. Alguns tópicos podem não estar disponíveis em seu idioma.</string>
+    <string name="google_news_top_stories">Melhores histórias</string>
+    <string name="google_news_world">Mundo</string>
+    <string name="google_news_business">Negócios</string>
+    <string name="google_news_technology">Tecnologia</string>
+    <string name="google_news_entertainment">Entretenimento</string>
+    <string name="google_news_sports">Esportes</string>
+    <string name="google_news_science">Ciência</string>
+    <string name="google_news_health">Saúde</string>
+
+    <!-- ENTRIES -->
+    <string name="all">Artigos</string>
+    <string name="no_entries">Sem artigos</string>
+    <string name="favorites">Favoritos</string>
+    <string name="context_menu_hide_read">Esconder artigos lidos</string>
+    <string name="context_menu_show_read">Mostrar artigos lidos</string>
+    <string name="context_menu_share_starred">Compartilhar artigos favoritos</string>
+    <string name="menu_star">Marcar favorito</string>
+    <string name="menu_unstar">Desmarcar favorito</string>
+    <string name="menu_share">Compartilhar</string>
+    <string name="menu_full_screen">Tela cheia</string>
+    <string name="menu_copy_clipboard">Copiar link</string>
+    <string name="menu_mark_as_unread">Marcar como lido</string>
+    <string name="share_favorites_title">spaRSS: artigos favoritos</string>
+    <string name="copied_clipboard">Link copiado</string>
+    <string name="get_full_text">Download do texto completo</string>
+    <string name="original_text">Mostrar texto básico</string>
+    <string name="see_enclosure">Listar anexos</string>
+    <string name="see_link">Abrir no browser</string>
+    <string name="cant_open_link">Nenhum aplicativo encontrado para este link</string>
+    <string name="open_enclosure">Abrir anexo</string>
+    <string name="file">Arquivo</string>
+    <string name="download_and_save">Fazer download e salvar</string>
+    <string name="open_link">Abrir link</string>
+    <string name="tip_sentence">Dica: deslize para a esquerda para marcar como lido e deslize para a direita para marcar como favorito</string>
+
+    <!-- WIDGET -->
+    <string name="red">Vermelho</string>
+    <string name="green">Verde</string>
+    <string name="blue">Azul</string>
+    <string name="transparency">Transparente</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_category_refresh">Atualização automática</string>
+    <string name="settings_refresh_enabled">Habilitar atualização automática</string>
+    <string name="settings_refresh_enabled_description">Habilitar a atualização automática de feeds</string>
+    <string name="settings_refresh_interval">Intervalo de atualização</string>
+    <string name="settings_category_notifications">Notificações</string>
+    <string name="settings_notifications_enabled">Habilitar notificações</string>
+    <string name="settings_notifications_enabled_description">Habilitar notificação para novos artigos</string>
+    <string name="settings_notifications_ringtone">Toque</string>
+    <string name="settings_notifications_ringtone_none">Nenhum</string>
+    <string name="settings_notifications_vibrate">Vibrar</string>
+    <string name="settings_notifications_vibrate_description">Habilitar vibração para novos artigos</string>
+    <string name="settings_notifications_light">Light</string>
+    <string name="settings_notifications_light_description">Ativar led de notificação para novos artigos</string>
+    <string name="settings_category_content_presentation">Apresentação de conteúdo</string>
+    <string name="settings_light_theme">Tema Claro</string>
+    <string name="settings_light_theme_description">Usar o tema claro</string>
+    <string name="settings_left_panel" tools:ignore="MissingTranslation">Painel esquerdo</string>
+    <string name="settings_left_panel_description" tools:ignore="MissingTranslation">Mostrar o painel esquerdo ao iniciar o aplicativo</string>
+    <string name="settings_keep_time">Período que os artigos serão mantidos</string>
+    <string name="settings_display_images">Mostrar imagens</string>
+    <string name="settings_display_images_description">Mostrar imagens nos artigos</string>
+    <string name="settings_preload_image_mode">Pré-carregar as imagens</string>
+    <string name="settings_font_size">Tamanho do texto</string>
+    <string name="settings_font_serif" tools:ignore="MissingTranslation">Usar fonte Serif</string>
+    <string name="settings_font_serif_description" tools:ignore="MissingTranslation">Usar fonte Serif ao invés de Sans-Serif em artigos</string>
+    <string name="settings_display_oldest_first">Ordem dos artigos</string>
+    <string name="settings_display_oldest_first_description">Mostrar artigos antigos primeiro</string>
+    <string name="settings_display_entries_fullscreen">Artigos em tela-cheia</string>
+    <string name="settings_display_entries_fullscreen_description">Automaticamente mostrar artigos em modo tela-cheia</string>
+    <string name="settings_refresh_on_open">Atualizar feeds ao iniciar app</string>
+    <string name="settings_refresh_on_open_description">Atualizar todos os feeds ao iniciar o aplicativo</string>
+    <string name="settings_refresh_wifi_only">Atualizar somente em Wi-Fi</string>
+    <string name="settings_refresh_wifi_only_description">Atualização automática somente se houver rede Wi-Fi disponível</string>
+    <string name="settings_visible_feeds">Feeds visíveis</string>
+    <string name="settings_widget_background">Fundo</string>
+    <string name="settings_widget_background_description">Cor de fundo e transparência do widget</string>
+    <string name="all_feeds">Todos os feeds (inc. futuros)</string>
+    <string name="settings_screen_proxy">Proxy</string>
+    <string name="settings_category_network">Rede</string>
+    <string name="settings_proxy_enabled">Habilitar</string>
+    <string name="settings_proxy_wifi_only">Somente Wi-Fi</string>
+    <string name="settings_proxy_wifi_only_description">Usar proxy apenas para Wi-Fi</string>
+    <string name="settings_proxy_host">Servidor</string>
+    <string name="settings_proxy_port">Porta</string>
+    <string name="settings_proxy_type">Tipo</string>
+    <string name="settings_mark_as_read" tools:ignore="MissingTranslation">Botão "Marcar todos como lido"</string>
+    <string name="settings_mark_as_read_description" tools:ignore="MissingTranslation" >Mostrar / Esconder o botão (necessário reiniciar)</string>
+    <plurals name="number_of_new_entries">
+        <item quantity="one">Um artigo novo</item>
+        <item quantity="other">%d novos artigos</item>
+    </plurals>
+
+    <string-array name="settings_intervals">
+        <item>1 minuto</item>
+        <item>5 minutos</item>
+        <item>15 minutos</item>
+        <item>30 minutos</item>
+        <item>1 hora</item>
+        <item>2 horas</item>
+        <item>6 horas</item>
+        <item>12 horas</item>
+        <item>1 dia</item>
+    </string-array>
+    <string-array name="settings_keep_times">
+        <item>1 dia</item>
+        <item>2 dias</item>
+        <item>4 dias</item>
+        <item>1 semana</item>
+        <item>2 semanas</item>
+        <item>1 mês</item>
+        <item>2 meses</item>
+        <item>3 meses</item>
+        <item>Para sempre</item>
+    </string-array>
+    <string-array name="settings_keep_times_per_feed" tools:ignore="MissingTranslation">
+        <item>1 dia</item>
+        <item>2 dias</item>
+        <item>4 dias</item>
+        <item>1 semana</item>
+        <item>2 semanas</item>
+        <item>1 mês</item>
+        <item>2 meses</item>
+        <item>3 meses</item>
+        <item>Padrão</item>
+    </string-array>
+    <string-array name="settings_font_sizes">
+        <item>-2</item>
+        <item>-1</item>
+        <item>Padrão</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+3</item>
+        <item>+4</item>
+        <item>+5</item>
+    </string-array>
+    <string-array name="settings_preload_image_modes">
+        <item>Nunca</item>
+        <item>Somente em Wi-Fi</item>
+        <item>Sempre</item>
+    </string-array>
+
+</resources>

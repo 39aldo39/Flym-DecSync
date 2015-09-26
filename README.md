@@ -3,6 +3,7 @@ QuickJump languages:
 * [English](#en)  
 * [Français](#fr)  
 * [ελληνικά](#el)
+* [Português](#pt)  
 
 ## EN
 RSS reader with all articles content in app.
@@ -113,3 +114,41 @@ GitHub project: https://github.com/Etuldan/spaRSS
 PlayStore: https://play.google.com/store/apps/details?id=net.etuldan.sparss  
 F-Droid: https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss  
 Το spaRSS είναι ένα "fork" του [Flym](https://github.com/FredJul/Flym)
+
+## PT
+Leitor de RSS que recupera periodicamente o conteúdo de artigos.
+
+Conteúdo
+* [Sumário](#sumário)
+* [Funcionalidades](#funcionalidades)
+* [Como ajudar?](#como-ajudar)
+* [Endereços](#endereços)
+
+### Sumário
+O spaRSS é um leitor de feeds RSS que permite a completa leitura de artigos sem a necessidade de abrir um navegador externo.
+Todo o conteúdo de seus sites de notícias favoritos estarão disponíveis diretamente no aplicativo, sem que precise estar conectado/on-line no momento da consulta.  
+Este aplicativo NÃO sincroniza com leitores de RSS on-line.
+
+### Funcionalidades
+* adicione facilmente novos feeds a partir do Google News ou do recurso de busca de feeds
+* adicione feeds a partir da funcionalidade de compartilhamento dos navegadores web
+* tema claro e escuro
+* leitura desconectada e completa de artigos, incluindo imagens e websites privados
+* importa e exporta lista de feeds no formato OPML
+* marque artigos favoritos
+* busque em artigos
+* filtre artigos por palavra-chave ou expressão regular
+* widgets
+
+Usuário de Feedly: visite [este endereço](http://cloud.feedly.com/#opml) para exportar seus feeds para OPML e importá-los no spaRSS
+
+### Como ajudar?
+Se você tem uma sugestão para melhorar o spaRSS fique à vontade para [adicioná-la aqui](https://github.com/Etuldan/spaRSS/issues).  
+Você também pode me ajudar com as sugestões já encaminhadas [clicando aqui](https://github.com/Etuldan/spaRSS/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
+
+
+### Endereços
+Projeto no GitHub : https://github.com/Etuldan/spaRSS  
+PlayStore : https://play.google.com/store/apps/details?id=net.etuldan.sparss  
+F-Droid : https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss  
+spaRSS é um fork de [Flym](https://github.com/FredJul/Flym)
