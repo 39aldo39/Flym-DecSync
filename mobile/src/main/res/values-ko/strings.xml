@@ -24,21 +24,21 @@
 
     <!-- GENERAL -->
     <string name="app_name">spaRSS</string>
-    <string name="about_spaRSS">플라임 정보</string>
-    <string name="welcome_title">플라임 사용을 환영합니다. 피드를 추가하시겠습니까?</string>
+    <string name="about_spaRSS">spaRSS 정보</string>
+    <string name="welcome_title">spaRSS 사용을 환영합니다. 피드를 추가하시겠습니까?</string>
     <string name="never">하지 않음</string>
     <string name="update">업데이트</string>
     <string name="colon">:\u00A0</string>
     <string name="menu_settings">설정</string>
     <string name="menu_refresh">새로 고침</string>
     <string name="menu_all_read">모두 읽은 것으로 표시</string>
-    <string name="spaRSS_feeds">플라임 피드</string>
+    <string name="spaRSS_feeds">spaRSS 피드</string>
     <string name="error">오류</string>
     <string name="network_error">네트워크가 준비되지 않았습니다</string>
     <string name="loading">읽어들이는 중…</string>
     <string name="no_result">결과 없음</string>
-    <string name="drawer_open">네비게이션 드로어 열기</string>
-    <string name="drawer_close">네비게이션 드로어 닫기</string>
+    <string name="drawer_open">탐색 서랍 열기</string>
+    <string name="drawer_close">탐색 서랍 닫기</string>
     <string name="back_again_to_quit">뒤로 가기 버튼을 한번 더 누르면 나갑니다</string>
 
     <!-- FEEDS -->
@@ -86,7 +86,7 @@
     <string name="to_group_message">피드를 그룹 안에 넣을 수도 있고 위에 놓을 수도 있습니다. 어떻게 하시겠습니까?</string>
     <string name="to_group_above">그룹 위</string>
     <string name="to_group_into">그룹 안</string>
-    <string name="add_custom_feed">Add a custom feed or search for one</string>
+    <string name="add_custom_feed">임의의 피드를 추가하거나 검색하기</string>
     <string name="google_news_title">구글 뉴스 주제</string>
     <string name="google_news_indicator">추가할 주제를 하나 또는 여러 개를 선택하십시오. 언어에 따라 일부 주제는 Google에서 제공하지 않을 수도 있습니다.</string>
     <string name="google_news_top_stories">주요 뉴스</string>
@@ -111,7 +111,7 @@
     <string name="menu_full_screen">전체 화면</string>
     <string name="menu_copy_clipboard">링크 복사</string>
     <string name="menu_mark_as_unread">읽은 것으로 표시</string>
-    <string name="share_favorites_title">플라임: 별표 항목</string>
+    <string name="share_favorites_title">spaRSS: 별표 항목</string>
     <string name="copied_clipboard">링크 복사함</string>
     <string name="get_full_text">전체 텍스트 가져오기</string>
     <string name="original_text">원래 텍스트 가져오기</string>
@@ -122,7 +122,7 @@
     <string name="file">파일</string>
     <string name="download_and_save">다운로드 및 저장</string>
     <string name="open_link">링크 열기</string>
-    <string name="tip_sentence">Tip: slide left to mark as read and slide right to mark as favorite</string>
+    <string name="tip_sentence">팁: 항목을 왼쪽으로 당기면 읽은 항목으로 설정할 수 있고 오른쪽으로 당기면 즐겨찾기로 설정할 수 있습니다</string>
 
     <!-- WIDGET -->
     <string name="red">빨강</string>
