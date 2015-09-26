@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.droidtitan.lintcleaner'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         applicationId "net.etuldan.sparss"
         minSdkVersion 15
-        targetSdkVersion 21
+        targetSdkVersion 23
         versionCode 63
         versionName "1.10.2"
     }
@@ -59,7 +59,7 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //wearApp project(':wear')\n' +
-    compile 'com.android.support:appcompat-v7:21.+'
+    compile 'com.android.support:appcompat-v7:23.+'
     gplayCompile 'com.google.android.gms:play-services-wearable:+'
     compile 'com.melnykov:floatingactionbutton:+'
     compile 'org.jsoup:jsoup:+'
