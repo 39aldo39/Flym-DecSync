@@ -31,6 +31,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -78,6 +79,9 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
     private SearchView mSearchView;
     private FloatingActionButton mHideReadButton;
     private long mListDisplayDate = new Date().getTime();
+
+    private static Button notifCount;
+
     private final LoaderManager.LoaderCallbacks<Cursor> mEntriesLoader = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -142,7 +146,7 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
         public void onLoaderReset(Loader<Cursor> loader) {
         }
     };
-    private Button mRefreshListBtn;
+    //private Button mRefreshListBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -219,7 +223,7 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
         });
         UiUtils.updateHideReadButton(mHideReadButton);
 
-        mRefreshListBtn = (Button) rootView.findViewById(R.id.refreshListBtn);
+        /*mRefreshListBtn = (Button) rootView.findViewById(R.id.refreshListBtn);
         mRefreshListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,7 +235,7 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
                     restartLoaders();
                 }
             }
-        });
+        });*/
 
         mSearchView = (SearchView) rootView.findViewById(R.id.searchView);
         if (savedInstanceState != null) {
@@ -301,11 +305,9 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear(); // This is needed to remove a bug on Android 4.0.3
-
-        if (PrefUtils.getBoolean(PrefUtils.MARK_AS_READ, true)) {
-            inflater.inflate(R.menu.entry_list, menu);
-        } else {
-            inflater.inflate(R.menu.entry_list_without_markasread, menu);
+         inflater.inflate(R.menu.entry_list, menu);
+        if (!PrefUtils.getBoolean(PrefUtils.MARK_AS_READ, true)) {
+            menu.findItem(R.id.menu_all_read).setVisible(false);
         }
 
         if (EntryColumns.FAVORITES_CONTENT_URI.equals(mUri)) {
@@ -314,6 +316,23 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
             menu.findItem(R.id.menu_share_starred).setVisible(false);
         }
 
+        MenuItem item = menu.findItem(R.id.menu_show_new_entries);
+        MenuItemCompat.setActionView(item, R.layout.feed_update_count);
+        notifCount = (Button) MenuItemCompat.getActionView(item);
+        notifCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNewEntriesNumber = 0;
+                mListDisplayDate = new Date().getTime();
+
+                refreshUI();
+                if (mUri != null) {
+                    restartLoaders();
+                }
+            }
+        });
+        //notifCount.setText(String.valueOf(mNewEntriesNumber));
+//        notifCount.setVisibility(View.GONE);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -408,10 +427,11 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
         }
 
         if (mNewEntriesNumber > 0) {
-            mRefreshListBtn.setText(getResources().getQuantityString(R.plurals.number_of_new_entries, mNewEntriesNumber, mNewEntriesNumber));
-            mRefreshListBtn.setVisibility(View.VISIBLE);
+            //mRefreshListBtn.setText(getResources().getQuantityString(R.plurals.number_of_new_entries, mNewEntriesNumber, mNewEntriesNumber));
+            notifCount.setText(String.valueOf(mNewEntriesNumber));
+            notifCount.setVisibility(View.VISIBLE);
         } else {
-            mRefreshListBtn.setVisibility(View.GONE);
+            notifCount.setVisibility(View.GONE);
         }
     }
 
