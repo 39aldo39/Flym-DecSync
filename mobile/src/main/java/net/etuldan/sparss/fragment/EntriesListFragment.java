@@ -146,7 +146,6 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
         public void onLoaderReset(Loader<Cursor> loader) {
         }
     };
-    //private Button mRefreshListBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -222,20 +221,6 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
             }
         });
         UiUtils.updateHideReadButton(mHideReadButton);
-
-        /*mRefreshListBtn = (Button) rootView.findViewById(R.id.refreshListBtn);
-        mRefreshListBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mNewEntriesNumber = 0;
-                mListDisplayDate = new Date().getTime();
-
-                refreshUI();
-                if (mUri != null) {
-                    restartLoaders();
-                }
-            }
-        });*/
 
         mSearchView = (SearchView) rootView.findViewById(R.id.searchView);
         if (savedInstanceState != null) {
