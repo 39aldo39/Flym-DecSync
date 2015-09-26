@@ -117,9 +117,6 @@ public class EntryView extends WebView {
     private static final String BUTTON_MIDDLE = "' onclick='";
     private static final String BUTTON_END = "'/></p>";
     // the separate 'marginfix' selector in the following is only needed because the CSS box model treats <input> and <a> elements differently
-    private static final String LINK_BUTTON_START = "<p class='marginfix'><a href='";
-    private static final String LINK_BUTTON_MIDDLE = "'>";
-    private static final String LINK_BUTTON_END = "</a></p>";
     private static final String IMAGE_ENCLOSURE = "[@]image/";
 
     private final JavaScriptObject mInjectedJSObject = new JavaScriptObject();
@@ -189,22 +186,11 @@ public class EntryView extends WebView {
             dateStringBuilder.append(" &mdash; ").append(author);
         }
 
-        content.append(dateStringBuilder).append(SUBTITLE_END).append(contentText).append(BUTTON_SECTION_START).append(BUTTON_START);
+        content.append(dateStringBuilder).append(SUBTITLE_END).append(contentText).append(BUTTON_SECTION_START);
 
-        if (!preferFullText) {
-            content.append(context.getString(R.string.get_full_text)).append(BUTTON_MIDDLE).append("injectedJSObject.onClickFullText();");
-        } else {
-            content.append(context.getString(R.string.original_text)).append(BUTTON_MIDDLE).append("injectedJSObject.onClickOriginalText();");
-        }
-        content.append(BUTTON_END);
-
-        if (enclosure != null && enclosure.length() > 6 && !enclosure.contains(IMAGE_ENCLOSURE)) {
+               if (enclosure != null && enclosure.length() > 6 && !enclosure.contains(IMAGE_ENCLOSURE)) {
             content.append(BUTTON_START).append(context.getString(R.string.see_enclosure)).append(BUTTON_MIDDLE)
                     .append("injectedJSObject.onClickEnclosure();").append(BUTTON_END);
-        }
-
-        if (link.length() > 0) {
-            content.append(LINK_BUTTON_START).append(link).append(LINK_BUTTON_MIDDLE).append(context.getString(R.string.see_link)).append(LINK_BUTTON_END);
         }
 
         content.append(BUTTON_SECTION_END).append(BODY_END);
@@ -311,10 +297,6 @@ public class EntryView extends WebView {
     }
 
     public interface EntryViewManager {
-        public void onClickOriginalText();
-
-        public void onClickFullText();
-
         public void onClickEnclosure();
 
         public void onStartVideoFullScreen();
@@ -331,15 +313,6 @@ public class EntryView extends WebView {
             return "injectedJSObject";
         }
 
-        @JavascriptInterface
-        public void onClickOriginalText() {
-            mEntryViewMgr.onClickOriginalText();
-        }
-
-        @JavascriptInterface
-        public void onClickFullText() {
-            mEntryViewMgr.onClickFullText();
-        }
 
         @JavascriptInterface
         public void onClickEnclosure() {

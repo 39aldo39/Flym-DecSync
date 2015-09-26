@@ -87,6 +87,8 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
 
     private View mCancelFullscreenBtn;
 
+    private boolean isChecked = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -195,6 +197,8 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
             MenuItem item = menu.findItem(R.id.menu_star);
             item.setTitle(R.string.menu_unstar).setIcon(R.drawable.ic_star);
         }
+        MenuItem item = menu.findItem(R.id.menu_switch_full_original);
+        item.setChecked(mPreferFullText);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -202,7 +206,7 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mEntriesIds != null) {
-            Activity activity = getActivity();
+            final Activity activity = getActivity();
 
             switch (item.getItemId()) {
                 case R.id.menu_star: {
@@ -271,11 +275,75 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                     activity.finish();
                     break;
                 }
+                case R.id.menu_open_in_browser: {
+                    Cursor cursor = mEntryPagerAdapter.getCursor(mCurrentPagerPos);
+                    if (cursor != null) {
+                        String link = cursor.getString(mLinkPos);
+                        if (link != null) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                            startActivity(browserIntent);
+                        }
+                    }
+                    break;
+                }
+                case R.id.menu_switch_full_original: {
+                    isChecked = !item.isChecked();
+                    item.setChecked(isChecked);
+                    if(mPreferFullText) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPreferFullText = false;
+                                mEntryPagerAdapter.displayEntry(mCurrentPagerPos, null, true);
+                            }
+                        });
+                    }else {
+                        Cursor cursor = mEntryPagerAdapter.getCursor(mCurrentPagerPos);
+                        final boolean alreadyMobilized = !cursor.isNull(mMobilizedHtmlPos);
+
+
+                        if (alreadyMobilized) {
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mPreferFullText = true;
+                                    mEntryPagerAdapter.displayEntry(mCurrentPagerPos, null, true);
+                                }
+                            });
+                        } else if (!isRefreshing()) {
+                            ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+                            final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+                            // since we have acquired the networkInfo, we use it for basic checks
+                            if (networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED) {
+                                FetcherService.addEntriesToMobilize(new long[]{mEntriesIds[mCurrentPagerPos]});
+                                activity.startService(new Intent(activity, FetcherService.class).setAction(FetcherService.ACTION_MOBILIZE_FEEDS));
+                                activity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showSwipeProgress();
+                                    }
+                                });
+                            } else {
+                                activity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(activity, R.string.network_error, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
             }
         }
 
-        return true;
+        return super.onOptionsItemSelected(item);
     }
+
 
     public void setData(Uri uri) {
         mCurrentPagerPos = -1;
@@ -384,57 +452,6 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
     private void setImmersiveFullScreen(boolean fullScreen) {
         BaseActivity activity = (BaseActivity) getActivity();
         activity.setImmersiveFullScreen(fullScreen);
-    }
-
-    @Override
-    public void onClickOriginalText() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mPreferFullText = false;
-                mEntryPagerAdapter.displayEntry(mCurrentPagerPos, null, true);
-            }
-        });
-    }
-
-    @Override
-    public void onClickFullText() {
-        final BaseActivity activity = (BaseActivity) getActivity();
-
-        Cursor cursor = mEntryPagerAdapter.getCursor(mCurrentPagerPos);
-        final boolean alreadyMobilized = !cursor.isNull(mMobilizedHtmlPos);
-
-        if (alreadyMobilized) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mPreferFullText = true;
-                    mEntryPagerAdapter.displayEntry(mCurrentPagerPos, null, true);
-                }
-            });
-        } else if (!isRefreshing()) {
-            ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-            final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-            // since we have acquired the networkInfo, we use it for basic checks
-            if (networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED) {
-                FetcherService.addEntriesToMobilize(new long[]{mEntriesIds[mCurrentPagerPos]});
-                activity.startService(new Intent(activity, FetcherService.class).setAction(FetcherService.ACTION_MOBILIZE_FEEDS));
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        showSwipeProgress();
-                    }
-                });
-            } else {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(activity, R.string.network_error, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }
     }
 
     @Override
