@@ -40,7 +40,7 @@
     <string name="no_result">Não encontrado</string>
     <string name="drawer_open">Abrir a aba de navegação</string>
     <string name="drawer_close">Fechar a aba de navegação</string>
-    <string name="back_again_to_quit">Pressione voltar novamente para sair</string>
+    <string name="back_again_to_quit">Pressione novamente para sair</string>
 
     <!-- FEEDS -->
     <string name="feeds">Feeds</string>
@@ -60,7 +60,7 @@
     <string name="error_feed_import">O arquivo selecionado não pôde ser importado.</string>
     <string name="error_feed_export">A exportação falhou. Certifique-se de que o cartão SD esteja montado como gravável.</string>
     <string name="error_external_storage_not_available">O armazenamento externo (ex. cartão SD) não está disponível.</string>
-    <string name="feed_url">Endereço / URL</string>
+    <string name="feed_url">Endereço / Url</string>
     <string name="optional">(opcional)</string>
     <string name="website_or_feed">(website ou feed)</string>
     <string name="feed_cookie" tools:ignore="MissingTranslation">Cookie de autenticação</string>
@@ -69,7 +69,7 @@
     <string name="tab_feed_title">Feed</string>
     <string name="tab_filters_title">Filtro</string>
     <string name="tab_advanced_title" tools:ignore="MissingTranslation">Avançado</string>
-    <string name="feed_title">TÍTULO</string>
+    <string name="feed_title">Título</string>
     <string name="feed_filters">REGRAS DE FILTRO</string>
     <string name="filter_add_title">Nova regra</string>
     <string name="filter_delete_title">Excluir regra</string>
@@ -91,8 +91,8 @@
     <string name="to_group_message">Você pode mover este feed para dentro ou acima deste grupo. O que deseja fazer?</string>
     <string name="to_group_above">Acima do grupo</string>
     <string name="to_group_into">Dentro do grupo</string>
-    <string name="add_custom_feed">Adicione ou busque um feed customizado</string>
-    <string name="google_news_title">Tópicos do Google News</string>
+    <string name="add_custom_feed">Adicione ou busque um feed</string>
+    <string name="google_news_title">Adicione um tópico do Google News</string>
     <string name="google_news_indicator">Selecione um ou mais tópicos para adicionar. Alguns tópicos podem não estar disponíveis em seu idioma.</string>
     <string name="google_news_top_stories">Melhores histórias</string>
     <string name="google_news_world">Mundo</string>
@@ -142,7 +142,7 @@
     <string name="settings_refresh_interval">Intervalo de atualização</string>
     <string name="settings_category_notifications">Notificações</string>
     <string name="settings_notifications_enabled">Habilitar notificações</string>
-    <string name="settings_notifications_enabled_description">Habilitar notificações no caso de novos artigos</string>
+    <string name="settings_notifications_enabled_description">Habilitar notificação para novos artigos</string>
     <string name="settings_notifications_ringtone">Toque</string>
     <string name="settings_notifications_ringtone_none">Nenhum</string>
     <string name="settings_notifications_vibrate">Vibrar</string>
@@ -154,7 +154,7 @@
     <string name="settings_light_theme_description">Usar o tema claro</string>
     <string name="settings_left_panel" tools:ignore="MissingTranslation">Painel esquerdo</string>
     <string name="settings_left_panel_description" tools:ignore="MissingTranslation">Mostrar o painel esquerdo ao iniciar o aplicativo</string>
-    <string name="settings_keep_time">Prazo que os artigos serão mantidas</string>
+    <string name="settings_keep_time">Período que os artigos serão mantidos</string>
     <string name="settings_display_images">Mostrar imagens</string>
     <string name="settings_display_images_description">Mostrar imagens nos artigos</string>
     <string name="settings_preload_image_mode">Pré-carregar as imagens</string>
@@ -165,10 +165,10 @@
     <string name="settings_display_oldest_first_description">Mostrar artigos antigos primeiro</string>
     <string name="settings_display_entries_fullscreen">Artigos em tela-cheia</string>
     <string name="settings_display_entries_fullscreen_description">Automaticamente mostrar artigos em modo tela-cheia</string>
-    <string name="settings_refresh_on_open">Atualizar feeds ao abrir</string>
+    <string name="settings_refresh_on_open">Atualizar feeds ao iniciar app</string>
     <string name="settings_refresh_on_open_description">Atualizar todos os feeds ao iniciar o aplicativo</string>
     <string name="settings_refresh_wifi_only">Atualizar somente em Wi-Fi</string>
-    <string name="settings_refresh_wifi_only_description">Atualizar artigos automaticamente somente se o Wi-Fi estiver disponível</string>
+    <string name="settings_refresh_wifi_only_description">Atualização automática somente se houver rede Wi-Fi disponível</string>
     <string name="settings_visible_feeds">Feeds visíveis</string>
     <string name="settings_widget_background">Fundo</string>
     <string name="settings_widget_background_description">Cor de fundo e transparência do widget</string>
@@ -181,7 +181,7 @@
     <string name="settings_proxy_host">Servidor</string>
     <string name="settings_proxy_port">Porta</string>
     <string name="settings_proxy_type">Tipo</string>
-    <string name="settings_mark_as_read" tools:ignore="MissingTranslation">Mostrar botão "Marcar todos como lido"</string>
+    <string name="settings_mark_as_read" tools:ignore="MissingTranslation">Botão "Marcar todos como lido"</string>
     <string name="settings_mark_as_read_description" tools:ignore="MissingTranslation" >Mostrar / Esconder o botão (necessário reiniciar)</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">Um artigo novo</item>
