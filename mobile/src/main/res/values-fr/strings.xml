@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='utf-8'?>
+<!--
  Copyright (c) 2015 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
  Copyright (c) 2010-2012 Stefan Handschuh
@@ -244,4 +245,8 @@
     <string name="settings_left_panel_description">Afficher le panneau de gauche au démarrage de l\'application</string>
     <string name="tab_advanced_title">Avancé</string>
 
-</resources>
+<string xmlns:tools="http://schemas.android.com/tools" name="menu_open_in_browser" tools:ignore="MissingTranslation">Ouvrir dans le navigateur</string>
+    <string xmlns:tools="http://schemas.android.com/tools" name="menu_switch_full_original" tools:ignore="MissingTranslation">Afficher le contenu complet</string>
+    <string xmlns:tools="http://schemas.android.com/tools" name="settings_font_serif" tools:ignore="MissingTranslation">Utiliser une police Serif</string>
+    <string xmlns:tools="http://schemas.android.com/tools" name="settings_font_serif_description" tools:ignore="MissingTranslation">Utiliser une police Serif au lieu d\'une Sans-Serif pour les articles</string>
+    </resources>
