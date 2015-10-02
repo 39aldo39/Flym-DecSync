@@ -84,9 +84,9 @@ public class UiUtils {
     static public void updateHideReadButton(FloatingActionButton drawerHideReadButton) {
         if (drawerHideReadButton != null) {
             if (PrefUtils.getBoolean(PrefUtils.SHOW_READ, true)) {
-                drawerHideReadButton.setColorNormalResId(getAttrResource(drawerHideReadButton.getContext(), R.attr.colorPrimary, R.color.light_theme_color_primary));
+                drawerHideReadButton.setColorNormalResId(getAttrResource(drawerHideReadButton.getContext(), R.attr.colorAccent, R.color.light_primary_color));
             } else {
-                drawerHideReadButton.setColorNormalResId(R.color.floating_action_button_disabled);
+                drawerHideReadButton.setColorNormalResId(R.color.light_disabled);
             }
         }
     }

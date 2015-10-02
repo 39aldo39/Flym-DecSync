@@ -31,6 +31,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.GestureDetector;
@@ -301,13 +302,14 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
             menu.findItem(R.id.menu_share_starred).setVisible(false);
         }
 
+
         MenuItem item = menu.findItem(R.id.menu_show_new_entries);
         MenuItemCompat.setActionView(item, R.layout.feed_update_count);
         notifCount = (Button) MenuItemCompat.getActionView(item);
         notifCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mNewEntriesNumber = 0;
+                //mNewEntriesNumber = 0;
                 mListDisplayDate = new Date().getTime();
 
                 refreshUI();
@@ -316,8 +318,6 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
                 }
             }
         });
-        //notifCount.setText(String.valueOf(mNewEntriesNumber));
-//        notifCount.setVisibility(View.GONE);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -411,12 +411,14 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
             mSearchView.setVisibility(View.GONE);
         }
 
-        if (mNewEntriesNumber > 0) {
-            //mRefreshListBtn.setText(getResources().getQuantityString(R.plurals.number_of_new_entries, mNewEntriesNumber, mNewEntriesNumber));
-            notifCount.setText(String.valueOf(mNewEntriesNumber));
-            notifCount.setVisibility(View.VISIBLE);
-        } else {
-            notifCount.setVisibility(View.GONE);
+        if(notifCount!=null) {
+            if (mNewEntriesNumber > 0) {
+                notifCount.setText(String.valueOf(mNewEntriesNumber));
+                notifCount.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.light_base_text));
+            } else {
+                notifCount.setText(String.valueOf(0));
+                notifCount.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.light_base_text));
+            }
         }
     }
 

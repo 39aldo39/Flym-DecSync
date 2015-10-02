@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="light_theme_color_primary">#247ab0</color>
-    <color name="light_theme_color_primary_dark">#175073</color>
-    <color name="dark_theme_color_primary">#175073</color>
-    <color name="dark_theme_color_primary_dark">#ff10364e</color>
-    <color name="dark_background">#FF000000</color>
-    <color name="light_background">#FFFFFFFF</color>
-    <color name="floating_action_button_disabled">#ff0b2535</color>
-    <color name="dark_text">#FFFFFFFF</color>
-    <color name="light_text">#FF000000</color>
-    <color name="group_text">#BBBBBB</color>
-    <color name="separator">#515151</color>
+    <color name="red">@android:color/holo_red_dark</color>
+    <color name="green">@android:color/holo_green_dark</color>
+
+
+    <color name="Indigo_900">#1a237e</color>
+    <color name="Indigo_800">#283593</color>
+    <color name="Indigo_700">#303f9f</color>
+    <color name="Indigo_500">#3F51B5</color>
+    <color name="Indigo_400">#5c6bc0</color>
+    <color name="Indigo_300">#7986cb</color>
+    <color name="Indigo_100">#C5CAE9</color>
+    <color name="Indigo_50">#e8eaf6</color>
+    <color name="light_A100">#b388ff</color>
+    <color name="dark_A700">#aa00ff</color>
+
+
+    <color name="dark_background">@android:color/black</color>
+    <color name="dark_base_text">#DEFFFFFF</color>
+    <color name="dark_secondary_text">#8AFFFFFF</color>
+    <color name="dark_disabled">#61FFFFFF</color>
+    <color name="dark_dividers">#1FFFFFFF</color>
+    <color name="dark_primary_color_dark">@color/Indigo_900</color>
+    <color name="dark_primary_color">@color/Indigo_700</color>
+    <color name="dark_primary_color_light">@android:color/black</color>
+    <color name="dark_accent_color">@color/dark_A700</color>
+
+    <color name="light_background">@android:color/white</color>
+    <color name="light_base_text">#DE000000</color>
+    <color name="light_secondary_text">#8A000000</color>
+    <color name="light_disabled">#61000000</color>
+    <color name="light_dividers">#1F000000</color>
+    <color name="light_primary_color_dark">@color/Indigo_800</color>
+    <color name="light_primary_color">@color/Indigo_500</color>
+    <color name="light_primary_color_light">@color/Indigo_50</color>
+    <color name="light_accent_color">@color/light_A100</color>
 </resources>

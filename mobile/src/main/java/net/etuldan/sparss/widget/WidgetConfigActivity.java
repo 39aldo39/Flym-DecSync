@@ -47,11 +47,11 @@ package net.etuldan.sparss.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import net.etuldan.sparss.R;
 
-public class WidgetConfigActivity extends ActionBarActivity {
+public class WidgetConfigActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

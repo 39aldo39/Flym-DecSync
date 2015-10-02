@@ -85,6 +85,14 @@
                                 android:hint="@string/optional"
                                 android:singleLine="true"/>
 
+                            <CheckBox
+                                android:id="@+id/retrieve_fulltext"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_below="@+id/settings_keep_times"
+                                android:layout_marginRight="10dp"
+                                android:text="@string/get_full_text"/>
                         </LinearLayout>
                      </ScrollView>
 
@@ -206,14 +214,6 @@
                                 android:key="keeptime"
                                 android:title="@string/settings_keep_time"/>
 
-                            <CheckBox
-                                android:id="@+id/retrieve_fulltext"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_below="@+id/settings_keep_times"
-                                android:layout_marginRight="10dp"
-                                android:text="@string/get_full_text"/>
                         </LinearLayout>
                     </ScrollView>
 

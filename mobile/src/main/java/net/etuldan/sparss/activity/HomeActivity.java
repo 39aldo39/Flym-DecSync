@@ -34,6 +34,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -132,13 +133,8 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
             }
         });
 
-        mLeftDrawer.setBackgroundColor(getResources().getColor(R.color.dark_theme_color_primary));
-        mDrawerList.setBackgroundColor(getResources().getColor(R.color.dark_background));
-        if (PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true)) {
-            mLeftDrawer.setBackgroundColor(getResources().getColor(R.color.light_theme_color_primary));
-            mDrawerList.setBackgroundColor(getResources().getColor(R.color.light_background));
-        }
-
+        mLeftDrawer.setBackgroundColor((ContextCompat.getColor(getApplicationContext(), PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_primary_color : R.color.dark_primary_color)));
+        mDrawerList.setBackgroundColor((ContextCompat.getColor(getApplicationContext(), PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_primary_color_light : R.color.dark_primary_color_light)));
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (mDrawerLayout != null) {
             mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -307,13 +303,9 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
             mDrawerAdapter.setCursor(cursor);
         } else {
             mDrawerAdapter = new DrawerAdapter(this, cursor);
-            mDrawerList.setAdapter(mDrawerAdapter);
-
-            // We don't have any menu yet, we need to display it
             mDrawerList.post(new Runnable() {
-                @Override
                 public void run() {
-                    selectDrawerItem(mCurrentDrawerPos);
+                    mDrawerList.setAdapter(mDrawerAdapter);
                 }
             });
         }
@@ -326,6 +318,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
 
     private void selectDrawerItem(int position) {
         mCurrentDrawerPos = position;
+        mDrawerAdapter.setSelectedItem(position);
         mIcon = null;
 
         Uri newUri;
@@ -355,6 +348,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
                     newUri = EntryColumns.ENTRIES_FOR_FEED_CONTENT_URI(feedOrGroupId);
                     showFeedInfo = false;
                 }
+
                 mTitle = mDrawerAdapter.getItemName(position);
                 break;
         }

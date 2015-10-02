@@ -14,8 +14,7 @@
         android:id="@+id/menu_show_new_entries"
         android:actionLayout="@layout/feed_update_count"
         android:title="Unread"
-        app:showAsAction="always"
-        android:visibility="invisible"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/menu_share_starred"
         android:icon="@drawable/ic_share"

@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import net.etuldan.sparss.R;
 import net.etuldan.sparss.view.SwipeRefreshLayout;
 
 public abstract class SwipeRefreshListFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -58,10 +59,10 @@ public abstract class SwipeRefreshListFragment extends ListFragment implements S
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRefreshLayout.setColorScheme(android.R.color.holo_blue_bright,
-                android.R.color.holo_blue_dark,
-                android.R.color.holo_blue_bright,
-                android.R.color.holo_blue_dark);
+        mRefreshLayout.setColorScheme(R.color.Indigo_300,
+                R.color.Indigo_400,
+                R.color.Indigo_300,
+                R.color.Indigo_400);
         mRefreshLayout.setOnRefreshListener(this);
     }
 

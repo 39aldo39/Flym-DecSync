@@ -23,6 +23,7 @@ package net.etuldan.sparss.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,9 +53,6 @@ public class DrawerAdapter extends BaseAdapter {
     private static final int POS_ERROR = 6;
     private static final int POS_UNREAD = 7;
 
-    //private static final int NORMAL_TEXT_COLOR = Color.parseColor("#EEEEEE");
-    //private static final int GROUP_TEXT_COLOR = Color.parseColor("#BBBBBB");
-
     private static final String COLON = MainApplication.getContext().getString(R.string.colon);
 
     private static final int CACHE_MAX_ENTRIES = 100;
@@ -65,6 +63,7 @@ public class DrawerAdapter extends BaseAdapter {
         }
     };
 
+    private int mSelectedItem;
     private final Context mContext;
     private Cursor mFeedsCursor;
     private int mAllUnreadNumber, mFavoritesNumber;
@@ -76,6 +75,14 @@ public class DrawerAdapter extends BaseAdapter {
         updateNumbers();
     }
 
+    public int getSelectedItem() {
+        return mSelectedItem;
+    }
+    public void setSelectedItem(int selectedItem) {
+        mSelectedItem = selectedItem;
+    }
+
+
     public void setCursor(Cursor feedCursor) {
         mFeedsCursor = feedCursor;
 
@@ -83,6 +90,7 @@ public class DrawerAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -94,18 +102,20 @@ public class DrawerAdapter extends BaseAdapter {
             holder.stateTxt = (TextView) convertView.findViewById(android.R.id.text2);
             holder.unreadTxt = (TextView) convertView.findViewById(R.id.unread_count);
             holder.separator = convertView.findViewById(R.id.separator);
+            holder.separator.setBackgroundColor(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_dividers:R.color.dark_dividers));
             convertView.setTag(R.id.holder, holder);
         }
-
         ViewHolder holder = (ViewHolder) convertView.getTag(R.id.holder);
+
+        if (position == mSelectedItem) {
+            holder.titleTxt.setTextColor(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_primary_color:R.color.dark_primary_color));
+        } else {
+            holder.titleTxt.setTextColor(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_base_text:R.color.dark_base_text));
+        }
 
         // default init
         holder.iconView.setImageDrawable(null);
         holder.titleTxt.setText("");
-        holder.titleTxt.setTextColor(mContext.getResources().getColor(R.color.dark_text));
-        if (PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true)) {
-            holder.titleTxt.setTextColor(mContext.getResources().getColor(R.color.light_text));
-        }
         holder.titleTxt.setAllCaps(false);
         holder.stateTxt.setVisibility(View.GONE);
         holder.unreadTxt.setText("");
@@ -115,9 +125,10 @@ public class DrawerAdapter extends BaseAdapter {
         if (position == 0 || position == 1) {
             holder.titleTxt.setText(position == 0 ? R.string.all : R.string.favorites);
             holder.iconView.setImageResource(position == 0 ? R.drawable.ic_statusbar_rss : R.drawable.ic_star);
-            holder.iconView.setColorFilter(mContext.getResources().getColor(R.color.dark_text));
-            if (PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true)) {
-                holder.iconView.setColorFilter(mContext.getResources().getColor(R.color.light_text));
+            if (position == mSelectedItem) {
+                holder.iconView.setColorFilter(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_primary_color:R.color.dark_primary_color));
+            } else {
+                holder.iconView.setColorFilter(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_base_text:R.color.dark_base_text));
             }
 
             int unread = position == 0 ? mAllUnreadNumber : mFavoritesNumber;
@@ -129,9 +140,14 @@ public class DrawerAdapter extends BaseAdapter {
             holder.titleTxt.setText((mFeedsCursor.isNull(POS_NAME) ? mFeedsCursor.getString(POS_URL) : mFeedsCursor.getString(POS_NAME)));
 
             if (mFeedsCursor.getInt(POS_IS_GROUP) == 1) {
-                holder.titleTxt.setTextColor(mContext.getResources().getColor(R.color.group_text));
                 holder.titleTxt.setAllCaps(true);
                 holder.separator.setVisibility(View.VISIBLE);
+                holder.iconView.setImageResource(R.drawable.ic_folder);
+                if (position == mSelectedItem) {
+                    holder.iconView.setColorFilter(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_primary_color:R.color.dark_primary_color));
+                } else {
+                    holder.iconView.setColorFilter(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_base_text:R.color.dark_base_text));
+                }
             } else {
                 holder.stateTxt.setVisibility(View.VISIBLE);
 
