@@ -65,8 +65,12 @@
     <string name="feed_url">Indirizzo URL</string>
     <string name="optional">(opzionale)</string>
     <string name="website_or_feed">(sito web o feed)</string>
+    <string name="feed_cookie">Cookie di autenticazione</string>
+    <string name="cookiename">Nome</string>
+    <string name="cookievalue">valore</string>
     <string name="tab_feed_title">Feed</string>
     <string name="tab_filters_title">Filtri</string>
+    <string name="tab_advanced_title">Avanzate</string>
     <string name="feed_title">TITOLO</string>
     <string name="feed_filters">REGOLE FILTRO</string>
     <string name="filter_add_title">Aggiungi filtro</string>
@@ -116,6 +120,8 @@
     <string name="menu_full_screen">A tutto schermo</string>
     <string name="menu_copy_clipboard">Copia il link</string>
     <string name="menu_mark_as_unread">Segna come non letto</string>
+    <string name="menu_open_in_browser">Apri nel browser</string>
+    <string name="menu_switch_full_original">Mostra testo originale</string>
     <string name="share_favorites_title">spaRSS: articoli preferiti</string>
     <string name="copied_clipboard">Link copiato</string>
     <string name="get_full_text">Recupera il testo completo</string>
@@ -157,11 +163,15 @@
     <string name="settings_category_content_presentation">Aspetto e contenuti</string>
     <string name="settings_light_theme">Tema chiaro</string>
     <string name="settings_light_theme_description">Utilizza il tema chiaro</string>
+    <string name="settings_left_panel">Pannello laterale</string>
+    <string name="settings_left_panel_description">Mostra il pannello laterale all\'avvio dell\'applicazione</string>
     <string name="settings_keep_time">Tempo di archiviazione</string>
     <string name="settings_display_images">Mostra immagini</string>
     <string name="settings_display_images_description">Mostra le immagini degli articoli</string>
     <string name="settings_preload_image_mode">Scarica le immagini in anticipo</string>
     <string name="settings_font_size">Dimensione testo</string>
+    <string name="settings_font_serif">Usa carattere Serif</string>
+    <string name="settings_font_serif_description">Usa il carattere Serif invece di Sans-Serif negli articoli</string>
     <string name="settings_display_oldest_first">Ordinamento articoli</string>
     <string name="settings_display_oldest_first_description">Mostra gli articoli più vecchi prima</string>
     <string name="settings_display_entries_fullscreen">Articoli a tutto schermo in automatico</string>
@@ -187,6 +197,8 @@
     <string name="settings_proxy_host">Host</string>
     <string name="settings_proxy_port">Porta</string>
     <string name="settings_proxy_type">Tipo</string>
+    <string name="settings_mark_as_read">Mostra bottone "Segna tutti come letti"</string>
+    <string name="settings_mark_as_read_description">Mostra / Nascondi il bottone (Richiede il riavvio)</string>
 
     <plurals name="number_of_new_entries">
         <item quantity="one">Un nuovo articolo</item>
@@ -214,6 +226,17 @@
         <item>2 mesi</item>
         <item>3 mesi</item>
         <item>Per sempre</item>
+    </string-array>
+    <string-array name="settings_keep_times_per_feed">
+        <item>1 giorno</item>
+        <item>2 giorni</item>
+        <item>4 giorni</item>
+        <item>1 settimana</item>
+        <item>2 settimane</item>
+        <item>1 mese</item>
+        <item>2 mesi</item>
+        <item>3 mesi</item>
+        <item>Default</item>
     </string-array>
     <string-array name="settings_font_sizes">
         <item>-2</item>
