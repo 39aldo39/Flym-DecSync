@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
     <!-- GENERAL -->
     <string name="app_name">спаРСС</string>
@@ -63,12 +63,12 @@
     <string name="feed_url">УРЛ адреса</string>
     <string name="optional">(необавезно)</string>
     <string name="website_or_feed">(вебсајт или довод)</string>
-    <string name="feed_cookie" tools:ignore="MissingTranslation">Authentication Cookie</string>
-    <string name="cookiename" tools:ignore="MissingTranslation">Name</string>
-    <string name="cookievalue" tools:ignore="MissingTranslation">Value</string>
+    <string name="feed_cookie">Authentication Cookie</string>
+    <string name="cookiename">Name</string>
+    <string name="cookievalue">Value</string>
     <string name="tab_feed_title">Довод</string>
     <string name="tab_filters_title">Филтер</string>
-    <string name="tab_advanced_title" tools:ignore="MissingTranslation">Advanced</string>
+    <string name="tab_advanced_title">Advanced</string>
     <string name="feed_title">НАСЛОВ</string>
     <string name="feed_filters">ПРАВИЛА ФИЛТЕРА</string>
     <string name="filter_add_title">Додавање правила</string>

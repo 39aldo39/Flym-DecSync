@@ -23,7 +23,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
     <!-- GENERAL -->
     <string name="app_name">spaRSS</string>
@@ -237,6 +237,6 @@
         <item>Vždy</item>
     </string-array>
 
-<string xmlns:tools="http://schemas.android.com/tools" name="tab_advanced_title" tools:ignore="MissingTranslation">Pokročilé</string>
-    <string xmlns:tools="http://schemas.android.com/tools" name="menu_open_in_browser" tools:ignore="MissingTranslation">Otevřít v prohlížeči</string>
-    </resources>
+    <string name="tab_advanced_title">Pokročilé</string>
+    <string name="menu_open_in_browser">Otevřít v prohlížeči</string>
+</resources>

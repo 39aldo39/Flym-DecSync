@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
     <!-- GENERAL -->
     <string name="app_name">spaRSS</string>
@@ -63,12 +63,12 @@
     <string name="feed_url">Endereço / Url</string>
     <string name="optional">(opcional)</string>
     <string name="website_or_feed">(website ou feed)</string>
-    <string name="feed_cookie" tools:ignore="MissingTranslation">Cookie de autenticação</string>
-    <string name="cookiename" tools:ignore="MissingTranslation">Nome</string>
-    <string name="cookievalue" tools:ignore="MissingTranslation">Valor</string>
+    <string name="feed_cookie">Cookie de autenticação</string>
+    <string name="cookiename">Nome</string>
+    <string name="cookievalue">Valor</string>
     <string name="tab_feed_title">Feed</string>
     <string name="tab_filters_title">Filtro</string>
-    <string name="tab_advanced_title" tools:ignore="MissingTranslation">Avançado</string>
+    <string name="tab_advanced_title">Avançado</string>
     <string name="feed_title">Título</string>
     <string name="feed_filters">REGRAS DE FILTRO</string>
     <string name="filter_add_title">Nova regra</string>
@@ -152,15 +152,15 @@
     <string name="settings_category_content_presentation">Apresentação de conteúdo</string>
     <string name="settings_light_theme">Tema Claro</string>
     <string name="settings_light_theme_description">Usar o tema claro</string>
-    <string name="settings_left_panel" tools:ignore="MissingTranslation">Painel esquerdo</string>
-    <string name="settings_left_panel_description" tools:ignore="MissingTranslation">Mostrar o painel esquerdo ao iniciar o aplicativo</string>
+    <string name="settings_left_panel">Painel esquerdo</string>
+    <string name="settings_left_panel_description">Mostrar o painel esquerdo ao iniciar o aplicativo</string>
     <string name="settings_keep_time">Período que os artigos serão mantidos</string>
     <string name="settings_display_images">Mostrar imagens</string>
     <string name="settings_display_images_description">Mostrar imagens nos artigos</string>
     <string name="settings_preload_image_mode">Pré-carregar as imagens</string>
     <string name="settings_font_size">Tamanho do texto</string>
-    <string name="settings_font_serif" tools:ignore="MissingTranslation">Usar fonte Serif</string>
-    <string name="settings_font_serif_description" tools:ignore="MissingTranslation">Usar fonte Serif ao invés de Sans-Serif em artigos</string>
+    <string name="settings_font_serif">Usar fonte Serif</string>
+    <string name="settings_font_serif_description">Usar fonte Serif ao invés de Sans-Serif em artigos</string>
     <string name="settings_display_oldest_first">Ordem dos artigos</string>
     <string name="settings_display_oldest_first_description">Mostrar artigos antigos primeiro</string>
     <string name="settings_display_entries_fullscreen">Artigos em tela-cheia</string>
@@ -181,8 +181,8 @@
     <string name="settings_proxy_host">Servidor</string>
     <string name="settings_proxy_port">Porta</string>
     <string name="settings_proxy_type">Tipo</string>
-    <string name="settings_mark_as_read" tools:ignore="MissingTranslation">Botão "Marcar todos como lido"</string>
-    <string name="settings_mark_as_read_description" tools:ignore="MissingTranslation" >Mostrar / Esconder o botão (necessário reiniciar)</string>
+    <string name="settings_mark_as_read">Botão "Marcar todos como lido"</string>
+    <string name="settings_mark_as_read_description">Mostrar / Esconder o botão (necessário reiniciar)</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">Um artigo novo</item>
         <item quantity="other">%d novos artigos</item>
@@ -210,7 +210,7 @@
         <item>3 meses</item>
         <item>Para sempre</item>
     </string-array>
-    <string-array name="settings_keep_times_per_feed" tools:ignore="MissingTranslation">
+    <string-array name="settings_keep_times_per_feed">
         <item>1 dia</item>
         <item>2 dias</item>
         <item>4 dias</item>

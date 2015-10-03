@@ -22,7 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
     <!-- GENERAL -->
     <string name="app_name">spaRSS</string>
@@ -245,8 +245,8 @@
     <string name="settings_left_panel_description">Afficher le panneau de gauche au démarrage de l\'application</string>
     <string name="tab_advanced_title">Avancé</string>
 
-<string xmlns:tools="http://schemas.android.com/tools" name="menu_open_in_browser" tools:ignore="MissingTranslation">Ouvrir dans le navigateur</string>
-    <string xmlns:tools="http://schemas.android.com/tools" name="menu_switch_full_original" tools:ignore="MissingTranslation">Afficher le contenu complet</string>
-    <string xmlns:tools="http://schemas.android.com/tools" name="settings_font_serif" tools:ignore="MissingTranslation">Utiliser une police Serif</string>
-    <string xmlns:tools="http://schemas.android.com/tools" name="settings_font_serif_description" tools:ignore="MissingTranslation">Utiliser une police Serif au lieu d\'une Sans-Serif pour les articles</string>
-    </resources>
+    <string name="menu_open_in_browser">Ouvrir dans le navigateur</string>
+    <string name="menu_switch_full_original">Afficher le contenu complet</string>
+    <string name="settings_font_serif">Utiliser une police Serif</string>
+    <string name="settings_font_serif_description">Utiliser une police Serif au lieu d\'une Sans-Serif pour les articles</string>
+</resources>
