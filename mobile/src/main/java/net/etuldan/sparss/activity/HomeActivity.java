@@ -306,6 +306,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
             mDrawerList.post(new Runnable() {
                 public void run() {
                     mDrawerList.setAdapter(mDrawerAdapter);
+                    selectDrawerItem(mCurrentDrawerPos);
                 }
             });
         }
