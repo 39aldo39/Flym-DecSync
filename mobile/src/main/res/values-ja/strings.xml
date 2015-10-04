@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<resources><string name="app_name">spaRSS</string>
+<resources  xmlns:tools="http://schemas.android.com/tools"  tools:locale="en">
+    <string name="app_name">spaRSS</string>
     <string name="about_spaRSS">spaRSS について</string>
     <string name="welcome_title">spaRSS へようこそ。フィードを追加しますか?</string>
     <string name="never">しない</string>
@@ -155,10 +156,9 @@
     <string name="settings_proxy_port">ポート</string>
     <string name="settings_proxy_type">タイプ</string>
     <string name="settings_mark_as_read">すべて既読としてマーク ボタンを表示</string>
-    <string xmlns:tools="http://schemas.android.com/tools" name="settings_mark_as_read_description" tools:ignore="MissingTranslation">ボタンを表示/非表示します (再起動が必要)</string>
+    <string name="settings_mark_as_read_description">ボタンを表示/非表示します (再起動が必要)</string>
     <plurals name="number_of_new_entries">
-	<item quantity="one">新しいエントリー 1 つ</item>
-	<item quantity="other"></item>
-</plurals>
+	    <item quantity="one">新しいエントリー 1 つ</item>
+    </plurals>
 
     </resources>
