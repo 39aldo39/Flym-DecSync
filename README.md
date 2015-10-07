@@ -1,11 +1,12 @@
 # spaRSS
 QuickJump languages:  
-* [English](#en)  
-* [Français](#fr)  
-* [ελληνικά](#el)
-* [Português](#pt)  
+* [English](#english)  
+* [Français](#français)  
+* [ελληνικά](#ελληνικά)
+* [Português](#português)  
+* [Deutsch](#deutsch)
 
-## EN
+## English
 RSS reader with all articles content in app.
 
 Table of Contents
@@ -42,7 +43,7 @@ F-Droid: https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss
 spaRSS is a fork of [Flym](https://github.com/FredJul/Flym)
 
 
-## FR
+## Français
 Lecteur de flux RSS récupérant périodiquement le contenu des articles.
 
 Table des matières
@@ -79,7 +80,7 @@ F-Droid : https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss
 spaRSS est un fork de [Flym](https://github.com/FredJul/Flym)
 
 
-## EL
+## ελληνικά
 Αναγνώστης ροών ειδήσεων (RSS) με αποθήκευση του περιεχόμενου των άρθρων.
 
 Ευρετήριο
@@ -115,7 +116,7 @@ PlayStore: https://play.google.com/store/apps/details?id=net.etuldan.sparss
 F-Droid: https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss  
 Το spaRSS είναι ένα "fork" του [Flym](https://github.com/FredJul/Flym)
 
-## PT
+## Português
 Leitor de RSS que recupera periodicamente o conteúdo de artigos.
 
 Conteúdo
@@ -152,3 +153,41 @@ Projeto no GitHub : https://github.com/Etuldan/spaRSS
 PlayStore : https://play.google.com/store/apps/details?id=net.etuldan.sparss  
 F-Droid : https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss  
 spaRSS é um fork de [Flym](https://github.com/FredJul/Flym)
+
+
+## Deutsch
+RSS-Reader, welcher den gesamten Artikelinhalt innerhalb der App darstellen kann.
+
+Inhaltsverzeichnis
+* [Zusammenfassung](#zusammenfassung)
+* [Funktionen](#funktionen)
+* [Zum Projekt beitragen](#zum-projekt-beitragen)
+* [Verweise](#verweise)
+
+### Zusammenfassung
+spaRSS ist ein schlankes, modernes, komplett freies (keine Werbung) Opensource Projekt, welches dich informiert hält, indem es deine Webseiten/Blogs abruft und diese für Mobilgeräte optimiert darstellt. Das Projekt basiert auf dem "Flym" RSS-Reader.
+
+Es findet KEINE SYNCHRONISATION mit einem Online-Feedreader statt!
+
+### Funktionen
+* Auf einfache Weise neue Feeds hinzufügen dank der Google News bzw. Suchfunktion (Es ist auch möglich über die Teilen-Funktion des Browsers einen neuen Feed zu abonnieren.)
+* Helle und dunkle Stile (Themes)
+* Offline Lesefunktion inklusive Bilder und privater Nachrichten
+* Import/Export der Feed-Liste via OPML
+* Den kompletten Text abrufen, auch wenn der Feed-Inhalt gekürzt ist
+* Beiträge können als Favoriten markiert werden
+* Artikel durchsuchbar
+* Feeds mittels Keyword oder regulärem Ausdruck filtern
+* Anpassbare Widgets
+
+An Feedly Nutzer: Es besteht die Möglichkeit Feeds im OPML-Format auf dieser Webseite (http://cloud.feedly.com/#opml) zu exportieren und anschließend in spaRSS zu importieren.
+
+### Zum Projekt beitragen
+Wenn du eine Idee zur Verbesserung von spaRSS hast, dann zögere nicht diese [hier](https://github.com/Etuldan/spaRSS/issues) hinzuzufügen.  
+Du kannst mich auch bei bereits bestehenden Punkten unterstützen, bei denen ich Hilfe benötige. Schau dafür einfach mal  [hier](https://github.com/Etuldan/spaRSS/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) vorbei.
+
+### Verweise
+GitHub Projekt: https://github.com/Etuldan/spaRSS  
+PlayStore: https://play.google.com/store/apps/details?id=net.etuldan.sparss  
+F-Droid: https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss  
+spaRSS ist ein Fork von [Flym](https://github.com/FredJul/Flym)
