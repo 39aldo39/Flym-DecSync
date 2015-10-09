@@ -34,7 +34,8 @@ Feedly users: you can export your feeds to OPML at this address (http://cloud.fe
 
 ### How to contribute ?
 If you have any idea to improve spaRSS, fell free to add it [here](https://github.com/Etuldan/spaRSS/issues).  
-You can also help me for current existing ones on which  I need help [here](https://github.com/Etuldan/spaRSS/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
+You can also help me for current existing ones on which  I need help [here](https://github.com/Etuldan/spaRSS/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).  
+Want to help translating? Join us at [Weblate](https://hosted.weblate.org/projects/sparss/strings/)!
 
 ### Links
 GitHub project: https://github.com/Etuldan/spaRSS  
@@ -72,6 +73,7 @@ Pour les utilisateurs de Feedly, l'export de vos flux RSS est possible en visita
 
 ### Comment Aider ?
 Vous pouvez proposer des idées [ici](https://github.com/Etuldan/spaRSS/issues) ou consulter celles pour lesquelles j'ai besoin d'aide ou de ressources [là](https://github.com/Etuldan/spaRSS/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
+Vous voulez aider à traduire spaRSS ? Contribuez sur [Weblate](https://hosted.weblate.org/projects/sparss/strings/) !
 
 ### Liens
 Projet GitHub : https://github.com/Etuldan/spaRSS  
