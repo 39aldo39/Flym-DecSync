@@ -416,7 +416,7 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
                 notifCount.setText(String.valueOf(mNewEntriesNumber));
                 notifCount.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.light_base_text));
             } else {
-                notifCount.setText(String.valueOf(0));
+                notifCount.setText("");
                 notifCount.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.light_base_text));
             }
         }
