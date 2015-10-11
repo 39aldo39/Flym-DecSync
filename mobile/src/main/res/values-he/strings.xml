@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<resources><string name="app_name">spaRSS</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+    <string name="app_name">spaRSS</string>
     <string name="about_spaRSS">אודות spaRSS</string>
     <string name="welcome_title">ברוך בואך spaRSS. האם ברצונך להוסיף ערוץ אחד?</string>
     <string name="never">אף פעם</string>
@@ -137,9 +138,9 @@
     <string name="settings_mark_as_read">הצג כפתור סמן את כולן בתור נקראו</string>
     <string xmlns:tools="http://schemas.android.com/tools" name="settings_mark_as_read_description" tools:ignore="MissingTranslation">הצג / הסתר את הכפתור (נדרשת התחלה מחדש)</string>
     <plurals name="number_of_new_entries">
-	<item quantity="one">רשומה חדשה אחת</item>
-	<item quantity="other">%d רשומות חדשות</item>
-</plurals>
+	    <item quantity="one">רשומה חדשה אחת</item>
+	    <item quantity="other">%d רשומות חדשות</item>
+    </plurals>
 
     <string name="back_again_to_quit">לחץ חזרה פעם נוספת כדי לצאת</string>
 
@@ -156,4 +157,4 @@
     <string name="see_enclosure">ראה צירוף</string>
     <string name="open_enclosure">פתח צירוף</string>
     <string name="copied_clipboard">קישור הועתק</string>
-    </resources>
+</resources>
