@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:src="@mipmap/ic_launcher"/>
 
@@ -16,7 +17,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/feed_ticker"
         android:layout_alignLeft="@+id/feed_ticker"
+        android:layout_alignStart="@+id/feed_ticker"
         android:layout_alignRight="@+id/feed_ticker"
+        android:layout_alignEnd="@+id/feed_ticker"
         android:layout_alignTop="@+id/feed_ticker"
         android:src="@drawable/red_circle"/>
 
@@ -26,7 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:ellipsize="none"
         android:enabled="true"
         android:gravity="center_vertical|center_horizontal"
@@ -44,6 +49,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="false"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentStart="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>
