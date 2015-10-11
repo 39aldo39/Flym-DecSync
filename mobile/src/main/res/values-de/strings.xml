@@ -58,7 +58,7 @@
     <string name="error_feed_process">Der Feed kann nicht bearbeitet werden.</string>
     <string name="error_feed_url_exists">Diese Adresse existiert schon.</string>
     <string name="error_feed_import">Die ausgewählte Datei konnte nicht importiert werden.</string>
-    <string name="error_feed_export">"Der Export ist fehlgeschlagen. Stelle sicher, dass du eine beschreibbare SD-Karte eingelegt hast. "</string>
+    <string name="error_feed_export">"Der Export ist fehlgeschlagen. Stelle sicher, dass du eine beschreibbare SD-Karte eingelegt hast "</string>
     <string name="error_external_storage_not_available">"Der externe Speicher (z.B. eine SD-Karte) ist nicht verfügbar. "</string>
     <string name="feed_url">URL-Adresse</string>
     <string name="optional">(optional)</string>
