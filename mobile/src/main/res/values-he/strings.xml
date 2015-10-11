@@ -136,7 +136,7 @@
     <string name="settings_proxy_port">פורט</string>
     <string name="settings_proxy_type">טיפוס</string>
     <string name="settings_mark_as_read">הצג כפתור סמן את כולן בתור נקראו</string>
-    <string xmlns:tools="http://schemas.android.com/tools" name="settings_mark_as_read_description" tools:ignore="MissingTranslation">הצג / הסתר את הכפתור (נדרשת התחלה מחדש)</string>
+    <string name="settings_mark_as_read_description" >הצג / הסתר את הכפתור (נדרשת התחלה מחדש)</string>
     <plurals name="number_of_new_entries">
 	    <item quantity="one">רשומה חדשה אחת</item>
 	    <item quantity="other">%d רשומות חדשות</item>
