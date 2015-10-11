@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="banner.svg"
-   inkscape:export-filename="E:\Dev\Flym\svg\banner2.png"
+   inkscape:export-filename="C:\Users\griffin\Desktop\bitmap.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -3642,7 +3642,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.63900148"
-     inkscape:cx="514.35723"
+     inkscape:cx="228.75539"
      inkscape:cy="265.38194"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -3660,39 +3660,33 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Camada 1"
+     inkscape:label="Background"
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-552.36218)">
     <rect
-       style="fill:#e1eaf1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+       style="fill:#e1eaf1;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="rect3424"
        width="1137.5651"
        height="577.63519"
        x="-28.771101"
        y="-31.158798"
        transform="translate(0,552.36218)" />
-    <flowRoot
-       xml:space="preserve"
-       id="flowRoot3894"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#6b6b6b;fill-opacity:1;stroke:none;font-family:Sans;"
-       transform="matrix(1.0073431,0,0,1.1461432,-109.54343,571.96346)"><flowRegion
-         id="flowRegion3896"><rect
-           id="rect3898"
-           width="553.98932"
-           height="413.14456"
-           x="597.80768"
-           y="74.335884"
-           style="fill:#6b6b6b;fill-opacity:1;" /></flowRegion><flowPara
-         id="flowPara3900"
-         style="font-size:72px;font-style:normal;font-variant:normal;font-stretch:normal;fill:#6b6b6b;font-family:Roboto;-inkscape-font-specification:Roboto Semi-Light;fill-opacity:1;">Light, modern and ads-free News Reader</flowPara></flowRoot>    <g
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Logo"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <g
        id="g4938"
-       transform="translate(-30.505556,551.517)">
+       transform="translate(-30.505556,-0.84518)">
       <rect
          style="fill:#ededed;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter4738)"
          id="rect3348"
@@ -3750,5 +3744,111 @@
          id="path4666"
          inkscape:connector-curvature="0" />
     </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Text"
+     style="display:inline">
+    <g
+       inkscape:groupmode="layer"
+       id="layer8"
+       inkscape:label="El"
+       style="display:none"
+       sodipodi:insensitive="true">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot3894-5"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;display:inline;fill:#6b6b6b;fill-opacity:1;stroke:none"
+         transform="matrix(1.0073431,0,0,1.1461432,-109.54343,19.601275)"><flowRegion
+           id="flowRegion3896-45"><rect
+             id="rect3898-59"
+             width="553.98932"
+             height="413.14456"
+             x="597.80768"
+             y="74.335884"
+             style="fill:#6b6b6b;fill-opacity:1" /></flowRegion><flowPara
+           id="flowPara3900-30"
+           style="font-style:normal;font-variant:normal;font-stretch:normal;font-size:72px;font-family:Roboto;-inkscape-font-specification:'Roboto Semi-Light';fill:#6b6b6b;fill-opacity:1">Light, modern and ads-free News Reader</flowPara></flowRoot>    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer7"
+       inkscape:label="De"
+       style="display:none"
+       sodipodi:insensitive="true">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot3894-23"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;display:inline;fill:#6b6b6b;fill-opacity:1;stroke:none"
+         transform="matrix(1.0073431,0,0,1.1461432,-109.54343,19.601275)"><flowRegion
+           id="flowRegion3896-6"><rect
+             id="rect3898-6"
+             width="553.98932"
+             height="413.14456"
+             x="597.80768"
+             y="74.335884"
+             style="fill:#6b6b6b;fill-opacity:1" /></flowRegion><flowPara
+           id="flowPara3900-03"
+           style="font-style:normal;font-variant:normal;font-stretch:normal;font-size:72px;font-family:Roboto;-inkscape-font-specification:'Roboto Semi-Light';fill:#6b6b6b;fill-opacity:1">Light, modern and ads-free News Reader</flowPara></flowRoot>    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer5"
+       inkscape:label="Fr"
+       style="display:none"
+       sodipodi:insensitive="true">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot3894-2"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;display:inline;fill:#6b6b6b;fill-opacity:1;stroke:none"
+         transform="matrix(1.0073431,0,0,1.1461432,-109.54343,19.601275)"><flowRegion
+           id="flowRegion3896-42"><rect
+             id="rect3898-5"
+             width="553.98932"
+             height="413.14456"
+             x="597.80768"
+             y="74.335884"
+             style="fill:#6b6b6b;fill-opacity:1" /></flowRegion><flowPara
+           id="flowPara3900-0"
+           style="font-style:normal;font-variant:normal;font-stretch:normal;font-size:72px;font-family:Roboto;-inkscape-font-specification:'Roboto Semi-Light';fill:#6b6b6b;fill-opacity:1">Light, modern and ads-free News Reader</flowPara></flowRoot>    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer4"
+       inkscape:label="En"
+       style="display:inline"
+       sodipodi:insensitive="true">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot3894"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;display:inline;fill:#6b6b6b;fill-opacity:1;stroke:none"
+         transform="matrix(1.0073431,0,0,1.1461432,-109.54343,19.60128)"><flowRegion
+           id="flowRegion3896"><rect
+             id="rect3898"
+             width="553.98932"
+             height="413.14456"
+             x="597.80768"
+             y="74.335884"
+             style="fill:#6b6b6b;fill-opacity:1" /></flowRegion><flowPara
+           id="flowPara3900"
+           style="font-style:normal;font-variant:normal;font-stretch:normal;font-size:72px;font-family:Roboto;-inkscape-font-specification:'Roboto Semi-Light';fill:#6b6b6b;fill-opacity:1">Light, modern and ads-free News Reader</flowPara></flowRoot>    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer6"
+       inkscape:label="Pt"
+       style="display:none"
+       sodipodi:insensitive="true">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot3894-4"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;display:inline;fill:#6b6b6b;fill-opacity:1;stroke:none"
+         transform="matrix(1.0073431,0,0,1.1461432,-109.54343,19.601275)"><flowRegion
+           id="flowRegion3896-4"><rect
+             id="rect3898-2"
+             width="553.98932"
+             height="413.14456"
+             x="597.80768"
+             y="74.335884"
+             style="fill:#6b6b6b;fill-opacity:1" /></flowRegion><flowPara
+           id="flowPara3900-3"
+           style="font-style:normal;font-variant:normal;font-stretch:normal;font-size:72px;font-family:Roboto;-inkscape-font-specification:'Roboto Semi-Light';fill:#6b6b6b;fill-opacity:1">Light, modern and ads-free News Reader</flowPara></flowRoot>    </g>
   </g>
 </svg>
