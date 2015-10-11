@@ -58,8 +58,8 @@
     <string name="error_feed_process">Der Feed kann nicht bearbeitet werden.</string>
     <string name="error_feed_url_exists">Diese Adresse existiert schon.</string>
     <string name="error_feed_import">Die ausgewählte Datei konnte nicht importiert werden.</string>
-    <string name="error_feed_export">"Der Export ist fehlgeschlagen. Stelle sicher, dass du eine beschreibbare SD-Karte eingelegt hast "</string>
-    <string name="error_external_storage_not_available">"Der externe Speicher (z.B. eine SD-Karte) ist nicht verfügbar. "</string>
+    <string name="error_feed_export">Der Export ist fehlgeschlagen. Stelle sicher, dass du eine beschreibbare SD-Karte eingelegt hast.</string>
+    <string name="error_external_storage_not_available">Der externe Speicher (z.B. eine SD-Karte) ist nicht verfügbar.</string>
     <string name="feed_url">URL-Adresse</string>
     <string name="optional">(optional)</string>
     <string name="website_or_feed">(Website oder Feed)</string>
@@ -78,7 +78,7 @@
     <string name="feed_search">Feed-Suche</string>
     <string name="select_file">Datei auswählen(SD-root)</string>
     <string name="question_delete_feed">Willst du diesen Feed wirklich löschen?</string>
-    <string name="question_delete_group">"Willst du diese Gruppe mit allen Feeds wirklich löschen? "</string>
+    <string name="question_delete_group">Willst du diese Gruppe mit allen Feeds wirklich löschen?</string>
     <string name="question_delete_filter">Willst du diesen Filter wirklich löschen?</string>
     <string name="add_group_title">Gruppenname wählen</string>
     <string name="edit_group_title">Gruppennamen bearbeiten</string>
