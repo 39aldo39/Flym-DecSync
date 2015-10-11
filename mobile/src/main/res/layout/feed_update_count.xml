@@ -6,7 +6,7 @@
     android:minWidth="32dp"
     android:minHeight="32dp"
     android:background="@drawable/ic_notifications"
-    android:text="0"
+    android:text=""
     android:textSize="15sp"
     android:textColor="@color/light_accent_color"
     android:gravity="center"

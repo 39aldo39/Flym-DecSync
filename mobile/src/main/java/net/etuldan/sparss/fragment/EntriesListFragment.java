@@ -256,6 +256,7 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
     @Override
     public void onStop() {
         PrefUtils.unregisterOnPrefChangeListener(mPrefListener);
+        refreshUI();
         super.onStop();
     }
 
@@ -264,7 +265,7 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
         outState.putParcelable(STATE_URI, mUri);
         outState.putBoolean(STATE_SHOW_FEED_INFO, mShowFeedInfo);
         outState.putLong(STATE_LIST_DISPLAY_DATE, mListDisplayDate);
-
+        refreshUI();
         super.onSaveInstanceState(outState);
     }
 
