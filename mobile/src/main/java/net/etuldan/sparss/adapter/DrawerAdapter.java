@@ -74,10 +74,6 @@ public class DrawerAdapter extends BaseAdapter {
 
         updateNumbers();
     }
-
-    public int getSelectedItem() {
-        return mSelectedItem;
-    }
     public void setSelectedItem(int selectedItem) {
         mSelectedItem = selectedItem;
     }
@@ -107,89 +103,95 @@ public class DrawerAdapter extends BaseAdapter {
         }
         ViewHolder holder = (ViewHolder) convertView.getTag(R.id.holder);
 
-        if (position == mSelectedItem) {
-            holder.titleTxt.setTextColor(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_primary_color:R.color.dark_primary_color));
-        } else {
-            holder.titleTxt.setTextColor(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_base_text:R.color.dark_base_text));
-        }
-
-        // default init
-        holder.iconView.setImageDrawable(null);
-        holder.titleTxt.setText("");
-        holder.titleTxt.setAllCaps(false);
-        holder.stateTxt.setVisibility(View.GONE);
-        holder.unreadTxt.setText("");
-        convertView.setPadding(0, 0, 0, 0);
-        holder.separator.setVisibility(View.GONE);
-
-        if (position == 0 || position == 1) {
-            holder.titleTxt.setText(position == 0 ? R.string.all : R.string.favorites);
-            holder.iconView.setImageResource(position == 0 ? R.drawable.ic_statusbar_rss : R.drawable.ic_star);
+        if(holder != null) {
             if (position == mSelectedItem) {
-                holder.iconView.setColorFilter(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_primary_color:R.color.dark_primary_color));
+                holder.titleTxt.setTextColor(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_primary_color : R.color.dark_primary_color));
             } else {
-                holder.iconView.setColorFilter(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_base_text:R.color.dark_base_text));
+                holder.titleTxt.setTextColor(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_base_text : R.color.dark_base_text));
             }
 
-            int unread = position == 0 ? mAllUnreadNumber : mFavoritesNumber;
-            if (unread != 0) {
-                holder.unreadTxt.setText(String.valueOf(unread));
-            }
-        }
-        if (mFeedsCursor != null && mFeedsCursor.moveToPosition(position - 2)) {
-            holder.titleTxt.setText((mFeedsCursor.isNull(POS_NAME) ? mFeedsCursor.getString(POS_URL) : mFeedsCursor.getString(POS_NAME)));
+            // default init
+            holder.iconView.setImageDrawable(null);
+            holder.titleTxt.setText("");
+            holder.titleTxt.setAllCaps(false);
+            holder.stateTxt.setVisibility(View.GONE);
+            holder.unreadTxt.setText("");
+            convertView.setPadding(0, 0, 0, 0);
+            holder.separator.setVisibility(View.GONE);
 
-            if (mFeedsCursor.getInt(POS_IS_GROUP) == 1) {
-                holder.titleTxt.setAllCaps(true);
-                holder.separator.setVisibility(View.VISIBLE);
-                holder.iconView.setImageResource(R.drawable.ic_folder);
+            if (position == 0 || position == 1) {
+                holder.titleTxt.setText(position == 0 ? R.string.all : R.string.favorites);
+                holder.iconView.setImageResource(position == 0 ? R.drawable.ic_statusbar_rss : R.drawable.ic_star);
                 if (position == mSelectedItem) {
                     holder.iconView.setColorFilter(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_primary_color:R.color.dark_primary_color));
                 } else {
                     holder.iconView.setColorFilter(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_base_text:R.color.dark_base_text));
                 }
-            } else {
-                holder.stateTxt.setVisibility(View.VISIBLE);
 
-                if (mFeedsCursor.isNull(POS_ERROR)) {
-                    long timestamp = mFeedsCursor.getLong(POS_LAST_UPDATE);
-
-                    // Date formatting is expensive, look at the cache
-                    String formattedDate = mFormattedDateCache.get(timestamp);
-                    if (formattedDate == null) {
-
-                        formattedDate = mContext.getString(R.string.update) + COLON;
-
-                        if (timestamp == 0) {
-                            formattedDate += mContext.getString(R.string.never);
-                        } else {
-                            formattedDate += StringUtils.getDateTimeString(timestamp);
-                        }
-
-                        mFormattedDateCache.put(timestamp, formattedDate);
-                    }
-
-                    holder.stateTxt.setText(formattedDate);
-                } else {
-                    holder.stateTxt.setText(new StringBuilder(mContext.getString(R.string.error)).append(COLON).append(mFeedsCursor.getString(POS_ERROR)));
-                }
-
-                final long feedId = mFeedsCursor.getLong(POS_ID);
-                Bitmap bitmap = UiUtils.getFaviconBitmap(feedId, mFeedsCursor, POS_ICON);
-
-                if (bitmap != null) {
-                    holder.iconView.setImageBitmap(bitmap);
-                } else {
-                    holder.iconView.setImageResource(R.mipmap.ic_launcher);
-                }
-
-                int unread = mFeedsCursor.getInt(POS_UNREAD);
+                int unread = position == 0 ? mAllUnreadNumber : mFavoritesNumber;
                 if (unread != 0) {
                     holder.unreadTxt.setText(String.valueOf(unread));
                 }
             }
-        }
+            if (mFeedsCursor != null && mFeedsCursor.moveToPosition(position - 2)) {
+                holder.titleTxt.setText((mFeedsCursor.isNull(POS_NAME) ? mFeedsCursor.getString(POS_URL) : mFeedsCursor.getString(POS_NAME)));
 
+                if (mFeedsCursor.getInt(POS_IS_GROUP) == 1) {
+                    holder.titleTxt.setAllCaps(true);
+                    holder.separator.setVisibility(View.VISIBLE);
+                    holder.iconView.setImageResource(R.drawable.ic_folder);
+                    if (position == mSelectedItem) {
+                        holder.iconView.setColorFilter(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_primary_color : R.color.dark_primary_color));
+                    } else {
+                        holder.iconView.setColorFilter(ContextCompat.getColor(mContext, PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_base_text : R.color.dark_base_text));
+                    }
+                } else {
+                    holder.stateTxt.setVisibility(View.VISIBLE);
+
+                    if (mFeedsCursor.isNull(POS_ERROR)) {
+                        long timestamp = mFeedsCursor.getLong(POS_LAST_UPDATE);
+
+                        // Date formatting is expensive, look at the cache
+                        String formattedDate = mFormattedDateCache.get(timestamp);
+                        if (formattedDate == null) {
+
+                            formattedDate = mContext.getString(R.string.update) + COLON;
+
+                            if (timestamp == 0) {
+                                formattedDate += mContext.getString(R.string.never);
+                            } else {
+                                formattedDate += StringUtils.getDateTimeString(timestamp);
+                            }
+
+                            mFormattedDateCache.put(timestamp, formattedDate);
+                        }
+
+                        holder.stateTxt.setText(formattedDate);
+                    } else {
+                        holder.stateTxt.setText(new StringBuilder(mContext.getString(R.string.error)).append(COLON).append(mFeedsCursor.getString(POS_ERROR)));
+                    }
+
+                    final long feedId = mFeedsCursor.getLong(POS_ID);
+                    Bitmap bitmap = UiUtils.getFaviconBitmap(feedId, mFeedsCursor, POS_ICON);
+
+                    if (bitmap != null) {
+                        holder.iconView.setImageBitmap(bitmap);
+                    } else {
+                        holder.iconView.setImageResource(R.mipmap.ic_launcher);
+                    }
+
+                    int unread = mFeedsCursor.getInt(POS_UNREAD);
+                    if (unread != 0) {
+                        holder.unreadTxt.setText(String.valueOf(unread));
+                    }
+                }
+                if((mFeedsCursor.isNull(POS_NAME) ? mFeedsCursor.getString(POS_URL) : mFeedsCursor.getString(POS_NAME)).startsWith("ERROR:")){
+                    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    convertView = inflater.inflate(R.layout.item_drawer_null, parent, false);
+                    return convertView;
+                }
+            }
+        }
         return convertView;
     }
 
