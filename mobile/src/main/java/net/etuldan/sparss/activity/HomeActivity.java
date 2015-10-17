@@ -134,7 +134,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         });
 
         mLeftDrawer.setBackgroundColor((ContextCompat.getColor(getApplicationContext(), PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_primary_color : R.color.dark_primary_color)));
-        mDrawerList.setBackgroundColor((ContextCompat.getColor(getApplicationContext(), PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_primary_color_light : R.color.dark_primary_color_light)));
+        mDrawerList.setBackgroundColor((ContextCompat.getColor(getApplicationContext(), PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_background : R.color.dark_primary_color_light)));
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (mDrawerLayout != null) {
             mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);

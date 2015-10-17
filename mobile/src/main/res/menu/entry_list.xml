@@ -12,8 +12,8 @@
 
     <item
         android:id="@+id/menu_show_new_entries"
-        android:actionLayout="@layout/feed_update_count"
-        android:title="Unread"
+        android:icon="@drawable/ic_new_releases"
+        android:title="@string/menu_show_new_entries"
         app:showAsAction="always"/>
     <item
         android:id="@+id/menu_share_starred"

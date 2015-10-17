@@ -81,8 +81,6 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
     private FloatingActionButton mHideReadButton;
     private long mListDisplayDate = new Date().getTime();
 
-    private static Button notifCount;
-
     private final LoaderManager.LoaderCallbacks<Cursor> mEntriesLoader = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -296,29 +294,15 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
         if (!PrefUtils.getBoolean(PrefUtils.MARK_AS_READ, true)) {
             menu.findItem(R.id.menu_all_read).setVisible(false);
         }
-
+        // if (!PrefUtils.getBoolean(PrefUtils.SHOW_NEW_ENTRIES, true)) {
+        //    menu.findItem(R.id.menu_show_new_entries).setVisible(false);
+        //}
         if (EntryColumns.FAVORITES_CONTENT_URI.equals(mUri)) {
             menu.findItem(R.id.menu_refresh).setVisible(false);
         } else {
             menu.findItem(R.id.menu_share_starred).setVisible(false);
         }
 
-
-        MenuItem item = menu.findItem(R.id.menu_show_new_entries);
-        MenuItemCompat.setActionView(item, R.layout.feed_update_count);
-        notifCount = (Button) MenuItemCompat.getActionView(item);
-        notifCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //mNewEntriesNumber = 0;
-                mListDisplayDate = new Date().getTime();
-
-                refreshUI();
-                if (mUri != null) {
-                    restartLoaders();
-                }
-            }
-        });
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -360,6 +344,15 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
                 }
                 return true;
             }
+            case R.id.menu_show_new_entries: {
+                mNewEntriesNumber = 0;
+                mListDisplayDate = new Date().getTime();
+
+                refreshUI();
+                if (mUri != null) {
+                    restartLoaders();
+                }
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -397,6 +390,7 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
             restartLoaders();
         }
         refreshUI();
+        //getSupportActionBar().setTitle(R.string.all + mNewEntriesNumber);
     }
 
     private void restartLoaders() {
@@ -410,16 +404,6 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
             mSearchView.setVisibility(View.VISIBLE);
         } else {
             mSearchView.setVisibility(View.GONE);
-        }
-
-        if(notifCount!=null) {
-            if (mNewEntriesNumber > 0) {
-                notifCount.setText(String.valueOf(mNewEntriesNumber));
-                notifCount.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.light_base_text));
-            } else {
-                notifCount.setText("");
-                notifCount.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.light_base_text));
-            }
         }
     }
 
