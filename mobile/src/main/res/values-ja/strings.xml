@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<resources  xmlns:tools="http://schemas.android.com/tools"  tools:locale="en">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
     <string name="app_name">spaRSS</string>
     <string name="about_spaRSS">spaRSS について</string>
     <string name="welcome_title">spaRSS へようこそ。フィードを追加しますか?</string>
@@ -161,4 +161,7 @@
 	    <item quantity="one">新しいエントリー 1 つ</item>
     </plurals>
 
+    <string name="menu_show_new_entries">新しいエントリーを表示</string>
+    <string name="settings_show_new_entries">自動的に新しいエントリーを表示します</string>
+    <string name="settings_show_new_entries_description">無効にした場合、新しいエントリーを表示ボタンをタップして、新しいエントリーを表示します</string>
     </resources>
