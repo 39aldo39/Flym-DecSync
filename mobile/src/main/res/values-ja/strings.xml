@@ -164,4 +164,6 @@
     <string name="menu_show_new_entries">新しいエントリーを表示</string>
     <string name="settings_show_new_entries">自動的に新しいエントリーを表示します</string>
     <string name="settings_show_new_entries_description">無効にした場合、新しいエントリーを表示ボタンをタップして、新しいエントリーを表示します</string>
+    <string name="no_new_entries">表示する新しいエントリはありません。</string>
+
     </resources>
