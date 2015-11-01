@@ -239,4 +239,17 @@
 
     <string name="tab_advanced_title">Pokročilé</string>
     <string name="menu_open_in_browser">Otevřít v prohlížeči</string>
-</resources>
+<string name="menu_show_new_entries">Zobrazit nové články</string>
+    <string name="feed_cookie">Ověřovací cookie</string>
+    <string name="cookiename">Jméno</string>
+    <string name="cookievalue">Hodnota</string>
+    <string name="menu_switch_full_original">Zobrazit celý článek</string>
+    <string name="settings_left_panel">Navigační lišta</string>
+    <string name="settings_left_panel_description">Zobrazit navigační lištu při spuštění aplikace</string>
+    <string name="settings_font_serif">Použít písmo Serif</string>
+    <string name="settings_font_serif_description">Použít pro text článků písmo Serif místo Sans-Serif</string>
+    <string name="settings_mark_as_read">Zobrazit tlačítko Označit vše jako přečtené</string>
+    <string name="settings_mark_as_read_description">Zobrazit / Skrýt tlačítko (vyžaduje restart)</string>
+    <string name="settings_show_new_entries">Automaticky zobrazovat nové články</string>
+    <string name="settings_show_new_entries_description">Pokud je vypnuto, je pro zobrazení nových článků třeba ťuknout na tlačítko Zobrazit nové články</string>
+    </resources>
