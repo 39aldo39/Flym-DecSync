@@ -246,4 +246,8 @@
     <string name="menu_switch_full_original">Mostrar contenido completo</string>
     <string name="settings_left_panel">Panel de navegación</string>
     <string name="settings_left_panel_description">Mostrar el panel de navegación al iniciar la aplicación</string>
+    <string name="cookiename">Nombre</string>
+    <string name="cookievalue">Valor</string>
+    <string name="settings_font_serif">Usar fuente Serif</string>
+    <string name="settings_font_serif_description">Usar fuente Serif en lugar de Sans-Serif en los articulos</string>
     </resources>
