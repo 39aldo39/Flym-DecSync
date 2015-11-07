@@ -43,7 +43,7 @@
 
     <!-- FEEDS -->
     <string name="feeds">Fuentes</string>
-    <string name="menu_add_feed">fuente</string>
+    <string name="menu_add_feed">Agregar fuente</string>
     <string name="no_feeds">No hay fuentes</string>
     <string name="no_filters">No hay filtros</string>
     <string name="context_menu_delete">Eliminar</string>
@@ -81,17 +81,17 @@
     <string name="select_file">Seleccionar archivo</string>
     <string name="question_delete_feed">¿Seguro que quiere eliminar esta fuente?</string>
     <string name="question_delete_group">¿Seguro que quiere eliminar este grupo de fuentes?</string>
-    <string name="question_delete_filter">¿Seguor que quiere eliminar este filtro?</string>
+    <string name="question_delete_filter">¿Seguro que quiere eliminar este filtro?</string>
     <string name="add_group_title">Añadir nombre de grupo</string>
     <string name="edit_group_title">Editar nombre de grupo</string>
-    <string name="message_exported_to">Exportar a %s</string>
+    <string name="message_exported_to">Exportar a %s.</string>
     <string name="to_group_title">Mover la fuente</string>
     <string name="to_group_message">Puede mover la fuente al grupo o encima del grupo. ¿Qué desea
         hacer?
     </string>
     <string name="to_group_above">Encima del grupo</string>
     <string name="to_group_into">Al grupo</string>
-    <string name="add_custom_feed">Add a custom feed or search for one</string>
+    <string name="add_custom_feed">Agregar una fuente personalizada o buscar una</string>
     <string name="google_news_title">Temas de Google Noticias</string>
     <string name="google_news_indicator">Seleccione uno o varios temas para agregar. Algunos de ellos podrían no estar disponibles en Google en su idioma.</string>
     <string name="google_news_top_stories">Noticias destacadas</string>
@@ -110,7 +110,7 @@
     <string name="context_menu_hide_read">Ocultar entradas leídas</string>
     <string name="context_menu_show_read">Mostrar entradas leídas</string>
     <string name="context_menu_share_starred">Compartir entradas seleccionadas</string>
-    <string name="menu_star">Destaca</string>
+    <string name="menu_star">Destacar</string>
     <string name="menu_unstar">No destacar</string>
     <string name="menu_share">Compartir</string>
     <string name="menu_full_screen">Pantalla completa</string>
@@ -122,11 +122,11 @@
     <string name="original_text">Mostrar el texto original</string>
     <string name="see_enclosure">Ver el adjunto</string>
     <string name="see_link">Ver en el navegador</string>
-    <string name="cant_open_link">No se ha encontrado una aplicación para este enlace.</string>
-    <string name="open_enclosure">Open enclosure</string>
-    <string name="file">File</string>
+    <string name="cant_open_link">No se ha encontrado una aplicación para este enlace</string>
+    <string name="open_enclosure">Abrir el adjunto</string>
+    <string name="file">Archivo</string>
     <string name="download_and_save">Descargar y guardar</string>
-    <string name="open_link">Open link</string>
+    <string name="open_link">Abrir el enlace</string>
     <string name="tip_sentence">Tip: deslizar a la izquierda marca como leido y a la derecha para destacar</string>
 
     <!-- WIDGET -->
@@ -136,7 +136,7 @@
     <string name="transparency">Transparencia</string>
 
     <!-- SETTINGS -->
-    <string name="settings_category_refresh">Actualización automáticas</string>
+    <string name="settings_category_refresh">Actualizaciones automáticas</string>
     <string name="settings_refresh_enabled">Habilitar actualizaciones automáticas</string>
     <string name="settings_refresh_enabled_description">Activa las actualizaciones automáticas de
         las fuentes.
@@ -148,13 +148,13 @@
         entradas.
     </string>
     <string name="settings_notifications_ringtone">Tono</string>
-    <string name="settings_notifications_ringtone_none">None</string>
+    <string name="settings_notifications_ringtone_none">Ninguno</string>
     <string name="settings_notifications_vibrate">Vibración</string>
     <string name="settings_notifications_vibrate_description">Hará vibrar el terminal al recibir
         nuevas entradas.
     </string>
-    <string name="settings_notifications_light">Light</string>
-    <string name="settings_notifications_light_description">Enable notification light on new entries</string>
+    <string name="settings_notifications_light">Luz</string>
+    <string name="settings_notifications_light_description">Mostrar notificación luminosa al encontrar nuevas entradas</string>
     <string name="settings_category_content_presentation">Modo de presentación</string>
     <string name="settings_light_theme">Tema claro</string>
     <string name="settings_light_theme_description">Usar el tema claro</string>
@@ -171,15 +171,13 @@
     <string name="settings_refresh_on_open_description">Actualiza las fuentes al iniciar la
         aplicación.
     </string>
-    <string name="settings_refresh_wifi_only">Actualizar solo en Wi-Fi.</string>
+    <string name="settings_refresh_wifi_only">Actualizar solo en Wi-Fi</string>
     <string name="settings_refresh_wifi_only_description">Solo se actualizarán las entradas cuando
         se esté conectado a una red Wi-Fi.
     </string>
     <string name="settings_visible_feeds">Visibilidad de las fuentes</string>
     <string name="settings_widget_background">Fondo</string>
-    <string name="settings_widget_background_description">Color i transparencia del fondo del
-        widget.
-    </string>
+    <string name="settings_widget_background_description">"Color y transparencia del fondo del widget. "</string>
     <string name="all_feeds">Todas las fuentes (incl. futuras)</string>
     <string name="settings_screen_proxy">Proxy</string>
     <string name="settings_category_network">Red</string>
@@ -249,5 +247,5 @@
     <string name="cookiename">Nombre</string>
     <string name="cookievalue">Valor</string>
     <string name="settings_font_serif">Usar fuente Serif</string>
-    <string name="settings_font_serif_description">Usar fuente Serif en lugar de Sans-Serif en los articulos</string>
+    <string name="settings_font_serif_description">Usar fuente Serif en lugar de Sans-Serif en los artículos</string>
     </resources>
