@@ -42,6 +42,7 @@
     <string name="drawer_open">Ouvrir menu de navigation</string>
     <string name="drawer_close">Fermer menu de navigation</string>
     <string name="back_again_to_quit">Appuyez de nouveau sur retour pour quitter</string>
+    <string name="no_new_entries">Aucun nouvel article à afficher.</string>
 
     <!-- FEEDS -->
     <string name="feeds">Flux</string>

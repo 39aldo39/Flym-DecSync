@@ -29,10 +29,10 @@ import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -46,14 +46,15 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
 import net.etuldan.sparss.Constants;
 import net.etuldan.sparss.R;
+import net.etuldan.sparss.activity.HomeActivity;
 import net.etuldan.sparss.adapter.EntriesCursorAdapter;
 import net.etuldan.sparss.provider.FeedData;
 import net.etuldan.sparss.provider.FeedData.EntryColumns;
@@ -80,6 +81,7 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
     private SearchView mSearchView;
     private FloatingActionButton mHideReadButton;
     private long mListDisplayDate = new Date().getTime();
+    private Menu menu;
 
     private final LoaderManager.LoaderCallbacks<Cursor> mEntriesLoader = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
@@ -137,6 +139,12 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
             } else {
                 refreshUI();
             }
+
+            ((HomeActivity)getActivity()).refreshTitle(mNewEntriesNumber);
+            if(mNewEntriesNumber!=0) {
+                menu.findItem(R.id.menu_show_new_entries).getIcon().setColorFilter(ContextCompat.getColor(mListView.getContext(), PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_accent_color : R.color.dark_accent_color), PorterDuff.Mode.MULTIPLY);
+            }
+
 
             mAutoRefreshDisplayDate = false;
         }
@@ -289,20 +297,17 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        this.menu = menu;
         menu.clear(); // This is needed to remove a bug on Android 4.0.3
          inflater.inflate(R.menu.entry_list, menu);
         if (!PrefUtils.getBoolean(PrefUtils.MARK_AS_READ, true)) {
             menu.findItem(R.id.menu_all_read).setVisible(false);
         }
-        // if (!PrefUtils.getBoolean(PrefUtils.SHOW_NEW_ENTRIES, true)) {
-        //    menu.findItem(R.id.menu_show_new_entries).setVisible(false);
-        //}
         if (EntryColumns.FAVORITES_CONTENT_URI.equals(mUri)) {
             menu.findItem(R.id.menu_refresh).setVisible(false);
         } else {
             menu.findItem(R.id.menu_share_starred).setVisible(false);
         }
-
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -345,6 +350,10 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
                 return true;
             }
             case R.id.menu_show_new_entries: {
+                if(mNewEntriesNumber==0) {
+                    Toast.makeText(mListView.getContext(), R.string.no_new_entries, Toast.LENGTH_LONG).show();
+                }
+                menu.findItem(R.id.menu_show_new_entries).getIcon().setColorFilter(null);
                 mNewEntriesNumber = 0;
                 mListDisplayDate = new Date().getTime();
 
@@ -366,7 +375,6 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
                 getActivity().startService(new Intent(getActivity(), FetcherService.class).setAction(FetcherService.ACTION_REFRESH_FEEDS));
             }
         }
-
         refreshSwipeProgress();
     }
 
@@ -390,7 +398,6 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
             restartLoaders();
         }
         refreshUI();
-        //getSupportActionBar().setTitle(R.string.all + mNewEntriesNumber);
     }
 
     private void restartLoaders() {

@@ -385,8 +385,9 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
                     });
             builder.show();
         }
-
-        // Set title & icon
+        refreshTitle(0);
+    }
+    public void refreshTitle(int mNewEntriesNumber) {
         switch (mCurrentDrawerPos) {
             case SEARCH_DRAWER_POSITION:
                 getSupportActionBar().setTitle(android.R.string.search_go);
@@ -409,8 +410,9 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
                 }
                 break;
         }
-
-        // Put the good menu
+        if (mNewEntriesNumber != 0) {
+            getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString() + " (" + String.valueOf(mNewEntriesNumber) + ")" );
+        }
         invalidateOptionsMenu();
     }
 }
