@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='utf-8'?>
+<!--
  Copyright (c) 2010-2012 Stefan Handschuh
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,8 +24,8 @@
 
     <!-- GENERAL -->
     <string name="app_name">spaRSS</string>
-    <string name="about_spaRSS">About spaRSS</string>
-    <string name="welcome_title">Welcome to spaRSS. Would you like to add one feed?</string>
+    <string name="about_spaRSS">Acerca de spaRSS</string>
+    <string name="welcome_title">Bienvenido a spaRSS. ¿Le gustaría agregar una fuente de contenidos?</string>
     <string name="never">nunca</string>
     <string name="update">Actualizar</string>
     <string name="colon">:\u00A0</string>
@@ -36,13 +37,13 @@
     <string name="network_error">No se ha configurado la red</string>
     <string name="loading">Cargando…</string>
     <string name="no_result">Sin resultados</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
+    <string name="drawer_open">Abrir el panel de navegación</string>
+    <string name="drawer_close">Cerrar el panel de navegación</string>
     <string name="back_again_to_quit">Presione atrás une vez más para salir</string>
 
     <!-- FEEDS -->
     <string name="feeds">Fuentes</string>
-    <string name="menu_add_feed">fuente</string>
+    <string name="menu_add_feed">Agregar fuente</string>
     <string name="no_feeds">No hay fuentes</string>
     <string name="no_filters">No hay filtros</string>
     <string name="context_menu_delete">Eliminar</string>
@@ -80,27 +81,27 @@
     <string name="select_file">Seleccionar archivo</string>
     <string name="question_delete_feed">¿Seguro que quiere eliminar esta fuente?</string>
     <string name="question_delete_group">¿Seguro que quiere eliminar este grupo de fuentes?</string>
-    <string name="question_delete_filter">¿Seguor que quiere eliminar este filtro?</string>
+    <string name="question_delete_filter">¿Seguro que quiere eliminar este filtro?</string>
     <string name="add_group_title">Añadir nombre de grupo</string>
     <string name="edit_group_title">Editar nombre de grupo</string>
-    <string name="message_exported_to">Exportar a %s</string>
+    <string name="message_exported_to">Exportar a %s.</string>
     <string name="to_group_title">Mover la fuente</string>
     <string name="to_group_message">Puede mover la fuente al grupo o encima del grupo. ¿Qué desea
         hacer?
     </string>
     <string name="to_group_above">Encima del grupo</string>
     <string name="to_group_into">Al grupo</string>
-    <string name="add_custom_feed">Add a custom feed or search for one</string>
-    <string name="google_news_title">Google News topics</string>
-    <string name="google_news_indicator">Select one or several topics to add. Some of them may not be provided by Google for your language.</string>
-    <string name="google_news_top_stories">Top Stories</string>
-    <string name="google_news_world">World</string>
-    <string name="google_news_business">Business</string>
-    <string name="google_news_technology">Technology</string>
-    <string name="google_news_entertainment">Entertainment</string>
-    <string name="google_news_sports">Sports</string>
-    <string name="google_news_science">Science</string>
-    <string name="google_news_health">Health</string>
+    <string name="add_custom_feed">Agregar una fuente personalizada o buscar una</string>
+    <string name="google_news_title">Temas de Google Noticias</string>
+    <string name="google_news_indicator">Seleccione uno o varios temas para agregar. Algunos de ellos podrían no estar disponibles en Google en su idioma.</string>
+    <string name="google_news_top_stories">Noticias destacadas</string>
+    <string name="google_news_world">Internacional</string>
+    <string name="google_news_business">Economía</string>
+    <string name="google_news_technology">Ciencia y Tecnología</string>
+    <string name="google_news_entertainment">Espectáculos</string>
+    <string name="google_news_sports">Deportes</string>
+    <string name="google_news_science">Ciencia</string>
+    <string name="google_news_health">Salud</string>
 
     <!-- ENTRIES -->
     <string name="all">Entradas</string>
@@ -109,7 +110,7 @@
     <string name="context_menu_hide_read">Ocultar entradas leídas</string>
     <string name="context_menu_show_read">Mostrar entradas leídas</string>
     <string name="context_menu_share_starred">Compartir entradas seleccionadas</string>
-    <string name="menu_star">Destaca</string>
+    <string name="menu_star">Destacar</string>
     <string name="menu_unstar">No destacar</string>
     <string name="menu_share">Compartir</string>
     <string name="menu_full_screen">Pantalla completa</string>
@@ -121,12 +122,12 @@
     <string name="original_text">Mostrar el texto original</string>
     <string name="see_enclosure">Ver el adjunto</string>
     <string name="see_link">Ver en el navegador</string>
-    <string name="cant_open_link">No se ha encontrado una aplicación para este enlace.</string>
-    <string name="open_enclosure">Open enclosure</string>
-    <string name="file">File</string>
-    <string name="download_and_save">Download and save</string>
-    <string name="open_link">Open link</string>
-    <string name="tip_sentence">Tip: slide left to mark as read and slide right to mark as favorite</string>
+    <string name="cant_open_link">No se ha encontrado una aplicación para este enlace</string>
+    <string name="open_enclosure">Abrir el adjunto</string>
+    <string name="file">Archivo</string>
+    <string name="download_and_save">Descargar y guardar</string>
+    <string name="open_link">Abrir el enlace</string>
+    <string name="tip_sentence">Tip: deslizar a la izquierda marca como leido y a la derecha para destacar</string>
 
     <!-- WIDGET -->
     <string name="red">Rojo</string>
@@ -135,7 +136,7 @@
     <string name="transparency">Transparencia</string>
 
     <!-- SETTINGS -->
-    <string name="settings_category_refresh">Actualización automáticas</string>
+    <string name="settings_category_refresh">Actualizaciones automáticas</string>
     <string name="settings_refresh_enabled">Habilitar actualizaciones automáticas</string>
     <string name="settings_refresh_enabled_description">Activa las actualizaciones automáticas de
         las fuentes.
@@ -147,38 +148,36 @@
         entradas.
     </string>
     <string name="settings_notifications_ringtone">Tono</string>
-    <string name="settings_notifications_ringtone_none">None</string>
+    <string name="settings_notifications_ringtone_none">Ninguno</string>
     <string name="settings_notifications_vibrate">Vibración</string>
     <string name="settings_notifications_vibrate_description">Hará vibrar el terminal al recibir
         nuevas entradas.
     </string>
-    <string name="settings_notifications_light">Light</string>
-    <string name="settings_notifications_light_description">Enable notification light on new entries</string>
+    <string name="settings_notifications_light">Luz</string>
+    <string name="settings_notifications_light_description">Mostrar notificación luminosa al encontrar nuevas entradas</string>
     <string name="settings_category_content_presentation">Modo de presentación</string>
     <string name="settings_light_theme">Tema claro</string>
     <string name="settings_light_theme_description">Usar el tema claro</string>
     <string name="settings_keep_time">Tiempo de retención de las entradas</string>
-    <string name="settings_display_images">Display images</string>
-    <string name="settings_display_images_description">Display images in entries</string>
-    <string name="settings_preload_image_mode">Preload images</string>
+    <string name="settings_display_images">Mostrar imágenes</string>
+    <string name="settings_display_images_description">Mostrar imágenes en las entradas</string>
+    <string name="settings_preload_image_mode">Precargar imágenes</string>
     <string name="settings_font_size">Tamaño del texto</string>
-    <string name="settings_display_oldest_first">Entries order</string>
-    <string name="settings_display_oldest_first_description">Display oldest entries first</string>
-    <string name="settings_display_entries_fullscreen">Auto-fullscreen entries</string>
-    <string name="settings_display_entries_fullscreen_description">Automatically display entries in fullscreen</string>
+    <string name="settings_display_oldest_first">Orden de las entradas</string>
+    <string name="settings_display_oldest_first_description">Mostrar entradas mas antiguas primero</string>
+    <string name="settings_display_entries_fullscreen">Entradas en pantalla completa</string>
+    <string name="settings_display_entries_fullscreen_description">Mostrar las entradas en pantalla completa automáticamente</string>
     <string name="settings_refresh_on_open">Actualizar las fuentes al inicio</string>
     <string name="settings_refresh_on_open_description">Actualiza las fuentes al iniciar la
         aplicación.
     </string>
-    <string name="settings_refresh_wifi_only">Actualizar solo en Wi-Fi.</string>
+    <string name="settings_refresh_wifi_only">Actualizar solo en Wi-Fi</string>
     <string name="settings_refresh_wifi_only_description">Solo se actualizarán las entradas cuando
         se esté conectado a una red Wi-Fi.
     </string>
     <string name="settings_visible_feeds">Visibilidad de las fuentes</string>
     <string name="settings_widget_background">Fondo</string>
-    <string name="settings_widget_background_description">Color i transparencia del fondo del
-        widget.
-    </string>
+    <string name="settings_widget_background_description">"Color y transparencia del fondo del widget. "</string>
     <string name="all_feeds">Todas las fuentes (incl. futuras)</string>
     <string name="settings_screen_proxy">Proxy</string>
     <string name="settings_category_network">Red</string>
@@ -192,9 +191,9 @@
     <string name="settings_proxy_type">Tipo</string>
 
     <plurals name="number_of_new_entries">
-        <item quantity="one">One new entry</item>
-        <item quantity="other">%d new entries</item>
-    </plurals>
+	<item quantity="one">Una entrada nueva</item>
+	<item quantity="other">%d entradas nuevas</item>
+</plurals>
 
     <string-array name="settings_intervals">
         <item>1 minuto</item>
@@ -234,4 +233,19 @@
         <item>Always</item>
     </string-array>
 
-</resources>
+<string name="menu_show_new_entries">Mostrar entradas nuevas</string>
+    <string name="feed_cookie">Cookie de autenticación</string>
+    <string name="tab_advanced_title">Avanzado</string>
+    <string name="menu_open_in_browser">Abrir en el navegador</string>
+    <string name="settings_mark_as_read">Mostrar botón Marcar todo como leído</string>
+    <string name="settings_mark_as_read_description">Mostrar / Ocultar el botón (requiere reinicio)</string>
+    <string name="settings_show_new_entries">Mostrar entradas nuevas automáticamente</string>
+    <string name="settings_show_new_entries_description">Desactivar para requerir tocar el botón Mostrar nuevas entradas para mostrar nuevas entradas</string>
+    <string name="menu_switch_full_original">Mostrar contenido completo</string>
+    <string name="settings_left_panel">Panel de navegación</string>
+    <string name="settings_left_panel_description">Mostrar el panel de navegación al iniciar la aplicación</string>
+    <string name="cookiename">Nombre</string>
+    <string name="cookievalue">Valor</string>
+    <string name="settings_font_serif">Usar fuente Serif</string>
+    <string name="settings_font_serif_description">Usar fuente Serif en lugar de Sans-Serif en los artículos</string>
+    </resources>
