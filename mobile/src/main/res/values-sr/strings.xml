@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='utf-8'?>
+<!--
  Copyright (c) 2015 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
  Copyright (c) 2010-2012 Stefan Handschuh
@@ -152,8 +153,8 @@
     <string name="settings_category_content_presentation">Приказ садржаја</string>
     <string name="settings_light_theme">Светла тема</string>
     <string name="settings_light_theme_description">Користи светлу тему</string>
-    <string name="settings_left_panel">Леви панел</string>
-    <string name="settings_left_panel_description">Приказ левог панела по покретању апликације</string>
+    <string name="settings_left_panel">Фиока навигације</string>
+    <string name="settings_left_panel_description">Приказ фиокенавигације по покретању апликације</string>
     <string name="settings_keep_time">Време чувања уноса</string>
     <string name="settings_display_images">Прикажи слике</string>
     <string name="settings_display_images_description">Приказ слика у уносима</string>
@@ -236,4 +237,13 @@
         <item>Увек</item>
     </string-array>
 
-</resources>
+<string name="menu_show_new_entries">Прикажи нове уносе</string>
+    <string name="no_new_entries">Нема нових уноса за приказ.</string>
+
+    <string name="menu_open_in_browser">Отвори у прегледачу</string>
+    <string name="menu_switch_full_original">Прикажи цео садржај</string>
+    <string name="settings_font_serif">Користи серифни фонт</string>
+    <string name="settings_font_serif_description">Коришћење серифног уместо бесерифног фонта у чланцима</string>
+    <string name="settings_show_new_entries">Аутоматски приказуј нове уносе</string>
+    <string name="settings_show_new_entries_description">Ако је искључено, биће потребно тапнути на дугме „Прикажи нове уносе“ за приказ нових уноса</string>
+    </resources>
