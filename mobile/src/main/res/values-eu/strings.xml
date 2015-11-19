@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='utf-8'?>
+<!--
  Copyright (c) 2015 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
  Copyright (c) 2010-2012 Stefan Handschuh
@@ -234,4 +235,21 @@
         <item>Beti</item>
     </string-array>
 
-</resources>
+<string name="menu_show_new_entries">Sarrera berriak erakutsi</string>
+    <string name="no_new_entries">Ez dago sarrera berririk erakusteko</string>
+
+    <string name="feed_cookie">Autentikazio cookiea</string>
+    <string name="cookiename">Izena</string>
+    <string name="cookievalue">Balioa</string>
+    <string name="tab_advanced_title">Aurreratua</string>
+    <string name="menu_open_in_browser">Nabigatzailean ireki</string>
+    <string name="menu_switch_full_original">Eduki guztia erakutsi</string>
+    <string name="settings_left_panel">Nabigazio tiradera</string>
+    <string name="settings_left_panel_description">Nabigazio tiradera erakutsi aplikazioa abiarazterakoan</string>
+    <string name="settings_font_serif">Serif letra mota erabili</string>
+    <string name="settings_font_serif_description">Serif letra mota erabili artikuluetan Sans-Serif erabili beharrean</string>
+    <string name="settings_mark_as_read">Guztia irakurrita bezala markatzeko botoia erakutsi</string>
+    <string name="settings_mark_as_read_description">Erakutsi / Ezkutatu botoia (berrabiarazi beharko da)</string>
+    <string name="settings_show_new_entries">Automatikoki sarrera berriak erakutsi</string>
+    <string name="settings_show_new_entries_description">Ezgaituta badago, Sarrera berriak erakutsi botoia sakatu beharko da sarrera berriak ikusteko</string>
+    </resources>
