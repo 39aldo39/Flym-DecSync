@@ -132,7 +132,7 @@
     <string name="file">Fitxategia</string>
     <string name="download_and_save">Deskargatu eta gorde</string>
     <string name="open_link">Esteka ireki</string>
-    <string name="tip_sentence">Tip: slide left to mark as read and slide right to mark as favorite</string>
+    <string name="tip_sentence">Aholkua: mugitu ezkerrera irakurrita bezala markatzeko eta eskuinera gogokoen bezala markatzeko</string>
 
     <!-- WIDGET -->
     <string name="red">Gorria</string>
@@ -236,7 +236,7 @@
     </string-array>
 
 <string name="menu_show_new_entries">Sarrera berriak erakutsi</string>
-    <string name="no_new_entries">Ez dago sarrera berririk erakusteko</string>
+    <string name="no_new_entries">Ez dago sarrera berririk erakusteko.</string>
 
     <string name="feed_cookie">Autentikazio cookiea</string>
     <string name="cookiename">Izena</string>
