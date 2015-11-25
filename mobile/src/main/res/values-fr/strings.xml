@@ -250,4 +250,6 @@
     <string name="menu_switch_full_original">Afficher le contenu complet</string>
     <string name="settings_font_serif">Utiliser une police Serif</string>
     <string name="settings_font_serif_description">Utiliser une police Serif au lieu d\'une Sans-Serif pour les articles</string>
-</resources>
+<string name="menu_show_new_entries">Afficher les nouvelles entrées</string>
+    <string name="settings_show_new_entries">Afficher automatiquement les nouvelles entrées</string>
+    </resources>
