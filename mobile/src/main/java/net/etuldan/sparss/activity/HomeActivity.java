@@ -314,11 +314,18 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        if (mDrawerAdapter == null)
+            return;
+
         mDrawerAdapter.setCursor(null);
     }
 
     private void selectDrawerItem(int position) {
         mCurrentDrawerPos = position;
+
+        if (mDrawerAdapter == null)
+            return;
+
         mDrawerAdapter.setSelectedItem(position);
         mIcon = null;
 
