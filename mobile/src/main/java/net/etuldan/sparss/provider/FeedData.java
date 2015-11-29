@@ -95,6 +95,8 @@ public class FeedData {
         public static final String NAME = "name";
         public static final String COOKIE_NAME = "cookiename";
         public static final String COOKIE_VALUE = "cookievalue";
+        public static final String HTTP_AUTH_LOGIN = "httpauthlogin";
+        public static final String HTTP_AUTH_PASSWORD = "httpauthpassword";
         public static final String KEEP_TIME = "keeptime";
         public static final String IS_GROUP = "isgroup";
         public static final String GROUP_ID = "groupid";
@@ -117,7 +119,7 @@ public class FeedData {
             return Uri.parse(CONTENT_AUTHORITY + "/feeds/" + feedId);
         }
 
-        public static final String[][] COLUMNS = new String[][]{{_ID, TYPE_PRIMARY_KEY}, {URL, TYPE_TEXT_UNIQUE}, {NAME, TYPE_TEXT},{COOKIE_NAME, TYPE_TEXT},{COOKIE_VALUE, TYPE_TEXT}, {KEEP_TIME, TYPE_DATE_TIME},{IS_GROUP, TYPE_BOOLEAN},
+        public static final String[][] COLUMNS = new String[][]{{_ID, TYPE_PRIMARY_KEY}, {URL, TYPE_TEXT_UNIQUE}, {NAME, TYPE_TEXT},{COOKIE_NAME, TYPE_TEXT},{COOKIE_VALUE, TYPE_TEXT},{HTTP_AUTH_LOGIN, TYPE_TEXT},{HTTP_AUTH_PASSWORD, TYPE_TEXT}, {KEEP_TIME, TYPE_DATE_TIME},{IS_GROUP, TYPE_BOOLEAN},
                 {GROUP_ID, TYPE_EXTERNAL_ID}, {LAST_UPDATE, TYPE_DATE_TIME}, {REAL_LAST_UPDATE, TYPE_DATE_TIME}, {RETRIEVE_FULLTEXT, TYPE_BOOLEAN},
                 {ICON, "BLOB"}, {ERROR, TYPE_TEXT}, {PRIORITY, TYPE_INT}, {FETCH_MODE, TYPE_INT}};
 

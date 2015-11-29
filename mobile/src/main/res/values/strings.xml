@@ -72,6 +72,9 @@
     <string name="feed_cookie">Authentication Cookie</string>
     <string name="cookiename">Name</string>
     <string name="cookievalue">Value</string>
+    <string name="feed_httpAuth">HTTP Authentication</string>
+    <string name="loginhttpAuth">Login</string>
+    <string name="passwordhttpAuth">Password</string>
     <string name="tab_feed_title">Feed</string>
     <string name="tab_filters_title">Filter</string>
     <string name="tab_advanced_title">Advanced</string>

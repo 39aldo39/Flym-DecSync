@@ -40,10 +40,12 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Authenticator;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.ProxySelector;
 import java.net.URL;
@@ -92,7 +94,7 @@ public class NetworkUtils {
 
                 // Compute the real URL (without "&eacute;", ...)
                 String realUrl = Html.fromHtml(imgUrl).toString();
-                imgURLConnection = setupConnection(realUrl);
+                imgURLConnection = setupConnection(new URL(realUrl));
 
                 FileOutputStream fileOutput = new FileOutputStream(tempImgPath);
                 InputStream inputStream = imgURLConnection.getInputStream();
@@ -218,20 +220,21 @@ public class NetworkUtils {
         }
     }
 
-    public static HttpURLConnection setupConnection(String url, String cookieName, String cookieValue) throws IOException {
+    public static HttpURLConnection setupConnection(String url, String cookieName, String cookieValue, String login, String password) throws IOException {
         String cookie = cookieName + "=" + cookieValue;
-        return setupConnection(new URL(url), cookie);
-    }
-
-    public static HttpURLConnection setupConnection(String url) throws IOException {
-        return setupConnection(new URL(url), "");
+        return setupConnection(new URL(url), cookie, login, password);
     }
 
     public static HttpURLConnection setupConnection(URL url) throws IOException {
-        return setupConnection(url, "");
+        return setupConnection(url, "", "", "");
     }
 
-    public static HttpURLConnection setupConnection(URL url, String cookie) throws IOException {
+    public static HttpURLConnection setupConnection(String url, String login, String password) throws IOException {
+        return setupConnection(new URL(url), "", login, password);
+    }
+
+    public static HttpURLConnection setupConnection(URL url, String cookie, final String login, final String password) throws IOException {
+
         Proxy proxy = null;
 
         ConnectivityManager connectivityManager = (ConnectivityManager) MainApplication.getContext()
@@ -260,7 +263,13 @@ public class NetworkUtils {
             } catch (Throwable ignored) {
             }
         }
-
+        if(!password.equals("") && !login.equals("")) {
+            Authenticator.setDefault(new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(login, password.toCharArray());
+                }
+            });
+        }
         HttpURLConnection connection = null;
         CookieManager cookieManager = new CookieManager();
         CookieHandler.setDefault(cookieManager);

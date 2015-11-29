@@ -92,6 +92,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,7 +103,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
     static final String FEED_SEARCH_URL = "url";
     static final String FEED_SEARCH_DESC = "contentSnippet";
     private static final String STATE_CURRENT_TAB = "STATE_CURRENT_TAB";
-    private static final String[] FEED_PROJECTION = new String[]{FeedColumns.NAME, FeedColumns.URL, FeedColumns.RETRIEVE_FULLTEXT, FeedColumns.COOKIE_NAME, FeedColumns.COOKIE_VALUE, FeedColumns.KEEP_TIME};
+    private static final String[] FEED_PROJECTION = new String[]{FeedColumns.NAME, FeedColumns.URL, FeedColumns.RETRIEVE_FULLTEXT, FeedColumns.COOKIE_NAME, FeedColumns.COOKIE_VALUE, FeedColumns.HTTP_AUTH_LOGIN, FeedColumns.HTTP_AUTH_PASSWORD, FeedColumns.KEEP_TIME};
     private final ActionMode.Callback mFilterActionModeCallback = new ActionMode.Callback() {
 
         // Called when the action mode is created; startActionMode() was called
@@ -221,6 +222,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
     private TabHost mTabHost;
     private EditText mNameEditText, mUrlEditText;
     private EditText mCookieNameEditText, mCookieValueEditText;
+    private EditText mLoginHTTPAuthEditText, mPasswordHTTPAuthEditText;
     private Spinner mKeepTime;
     private CheckBox mRetrieveFulltextCb;
     private ListView mFiltersListView;
@@ -246,6 +248,8 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
         mUrlEditText = (EditText) findViewById(R.id.feed_url);
         mCookieNameEditText = (EditText) findViewById(R.id.feed_cookiename);
         mCookieValueEditText = (EditText) findViewById(R.id.feed_cookievalue);
+        mLoginHTTPAuthEditText = (EditText) findViewById(R.id.feed_loginHttpAuth);
+        mPasswordHTTPAuthEditText = (EditText) findViewById(R.id.feed_passwordHttpAuth);
         mKeepTime =(Spinner) findViewById(R.id.settings_keep_times);
         mRetrieveFulltextCb = (CheckBox) findViewById(R.id.retrieve_fulltext);
         mFiltersListView = (ListView) findViewById(android.R.id.list);
@@ -306,7 +310,9 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                     mRetrieveFulltextCb.setChecked(cursor.getInt(2) == 1);
                     mCookieNameEditText.setText(cursor.getString(3));
                     mCookieValueEditText.setText(cursor.getString(4));
-                    Integer intDate = cursor.getInt(5);
+                    mLoginHTTPAuthEditText.setText(cursor.getString(5));
+                    mPasswordHTTPAuthEditText.setText(cursor.getString(6));
+                    Integer intDate = cursor.getInt(7);
                     String[] selectedValues = getResources().getStringArray(R.array.settings_keep_time_values);
                     int index = Arrays.asList(selectedValues).indexOf(String.valueOf(intDate));
                     mKeepTime.setSelection(index >= 0 ? index : selectedValues.length - 1);
@@ -350,11 +356,15 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                     String name = mNameEditText.getText().toString();
                     String cookieName = mCookieNameEditText.getText().toString();
                     String cookieValue = mCookieValueEditText.getText().toString();
+                    String loginHTTPAuth = mLoginHTTPAuthEditText.getText().toString();
+                    String passwordHTTPAuth = mPasswordHTTPAuthEditText.getText().toString();
 
                     values.put(FeedColumns.NAME, name.trim().length() > 0 ? name : null);
                     values.put(FeedColumns.RETRIEVE_FULLTEXT, mRetrieveFulltextCb.isChecked() ? 1 : null);
                     values.put(FeedColumns.COOKIE_NAME, cookieName.trim().length() > 0 ? cookieName : "");
                     values.put(FeedColumns.COOKIE_VALUE, cookieValue.trim().length() > 0 ? cookieValue : "");
+                    values.put(FeedColumns.HTTP_AUTH_LOGIN, loginHTTPAuth.trim().length() > 0 ? loginHTTPAuth : "");
+                    values.put(FeedColumns.HTTP_AUTH_PASSWORD, passwordHTTPAuth.trim().length() > 0 ? passwordHTTPAuth : "");
                     final TypedArray selectedValues = getResources().obtainTypedArray(R.array.settings_keep_time_values);
                     values.put(FeedColumns.KEEP_TIME, selectedValues.getInt(mKeepTime.getSelectedItemPosition(),0));
                     values.put(FeedColumns.FETCH_MODE, 0);
@@ -553,7 +563,7 @@ class GetFeedSearchResultsLoader extends BaseLoader<ArrayList<HashMap<String, St
     @Override
     public ArrayList<HashMap<String, String>> loadInBackground() {
         try {
-            HttpURLConnection conn = NetworkUtils.setupConnection("https://ajax.googleapis.com/ajax/services/feed/find?v=1.0&q=" + mSearchText);
+            HttpURLConnection conn = NetworkUtils.setupConnection(new URL("https://ajax.googleapis.com/ajax/services/feed/find?v=1.0&q=" + mSearchText));
             try {
                 String jsonStr = new String(NetworkUtils.getBytes(conn.getInputStream()));
 

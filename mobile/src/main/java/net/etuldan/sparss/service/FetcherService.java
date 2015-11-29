@@ -86,7 +86,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.net.Authenticator;
 import java.net.HttpURLConnection;
+import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -307,6 +309,10 @@ public class FetcherService extends IntentService {
                         int cookieValuePosition = cursorFeed.getColumnIndex(FeedColumns.COOKIE_VALUE);
                         String cookieName = cursorFeed.getString(cookieNamePosition);
                         String cookieValue = cursorFeed.getString(cookieValuePosition);
+                        int httpAuthLoginPosition = cursorFeed.getColumnIndex(FeedColumns.HTTP_AUTH_LOGIN);
+                        int httpAuthPasswordPosition = cursorFeed.getColumnIndex(FeedColumns.HTTP_AUTH_PASSWORD);
+                        final String httpAuthLoginValue = cursorFeed.getString(httpAuthLoginPosition);
+                        final String httpAuthPassValue = cursorFeed.getString(httpAuthPasswordPosition);
                         cursorFeed.close();
 
                         // Try to find a text indicator for better content extraction
@@ -319,7 +325,7 @@ public class FetcherService extends IntentService {
                             }
                         }
 
-                        connection = NetworkUtils.setupConnection(link,cookieName, cookieValue);
+                        connection = NetworkUtils.setupConnection(link,cookieName, cookieValue,httpAuthLoginValue, httpAuthPassValue);
 
                         String mobilizedHtml = ArticleTextExtractor.extractContent(connection.getInputStream(), contentIndicator);
 
@@ -507,13 +513,18 @@ public class FetcherService extends IntentService {
             int realLastUpdatePosition = cursor.getColumnIndex(FeedColumns.REAL_LAST_UPDATE);
             int iconPosition = cursor.getColumnIndex(FeedColumns.ICON);
             int retrieveFullscreenPosition = cursor.getColumnIndex(FeedColumns.RETRIEVE_FULLTEXT);
+            int httpAuthLoginPosition = cursor.getColumnIndex(FeedColumns.HTTP_AUTH_LOGIN);
+            int httpAuthPasswordPosition = cursor.getColumnIndex(FeedColumns.HTTP_AUTH_PASSWORD);
+            final String httpAuthLoginValue = cursor.getString(httpAuthLoginPosition);
+            final String httpAuthPassValue = cursor.getString(httpAuthPasswordPosition);
 
             String id = cursor.getString(idPosition);
+
             HttpURLConnection connection = null;
 
             try {
                 String feedUrl = cursor.getString(urlPosition);
-                connection = NetworkUtils.setupConnection(feedUrl);
+                connection = NetworkUtils.setupConnection(feedUrl,httpAuthLoginValue, httpAuthPassValue);
                 String contentType = connection.getContentType();
                 int fetchMode = cursor.getInt(fetchModePosition);
 
@@ -558,7 +569,7 @@ public class FetcherService extends IntentService {
                                         values.put(FeedColumns.URL, url);
                                         cr.update(FeedColumns.CONTENT_URI(id), values, null, null);
                                         connection.disconnect();
-                                        connection = NetworkUtils.setupConnection(url);
+                                        connection = NetworkUtils.setupConnection(new URL(url));
                                         contentType = connection.getContentType();
                                         break;
                                     }
@@ -568,7 +579,7 @@ public class FetcherService extends IntentService {
                         // this indicates a badly configured feed
                         if (posStart == -1) {
                             connection.disconnect();
-                            connection = NetworkUtils.setupConnection(feedUrl);
+                            connection = NetworkUtils.setupConnection(new URL(feedUrl));
                             contentType = connection.getContentType();
                         }
                     }

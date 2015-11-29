@@ -154,7 +154,6 @@
                                 android:id="@+id/name_cookieview"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/feed_title"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="20dp"
                                 android:text="@string/feed_cookie"
@@ -162,7 +161,7 @@
                                 android:textStyle="bold"/>
 
                             <LinearLayout
-                                android:id="@+id/feed_linear"
+                                android:id="@+id/feed_cookie_linear"
                                 android:orientation="horizontal"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -190,10 +189,50 @@
                             </LinearLayout>
 
                             <TextView
+                                android:id="@+id/name_httpAuth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_below="@id/feed_cookie_linear"
+                                android:text="@string/feed_httpAuth"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textStyle="bold"/>
+
+                            <LinearLayout
+                                android:id="@+id/feed_httpAuth_linear"
+                                android:orientation="horizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_below="@+id/name_httpAuth"
+                                android:layout_alignLeft="@+id/name_cookieview"
+                                android:layout_alignStart="@+id/name_cookieview">
+
+                                <EditText
+                                    android:id="@+id/feed_loginHttpAuth"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/loginhttpAuth"
+                                    android:singleLine="true"
+                                    android:layout_weight="1"/>
+
+                                <EditText
+                                    android:id="@+id/feed_passwordHttpAuth"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/passwordhttpAuth"
+                                    android:inputType="textPassword"
+                                    android:singleLine="true"
+                                    android:layout_weight="1"/>
+
+                            </LinearLayout>
+
+                            <TextView
                                 android:id="@+id/name_keep_times"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/feed_linear"
+                                android:layout_below="@id/feed_httpAuth_linear"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="20dp"
                                 android:text="@string/settings_keep_time"
