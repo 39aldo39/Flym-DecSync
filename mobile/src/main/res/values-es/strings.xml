@@ -250,4 +250,7 @@
     <string name="settings_font_serif_description">Usar fuente Serif en lugar de Sans-Serif en los artículos</string>
     <string name="no_new_entries">Nada nuevo para mostrar.</string>
 
+    <string name="feed_httpAuth">Autenticación HTTP</string>
+    <string name="passwordhttpAuth">Contraseña</string>
+    <string name="loginhttpAuth">Nombre de acceso</string>
     </resources>
