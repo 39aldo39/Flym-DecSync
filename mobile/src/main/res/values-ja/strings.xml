@@ -166,4 +166,7 @@
     <string name="settings_show_new_entries_description">無効にした場合、新しいエントリーを表示ボタンをタップして、新しいエントリーを表示します</string>
     <string name="no_new_entries">表示する新しいエントリはありません。</string>
 
+    <string name="feed_httpAuth">HTTP 認証</string>
+    <string name="loginhttpAuth">ログイン</string>
+    <string name="passwordhttpAuth">パスワード</string>
     </resources>
