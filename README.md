@@ -12,7 +12,7 @@ RSS reader with all articles content in app.
 Table of Contents
 * [Summary](#summary)
 * [Features](#features)
-* [Why spaRSS ?] (#why-)
+* [Why spaRSS ?] (#why-sparss-)
 * [How to contribute ?](#how-to-contribute-)
 * [Links](#links)
 
@@ -34,10 +34,10 @@ It DOES NOT synchronize with any online feed reader.
 Feedly users: you can export your feeds to OPML at this address (http://cloud.feedly.com/#opml) and then import them into spaRSS
 
 ### Why spaRSS ?
-spaRSS is a fork of Flym. It uses the same license (GPLv3) and has quite the same behavior. So why I created this fork ?
-https://github.com/FredJul , the official maintainer and developer of Flym has decided to not maintain his app as much as before. (see https://github.com/FredJul/Flym/blob/master/README.md ).
-However, as Flym is a great app, and I wanted to add some features (like the Authentication Cookie, see https://github.com/FredJul/Flym/pull/296 ), I decided, with the OK of FredJul to start the fork.
-Everyone, included FredJul is free to contribute or to use the spaRSS code for his own app, if it's GPLv3 compliant.
+spaRSS is a fork of Flym. It uses the same license (GPLv3) and has quite the same behavior. So why I created this fork ?  
+https://github.com/FredJul , the official maintainer and developer of Flym has decided to not maintain his app as much as before. (see https://github.com/FredJul/Flym/blob/master/README.md ).  
+However, as Flym is a great app, and I wanted to add some features (like the Authentication Cookie, see https://github.com/FredJul/Flym/pull/296 ), I decided, with the OK of FredJul to start the fork.  
+Everyone, included FredJul is free to contribute or to use the spaRSS code for his own app, if it's GPLv3 compliant.  
 So if he decided to re-start on his app, I'll be very happy to help him to push all the modifications included in spaRSS into Flym.
 
 ### How to contribute ?
@@ -81,10 +81,10 @@ Il ne se synchronise pas avec les lecteurs RSS en ligne.
 Pour les utilisateurs de Feedly, l'export de vos flux RSS est possible en visitant : http://cloud.feedly.com/#opml
 
 ### Pourquoi spaRSS ?
-spaRSS est un fork de Flym. La licence utilisée (GPLv3) est la même pour les deux applications, et le fonctionnement général de Flym et spaRSS est pratiquement le même. Donc, pourquoi j'ai décider de créer un fork ?
-https://github.com/FredJul , le développeur et mainteneur officiel de Flym a décidé, par manque de temps, d’arrêter (temporairement ?) le développement de Flym. (cf https://github.com/FredJul/Flym/blob/master/README.md ).
-Flym étant une application très pratique, et pour laquelle je voulais ajouter/proposer des nouvelles fonctionnalités (comme l'authentification par cookie, cf https://github.com/FredJul/Flym/pull/296 ), j'ai décidé, avec l'accord de FredJul de démarrer le fork.
-Tout le monde, et en particulier FredJul est libre de proposer et de contribuer à spaRSS, et d'utiliser le code de spaRSS dans sa propre application, tant que la GPLv3 est respectée.
+spaRSS est un fork de Flym. La licence utilisée (GPLv3) est la même pour les deux applications, et le fonctionnement général de Flym et spaRSS est pratiquement le même. Donc, pourquoi j'ai décider de créer un fork ?  
+https://github.com/FredJul , le développeur et mainteneur officiel de Flym a décidé, par manque de temps, d’arrêter (temporairement ?) le développement de Flym. (cf https://github.com/FredJul/Flym/blob/master/README.md ).  
+Flym étant une application très pratique, et pour laquelle je voulais ajouter/proposer des nouvelles fonctionnalités (comme l'authentification par cookie, cf https://github.com/FredJul/Flym/pull/296 ), j'ai décidé, avec l'accord de FredJul de démarrer le fork.  
+Tout le monde, et en particulier FredJul est libre de proposer et de contribuer à spaRSS, et d'utiliser le code de spaRSS dans sa propre application, tant que la GPLv3 est respectée.  
 Donc, si FredJul décide de re-travailler sur Flym, je l'aiderai volontiers à intégrer dans Flym, si il le veut, les modifications intégrées dans spaRSS.
 
 ### Comment Aider ?
