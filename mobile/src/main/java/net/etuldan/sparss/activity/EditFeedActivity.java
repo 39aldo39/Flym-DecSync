@@ -393,7 +393,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mTabHost.getCurrentTab() == 0) {
+        if (mTabHost.getCurrentTab() != 1) {
             menu.findItem(R.id.menu_add_filter).setVisible(false);
         } else {
             menu.findItem(R.id.menu_add_filter).setVisible(true);
