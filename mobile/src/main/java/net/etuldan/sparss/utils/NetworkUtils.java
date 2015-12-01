@@ -263,13 +263,13 @@ public class NetworkUtils {
             } catch (Throwable ignored) {
             }
         }
-          //  if (!password.equals("") && !login.equals("")) {
-          //      Authenticator.setDefault(new Authenticator() {
-          //          protected PasswordAuthentication getPasswordAuthentication() {
-          //              return new PasswordAuthentication(login, password.toCharArray());
-          //          }
-          //      });
-          //  }
+        if (login!=null && password!=null && !password.equals("") && !login.equals("")) {
+            Authenticator.setDefault(new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(login, password.toCharArray());
+                }
+            });
+        }
         HttpURLConnection connection = null;
         CookieManager cookieManager = new CookieManager();
         CookieHandler.setDefault(cookieManager);
