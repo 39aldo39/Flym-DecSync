@@ -141,7 +141,7 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
             }
 
             ((HomeActivity)getActivity()).refreshTitle(mNewEntriesNumber);
-            if(mNewEntriesNumber!=0) {
+            if(mNewEntriesNumber!=0 && mListView != null) {
                 menu.findItem(R.id.menu_show_new_entries).getIcon().setColorFilter(ContextCompat.getColor(mListView.getContext(), PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_accent_color : R.color.dark_accent_color), PorterDuff.Mode.MULTIPLY);
             }
 
