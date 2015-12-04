@@ -55,7 +55,7 @@
     <string name="menu_add_group">Додај групу</string>
     <string name="menu_import">Увези ОПМЛ фајл</string>
     <string name="menu_export">Извези у ОПМЛ фајл</string>
-    <string name="error_feed_error">Не може да се приступи адреси довода.</string>
+    <string name="error_feed_error">Вебсајт довода је недоступан.</string>
     <string name="error_feed_process">Довод се не може обрадити.</string>
     <string name="error_feed_url_exists">Адреса већ постоји.</string>
     <string name="error_feed_import">Изабрани фајл се не може увести.</string>
@@ -138,16 +138,16 @@
 
     <!-- SETTINGS -->
     <string name="settings_category_refresh">Аутоматско освежавање</string>
-    <string name="settings_refresh_enabled">Омогући</string>
-    <string name="settings_refresh_enabled_description">Омогући аутоматско освежавање довода</string>
+    <string name="settings_refresh_enabled">Укључи</string>
+    <string name="settings_refresh_enabled_description">Укључи аутоматско освежавање довода</string>
     <string name="settings_refresh_interval">Интервал освежавања</string>
     <string name="settings_category_notifications">Обавештења</string>
-    <string name="settings_notifications_enabled">Омогући</string>
-    <string name="settings_notifications_enabled_description">Омогући обавештења о новим уносима</string>
+    <string name="settings_notifications_enabled">Укључи</string>
+    <string name="settings_notifications_enabled_description">Укључи обавештавање о новим уносима</string>
     <string name="settings_notifications_ringtone">Звук</string>
     <string name="settings_notifications_ringtone_none">Без звука</string>
     <string name="settings_notifications_vibrate">Вибрирај</string>
-    <string name="settings_notifications_vibrate_description">Омогући вибрацију по новим уносима</string>
+    <string name="settings_notifications_vibrate_description">Укључи вибрирање по новим уносима</string>
     <string name="settings_notifications_light">Светло</string>
     <string name="settings_notifications_light_description">Омогући светлосно обавештење по новим уносима</string>
     <string name="settings_category_content_presentation">Приказ садржаја</string>
@@ -174,7 +174,7 @@
     <string name="all_feeds">Сви (укљ. будуће)</string>
     <string name="settings_screen_proxy">Прокси</string>
     <string name="settings_category_network">Мрежа</string>
-    <string name="settings_proxy_enabled">Омогућен</string>
+    <string name="settings_proxy_enabled">Укључен</string>
     <string name="settings_proxy_wifi_only">Само бежични</string>
     <string name="settings_proxy_wifi_only_description">Прокси само за бежичне везе</string>
     <string name="settings_proxy_host">Домаћин</string>
