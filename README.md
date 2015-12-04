@@ -41,7 +41,7 @@ Everyone, included FredJul is free to contribute or to use the spaRSS code for h
 So if he decided to re-start on his app, I'll be very happy to help him to push all the modifications included in spaRSS into Flym.
 
 ### How to contribute ?
-If you have any idea to improve spaRSS, fell free to add it [here](https://github.com/Etuldan/spaRSS/issues).  
+If you have any idea to improve spaRSS, feel free to add it [here](https://github.com/Etuldan/spaRSS/issues).  
 You can also help me for current existing ones on which  I need help [here](https://github.com/Etuldan/spaRSS/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).  
 Want to help translating? Join us at [Weblate](https://hosted.weblate.org/projects/sparss/strings/)!
 
