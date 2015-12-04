@@ -249,4 +249,5 @@
     <string name="feed_httpAuth">ХТТП аутентификација</string>
     <string name="loginhttpAuth">Пријава</string>
     <string name="passwordhttpAuth">Лозинка</string>
+    <string name="filter_help">Помоћ за филтер</string>
     </resources>
