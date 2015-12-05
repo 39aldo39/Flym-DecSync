@@ -169,4 +169,5 @@
     <string name="feed_httpAuth">HTTP 認証</string>
     <string name="loginhttpAuth">ログイン</string>
     <string name="passwordhttpAuth">パスワード</string>
+    <string name="filter_help">フィルター ヘルプ</string>
     </resources>
