@@ -33,8 +33,8 @@
     <string name="error_feed_process">フィードを処理できません.</string>
     <string name="error_feed_url_exists">アドレスは既に存在します.</string>
     <string name="error_feed_import">選択したファイルをインポートできませんでした.</string>
-    <string name="error_feed_export">"エクスポートに失敗しました。書き込み可能な SD カードがマウントされていることを確認してください. "</string>
-    <string name="error_external_storage_not_available">"外部記憶装置 (SD カードなど) が利用できません. "</string>
+    <string name="error_feed_export">エクスポートに失敗しました。書き込み可能な SD カードがマウントされていることを確認してください.</string>
+    <string name="error_external_storage_not_available">外部記憶装置 (SD カードなど) が利用できません.</string>
     <string name="feed_url">URL アドレス</string>
     <string name="optional">(省略可能)</string>
     <string name="website_or_feed">(ウェブサイトまたはフィード)</string>
@@ -63,7 +63,7 @@
     <string name="edit_group_title">グループ名を編集</string>
     <string name="message_exported_to">%s にエクスポートしました.</string>
     <string name="to_group_title">フィード移動操作</string>
-    <string name="to_group_message">"このフィードをこのグループの中または上のどちらかに置くことができます。どうしますか? "</string>
+    <string name="to_group_message">このフィードをこのグループの中または上のどちらかに置くことができます。どうしますか?</string>
     <string name="to_group_above">グループの上</string>
     <string name="to_group_into">グループの中</string>
     <string name="add_custom_feed">カスタムのフィードを追加、または 1 つ検索します</string>
@@ -112,15 +112,15 @@
 
     <string name="settings_category_refresh">自動更新</string>
     <string name="settings_refresh_enabled">自動更新を有効にする</string>
-    <string name="settings_refresh_enabled_description">"フィードの自動更新を有効にします "</string>
+    <string name="settings_refresh_enabled_description">フィードの自動更新を有効にします</string>
     <string name="settings_refresh_interval">更新間隔</string>
     <string name="settings_category_notifications">通知</string>
     <string name="settings_notifications_enabled">通知を有効にする</string>
-    <string name="settings_notifications_enabled_description">"新しいエントリーの場合に通知を有効にします "</string>
+    <string name="settings_notifications_enabled_description">新しいエントリーの場合に通知を有効にします</string>
     <string name="settings_notifications_ringtone">着信音</string>
     <string name="settings_notifications_ringtone_none">なし</string>
     <string name="settings_notifications_vibrate">振動</string>
-    <string name="settings_notifications_vibrate_description">"新しいエントリーで振動を有効にします "</string>
+    <string name="settings_notifications_vibrate_description">新しいエントリーで振動を有効にします</string>
     <string name="settings_notifications_light">ライト</string>
     <string name="settings_notifications_light_description">新しいエントリーで通知のライトを有効にします</string>
     <string name="settings_category_content_presentation">コンテンツの表示</string>
@@ -140,12 +140,12 @@
     <string name="settings_display_entries_fullscreen">自動全画面表示エントリー</string>
     <string name="settings_display_entries_fullscreen_description">自動的に全画面表示でエントリーを表示します</string>
     <string name="settings_refresh_on_open">開くときにフィードを更新</string>
-    <string name="settings_refresh_on_open_description">"アプリケーションを開始した後、すべてのフィードを更新します "</string>
+    <string name="settings_refresh_on_open_description">アプリケーションを開始した後、すべてのフィードを更新します</string>
     <string name="settings_refresh_wifi_only">Wi-Fi 接続時のみ更新</string>
-    <string name="settings_refresh_wifi_only_description">"Wi-Fi 接続が利用可能な場合にのみ自動更新が行われます "</string>
+    <string name="settings_refresh_wifi_only_description">Wi-Fi 接続が利用可能な場合にのみ自動更新が行われます</string>
     <string name="settings_visible_feeds">表示フィード</string>
     <string name="settings_widget_background">背景</string>
-    <string name="settings_widget_background_description">"ウィジェットの背景の色と透明度 "</string>
+    <string name="settings_widget_background_description">ウィジェットの背景の色と透明度</string>
     <string name="all_feeds">すべてのフィード (未来を含む)</string>
     <string name="settings_screen_proxy">プロキシ</string>
     <string name="settings_category_network">ネットワーク</string>
