@@ -29,8 +29,8 @@
     <string name="error_feed_process">אי אפשר לעבד את הערוץ.</string>
     <string name="error_feed_url_exists">הכתובת כבר קיימת.</string>
     <string name="error_feed_import">אי אפשר ליבא את הקובץ הנבחר.</string>
-    <string name="error_feed_export">"היצוא נכשל. ודא כי ברשותך כרטיס-SD כתיב ומעוגן. "</string>
-    <string name="error_external_storage_not_available">"האחסון החיצוני (למשל SD-כרטיס) אינו זמין. "</string>
+    <string name="error_feed_export">היצוא נכשל. ודא כי מצוי ברשותך כרטיס-SD כתיב מעוגן.</string>
+    <string name="error_external_storage_not_available">האחסון החיצוני (למשל כרטיס-SD) אינו זמין.</string>
     <string name="feed_url">כתובת URL</string>
     <string name="optional">(רשות)</string>
     <string name="website_or_feed">(אתר רשת או ערוץ)</string>
@@ -58,7 +58,7 @@
     <string name="edit_group_title">ערוך שם קבוצה</string>
     <string name="message_exported_to">יוצא לתוך %s.</string>
     <string name="to_group_title">פעולת הזזת ערוץ</string>
-    <string name="to_group_message">"באפשרותך לשים את ערוץ זה בתוך או מעל קבוצה זו. מה ברצונך לעשות? "</string>
+    <string name="to_group_message">באפשרותך לשים את ערוץ זה בתוך או מעל קבוצה זו. מה ברצונך לעשות?</string>
     <string name="to_group_above">מעל הקבוצה</string>
     <string name="to_group_into">לתוך הקבוצה</string>
     <string name="add_custom_feed">הוסף ערוץ מותאם או חפש ערוץ</string>
@@ -95,15 +95,15 @@
 
     <string name="settings_category_refresh">רענון אוטומטי</string>
     <string name="settings_refresh_enabled">אפשר רענון אוטומטי</string>
-    <string name="settings_refresh_enabled_description">"אפשר רענון אוטומטי של ערוצים "</string>
+    <string name="settings_refresh_enabled_description">אפשר רענון אוטומטי של ערוצים</string>
     <string name="settings_refresh_interval">תדירות רענון</string>
     <string name="settings_category_notifications">התראות</string>
     <string name="settings_notifications_enabled">אפשר התראות</string>
-    <string name="settings_notifications_enabled_description">"אפשר התראות במקרה של רשומות חדשות "</string>
+    <string name="settings_notifications_enabled_description">אפשר התראות במקרה של רשומות חדשות</string>
     <string name="settings_notifications_ringtone">רינגטון</string>
     <string name="settings_notifications_ringtone_none">אין</string>
     <string name="settings_notifications_vibrate">רטט</string>
-    <string name="settings_notifications_vibrate_description">"אפשר רטט כאשר ישנן רשומות חדשות "</string>
+    <string name="settings_notifications_vibrate_description">אפשר רטט כאשר ישנן רשומות חדשות</string>
     <string name="settings_notifications_light">אור</string>
     <string name="settings_notifications_light_description">אפשר התראת אור כאשר ישנן רשומות חדשות</string>
     <string name="settings_light_theme">ערכת נושא בהירה</string>
@@ -120,12 +120,12 @@
     <string name="settings_display_entries_fullscreen">רשומות מסך מלא</string>
     <string name="settings_display_entries_fullscreen_description">הצג אוטומטית רשומות בתוך מסך מלא</string>
     <string name="settings_refresh_on_open">רענן ערוצים בפתיחה</string>
-    <string name="settings_refresh_on_open_description">"רענון כל הערוצים לאחר פתיחת האפליקציה "</string>
+    <string name="settings_refresh_on_open_description">רענון כל הערוצים לאחר פתיחת האפליקציה</string>
     <string name="settings_refresh_wifi_only">רענן רק על גבי Wi-Fi</string>
-    <string name="settings_refresh_wifi_only_description">"רענון אוטומטי יתבצע רק כאשר חיבור Wi-Fi הינו זמין "</string>
+    <string name="settings_refresh_wifi_only_description">רענון אוטומטי יתבצע רק כאשר חיבור Wi-Fi הינו זמין</string>
     <string name="settings_visible_feeds">ערוצים נראים</string>
     <string name="settings_widget_background">רקע</string>
-    <string name="settings_widget_background_description">"צבע ושקיפות של רקע הוידג׳ט "</string>
+    <string name="settings_widget_background_description">צבע ושקיפות של רקע הוידג׳ט</string>
     <string name="all_feeds">כל הערוצים (גם עתיד)</string>
     <string name="settings_screen_proxy">פרוקסי</string>
     <string name="settings_category_network">רשת</string>
@@ -136,7 +136,7 @@
     <string name="settings_proxy_port">פורט</string>
     <string name="settings_proxy_type">טיפוס</string>
     <string name="settings_mark_as_read">הצג כפתור סמן את כולן בתור נקראו</string>
-    <string name="settings_mark_as_read_description" >הצג / הסתר את הכפתור (נדרשת התחלה מחדש)</string>
+    <string name="settings_mark_as_read_description">הצג / הסתר את הכפתור (נדרשת התחלה מחדש)</string>
     <plurals name="number_of_new_entries">
 	    <item quantity="one">רשומה חדשה אחת</item>
 	    <item quantity="other">%d רשומות חדשות</item>
@@ -157,4 +157,12 @@
     <string name="see_enclosure">ראה צירוף</string>
     <string name="open_enclosure">פתח צירוף</string>
     <string name="copied_clipboard">קישור הועתק</string>
-</resources>
+<string name="menu_show_new_entries">הצג רשומות חדשות</string>
+    <string name="no_new_entries">אין רשומות חדשות להצגה.</string>
+
+    <string name="feed_httpAuth">אימות HTTP</string>
+    <string name="loginhttpAuth">התחבר</string>
+    <string name="passwordhttpAuth">סיסמה</string>
+    <string name="settings_category_content_presentation">הצגת תוכן</string>
+    <string name="settings_show_new_entries">הצג אוטומטית רשומות חדשות</string>
+    </resources>
