@@ -4,6 +4,12 @@
       xmlns:tools="http://schemas.android.com/tools">
 
     <item
+        android:id="@+id/menu_help_filter"
+        android:title="@string/filter_help"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <item
         android:id="@+id/menu_add_filter"
         android:icon="@drawable/ic_add"
         android:title="@string/filter_add_title"
