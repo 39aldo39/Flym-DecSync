@@ -57,6 +57,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
@@ -395,8 +396,10 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (mTabHost.getCurrentTab() != 1) {
             menu.findItem(R.id.menu_add_filter).setVisible(false);
+            menu.findItem(R.id.menu_help_filter).setVisible(false);
         } else {
             menu.findItem(R.id.menu_add_filter).setVisible(true);
+            menu.findItem(R.id.menu_help_filter).setVisible(true);
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -438,6 +441,13 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                 }).show();
                 return true;
             }
+            case R.id.menu_help_filter:
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://github.com/Etuldan/spaRSS/wiki/How-to-use-the-Feed-Filter"));
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
