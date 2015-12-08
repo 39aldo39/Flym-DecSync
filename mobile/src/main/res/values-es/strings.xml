@@ -238,4 +238,5 @@
     <string name="feed_httpAuth">Autenticación HTTP</string>
     <string name="passwordhttpAuth">Contraseña</string>
     <string name="loginhttpAuth">Nombre de acceso</string>
+    <string name="filter_help">Ayuda de filtros</string>
     </resources>
