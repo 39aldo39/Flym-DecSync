@@ -78,6 +78,7 @@
     <string name="feed_filters">FILTER RULES</string>
     <string name="filter_add_title">Add rule</string>
     <string name="filter_delete_title">Delete rule</string>
+    <string name="filter_help">Filter Help</string>
     <string name="filter_edit_title">Edit rule</string>
     <string name="filter_is_regex">is a regular expression</string>
     <string name="filter_apply_to_title">Apply to title</string>
