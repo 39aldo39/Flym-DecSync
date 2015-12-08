@@ -20,6 +20,7 @@
 
 package net.etuldan.sparss.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.content.ContextCompat;
@@ -37,6 +38,7 @@ public class FiltersCursorAdapter extends ResourceCursorAdapter {
     private int mIsAppliedToTitleColumnPosition;
     private int mIsAcceptRulePosition;
     private int mSelectedFilter = -1;
+    private boolean isZero = false;
 
     public FiltersCursorAdapter(Context context, Cursor cursor) {
         super(context, R.layout.item_rule_list, cursor, 0);
@@ -50,7 +52,7 @@ public class FiltersCursorAdapter extends ResourceCursorAdapter {
         TextView isAppliedToTitleTextView = (TextView) view.findViewById(R.id.text3);
 
         if (cursor.getPosition() == mSelectedFilter) {
-            view.setBackgroundResource(PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_accent_color :  R.color.dark_accent_color );
+            view.setBackgroundResource(PrefUtils.getBoolean(PrefUtils.LIGHT_THEME, true) ? R.color.light_accent_color : R.color.dark_accent_color);
         } else {
             view.setBackgroundResource(android.R.color.transparent);
         }
@@ -61,6 +63,15 @@ public class FiltersCursorAdapter extends ResourceCursorAdapter {
                 ContextCompat.getColor(context, R.color.red));
         filterTextTextView.setText(cursor.getString(mFilterTextColumnPosition));
         isAppliedToTitleTextView.setText(cursor.getInt(mIsAppliedToTitleColumnPosition) == 1 ? R.string.filter_apply_to_title : R.string.filter_apply_to_content);
+
+        Activity mActivity = (context instanceof Activity) ? (Activity) context : null;
+        if (mActivity != null) {
+            if (!isZero) {
+                mActivity.findViewById(R.id.empty).setVisibility(View.GONE);
+            } else {
+                mActivity.findViewById(R.id.empty).setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -88,10 +99,15 @@ public class FiltersCursorAdapter extends ResourceCursorAdapter {
     }
 
     private void reinit(Cursor cursor) {
-        if (cursor != null && cursor.getCount() > 0) {
-            mFilterTextColumnPosition = cursor.getColumnIndex(FilterColumns.FILTER_TEXT);
-            mIsAppliedToTitleColumnPosition = cursor.getColumnIndex(FilterColumns.IS_APPLIED_TO_TITLE);
-            mIsAcceptRulePosition = cursor.getColumnIndex(FilterColumns.IS_ACCEPT_RULE);
+        if(cursor != null) {
+            if (cursor.getCount() > 0) {
+                mFilterTextColumnPosition = cursor.getColumnIndex(FilterColumns.FILTER_TEXT);
+                mIsAppliedToTitleColumnPosition = cursor.getColumnIndex(FilterColumns.IS_APPLIED_TO_TITLE);
+                mIsAcceptRulePosition = cursor.getColumnIndex(FilterColumns.IS_ACCEPT_RULE);
+                isZero = false;
+            } else {
+                isZero = true;
+            }
         }
     }
 
