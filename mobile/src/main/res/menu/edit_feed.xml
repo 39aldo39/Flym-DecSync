@@ -7,7 +7,7 @@
         android:id="@+id/menu_help_filter"
         android:title="@string/filter_help"
         app:showAsAction="always"
-        tools:ignore="AlwaysShowAction" />
+        tools:ignore="AlwaysShowAction"/>
 
     <item
         android:id="@+id/menu_add_filter"
