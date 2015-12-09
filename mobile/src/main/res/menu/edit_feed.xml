@@ -5,6 +5,7 @@
 
     <item
         android:id="@+id/menu_help_filter"
+        android:icon="@drawable/ic_help"
         android:title="@string/filter_help"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction"/>
