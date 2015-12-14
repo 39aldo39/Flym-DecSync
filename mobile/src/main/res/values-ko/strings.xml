@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='utf-8'?>
+<!--
  Copyright (c) 2014 Changwoo Ryu
  Copyright (c) 2010-2012 Stefan Handschuh
 
@@ -58,7 +59,7 @@
     <string name="error_feed_url_exists">그 주소는 이미 있습니다.</string>
     <string name="error_feed_import">선택한 파일을 가져올 수 없습니다.</string>
     <string name="error_feed_export">내보내기가 실패했습니다. 쓰기 가능한 SD 카드 저장소가 마운트되어 있는지 확인하십시오.</string>
-    <string name="error_external_storage_not_available">외부 저장소(SD 카드 따위)가 없습니다.</string>
+    <string name="error_external_storage_not_available">외부 저장소(예를 들면 SD 카드)가 없습니다.</string>
     <string name="feed_url">URL 주소</string>
     <string name="optional">(선택 사항)</string>
     <string name="website_or_feed">(웹페이지 또는 피드)</string>
@@ -214,4 +215,25 @@
         <item>Wi-Fi를 통해서만</item>
         <item>언제나</item>
     </string-array>
-</resources>
+<string name="menu_show_new_entries">새로운 항목 표시</string>
+    <string name="no_new_entries">표시할 새 항목이 없습니다.</string>
+
+    <string name="feed_cookie">인증 쿠키</string>
+    <string name="cookiename">이름</string>
+    <string name="cookievalue">값</string>
+    <string name="feed_httpAuth">HTTP 인증</string>
+    <string name="loginhttpAuth">로그인</string>
+    <string name="passwordhttpAuth">암호</string>
+    <string name="tab_advanced_title">고급</string>
+    <string name="filter_help">필터 도움말</string>
+    <string name="menu_open_in_browser">브라우저에서 열기</string>
+    <string name="menu_switch_full_original">모든 내용 표시</string>
+    <string name="settings_left_panel">탐색 서랍</string>
+    <string name="settings_left_panel_description">앱이 시작될 때 탐색 서랍을 표시합니다</string>
+    <string name="settings_font_serif">세리프 글꼴 사용</string>
+    <string name="settings_font_serif_description">내용을 표시할 때 산세리프 대신 세리프 글꼴을 사용합니다</string>
+    <string name="settings_mark_as_read">\'모두 읽음으로 표시\' 버튼 표시</string>
+    <string name="settings_mark_as_read_description">버튼을 표시하거나 숨깁니다 (재시작 필요)</string>
+    <string name="settings_show_new_entries">새 항목 자동으로 표시</string>
+    <string name="settings_show_new_entries_description">만약 해제되었을 경우 \'새 항목 표시\' 버튼을 눌러야만 새로운 항목이 표시됩니다</string>
+    </resources>
