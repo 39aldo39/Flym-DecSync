@@ -32,6 +32,7 @@
     <string name="menu_settings">Настройки</string>
     <string name="menu_refresh">Обновить</string>
     <string name="menu_all_read">Пометить все как прочтённые</string>
+    <string name="menu_show_new_entries">Показать новые записи</string>
     <string name="spaRSS_feeds">spaRSS ленты</string>
     <string name="error">Ошибка</string>
     <string name="network_error">Нет подключения к сети</string>
@@ -40,6 +41,7 @@
     <string name="drawer_open">Открыть меню навигации</string>
     <string name="drawer_close">Закрыть меню навигации</string>
     <string name="back_again_to_quit">Нажмите "Назад" еще раз, чтобы выйти</string>
+    <string name="no_new_entries">Нет новых записей.</string>
 
     <!-- FEEDS -->
     <string name="feeds">Ленты</string>
@@ -72,8 +74,8 @@
     <string name="filter_is_regex">это регулярное выражение</string>
     <string name="filter_apply_to_title">Применить к заголовкам</string>
     <string name="filter_apply_to_content">Применить к содержанию</string>
-    <string name="accept">ACCEPT</string>
-    <string name="reject">REJECT</string>
+    <string name="accept">ПРИНЯТЬ</string>
+    <string name="reject">ОТКЛОНИТЬ</string>
     <string name="feed_search">Поиск лент</string>
     <string name="select_file">Выбрать файл (корень SD-карты)</string>
     <string name="question_delete_feed">Вы действительно хотите удалить эту ленту?</string>
@@ -119,7 +121,9 @@
     <string name="see_link">Открыть в браузере</string>
     <string name="cant_open_link">Не найдено приложений для открытия этой ссылки</string>
     <string name="open_enclosure">Открыть вложение</string>
-    <string name="file">File</string>
+    <string name="cant_open_link">Нет приложения, чтобы открыть ссылку</string>
+    <string name="open_enclosure">Открыть вложение</string>
+    <string name="file">Файл</string>
     <string name="download_and_save">Загрузить и сохранить</string>
     <string name="open_link">Открыть ссылку</string>
     <string name="tip_sentence">Совет: проведите пальцем влево, чтобы отметить как прочитанное, или вправо, чтобы добавить в избранное</string>
@@ -204,6 +208,17 @@
         <item>3 месяца</item>
         <item>Не удалять</item>
     </string-array>
+    <string-array name="settings_keep_times_per_feed">
+        <item>1 день</item>
+        <item>2 дня</item>
+        <item>4 дня</item>
+        <item>1 неделя</item>
+        <item>2 недели</item>
+        <item>1 месяц</item>
+        <item>2 месяца</item>
+        <item>3 месяца</item>
+        <item>По умолчанию</item>
+    </string-array>
     <string-array name="settings_font_sizes">
         <item>-2</item>
         <item>-1</item>
@@ -215,13 +230,10 @@
         <item>+5</item>
     </string-array>
     <string-array name="settings_preload_image_modes">
-        <item>Never</item>
-        <item>Only over Wi-Fi</item>
-        <item>Always</item>
+        <item>Никогда</item>
+        <item>Только по Wi-Fi</item>
+        <item>Всегда</item>
     </string-array>
-
-<string name="menu_show_new_entries">Показать новые записи</string>
-    <string name="no_new_entries">Нет новых записей.</string>
 
     <string name="feed_cookie">Cookie для аутентификации</string>
     <string name="cookiename">Имя</string>
