@@ -238,4 +238,5 @@
     <string name="feed_httpAuth">Authentification HTTP</string>
     <string name="loginhttpAuth">Identifiant</string>
     <string name="passwordhttpAuth">Mot de Passe</string>
-</resources>
+<string name="settings_show_new_entries_description">"Si désactivé, un appui sur le bouton Afficher nouveaux articles  sera requis"</string>
+    </resources>
