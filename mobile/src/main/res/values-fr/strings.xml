@@ -60,12 +60,8 @@
     <string name="error_feed_process">Le flux ne peut pas être traité.</string>
     <string name="error_feed_url_exists">L\'adresse existe déjà.</string>
     <string name="error_feed_import">Le fichier sélectionné n\'a pu être importé.</string>
-    <string name="error_feed_export">L\'export a échoué. Assurez-vous d\'avoir une carte SD montée
-        et autorisée en écriture.
-    </string>
-    <string name="error_external_storage_not_available">Le stockage externe (comme la carte SD)
-        n\'est pas disponible.
-    </string>
+    <string name="error_feed_export">L\'exportation a échoué. Assurez-vous d\'avoir une carte SD montée et autorisée en écriture.</string>
+    <string name="error_external_storage_not_available">Le stockage externe (e.g. carte SD) n\'est pas disponible.</string>
     <string name="feed_url">Adresse URL</string>
     <string name="optional">(optionel)</string>
     <string name="website_or_feed">(site web ou flux)</string>
@@ -92,9 +88,7 @@
     <string name="edit_group_title">Éditer le nom du groupe</string>
     <string name="message_exported_to">Exporté vers %s.</string>
     <string name="to_group_title">Déplacement de flux</string>
-    <string name="to_group_message">Vous pouvez placer ce flux dans ou au-dessus de ce groupe. Que
-        voulez-vous faire\u00A0?
-    </string>
+    <string name="to_group_message">Vous pouvez placer ce flux dans ou au-dessus de ce groupe. Que voulez-vous faire ?</string>
     <string name="to_group_above">Au-dessus du groupe</string>
     <string name="to_group_into">Dans le groupe</string>
     <string name="add_custom_feed">Ajoute un flux manuellement ou en rechercher</string>
@@ -106,7 +100,7 @@
     <string name="google_news_technology">High-Tech</string>
     <string name="google_news_entertainment">Culture</string>
     <string name="google_news_sports">Sport</string>
-    <string name="google_news_science">Science</string>
+    <string name="google_news_science">Science/High-Tech</string>
     <string name="google_news_health">Santé</string>
 
     <!-- ENTRIES -->
@@ -144,20 +138,15 @@
     <!-- SETTINGS -->
     <string name="settings_category_refresh">Mise à jour automatique</string>
     <string name="settings_refresh_enabled">Activer la mise à jour auto</string>
-    <string name="settings_refresh_enabled_description">Active la mise à jour automatique des flux
-    </string>
+    <string name="settings_refresh_enabled_description">Activer la mise à jour automatique des flux</string>
     <string name="settings_refresh_interval">Intervalle de mise à jour</string>
     <string name="settings_category_notifications">Notifications</string>
     <string name="settings_notifications_enabled">Activer les notifications</string>
-    <string name="settings_notifications_enabled_description">Active les notifications en cas de
-        nouveaux articles
-    </string>
+    <string name="settings_notifications_enabled_description">Activer les notifications en cas de nouvelles entrées</string>
     <string name="settings_notifications_ringtone">Sonnerie</string>
     <string name="settings_notifications_ringtone_none">Aucune</string>
     <string name="settings_notifications_vibrate">Vibrer</string>
-    <string name="settings_notifications_vibrate_description">Active la vibration pour les nouveaux
-        articles
-    </string>
+    <string name="settings_notifications_vibrate_description">Activer la vibration pour les nouvelles entrées</string>
     <string name="settings_notifications_light">LED</string>
     <string name="settings_notifications_light_description">Active les notifications LED pour les nouveaux articles</string>
     <string name="settings_category_content_presentation">Présentation des flux</string>
@@ -173,18 +162,12 @@
     <string name="settings_display_entries_fullscreen">Plein écran auto</string>
     <string name="settings_display_entries_fullscreen_description">Affiche automatiquement les articles en plein écran</string>
     <string name="settings_refresh_on_open">Mise à jour des flux à l\'ouverture</string>
-    <string name="settings_refresh_on_open_description">Met à jour tous les flux à l\'ouverture de
-        l\'application
-    </string>
+    <string name="settings_refresh_on_open_description">Mettre à jour tous les flux à l\'ouverture de l\'application</string>
     <string name="settings_refresh_wifi_only">Mise à jour en WiFi uniquement</string>
-    <string name="settings_refresh_wifi_only_description">La mise à jour auto ne se fera que si le
-        Wifi est activé
-    </string>
+    <string name="settings_refresh_wifi_only_description">La mise à jour automatique ne se fera que si vous êtes connecté au Wifi</string>
     <string name="settings_visible_feeds">Flux visibles</string>
     <string name="settings_widget_background">Arrière-plan</string>
-    <string name="settings_widget_background_description">Couleur et transparence de l\'arrière-plan
-        du widget
-    </string>
+    <string name="settings_widget_background_description">Couleur et transparence de l\'arrière-plan du widget</string>
     <string name="all_feeds">Tous les flux (y compris ceux à venir)</string>
     <string name="settings_screen_proxy">Proxy</string>
     <string name="settings_category_network">Réseau</string>
