@@ -142,11 +142,11 @@
     <string name="settings_refresh_interval">Intervalle de mise à jour</string>
     <string name="settings_category_notifications">Notifications</string>
     <string name="settings_notifications_enabled">Activer les notifications</string>
-    <string name="settings_notifications_enabled_description">Activer les notifications en cas de nouvelles entrées</string>
+    <string name="settings_notifications_enabled_description">Activer les notifications en cas de nouveaux articles</string>
     <string name="settings_notifications_ringtone">Sonnerie</string>
     <string name="settings_notifications_ringtone_none">Aucune</string>
     <string name="settings_notifications_vibrate">Vibrer</string>
-    <string name="settings_notifications_vibrate_description">Activer la vibration pour les nouvelles entrées</string>
+    <string name="settings_notifications_vibrate_description">Activer la vibration pour les nouveaux articles</string>
     <string name="settings_notifications_light">LED</string>
     <string name="settings_notifications_light_description">Active les notifications LED pour les nouveaux articles</string>
     <string name="settings_category_content_presentation">Présentation des flux</string>
@@ -233,10 +233,11 @@
     <string name="menu_switch_full_original">Afficher le contenu complet</string>
     <string name="settings_font_serif">Utiliser une police Serif</string>
     <string name="settings_font_serif_description">Utiliser une police Serif au lieu d\'une Sans-Serif pour les articles</string>
-<string name="menu_show_new_entries">Afficher les nouvelles entrées</string>
-    <string name="settings_show_new_entries">Afficher automatiquement les nouvelles entrées</string>
+<string name="menu_show_new_entries">Afficher les nouveaux articles</string>
+    <string name="settings_show_new_entries">Afficher automatiquement les nouveaux articles</string>
     <string name="feed_httpAuth">Authentification HTTP</string>
     <string name="loginhttpAuth">Identifiant</string>
     <string name="passwordhttpAuth">Mot de Passe</string>
-<string name="settings_show_new_entries_description">"Si désactivé, un appui sur le bouton Afficher nouveaux articles  sera requis"</string>
+<string name="settings_show_new_entries_description">Si désactivé, un appui sur le bouton Afficher nouveaux articles sera requis pour les afficher</string>
+    <string name="filter_help">Aide à propos des filtres</string>
     </resources>
