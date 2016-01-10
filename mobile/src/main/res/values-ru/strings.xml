@@ -145,8 +145,7 @@
     <string name="settings_notifications_ringtone">Звук</string>
     <string name="settings_notifications_ringtone_none">Нет</string>
     <string name="settings_notifications_vibrate">Вибрация</string>
-    <string name="settings_notifications_vibrate_description">Включить вибрацию при новых записях
-    </string>
+    <string name="settings_notifications_vibrate_description">Включить вибрацию, если есть новые записи</string>
     <string name="settings_notifications_light">Свет</string>
     <string name="settings_notifications_light_description">Включить световую индикацию при новых записях</string>
     <string name="settings_category_content_presentation">Представление содержания</string>
@@ -252,4 +251,5 @@
     <string name="menu_open_in_browser">Открыть в браузере</string>
     <string name="menu_switch_full_original">Показать всё содержимое</string>
     <string name="filter_help">Помощь по фильтрам</string>
+    <string name="tab_advanced_title">Дополнительно</string>
     </resources>
