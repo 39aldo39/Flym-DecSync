@@ -84,7 +84,7 @@
     <string name="edit_group_title">그룹 이름 편집</string>
     <string name="message_exported_to">%s에 내보냄</string>
     <string name="to_group_title">피드 옮기기 동작</string>
-    <string name="to_group_message">피드를 그룹 안에 넣을 수도 있고 위에 놓을 수도 있습니다. 어떻게 하시겠습니까?</string>
+    <string name="to_group_message">피드를 그룹 안에 넣을수도 있고 위에 놓을수도 있습니다. 어떻게 하시겠습니까?</string>
     <string name="to_group_above">그룹 위</string>
     <string name="to_group_into">그룹 안</string>
     <string name="add_custom_feed">임의의 피드를 추가하거나 검색하기</string>
@@ -158,7 +158,7 @@
     <string name="settings_display_entries_fullscreen">Auto-fullscreen entries</string>
     <string name="settings_display_entries_fullscreen_description">Automatically display entries in fullscreen</string>
     <string name="settings_refresh_on_open">열면 피드 새로 고침</string>
-    <string name="settings_refresh_on_open_description">프로그램을 열면 모든 피드 새로 고침</string>
+    <string name="settings_refresh_on_open_description">앱을 열면 모든 피드 새로 고침</string>
     <string name="settings_refresh_wifi_only">Wi-Fi에서만 새로 고침</string>
     <string name="settings_refresh_wifi_only_description">Wi-Fi를 사용할 때만 자동으로 새로 고침</string>
     <string name="settings_visible_feeds">피드 모양</string>
