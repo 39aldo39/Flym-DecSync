@@ -119,8 +119,6 @@
     <string name="original_text">Показать оригинальный текст</string>
     <string name="see_enclosure">Показать вложение</string>
     <string name="see_link">Открыть в браузере</string>
-    <string name="cant_open_link">Не найдено приложений для открытия этой ссылки</string>
-    <string name="open_enclosure">Открыть вложение</string>
     <string name="cant_open_link">Нет приложения, чтобы открыть ссылку</string>
     <string name="open_enclosure">Открыть вложение</string>
     <string name="file">Файл</string>
