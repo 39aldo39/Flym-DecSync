@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='utf-8'?>
+<!--
  Copyright (c) 2015 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
  Copyright (c) 2010-2012 Stefan Handschuh
@@ -37,15 +38,15 @@
     <string name="spaRSS_feeds">spaRSS zdroje</string>
     <string name="error">Chyba</string>
     <string name="network_error">Sieť nie je nastavená</string>
-    <string name="loading">Načítávam…</string>
+    <string name="loading">Načítavanie…</string>
     <string name="no_result">Žiadny výsledok</string>
     <string name="drawer_open">Otvoriť navigačnú lištu</string>
-    <string name="drawer_close">Zavřít navigačnú lištu</string>
-    <string name="back_again_to_quit">Opakovaný stisk tlačítka spät ukončí aplikáciu</string>
+    <string name="drawer_close">Zavrieť navigačnú lištu</string>
+    <string name="back_again_to_quit">Opakované stlačenie tlačidla späť ukončí aplikáciu</string>
 
     <!-- FEEDS -->
     <string name="feeds">Zdroje</string>
-    <string name="no_feeds">Žiadne Zdroje</string>
+    <string name="no_feeds">Žiadne zdroje</string>
     <string name="menu_add_feed">Pridať zdroj</string>
     <string name="no_filters">Žiadne filtre</string>
     <string name="context_menu_delete">Zmazať</string>
@@ -55,7 +56,7 @@
     <string name="menu_add_group">Pridať skupinu</string>
     <string name="menu_import">Import z OPML</string>
     <string name="menu_export">Export do OPML</string>
-    <string name="error_feed_error">Adresa zdroja nemohla byť otvorená.</string>
+    <string name="error_feed_error">Adresa zdroja sa nedá otvoriť.</string>
     <string name="error_feed_process">Zdroj sa nedá spracovať.</string>
     <string name="error_feed_url_exists">Adresa už existuje.</string>
     <string name="error_feed_import">Vybraný súbor nemohol byť importovaný.</string>
@@ -71,51 +72,51 @@
     <string name="filter_add_title">Pridať pravidlo</string>
     <string name="filter_delete_title">Zmazať pravidlo</string>
     <string name="filter_edit_title">Upraviť pravidlo</string>
-    <string name="filter_is_regex">regulárny výraz</string>
+    <string name="filter_is_regex">je regulárny výraz</string>
     <string name="filter_apply_to_title">Použiť pre nadpis</string>
     <string name="filter_apply_to_content">Použiť pre obsah</string>
     <string name="accept">POVOLIŤ</string>
-    <string name="reject">VYRADIŤ</string>
+    <string name="reject">ODMIETNUŤ</string>
     <string name="feed_search">Prehľadať zdroj</string>
-    <string name="select_file">Vybrať súbor (SD-koreň)</string>
-    <string name="question_delete_feed">Naozaj zmazať tento zdroj?</string>
-    <string name="question_delete_group">Naozaj chcete zmazať túto skupinu a všetky jej zdroje?</string>
+    <string name="select_file">Vybrať súbor (SD karta)</string>
+    <string name="question_delete_feed">Naozaj chcete zmazať tento zdroj?</string>
+    <string name="question_delete_group">"Naozaj chcete zmazať túto skupinu a všetky jej zdroje? "</string>
     <string name="question_delete_filter">Naozaj chcete zmazat tento filter?</string>
     <string name="add_group_title">Vybrať meno skupiny</string>
     <string name="edit_group_title">Upraviť meno skupiny</string>
     <string name="message_exported_to">Exportovať do %s.</string>
-    <string name="to_group_title">Akcia presunu zdroja</string>
-    <string name="to_group_message">Môžete tento zdroj posunúť do a alebo nad túto skupinu. Čo chcete spraviť?</string>
+    <string name="to_group_title">Akcia presunutia zdroja</string>
+    <string name="to_group_message">Môžete tento zdroj presunúť do a alebo nad túto skupinu. Čo chcete spraviť?</string>
     <string name="to_group_above">Nad skupinu</string>
     <string name="to_group_into">Do skupiny</string>
     <string name="add_custom_feed">Pridať vlastný zdroj alebo vyhľadať nový</string>
     <string name="google_news_title">Články Google News</string>
-    <string name="google_news_indicator">Vybrať jedno alebo niekoľko témat k pridaniu. Niektoré z nich nemusia byť poskytované Googlom pre váš jazyk.</string>
+    <string name="google_news_indicator">Vybrať jednu alebo viac tém na pridanie. Niektoré z nich nemusí Google poskytovať vo vašom jazyku.</string>
     <string name="google_news_top_stories">Hlavné témy</string>
     <string name="google_news_world">Svet</string>
     <string name="google_news_business">Podnikanie</string>
     <string name="google_news_technology">Technológie</string>
     <string name="google_news_entertainment">Zábava</string>
-    <string name="google_news_sports">Športy</string>
+    <string name="google_news_sports">Šport</string>
     <string name="google_news_science">Veda</string>
     <string name="google_news_health">Zdravie</string>
 
     <!-- ENTRIES -->
-    <string name="all">Všetky Články</string>
+    <string name="all">Všetky články</string>
     <string name="no_entries">Žiadne články</string>
-    <string name="favorites">Obľúbené Články</string>
+    <string name="favorites">S hviezdičkou</string>
     <string name="context_menu_hide_read">Skryť prečítané články</string>
     <string name="context_menu_show_read">Zobraziť prečítané články</string>
-    <string name="context_menu_share_starred">Zdieľať označené články</string>
-    <string name="menu_star">Označiť</string>
-    <string name="menu_unstar">Odznačiť</string>
+    <string name="context_menu_share_starred">Zdieľať články s hviezdičkou</string>
+    <string name="menu_star">Označiť hviezdičkou</string>
+    <string name="menu_unstar">Odznačiť hviezdičku</string>
     <string name="menu_share">Zdieľať</string>
     <string name="menu_full_screen">Na celú obrazovku</string>
-    <string name="menu_copy_clipboard">Zkopírovať odkaz</string>
+    <string name="menu_copy_clipboard">Skopírovať odkaz</string>
     <string name="menu_mark_as_unread">Označiť ako neprečítané</string>
-    <string name="share_favorites_title">spaRSS: označené články</string>
-    <string name="copied_clipboard">Link zkopírovaný</string>
-    <string name="get_full_text">Stiahnúť celý text</string>
+    <string name="share_favorites_title">spaRSS: články s hviezdičkou</string>
+    <string name="copied_clipboard">Link skopírovaný</string>
+    <string name="get_full_text">Stiahnuť celý text</string>
     <string name="original_text">Zobraziť originálny text</string>
     <string name="see_enclosure">Zobraziť prílohu</string>
     <string name="see_link">Zobraziť v prehliadači</string>
@@ -124,7 +125,7 @@
     <string name="file">Súbor</string>
     <string name="download_and_save">Stiahnúť a uložiť</string>
     <string name="open_link">Otvoriť odkaz</string>
-    <string name="tip_sentence">Tip: Posunutím doľava označíte článok ako prečítaný, posunutím doprava ako obľúbený.</string>
+    <string name="tip_sentence">Tip: Posunutím doľava označíte článok ako prečítaný, posunutím doprava ako obľúbený</string>
 
     <!-- WIDGET -->
     <string name="red">Červená</string>
@@ -133,19 +134,19 @@
     <string name="transparency">Priehľadnosť</string>
 
     <!-- SETTINGS -->
-    <string name="settings_category_refresh">Automatické načítavanie</string>
-    <string name="settings_refresh_enabled">Povoliť automatické načítávanie</string>
-    <string name="settings_refresh_enabled_description">Povolí automatické načítavanie článkov</string>
-    <string name="settings_refresh_interval">Interval načítavania</string>
+    <string name="settings_category_refresh">Automatické obnovenie</string>
+    <string name="settings_refresh_enabled">Povoliť automatické obnovenie</string>
+    <string name="settings_refresh_enabled_description">Povoliť automatické obnovenie článkov</string>
+    <string name="settings_refresh_interval">Interval obnovenia</string>
     <string name="settings_category_notifications">Oznámenia</string>
     <string name="settings_notifications_enabled">Povoliť oznámenia</string>
-    <string name="settings_notifications_enabled_description">Povolí oznámenie v prípade nových článkov</string>
+    <string name="settings_notifications_enabled_description">Povolí oznámenia v prípade nových článkov</string>
     <string name="settings_notifications_ringtone">Tón oznámenia</string>
     <string name="settings_notifications_ringtone_none">Žiadny</string>
     <string name="settings_notifications_vibrate">Vibrovať</string>
     <string name="settings_notifications_vibrate_description">Povoliť vibrácie pri prijatí nových článkov</string>
     <string name="settings_notifications_light">Svetelné LED oznámenia</string>
-    <string name="settings_notifications_light_description">Povoliť oznamovanie blikaním pri prijatí nových článkov</string>
+    <string name="settings_notifications_light_description">Povoliť blikanie pri prijatí nových článkov</string>
     <string name="settings_category_content_presentation">Prezentácia obsahu</string>
     <string name="settings_light_theme">Svetlý vzhľad</string>
     <string name="settings_light_theme_description">Použiť svetlý vzhľad</string>
@@ -155,11 +156,11 @@
     <string name="settings_preload_image_mode">Načítať obrázky</string>
     <string name="settings_font_size">Veľkosť textu</string>
     <string name="settings_display_oldest_first">Poradie článkov</string>
-    <string name="settings_display_oldest_first_description">Zobrazovať najskôr staršie články</string>
-    <string name="settings_display_entries_fullscreen">Články na celú obrazovku</string>
+    <string name="settings_display_oldest_first_description">Zobraziť najskôr staršie články</string>
+    <string name="settings_display_entries_fullscreen">Automaticky zobrazovať články na celú obrazovku</string>
     <string name="settings_display_entries_fullscreen_description">Automaticky zobrazovať články na celú obrazovku</string>
-    <string name="settings_refresh_on_open">Načítať články pri otvorení aplikácie</string>
-    <string name="settings_refresh_on_open_description">Načíta články pri otvorení aplikácie</string>
+    <string name="settings_refresh_on_open">Obnoviť články pri spustení aplikácie</string>
+    <string name="settings_refresh_on_open_description">Obnoviť články pri spustení aplikácie</string>
     <string name="settings_refresh_wifi_only">Obnovovať len cez Wi-Fi pripojenie</string>
     <string name="settings_refresh_wifi_only_description">Automatické obnovovanie bude spustené len pri dostupnom Wi-Fi pripojení</string>
     <string name="settings_visible_feeds">Viditeľné zdroje</string>
@@ -169,9 +170,9 @@
     <string name="settings_screen_proxy">Proxy</string>
     <string name="settings_category_network">Sieť</string>
     <string name="settings_proxy_enabled">Povoliť</string>
-    <string name="settings_proxy_wifi_only">Len pre Wi-Fi</string>
+    <string name="settings_proxy_wifi_only">Len pre Wi-Fi pripojenie</string>
     <string name="settings_proxy_wifi_only_description">Použiť proxy len pre Wi-Fi pripojenie</string>
-    <string name="settings_proxy_host">Hosť</string>
+    <string name="settings_proxy_host">Host</string>
     <string name="settings_proxy_port">Port</string>
     <string name="settings_proxy_type">Typ</string>
 
@@ -223,4 +224,25 @@
         <item>Vždy</item>
     </string-array>
 
-</resources>
+<string name="menu_show_new_entries">Zobraziť nové články</string>
+    <string name="no_new_entries">Žiadne nové články.</string>
+
+    <string name="feed_cookie">Autentifikačná cookie</string>
+    <string name="cookiename">Názov</string>
+    <string name="cookievalue">Hodnota</string>
+    <string name="feed_httpAuth">HTTP autentifikácia</string>
+    <string name="loginhttpAuth">Prihlasovacie meno</string>
+    <string name="passwordhttpAuth">Heslo</string>
+    <string name="tab_advanced_title">Rozšírené</string>
+    <string name="filter_help">Nápoveda pre filtre</string>
+    <string name="menu_open_in_browser">Otvoriť v prehliadači</string>
+    <string name="menu_switch_full_original">Zobraziť celý obsah</string>
+    <string name="settings_left_panel">Navigačná lišta</string>
+    <string name="settings_left_panel_description">Zobraziť navigačnú lištu pri spustení aplikácie</string>
+    <string name="settings_font_serif">Použiť pätkové písmo</string>
+    <string name="settings_font_serif_description">Použiť pätkové písmo v článkoch</string>
+    <string name="settings_mark_as_read">Zobraziť tlačidlo Označiť všetko ako prečítané</string>
+    <string name="settings_mark_as_read_description">Zobraziť / skryť tlačidlo (potrebný reštart)</string>
+    <string name="settings_show_new_entries">Automaticky zobraziť nové články</string>
+    <string name="settings_show_new_entries_description">Ak</string>
+    </resources>
