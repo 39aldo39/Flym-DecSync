@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
  Copyright (c) 2010-2012 Stefan Handschuh
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -52,11 +53,11 @@
     <string name="menu_add_group">添加分组</string>
     <string name="menu_import">导出为OPML</string>
     <string name="menu_export">导入OPML</string>
-    <string name="error_feed_error">这个订阅没有权限</string>
-    <string name="error_feed_process">这个订阅失败</string>
-    <string name="error_feed_url_exists">这个订阅地址不存在</string>
+    <string name="error_feed_error">该订阅地址无法访问。</string>
+    <string name="error_feed_process">该订阅处理失败。</string>
+    <string name="error_feed_url_exists">该订阅地址已存在。</string>
     <string name="error_feed_import">您选择的文件无法导入。</string>
-    <string name="error_feed_export">导出失败，请确定你的SD卡可以读写。</string>
+    <string name="error_feed_export">导出失败，请确认SD卡可以写入。</string>
     <string name="error_external_storage_not_available">外置存储（如SD卡）不可用。</string>
     <string name="feed_url">频道地址</string>
     <string name="optional">（可选）</string>
@@ -75,14 +76,14 @@
     <string name="reject">排除</string>
     <string name="feed_search">搜索订阅</string>
     <string name="select_file">选择文件（SD卡目录）</string>
-    <string name="question_delete_feed">你确定要删除这个订阅</string>
-    <string name="question_delete_group">你确定要删除这个分组和其中所有的订阅？</string>
-    <string name="question_delete_filter">你确定删除这个过滤器</string>
+    <string name="question_delete_feed">确定要删除该订阅？</string>
+    <string name="question_delete_group">"确定要删除该分组及其所有的订阅？ "</string>
+    <string name="question_delete_filter">确定删除该过滤规则？</string>
     <string name="add_group_title">选择分组名</string>
     <string name="edit_group_title">重命名分组</string>
     <string name="message_exported_to">已导出到 %s。</string>
     <string name="to_group_title">移动订阅</string>
-    <string name="to_group_message">你能移动这个订阅到这个组里面或者上面。你想做什么？</string>
+    <string name="to_group_message">你可以移动订阅到该组的内部或者上面，你的选择是？</string>
     <string name="to_group_above">移动到分组上面</string>
     <string name="to_group_into">添加到分组</string>
     <string name="add_custom_feed">添加一个定制源，或者寻找一个</string>
@@ -121,7 +122,7 @@
     <string name="file">文件</string>
     <string name="download_and_save">下载并保存</string>
     <string name="open_link">打开链接</string>
-    <string name="tip_sentence">Tip: slide left to mark as read and slide right to mark as favorite</string>
+    <string name="tip_sentence">提示：左划标记已读，右划添加到收藏</string>
 
     <!-- WIDGET -->
     <string name="red">红色</string>
@@ -136,11 +137,11 @@
     <string name="settings_refresh_interval">刷新间隔</string>
     <string name="settings_category_notifications">通知</string>
     <string name="settings_notifications_enabled">启用通知</string>
-    <string name="settings_notifications_enabled_description">启用的新消息通知 </string>
+    <string name="settings_notifications_enabled_description">启用新消息通知</string>
     <string name="settings_notifications_ringtone">铃声</string>
     <string name="settings_notifications_ringtone_none">无</string>
     <string name="settings_notifications_vibrate">震动提醒</string>
-    <string name="settings_notifications_vibrate_description">当有新的消息时，震动提醒</string>
+    <string name="settings_notifications_vibrate_description">有新消息时震动</string>
     <string name="settings_notifications_light">LED</string>
     <string name="settings_notifications_light_description">当有新的消息时，点亮通知灯</string>
     <string name="settings_category_content_presentation">内容介绍</string>
@@ -156,12 +157,12 @@
     <string name="settings_display_entries_fullscreen">自动全屏显示</string>
     <string name="settings_display_entries_fullscreen_description">自动在全屏显示消息</string>
     <string name="settings_refresh_on_open">自动刷新</string>
-    <string name="settings_refresh_on_open_description">当程序开启时，自动刷新所有订阅</string>
+    <string name="settings_refresh_on_open_description">进入应用时刷新所有订阅</string>
     <string name="settings_refresh_wifi_only">Wi-Fi环境才自动刷新</string>
-    <string name="settings_refresh_wifi_only_description">自动刷新仅在Wi-Fi环境启用</string>
+    <string name="settings_refresh_wifi_only_description">仅Wi-Fi环境自动刷新</string>
     <string name="settings_visible_feeds">可见源</string>
     <string name="settings_widget_background">背景色</string>
-    <string name="settings_widget_background_description">挂件的颜色和透明度</string>
+    <string name="settings_widget_background_description">挂件背景的颜色和透明度</string>
     <string name="all_feeds">全部订阅（包括未来的）</string>
     <string name="settings_screen_proxy">代理</string>
     <string name="settings_category_network">网络</string>
@@ -214,4 +215,25 @@
         <item>总是</item>
     </string-array>
 
-</resources>
+<string name="menu_show_new_entries">显示新文章</string>
+    <string name="no_new_entries">没有有新文章可供显示。</string>
+
+    <string name="feed_cookie">验证Cookie</string>
+    <string name="cookiename">名字</string>
+    <string name="cookievalue">值</string>
+    <string name="feed_httpAuth">HTTP验证</string>
+    <string name="loginhttpAuth">登陆</string>
+    <string name="passwordhttpAuth">密码</string>
+    <string name="tab_advanced_title">高级</string>
+    <string name="filter_help">关于过滤</string>
+    <string name="menu_open_in_browser">用浏览器打开</string>
+    <string name="menu_switch_full_original">显示全文</string>
+    <string name="settings_left_panel">导航抽屉</string>
+    <string name="settings_left_panel_description">应用启动时打开导航抽屉</string>
+    <string name="settings_font_serif">使用衬线体</string>
+    <string name="settings_font_serif_description">使用衬线体显示文章而非黑体</string>
+    <string name="settings_mark_as_read">显示用来标记全部文章为已读的按钮</string>
+    <string name="settings_mark_as_read_description">显示/隐藏按钮(需重启该应用)</string>
+    <string name="settings_show_new_entries">自动显示新文章</string>
+    <string name="settings_show_new_entries_description">如果禁用，需要点击一下显示按钮才能显示新文章</string>
+    </resources>
