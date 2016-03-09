@@ -223,7 +223,7 @@ Obsah
 * [Odkazy](#odkazy)
 
 ### Zhrnutie
-spaRSS je nenáročný, moderný, úplne zadarmo (bez reklamy) a opensource projekt, ktorý vás udržuje informovaných načítavaním vašich webových stránok, či blogov a zobrazuje ich optimalizovane pre mobilné zariadenia. Je založený na RSS čítačke "Flym".
+spaRSS je nenáročný, moderný, úplne zadarmo (bez reklamy) a opensource projekt, ktorý vás udržuje informovaných načítavaním vašich webových stránok, či blogov a zobrazuje ich optimalizovane pre mobilné zariadenia. Je založený na RSS čítačke "Flym".  
 NESYNCHRONIZUJE SA so žiadnou on-line čítačkou zdrojov.
 
 ### Vlastnosti
@@ -240,19 +240,19 @@ NESYNCHRONIZUJE SA so žiadnou on-line čítačkou zdrojov.
 Užívatelia Feedly môžu exportovať svoje zdroje do OPML na tejto adrese: (http://cloud.feedly.com/#opml) a potom ich importovať do spaRSS
 
 ### Prečo spaRSS?
-spaRSS je forkom (pokračovaním) projektu Flym. Používa rovnakú licenciu (GPLv3), a má celkovo rovnaké správanie. Tak prečo som potom vytvoril tento fork?
-https://github.com/FredJul , ktorý oficiálne udržiava a vyvíja Flym sa rozhodol nepokračovať vo vývoji svojej aplikácie v takom rozsahu ako predtým. (viď https://github.com/FredJul/Flym/blob/master/README.md).
-Avšak, keďže Flym je skvelá aplikácia a ja som chcel pridať niektoré funkcie (ako je napríklad overovanie pomocou súborov cookie, pozri https://github.com/FredJul/Flym/pull/296), rozhodol som sa, so súhlasom od FredJula, pre vytvorenie forku.
-Všetci, vrátane FredJula môžu slobodne prispieť alebo použiť spaRSS zdrojový kód pre svoje vlastné aplikácie, pokiaľ budú GPLv3 kompatibilné.
+spaRSS je forkom (pokračovaním) projektu Flym. Používa rovnakú licenciu (GPLv3), a má celkovo rovnaké správanie. Tak prečo som potom vytvoril tento fork?  
+https://github.com/FredJul , ktorý oficiálne udržiava a vyvíja Flym sa rozhodol nepokračovať vo vývoji svojej aplikácie v takom rozsahu ako predtým. (viď https://github.com/FredJul/Flym/blob/master/README.md).  
+Avšak, keďže Flym je skvelá aplikácia a ja som chcel pridať niektoré funkcie (ako je napríklad overovanie pomocou súborov cookie, pozri https://github.com/FredJul/Flym/pull/296), rozhodol som sa, so súhlasom od FredJula, pre vytvorenie forku.  
+Všetci, vrátane FredJula môžu slobodne prispieť alebo použiť spaRSS zdrojový kód pre svoje vlastné aplikácie, pokiaľ budú GPLv3 kompatibilné.  
 Takže ak by sa rozhodol k obnoveniu práce na jeho aplikácii, veľmi rád mu pomôžem zaradiť všetky zmeny obsiahnuté v spaRSS do jeho aplikácie Flym.
 
 ### Ako prispieť?
-Ak máte akýkoľvek nápad na zlepšenie spaRSS, neváhajte a pridajte ho [sem](https://github.com/Etuldan/spaRSS/issues).
-Môžete mi tiež pomôcť s momentálne existujúcimi problémami [tu](https://github.com/Etuldan/spaRSS/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
+Ak máte akýkoľvek nápad na zlepšenie spaRSS, neváhajte a pridajte ho [sem](https://github.com/Etuldan/spaRSS/issues).  
+Môžete mi tiež pomôcť s momentálne existujúcimi problémami [tu](https://github.com/Etuldan/spaRSS/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).  
 Chcete pomôcť s prekladom? Pridajte sa k nám na [Weblate](https://hosted.weblate.org/projects/sparss/strings/)!
 
 ### Odkazy
-GitHub projekt: https://github.com/Etuldan/spaRSS
-PlayStore: https://play.google.com/store/apps/details?id=net.etuldan.sparss
-F-Droid: https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss
+GitHub projekt: https://github.com/Etuldan/spaRSS  
+PlayStore: https://play.google.com/store/apps/details?id=net.etuldan.sparss  
+F-Droid: https://f-droid.org/repository/browse/?fdid=net.etuldan.sparss.floss  
 spaRSS je fork aplikácie [Flym](https://github.com/FredJul/Flym)
