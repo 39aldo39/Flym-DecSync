@@ -82,6 +82,7 @@ import net.etuldan.sparss.view.DragNDropListener;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -457,37 +458,31 @@ public class EditFeedsListFragment extends ListFragment {
                 return true;
             }
             case R.id.menu_export: {
-                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
-                        || Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
+                new Thread(new Runnable() { // To not block the UI
+                    @Override
+                    public void run() {
+                        try {
+                            final String filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/spaRSS_"
+                                    + System.currentTimeMillis() + ".opml";
 
-                    new Thread(new Runnable() { // To not block the UI
-                        @Override
-                        public void run() {
-                            try {
-                                final String filename = Environment.getExternalStorageDirectory().toString() + "/spaRSS_"
-                                        + System.currentTimeMillis() + ".opml";
-
-                                OPML.exportToFile(filename);
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getActivity(), String.format(getString(R.string.message_exported_to), filename),
-                                                Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            } catch (Exception e) {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getActivity(), R.string.error_feed_export, Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
+                            OPML.exportToFile(filename);
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getActivity(), String.format(getString(R.string.message_exported_to), filename),
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        } catch (IOException e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getActivity(), R.string.error_feed_export, Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
-                    }).start();
-                } else {
-                    Toast.makeText(getActivity(), R.string.error_external_storage_not_available, Toast.LENGTH_LONG).show();
-                }
+                    }
+                }).start();
                 break;
             }
         }
