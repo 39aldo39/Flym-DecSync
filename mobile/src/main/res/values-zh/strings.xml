@@ -233,7 +233,7 @@
     <string name="settings_font_serif">使用衬线体</string>
     <string name="settings_font_serif_description">使用衬线体显示文章而非黑体</string>
     <string name="settings_mark_as_read">显示用来标记全部文章为已读的按钮</string>
-    <string name="settings_mark_as_read_description">显示/隐藏按钮(需重启该应用)</string>
+    <string name="settings_mark_as_read_description">显示/隐藏按钮</string>
     <string name="settings_show_new_entries">自动显示新文章</string>
     <string name="settings_show_new_entries_description">如果禁用，需要点击一下显示按钮才能显示新文章</string>
     </resources>

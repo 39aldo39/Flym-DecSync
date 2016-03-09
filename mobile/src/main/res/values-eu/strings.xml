@@ -249,7 +249,7 @@
     <string name="settings_font_serif">Serif letra mota erabili</string>
     <string name="settings_font_serif_description">Serif letra mota erabili artikuluetan Sans-Serif erabili beharrean</string>
     <string name="settings_mark_as_read">Guztia irakurrita bezala markatzeko botoia erakutsi</string>
-    <string name="settings_mark_as_read_description">Erakutsi / Ezkutatu botoia (berrabiarazi beharko da)</string>
+    <string name="settings_mark_as_read_description">Erakutsi / Ezkutatu botoia</string>
     <string name="settings_show_new_entries">Automatikoki sarrera berriak erakutsi</string>
     <string name="settings_show_new_entries_description">Ezgaituta badago, Sarrera berriak erakutsi botoia sakatu beharko da sarrera berriak ikusteko</string>
     </resources>

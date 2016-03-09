@@ -249,7 +249,7 @@
     <string name="settings_font_serif">Použít písmo Serif</string>
     <string name="settings_font_serif_description">Použít pro text článků písmo Serif místo Sans-Serif</string>
     <string name="settings_mark_as_read">Zobrazit tlačítko Označit vše jako přečtené</string>
-    <string name="settings_mark_as_read_description">Zobrazit / Skrýt tlačítko (vyžaduje restart)</string>
+    <string name="settings_mark_as_read_description">Zobrazit / Skrýt tlačítko</string>
     <string name="settings_show_new_entries">Automaticky zobrazovat nové články</string>
     <string name="settings_show_new_entries_description">Pokud je vypnuto, je pro zobrazení nových článků třeba ťuknout na tlačítko Zobrazit nové články</string>
     <string name="no_new_entries">Žádné nové příspěvky k zobrazení.</string>

@@ -156,7 +156,7 @@
     <string name="settings_proxy_port">ポート</string>
     <string name="settings_proxy_type">タイプ</string>
     <string name="settings_mark_as_read">すべて既読としてマーク ボタンを表示</string>
-    <string name="settings_mark_as_read_description">ボタンを表示/非表示します (再起動が必要)</string>
+    <string name="settings_mark_as_read_description">ボタンを表示/非表示します</string>
     <plurals name="number_of_new_entries">
 	    <item quantity="one">新しいエントリー 1 つ</item>
     </plurals>

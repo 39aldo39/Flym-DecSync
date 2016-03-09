@@ -176,7 +176,7 @@
     <string name="settings_proxy_port">Port</string>
     <string name="settings_proxy_type">Type</string>
     <string name="settings_mark_as_read">Afficher le bouton "Marquer tout comme lu"</string>
-    <string name="settings_mark_as_read_description">Afficher/Masquer le bouton (redémarrage requis)</string>
+    <string name="settings_mark_as_read_description">Afficher/Masquer le bouton</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">%d nouvel article</item>
         <item quantity="other">%d nouveaux articles</item>

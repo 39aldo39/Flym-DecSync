@@ -197,7 +197,7 @@
     <string name="settings_proxy_port">Porta</string>
     <string name="settings_proxy_type">Tipo</string>
     <string name="settings_mark_as_read">Mostra bottone "Segna tutti come letti"</string>
-    <string name="settings_mark_as_read_description">Mostra/nascondi il bottone (Richiede il riavvio)</string>
+    <string name="settings_mark_as_read_description">Mostra/nascondi il bottone</string>
 
     <plurals name="number_of_new_entries">
         <item quantity="one">Un nuovo articolo</item>

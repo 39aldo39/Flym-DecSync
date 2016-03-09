@@ -299,8 +299,8 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         this.menu = menu;
         menu.clear(); // This is needed to remove a bug on Android 4.0.3
-         inflater.inflate(R.menu.entry_list, menu);
-        if (!PrefUtils.getBoolean(PrefUtils.MARK_AS_READ, true)) {
+        inflater.inflate(R.menu.entry_list, menu);
+        if (!PrefUtils.getBoolean(PrefUtils.MARK_AS_READ, false)) {
             menu.findItem(R.id.menu_all_read).setVisible(false);
         }
         if (EntryColumns.FAVORITES_CONTENT_URI.equals(mUri)) {

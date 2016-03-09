@@ -190,7 +190,7 @@
     <string name="settings_proxy_port">Port</string>
     <string name="settings_proxy_type">Type</string>
     <string name="settings_mark_as_read">Display button "Mark all as read"</string>
-    <string name="settings_mark_as_read_description">Show / Hide the button (restart required)</string>
+    <string name="settings_mark_as_read_description">Show / Hide the button</string>
     <string name="settings_show_new_entries">Automatically show new entries</string>
     <string name="settings_show_new_entries_description">If disabled, a tap on the "Show new entries" button will be required to show new entries</string>
     <plurals name="number_of_new_entries">

@@ -233,7 +233,7 @@
     <string name="settings_font_serif">세리프 글꼴 사용</string>
     <string name="settings_font_serif_description">내용을 표시할 때 산세리프 대신 세리프 글꼴을 사용합니다</string>
     <string name="settings_mark_as_read">\'모두 읽음으로 표시\' 버튼 표시</string>
-    <string name="settings_mark_as_read_description">버튼을 표시하거나 숨깁니다 (재시작 필요)</string>
+    <string name="settings_mark_as_read_description">버튼을 표시하거나 숨깁니다</string>
     <string name="settings_show_new_entries">새 항목 자동으로 표시</string>
     <string name="settings_show_new_entries_description">만약 해제되었을 경우 \'새 항목 표시\' 버튼을 눌러야만 새로운 항목이 표시됩니다</string>
     </resources>

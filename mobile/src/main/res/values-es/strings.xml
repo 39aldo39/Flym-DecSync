@@ -223,7 +223,7 @@
     <string name="tab_advanced_title">Avanzado</string>
     <string name="menu_open_in_browser">Abrir en el navegador</string>
     <string name="settings_mark_as_read">Mostrar botón Marcar todo como leído</string>
-    <string name="settings_mark_as_read_description">Mostrar / Ocultar el botón (requiere reinicio)</string>
+    <string name="settings_mark_as_read_description">Mostrar / Ocultar el botón</string>
     <string name="settings_show_new_entries">Mostrar entradas nuevas automáticamente</string>
     <string name="settings_show_new_entries_description">Desactivar para requerir tocar el botón Mostrar nuevas entradas para mostrar nuevas entradas</string>
     <string name="menu_switch_full_original">Mostrar contenido completo</string>

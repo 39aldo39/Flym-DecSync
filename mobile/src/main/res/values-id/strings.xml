@@ -161,7 +161,7 @@
     <string name="settings_proxy_port">Port</string>
     <string name="settings_proxy_type">Tipe</string>
     <string name="settings_mark_as_read">Tampilkan tombol Tandai semua terbaca</string>
-    <string name="settings_mark_as_read_description">Tampil / Sembunyi tombol (mulai ulang dibutuhkan)</string>
+    <string name="settings_mark_as_read_description">Tampil / Sembunyi tombol</string>
     <string name="settings_show_new_entries">Secara otomatis menampilkan entri baru</string>
     <string name="settings_show_new_entries_description">Jika non-aktif, sentuk ditombol Tampilkan entri baru dibutuhkan untuk menampilkan entri baru</string>
     <plurals name="number_of_new_entries">

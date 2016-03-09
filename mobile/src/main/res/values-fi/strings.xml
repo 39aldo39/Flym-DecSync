@@ -193,7 +193,7 @@
     <string name="settings_proxy_port">Portti</string>
     <string name="settings_proxy_type">Tyyppi</string>
     <string name="settings_mark_as_read">Näytä "Merkitse luetuksi" -nappi</string>
-    <string name="settings_mark_as_read_description" tools:ignore="MissingTranslation" >Näytä "Merkitse luetuksi" -nappi (edellyttää uudelleenkäynnistyksen)</string>
+    <string name="settings_mark_as_read_description">Näytä "Merkitse luetuksi" -nappi</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">Yksi uusi artikkeli</item>
         <item quantity="other">%d uutta artikkelia</item>

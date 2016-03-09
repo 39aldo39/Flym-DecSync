@@ -182,7 +182,7 @@
     <string name="settings_proxy_port">Porta</string>
     <string name="settings_proxy_type">Tipo</string>
     <string name="settings_mark_as_read">Botão "Marcar todos como lido"</string>
-    <string name="settings_mark_as_read_description">Mostrar / Esconder o botão (necessário reiniciar)</string>
+    <string name="settings_mark_as_read_description">Mostrar / Esconder o botão</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">Um artigo novo</item>
         <item quantity="other">%d novos artigos</item>

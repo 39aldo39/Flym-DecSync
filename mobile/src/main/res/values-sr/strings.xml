@@ -181,7 +181,7 @@
     <string name="settings_proxy_port">Порт</string>
     <string name="settings_proxy_type">Тип</string>
     <string name="settings_mark_as_read">Прикажи дугме "Означи све прочитаним"</string>
-    <string name="settings_mark_as_read_description">Прикажи/сакриј дугме (потребан рестарт)</string>
+    <string name="settings_mark_as_read_description">Прикажи/сакриј дугме</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">%d нови унос</item>
         <item quantity="few">%d нових уноса</item>

@@ -182,7 +182,7 @@
     <string name="settings_proxy_port">Port</string>
     <string name="settings_proxy_type">Type</string>
     <string name="settings_mark_as_read">Visa knappen "Mark som läst"</string>
-    <string name="settings_mark_as_read_description">Visa knappen "Mark som läst" (omstart behövs)</string>
+    <string name="settings_mark_as_read_description">Visa knappen "Mark som läst"</string>
 
     <plurals name="number_of_new_entries">
         <item quantity="one">Ett nytt inlägg</item>

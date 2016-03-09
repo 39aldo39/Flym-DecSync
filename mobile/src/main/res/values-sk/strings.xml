@@ -241,7 +241,7 @@
     <string name="settings_font_serif">Použiť pätkové písmo</string>
     <string name="settings_font_serif_description">Použiť pätkové písmo v článkoch</string>
     <string name="settings_mark_as_read">Zobraziť tlačidlo „Označiť všetko ako prečítané“</string>
-    <string name="settings_mark_as_read_description">Zobraziť / skryť tlačidlo (potrebný reštart)</string>
+    <string name="settings_mark_as_read_description">Zobraziť / skryť tlačidlo</string>
     <string name="settings_show_new_entries">Automaticky zobraziť nové články</string>
     <string name="settings_show_new_entries_description">Ak je vypnuté, tlačidlo „Zobraziť nové články“ bude potrebné pre zobrazenie nových článkov</string>
     </resources>

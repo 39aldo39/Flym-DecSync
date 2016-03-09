@@ -243,7 +243,7 @@
     <string name="settings_font_serif">Шрифт с засечками</string>
     <string name="settings_font_serif_description">Использовать шрифт с засечками для отображения новостей</string>
     <string name="settings_mark_as_read">Показывать кнопку «Отметить все как прочтённые»</string>
-    <string name="settings_mark_as_read_description">Показать/скрыть кнопку (требуется перезапуск)</string>
+    <string name="settings_mark_as_read_description">Показать/скрыть кнопку</string>
     <string name="settings_show_new_entries">Автоматически показывать новые записи</string>
     <string name="settings_show_new_entries_description">Если отключено, для показа новых записей потребуется нажать «Показать новые записи»</string>
     <string name="menu_open_in_browser">Открыть в браузере</string>
