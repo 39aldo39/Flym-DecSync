@@ -283,6 +283,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
             }
             String[] selectedValues = getResources().getStringArray(R.array.settings_keep_time_values);
             mKeepTime.setSelection(selectedValues.length - 1);
+            mRetrieveFulltextCb.setChecked(true);
         } else if (intent.getAction().equals(Intent.ACTION_EDIT)) {
             setTitle(R.string.edit_feed_title);
 
