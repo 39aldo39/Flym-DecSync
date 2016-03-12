@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
  Copyright (c) 2015 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
  Copyright (c) 2010-2012 Stefan Handschuh
@@ -42,7 +43,7 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="back_again_to_quit">Press back once more to exit</string>
-    <string name="no_new_entries">No new entries to display.</string>
+    <string name="no_new_entries">No new entries to display</string>
 
     <!-- FEEDS -->
     <string name="feeds">Feeds</string>
@@ -62,7 +63,7 @@
     <string name="error_feed_import">The selected file could not be imported.</string>
     <string name="error_feed_export">The export has failed. Make sure you have a writable SD-card mounted.</string>
     <string name="error_external_storage_not_available">The external storage (e.g. SD-card) is not available.</string>
-    <string name="feed_url">URL address</string>
+    <string name="feed_url">URL</string>
     <string name="optional">(optional)</string>
     <string name="website_or_feed">(website or feed)</string>
     <string name="feed_cookie">Authentication Cookie</string>
@@ -74,8 +75,8 @@
     <string name="tab_feed_title">Feed</string>
     <string name="tab_filters_title">Filter</string>
     <string name="tab_advanced_title">Advanced</string>
-    <string name="feed_title">TITLE</string>
-    <string name="feed_filters">FILTER RULES</string>
+    <string name="feed_title">Title</string>
+    <string name="feed_filters">Filter rules</string>
     <string name="filter_add_title">Add rule</string>
     <string name="filter_delete_title">Delete rule</string>
     <string name="filter_help">Filter Help</string>
