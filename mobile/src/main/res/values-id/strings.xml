@@ -17,7 +17,7 @@
     <string name="drawer_open">Buka navigasi panel samping</string>
     <string name="drawer_close">Tutup navigasi panel samping</string>
     <string name="back_again_to_quit">Tekan kembali sekali lagi untuk keluar</string>
-    <string name="no_new_entries">Tidak ada entri baru yang ditampilkan.</string>
+    <string name="no_new_entries">Tidak ada entri baru yg ditampilkan</string>
 
     <string name="feeds">Feeds</string>
     <string name="menu_add_feed">Tambahkan umpan</string>
@@ -36,7 +36,7 @@
     <string name="error_feed_import">Berkas yang dipilih tidak dapat diimpor.</string>
     <string name="error_feed_export">Ekspor gagal. Pastikan kamu mempunyai SD-card terpasang yang dapat ditulis.</string>
     <string name="error_external_storage_not_available">Penyimpanan eksternal (contoh SD-card) tidak tersedia.</string>
-    <string name="feed_url">Alamat URL</string>
+    <string name="feed_url">URL</string>
     <string name="optional">(pilihan)</string>
     <string name="website_or_feed">(situs atau umpan)</string>
     <string name="feed_cookie">Otentikasi Cookie</string>
@@ -48,8 +48,8 @@
     <string name="tab_feed_title">Umpan</string>
     <string name="tab_filters_title">Penyaring</string>
     <string name="tab_advanced_title">Tingkat lanjut</string>
-    <string name="feed_title">JUDUL</string>
-    <string name="feed_filters">ATURAN PENYARING</string>
+    <string name="feed_title">Judul</string>
+    <string name="feed_filters">Aturan saringan</string>
     <string name="filter_add_title">Tambahkan aturan</string>
     <string name="filter_delete_title">Hapus aturan</string>
     <string name="filter_help">Bantuan Penyaring</string>
@@ -166,7 +166,7 @@
     <string name="settings_show_new_entries_description">Jika non-aktif, sentuk ditombol Tampilkan entri baru dibutuhkan untuk menampilkan entri baru</string>
     <plurals name="number_of_new_entries">
 	<item quantity="one">Satu entri baru</item>
-	<item quantity="other"></item>
+	<item quantity="other"/>
 </plurals>
 
     </resources>
