@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
     <string name="app_name">spaRSS</string>
     <string name="about_spaRSS">spaRSS について</string>
@@ -35,7 +35,7 @@
     <string name="error_feed_import">選択したファイルをインポートできませんでした.</string>
     <string name="error_feed_export">エクスポートに失敗しました。書き込み可能な SD カードがマウントされていることを確認してください.</string>
     <string name="error_external_storage_not_available">外部記憶装置 (SD カードなど) が利用できません.</string>
-    <string name="feed_url">URL アドレス</string>
+    <string name="feed_url">URL</string>
     <string name="optional">(省略可能)</string>
     <string name="website_or_feed">(ウェブサイトまたはフィード)</string>
     <string name="feed_cookie">認証 Cookie</string>
@@ -164,7 +164,7 @@
     <string name="menu_show_new_entries">新しいエントリーを表示</string>
     <string name="settings_show_new_entries">自動的に新しいエントリーを表示します</string>
     <string name="settings_show_new_entries_description">無効にした場合、新しいエントリーを表示ボタンをタップして、新しいエントリーを表示します</string>
-    <string name="no_new_entries">表示する新しいエントリはありません。</string>
+    <string name="no_new_entries">表示する新しいエントリはありません</string>
 
     <string name="feed_httpAuth">HTTP 認証</string>
     <string name="loginhttpAuth">ログイン</string>
