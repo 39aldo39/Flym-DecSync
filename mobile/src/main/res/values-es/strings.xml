@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
  Copyright (c) 2010-2012 Stefan Handschuh
 
@@ -59,13 +59,13 @@
     <string name="error_feed_import">No se ha podido importar el archivo seleccionado.</string>
     <string name="error_feed_export">No se han exportado las fuentes. Compruebe los permisos en la tarjeta SD.</string>
     <string name="error_external_storage_not_available">El almacenaje externo no está disponible.</string>
-    <string name="feed_url">Dirección URL</string>
+    <string name="feed_url">URL</string>
     <string name="optional">(opcional)</string>
     <string name="website_or_feed">(página web o fuente)</string>
     <string name="tab_feed_title">Fuente</string>
     <string name="tab_filters_title">Filtros</string>
-    <string name="feed_title">TÍTULO</string>
-    <string name="feed_filters">FILTROS DE EXCLUSIÓN</string>
+    <string name="feed_title">Título</string>
+    <string name="feed_filters">Filtros de exclusión</string>
     <string name="filter_add_title">Añadir filtro</string>
     <string name="filter_delete_title">Eliminar filtro</string>
     <string name="filter_edit_title">Editar filtro</string>
@@ -233,7 +233,7 @@
     <string name="cookievalue">Valor</string>
     <string name="settings_font_serif">Usar fuente Serif</string>
     <string name="settings_font_serif_description">Usar fuente Serif en lugar de Sans-Serif en los artículos</string>
-    <string name="no_new_entries">Nada nuevo para mostrar.</string>
+    <string name="no_new_entries">Nada nuevo para mostrar</string>
 
     <string name="feed_httpAuth">Autenticación HTTP</string>
     <string name="passwordhttpAuth">Contraseña</string>
