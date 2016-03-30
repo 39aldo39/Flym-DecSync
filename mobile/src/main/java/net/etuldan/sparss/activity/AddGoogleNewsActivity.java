@@ -25,11 +25,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 
 import net.etuldan.sparss.R;
 import net.etuldan.sparss.provider.FeedDataContentProvider;
 import net.etuldan.sparss.utils.UiUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Locale;
 
 public class AddGoogleNewsActivity extends BaseActivity {
@@ -41,6 +44,7 @@ public class AddGoogleNewsActivity extends BaseActivity {
 
     private static final int[] CB_IDS = new int[]{R.id.cb_top_stories, R.id.cb_world, R.id.cb_business, R.id.cb_technology, R.id.cb_entertainment,
             R.id.cb_sports, R.id.cb_science, R.id.cb_health};
+    private EditText mCustomTopicEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class AddGoogleNewsActivity extends BaseActivity {
         setResult(RESULT_CANCELED);
 
         setContentView(R.layout.activity_add_google_news);
+        mCustomTopicEditText = (EditText) findViewById(R.id.google_news_custom_topic);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,6 +79,16 @@ public class AddGoogleNewsActivity extends BaseActivity {
                     url += "&topic=" + TOPIC_CODES[topic];
                 }
                 FeedDataContentProvider.addFeed(this, url, getString(TOPIC_NAME[topic]), true);
+            }
+        }
+
+        String custom_topic = mCustomTopicEditText.getText().toString();
+        if(!custom_topic.isEmpty())
+        {
+            try {
+                String url = "http://news.google.com/news?hl=" + Locale.getDefault().getLanguage() + "&output=rss&q=" + URLEncoder.encode(custom_topic, "UTF-8");
+                FeedDataContentProvider.addFeed(this, url, custom_topic, true);
+            } catch (UnsupportedEncodingException ignored) {
             }
         }
 
