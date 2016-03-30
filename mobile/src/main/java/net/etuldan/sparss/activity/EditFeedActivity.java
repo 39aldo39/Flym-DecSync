@@ -62,6 +62,7 @@ import android.os.Bundle;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -281,6 +282,14 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
             if (intent.hasExtra(Intent.EXTRA_TEXT)) {
                 mUrlEditText.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
             }
+            String[] selectedValues = getResources().getStringArray(R.array.settings_keep_time_values);
+            mKeepTime.setSelection(selectedValues.length - 1);
+            mRetrieveFulltextCb.setChecked(true);
+        } else if (intent.getAction().equals(Intent.ACTION_VIEW)) {
+            setTitle(R.string.new_feed_title);
+
+            tabWidget.setVisibility(View.GONE);
+            mUrlEditText.setText(intent.getDataString());
             String[] selectedValues = getResources().getStringArray(R.array.settings_keep_time_values);
             mKeepTime.setSelection(selectedValues.length - 1);
             mRetrieveFulltextCb.setChecked(true);
