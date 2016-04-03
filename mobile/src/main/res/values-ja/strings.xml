@@ -170,4 +170,7 @@
     <string name="loginhttpAuth">ログイン</string>
     <string name="passwordhttpAuth">パスワード</string>
     <string name="filter_help">フィルター ヘルプ</string>
+    <string name="storage_request_explanation">フィードのファイルをインポートまたはエクスポートできるように、アプリケーションをストレージのメモリにアクセスする許可が必要です。</string>
+    <string name="google_news_custom_topic">カスタム トピックを入力</string>
+
     </resources>
