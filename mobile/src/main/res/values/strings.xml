@@ -109,6 +109,7 @@
     <string name="google_news_sports">Sports</string>
     <string name="google_news_science">Science</string>
     <string name="google_news_health">Health</string>
+    <string name="google_news_custom_topic">Enter custom topic</string>
 
     <!-- ENTRIES -->
     <string name="all">Entries</string>
