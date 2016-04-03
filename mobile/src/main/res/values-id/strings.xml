@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">spaRSS</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+    <string name="app_name">spaRSS</string>
     <string name="about_spaRSS">Tentang spaRSS</string>
     <string name="welcome_title">Selamat datang di spaRSS. Apakah anda ingin menambahkan satu umpan?</string>
     <string name="never">tidak pernah</string>
