@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
  Copyright (c) 2015 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
@@ -61,7 +61,7 @@
     <string name="error_feed_import">Изабрани фајл се не може увести.</string>
     <string name="error_feed_export">Извоз није успео. Проверите да ли имате монтирану уписиву СД картицу.</string>
     <string name="error_external_storage_not_available">Спољашње складиште (нпр. СД картица) није доступно.</string>
-    <string name="feed_url">УРЛ адреса</string>
+    <string name="feed_url">УРЛ</string>
     <string name="optional">(необавезно)</string>
     <string name="website_or_feed">(вебсајт или довод)</string>
     <string name="feed_cookie">Колачић аутентификације</string>
@@ -70,8 +70,8 @@
     <string name="tab_feed_title">Довод</string>
     <string name="tab_filters_title">Филтер</string>
     <string name="tab_advanced_title">Напредно</string>
-    <string name="feed_title">НАСЛОВ</string>
-    <string name="feed_filters">ПРАВИЛА ФИЛТЕРА</string>
+    <string name="feed_title">Наслов</string>
+    <string name="feed_filters">Правила филтера</string>
     <string name="filter_add_title">Додавање правила</string>
     <string name="filter_delete_title">Брисање правила</string>
     <string name="filter_edit_title">Уређивање правила</string>
@@ -238,7 +238,7 @@
     </string-array>
 
 <string name="menu_show_new_entries">Прикажи нове уносе</string>
-    <string name="no_new_entries">Нема нових уноса за приказ.</string>
+    <string name="no_new_entries">Нема нових уноса за приказ</string>
 
     <string name="menu_open_in_browser">Отвори у прегледачу</string>
     <string name="menu_switch_full_original">Прикажи цео садржај</string>
@@ -250,4 +250,6 @@
     <string name="loginhttpAuth">Пријава</string>
     <string name="passwordhttpAuth">Лозинка</string>
     <string name="filter_help">Помоћ за филтер</string>
+    <string name="google_news_custom_topic">Прилагођена тема</string>
+
     </resources>
