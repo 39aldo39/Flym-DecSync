@@ -239,4 +239,7 @@
     <string name="passwordhttpAuth">Contraseña</string>
     <string name="loginhttpAuth">Nombre de acceso</string>
     <string name="filter_help">Ayuda de filtros</string>
+    <string name="storage_request_explanation">Para poder importar o exportar las fuentes desde o hacia un archivo, debes permitir que la aplicación acceda a la memoria de almacenamiento.</string>
+    <string name="google_news_custom_topic">Añade un tema de tu elección</string>
+
     </resources>
