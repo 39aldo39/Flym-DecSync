@@ -1,2 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">spaRSS</string>
+    <string name="about_spaRSS">O spaRSS</string>
+    <string name="welcome_title">Witaj w spaRSS. Chciałbyś dodać nowe źródło?</string>
+    <string name="never">nigdy</string>
+    <string name="update">Aktualizuj</string>
+    <string name="colon">: </string>
+    <string name="menu_settings">Ustawienia</string>
+    <string name="menu_refresh">Odśwież</string>
+    <string name="menu_all_read">Oznacz wszystko jako przeczytane</string>
+    <string name="menu_show_new_entries">Pokaż nowe wiadomości</string>
+    <string name="error">Błąd</string>
+    <string name="network_error">Problem z internetem</string>
+    <string name="loading">Ładowanie…</string>
+    <string name="no_result">Brak wyników</string>
+    </resources>
