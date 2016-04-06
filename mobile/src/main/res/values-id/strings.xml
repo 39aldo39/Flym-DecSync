@@ -170,4 +170,7 @@
 	<item quantity="other"/>
 </plurals>
 
+    <string name="storage_request_explanation">Agar bisa mengimpor atau mengekspor umpan dari atau ke berkas, anda harus mengijinkan aplikasi mengakses media penyimpanan.</string>
+    <string name="google_news_custom_topic">Masukkan topik khusus</string>
+
     </resources>
