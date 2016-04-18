@@ -112,7 +112,7 @@ public class EntriesCursorAdapter extends ResourceCursorAdapter {
         ColorGenerator generator = ColorGenerator.DEFAULT;
         int color = generator.getColor(Long.valueOf(feedId)); // The color is specific to the feedId (which shouldn't change)
         TextDrawable letterDrawable = TextDrawable.builder().buildRound((feedName != null ? feedName.substring(0, 1).toUpperCase() : ""), color);
-        if (mainImgUrl != null) {
+        if (mainImgUrl != null && PrefUtils.getBoolean(PrefUtils.DISPLAY_IMAGES, true)) {
             Picasso.with(context).load(mainImgUrl).transform(mCircleTransform).placeholder(letterDrawable).error(letterDrawable).into(holder.mainImgView);
         } else {
             Picasso.with(context).cancelRequest(holder.mainImgView);
