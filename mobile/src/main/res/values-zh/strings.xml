@@ -236,4 +236,7 @@
     <string name="settings_mark_as_read_description">显示/隐藏按钮</string>
     <string name="settings_show_new_entries">自动显示新文章</string>
     <string name="settings_show_new_entries_description">如果禁用，需要点击一下显示按钮才能显示新文章</string>
+    <string name="storage_request_explanation">为了把订阅导入或导出为文件，必须允许应用访问sd卡。</string>
+    <string name="google_news_custom_topic">自定义主题</string>
+
     </resources>
