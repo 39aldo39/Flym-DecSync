@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
  Copyright (c) 2010-2012 Stefan Handschuh
 
@@ -41,7 +41,7 @@
     <string name="drawer_open">Открыть меню навигации</string>
     <string name="drawer_close">Закрыть меню навигации</string>
     <string name="back_again_to_quit">Нажмите "Назад" еще раз, чтобы выйти</string>
-    <string name="no_new_entries">Нет новых записей.</string>
+    <string name="no_new_entries">Нет новых записей</string>
 
     <!-- FEEDS -->
     <string name="feeds">Ленты</string>
@@ -61,13 +61,13 @@
     <string name="error_feed_import">Не удалось импортировать выбранный файл.</string>
     <string name="error_feed_export">Экспорт не удался. Удостоверьтесь, что подключена карта памяти с возможностью записи.</string>
     <string name="error_external_storage_not_available">Внешнее хранилище (например карта памяти) недоступно.</string>
-    <string name="feed_url">URL-адрес</string>
+    <string name="feed_url">URL</string>
     <string name="optional">(не обязательно)</string>
     <string name="website_or_feed">(сайта или ленты новостей)</string>
     <string name="tab_feed_title">Ленту</string>
     <string name="tab_filters_title">Фильтры</string>
-    <string name="feed_title">НАЗВАНИЕ</string>
-    <string name="feed_filters">ФИЛЬТРЫ ИСКЛЮЧЕНИЙ</string>
+    <string name="feed_title">Название</string>
+    <string name="feed_filters">Фильтры исключений</string>
     <string name="filter_add_title">Добавить фильтр</string>
     <string name="filter_delete_title">Удалить фильтр</string>
     <string name="filter_edit_title">Редактировать фильтр</string>
@@ -250,4 +250,7 @@
     <string name="menu_switch_full_original">Показать всё содержимое</string>
     <string name="filter_help">Помощь по фильтрам</string>
     <string name="tab_advanced_title">Дополнительно</string>
+    <string name="storage_request_explanation">Чтобы получить возможность импорта лент из файла или экспорта их в файл, надо разрешить приложению доступ к хранилищу.</string>
+    <string name="google_news_custom_topic">Ввести рубрику вручную</string>
+
     </resources>
