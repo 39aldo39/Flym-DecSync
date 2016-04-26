@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
  Copyright (c) 2015 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
@@ -252,4 +252,11 @@
     <string name="settings_mark_as_read_description">Erakutsi / Ezkutatu botoia</string>
     <string name="settings_show_new_entries">Automatikoki sarrera berriak erakutsi</string>
     <string name="settings_show_new_entries_description">Ezgaituta badago, Sarrera berriak erakutsi botoia sakatu beharko da sarrera berriak ikusteko</string>
+    <string name="storage_request_explanation">Jarioak fitxategi batetik inportatu edo fitxategi batera esportatu ahal izateko, biltegirako baimena eman behar diozu aplikazioari.</string>
+    <string name="feed_httpAuth">HTTP autentikazioa</string>
+    <string name="loginhttpAuth">Saioa hasiera</string>
+    <string name="passwordhttpAuth">Pasahitza</string>
+    <string name="filter_help">Iragazkiaren laguntza</string>
+    <string name="google_news_custom_topic">Gai pertsonalizatua sartu</string>
+
     </resources>
