@@ -254,7 +254,7 @@
     <string name="settings_show_new_entries_description">Ezgaituta badago, Sarrera berriak erakutsi botoia sakatu beharko da sarrera berriak ikusteko</string>
     <string name="storage_request_explanation">Jarioak fitxategi batetik inportatu edo fitxategi batera esportatu ahal izateko, biltegirako baimena eman behar diozu aplikazioari.</string>
     <string name="feed_httpAuth">HTTP autentikazioa</string>
-    <string name="loginhttpAuth">Saioa hasiera</string>
+    <string name="loginhttpAuth">Erabiltzailearen izena</string>
     <string name="passwordhttpAuth">Pasahitza</string>
     <string name="filter_help">Iragazkiaren laguntza</string>
     <string name="google_news_custom_topic">Gai pertsonalizatua sartu</string>
