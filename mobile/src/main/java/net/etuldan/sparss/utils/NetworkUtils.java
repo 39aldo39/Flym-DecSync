@@ -221,7 +221,7 @@ public class NetworkUtils {
     }
 
     public static HttpURLConnection setupConnection(String url, String cookieName, String cookieValue, String login, String password) throws IOException {
-        String cookie = cookieName.isEmpty() ? "" : cookieName + "=" + cookieValue;
+        String cookie = cookieName == null || cookieName.isEmpty() ? "" : cookieName + "=" + cookieValue;
         return setupConnection(new URL(url), cookie, login, password);
     }
 
