@@ -41,17 +41,22 @@ public class ArticleTextExtractor {
     private static final Pattern NEGATIVE_STYLE =
             Pattern.compile("hidden|display: ?none|font-size: ?small");
 
+    public static String extractContent(InputStream input, String contentIndicator, String titleIndicator) throws Exception {
+        Element conventional = extractContent(input, contentIndicator);
+        return conventional == null ? null : conventional.toString();
+    }
+    
     /**
      * @param input            extracts article text from given html string. wasn't tested
      *                         with improper HTML, although jSoup should be able to handle minor stuff.
      * @param contentIndicator a text which should be included into the extracted content, or null
      * @return extracted article, all HTML tags stripped
      */
-    public static String extractContent(InputStream input, String contentIndicator) throws Exception {
+    public static Element extractContent(InputStream input, String contentIndicator) throws Exception {
         return extractContent(Jsoup.parse(input, null, ""), contentIndicator);
     }
 
-    public static String extractContent(Document doc, String contentIndicator) {
+    private static Element extractContent(Document doc, String contentIndicator) {
         if (doc == null)
             throw new NullPointerException("missing document");
 
@@ -75,11 +80,7 @@ public class ArticleTextExtractor {
             }
         }
 
-        if (bestMatchElement != null) {
-            return bestMatchElement.toString();
-        }
-
-        return null;
+        return bestMatchElement;
     }
 
     /**

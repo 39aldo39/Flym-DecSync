@@ -296,6 +296,7 @@ public class FetcherService extends IntentService {
             if (entryCursor.moveToFirst()) {
                 if (entryCursor.isNull(entryCursor.getColumnIndex(EntryColumns.MOBILIZED_HTML))) { // If we didn't already mobilized it
                     int linkPos = entryCursor.getColumnIndex(EntryColumns.LINK);
+                    int titlePos = entryCursor.getColumnIndex(EntryColumns.TITLE);
                     int abstractHtmlPos = entryCursor.getColumnIndex(EntryColumns.ABSTRACT);
                     int feedIdPos = entryCursor.getColumnIndex(EntryColumns.FEED_ID);
                     HttpURLConnection connection = null;
@@ -316,18 +317,18 @@ public class FetcherService extends IntentService {
                         cursorFeed.close();
 
                         // Try to find a text indicator for better content extraction
-                        String contentIndicator = null;
-                        String text = entryCursor.getString(abstractHtmlPos);
-                        if (!TextUtils.isEmpty(text)) {
-                            text = Html.fromHtml(text).toString();
-                            if (text.length() > 60) {
-                                contentIndicator = text.substring(20, 40);
-                            }
-                        }
-
+                        String contentIndicator = entryCursor.getString(abstractHtmlPos);
+                        contentIndicator = Html.fromHtml(contentIndicator).toString();
+                        contentIndicator = contentIndicator.substring(0, 100);
+                        contentIndicator = contentIndicator.replaceAll("[\\s\\u00A0]+"," "); //normalize, all whitespaces (incl char(160)) -> single space
+                        
+                        String titleIndicator = entryCursor.getString(titlePos);
+                        titleIndicator = Html.fromHtml(titleIndicator).toString();
+                        titleIndicator = titleIndicator.replaceAll("[\\s\\u00A0]+"," "); //normalize, all whitespaces (incl char(160)) -> single space
+                        
                         connection = NetworkUtils.setupConnection(link,cookieName, cookieValue,httpAuthLoginValue, httpAuthPassValue);
 
-                        String mobilizedHtml = ArticleTextExtractor.extractContent(connection.getInputStream(), contentIndicator);
+                        String mobilizedHtml = ArticleTextExtractor.extractContent(connection.getInputStream(), contentIndicator, titleIndicator);
 
                         if (mobilizedHtml != null) {
                             mobilizedHtml = HtmlUtils.improveHtmlContent(mobilizedHtml, NetworkUtils.getBaseUrl(link));

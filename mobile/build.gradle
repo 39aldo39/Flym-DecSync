@@ -58,11 +58,11 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    //wearApp project(':wear')\n' +
     compile 'com.android.support:appcompat-v7:23.+'
-    gplayCompile 'com.google.android.gms:play-services-wearable:+'
     compile 'com.melnykov:floatingactionbutton:+'
     compile 'org.jsoup:jsoup:+'
     compile 'com.squareup.picasso:picasso:+'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:+'
+    // Required -- JUnit 4 framework
+    testCompile 'junit:junit:4.12'
 }
