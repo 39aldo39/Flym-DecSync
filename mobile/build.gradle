@@ -3,7 +3,7 @@ apply plugin: 'com.droidtitan.lintcleaner'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "net.etuldan.sparss"
@@ -11,6 +11,7 @@ android {
         targetSdkVersion 23
         versionCode 71
         versionName "1.11.4"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -32,7 +33,6 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -48,6 +48,10 @@ android {
         }
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
 }
 
 repositories {
@@ -57,12 +61,31 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.+'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.melnykov:floatingactionbutton:+'
-    compile 'org.jsoup:jsoup:+'
+    compile 'org.jsoup:jsoup:+' 
     compile 'com.squareup.picasso:picasso:+'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:+'
+//    testCompile 'junit:junit:4.12'
+//    testCompile 'org.mockito:mockito-core:1.10.19'
+
+    //for unit tests. see src/test
     // Required -- JUnit 4 framework
     testCompile 'junit:junit:4.12'
+    // Optional -- Mockito framework
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
+
+    //for Android Instrumented Tests. see src/androidTest
+    androidTestCompile 'com.android.support:support-annotations:23.3.0'
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    // Optional -- Hamcrest library
+    androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
+    //compile 'org.hamcrest:hamcrest-library:1.3'
+    // Optional -- UI testing with Espresso
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    
+
 }
