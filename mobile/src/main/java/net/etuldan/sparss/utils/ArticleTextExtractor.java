@@ -2,6 +2,8 @@ package net.etuldan.sparss.utils;
 
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -94,11 +96,13 @@ public class ArticleTextExtractor {
         }
 
         //check siblings for images and add them if any available
+        int imgAdded =0;
         Element previousSibling = bestMatchElement.previousElementSibling();
         while(previousSibling != null) {
             if (previousSibling.select("img").size() != 0) {
                 bestMatchElement.prependChild(previousSibling);
                 previousSibling = bestMatchElement.previousElementSibling();
+                imgAdded++;
             } else {
                 previousSibling = previousSibling.previousElementSibling();
             }
@@ -108,10 +112,71 @@ public class ArticleTextExtractor {
             if (nextSibling.select("img").size() != 0) {
                 bestMatchElement.appendChild(nextSibling);
                 nextSibling = bestMatchElement.nextElementSibling();
+                imgAdded++;
             } else {
                 nextSibling = nextSibling.nextElementSibling();
             }
         }
+        System.out.println("ADDED "+imgAdded +" IMAGES!!!");
+        
+        //search for video tags and fix them if necessary
+//        IF VIDEO TAG LOOKS LIKE THIS:
+//        <video style="position: absolute; top: 0px; display: none; width: 100%; padding-top: 56.25%;">
+//        ...
+//        <meta itemprop="thumbnailUrl" content="http://...">
+//        <meta itemprop="contentURL" content="http://...">
+//        </video>
+//        TRANSFORM TO THIS:
+//        <video controls poster="http://...">
+//        <source src="http://...">
+//        </video>
+        for (Element video : bestMatchElement.getElementsByTag("video")) {
+            String thumb = null;
+            String url = null;
+            for (Element meta : video.getElementsByTag("meta")) {
+                if(meta.attr("itemprop").equals("thumbnailUrl")) {
+                    thumb = meta.attr("content");
+                }
+                if(meta.attr("itemprop").equals("contentURL")) {
+                    url = meta.attr("content");
+                }
+            }
+            if(thumb != null && url != null) {
+                video.attr("controls", true);
+                video.attr("poster", thumb);
+                video.appendElement("source").attr("src", url);
+            }
+        }
+        
+        //search for img and remove lazy-loading
+//        IF VIDEO TAG LOOKS LIKE THIS:
+//        <figure class="NewsArticle__ChapterImage LazyImage mt-sm" data-lazy-image="{&quot;src&quot;: &quot;/ii/4/5/4/7/2/9/8/8/d51292db9620e5ed.jpeg&quot; }" data-lazy-image-text="Bild lädt...">
+//        <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 4 3'%2F%3E">
+//        ...
+//        </figure>
+//        TRANSFORM TO THIS:
+//        <img src="/ii/4/5/4/7/2/9/8/8/d51292db9620e5ed.jpeg">
+        for (Element img : bestMatchElement.getElementsByTag("img")) {
+            String src = null;
+            if(img.parent() != null && img.parent().tag().getName().equals("figure")) {
+                Element parent = img.parent();
+                
+                    String json = parent.attr("data-lazy-image");
+//                    JSONObject obj = new JSONObject(json); //does not work.
+//                    src = obj.getString("src");            //WHY?
+                if(json.substring(2, 5).equals("src")) {
+                    json = json.substring(6);//remove "src"
+                    int first = json.indexOf("\"") + 1;
+                    int last = json.indexOf("\"", first);
+                    src = json.substring(first, last);
+                }
+            }
+            if(src != null) {
+                img.attr("src", src);
+            }
+        }
+        
+        
 
         if (bestMatchElement != null) {
             return bestMatchElement.toString();
