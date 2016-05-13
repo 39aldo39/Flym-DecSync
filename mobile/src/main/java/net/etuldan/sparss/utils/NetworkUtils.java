@@ -29,6 +29,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.text.Html;
+import android.util.Log;
 
 import net.etuldan.sparss.Constants;
 import net.etuldan.sparss.MainApplication;
@@ -52,7 +53,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class NetworkUtils {
+ public class NetworkUtils {
+     private static final String TAG = "NetworkUtils"; 
 
     public static final File IMAGE_FOLDER_FILE = new File(MainApplication.getContext().getCacheDir(), "images/");
     public static final String IMAGE_FOLDER = IMAGE_FOLDER_FILE.getAbsolutePath() + '/';
@@ -206,6 +208,7 @@ public class NetworkUtils {
                 }
             }
         } catch (Throwable ignored) {
+            Log.e(TAG, "Exception", ignored);
         } finally {
             if (iconURLConnection != null) {
                 iconURLConnection.disconnect();
@@ -261,6 +264,7 @@ public class NetworkUtils {
                     proxy = proxyList.get(0);
                 }
             } catch (Throwable ignored) {
+                Log.e(TAG, "Exception", ignored);
             }
         }
         if (login!=null && password!=null && !password.equals("") && !login.equals("")) {

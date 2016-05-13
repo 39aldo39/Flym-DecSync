@@ -187,7 +187,7 @@ public class ArticleTextExtractor {
                     String json = parent.attr("data-lazy-image");
 //                    JSONObject obj = new JSONObject(json); //does not work.
 //                    src = obj.getString("src");            //WHY?
-                if(json.substring(2, 5).equals("src")) {
+                if(json.length() > 7 && json.substring(2, 5).equals("src")) {
                     json = json.substring(6);//remove "src"
                     int first = json.indexOf("\"") + 1;
                     int last = json.indexOf("\"", first);

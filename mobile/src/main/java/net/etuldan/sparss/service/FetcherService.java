@@ -369,6 +369,7 @@ public class FetcherService extends IntentService {
                             }
                         }
                     } catch (Throwable ignored) {
+                        Log.e(TAG, "Exception", ignored);
                     } finally {
                         if (connection != null) {
                             connection.disconnect();
@@ -398,6 +399,7 @@ public class FetcherService extends IntentService {
             try {
                 cr.applyBatch(FeedData.AUTHORITY, operations);
             } catch (Throwable ignored) {
+                Log.e(TAG, "Exception", ignored);
             }
         }
     }
@@ -440,6 +442,7 @@ public class FetcherService extends IntentService {
             try {
                 cr.applyBatch(FeedData.AUTHORITY, operations);
             } catch (Throwable ignored) {
+                Log.e(TAG, "Exception", ignored);
             }
         }
     }
@@ -740,6 +743,7 @@ public class FetcherService extends IntentService {
                         }
                     }
                 } catch (Throwable ignored) {
+                    Log.e(TAG, "Exception", ignored);
                 }
 
                 if (connection != null) {
