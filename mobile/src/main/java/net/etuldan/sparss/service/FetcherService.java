@@ -79,6 +79,9 @@ import net.etuldan.sparss.utils.HtmlUtils;
 import net.etuldan.sparss.utils.NetworkUtils;
 import net.etuldan.sparss.utils.PrefUtils;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -318,13 +321,17 @@ public class FetcherService extends IntentService {
 
                         // Try to find a text indicator for better content extraction
                         String contentIndicator = entryCursor.getString(abstractHtmlPos);
-                        contentIndicator = Html.fromHtml(contentIndicator).toString();
-                        contentIndicator = contentIndicator.substring(0, 100);
-                        contentIndicator = contentIndicator.replaceAll("[\\s\\u00A0]+"," "); //normalize, all whitespaces (incl char(160)) -> single space
+
+                        Document doc = Jsoup.parse(contentIndicator);
+                        contentIndicator = doc.text().substring(0, 100);
+                        
                         
                         String titleIndicator = entryCursor.getString(titlePos);
-                        titleIndicator = Html.fromHtml(titleIndicator).toString();
-                        titleIndicator = titleIndicator.replaceAll("[\\s\\u00A0]+"," "); //normalize, all whitespaces (incl char(160)) -> single space
+                        doc = Jsoup.parse(titleIndicator);
+                        titleIndicator = doc.text();
+                        
+//                        titleIndicator = Html.fromHtml(titleIndicator).toString();
+//                        titleIndicator = titleIndicator.replaceAll("[\\s\\u00A0]+"," "); //normalize, all whitespaces (incl char(160)) -> single space
                         
                         connection = NetworkUtils.setupConnection(link,cookieName, cookieValue,httpAuthLoginValue, httpAuthPassValue);
 

@@ -141,6 +141,12 @@ public class ArticleTextExtractorTest {
 
     @Test
     public void fullContentChip() throws Exception {
+        checkArticle("http://www.chip.de/news/Hoellischer-Gameboy-Doom-II-auf-Raspberry-Pi-Kettensaege-zocken_93519098.html",
+                "Höllischer Gameboy: Doom II auf Raspberry-Pi-Kettensäge zocken",
+                "Viel stilvoller kann man Doom II kaum spielen: Ein Bastler hat eine blutverschmierte Kettensäge mit ",
+                100,
+                1,
+                new String[]{"Viel stilvoller kann man", "320 x 240 Pixeln in den leeren Körper.", "ab 18 Jahren, versteht sich."});
         checkArticle("http://www.chip.de/news/Volles-Rohr-Der-Hyperloop-faehrt-zum-ersten-Mal_93581140.html",
                 "Volles Rohr: Der Hyperloop fährt zum ersten Mal",
                 "Der Hyperloop galt lange als Hirngespinst des Milliardärs Elon Musk. Jetzt soll die Vision tatsächli",

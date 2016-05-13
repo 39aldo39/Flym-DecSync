@@ -56,7 +56,7 @@ public class ArticleTextExtractor {
         return extractContent(Jsoup.parse(input, null, ""), contentIndicator, titleIndicator);
     }
 
-    public static String extractContent(Document doc, String contentIndicator, String titleIndicator) {
+    private static String extractContent(Document doc, String contentIndicator, String titleIndicator) {
         if (doc == null)
             throw new NullPointerException("missing document");
 
@@ -68,11 +68,12 @@ public class ArticleTextExtractor {
         int maxWeight = 0;
         Element bestMatchElement = null;
 
+        Log.d(TAG, "======================================================");
+        Log.d(TAG, "extractContent: " + titleIndicator + "");
         if(contentIndicator != null) {
             //first largest node which contains content but not title. that is the content we want.
             for (Element entry : nodes) {
                 String text = entry.text();
-                text = text.substring(0, Math.min(200, text.length())).replaceAll("[\\s\\u00A0]+"," "); //normalized beginning of text
                 if(text.contains(contentIndicator)) {
                     if(!text.contains(titleIndicator)) {
                         if(maxWeight < entry.text().length()) { //use whole content length here!
@@ -83,26 +84,48 @@ public class ArticleTextExtractor {
                 }
             }
         }
+        if(bestMatchElement != null) {
+            Log.d(TAG, "extractContent: new method worked. " + bestMatchElement.text().length());
+        }
 
         if(bestMatchElement == null) {
             if(contentIndicator != null) {
-                Log.d(TAG, "extractContent: conventionalMatching for " + titleIndicator + ", withContentFilter==true");
                 bestMatchElement = conventionalMatching(nodes, contentIndicator, true);
+                if(bestMatchElement != null) {
+                    Log.d(TAG, "extractContent: conventionalMatching worked, withContentFilter==true " + bestMatchElement.text().length());
+                }
             }
             if (bestMatchElement == null) {
-                Log.d(TAG, "extractContent: conventionalMatching for " + titleIndicator + ", withContentFilter==false");
                 bestMatchElement = conventionalMatching(nodes, contentIndicator, false);
+                if(bestMatchElement != null) {
+                    Log.d(TAG, "extractContent: conventionalMatching worked, withContentFilter==false " + bestMatchElement.text().length());
+                }
             }
         }
 
+        if (bestMatchElement == null) {
+            Log.e(TAG, "extractContent failed. Returning document body.");
+            return doc.select("body").first().toString();
+        }
+
+        Log.d(TAG, "extractContent: -----------------------------------------------------");
+        Log.d(TAG, bestMatchElement.text());
+        Log.d(TAG, "extractContent: -----------------------------------------------------");
+
+        //remove child "aside" if available.
+        Element aside = bestMatchElement.select("aside").first();
+        if(aside != null) {
+            aside.remove();
+            Log.d(TAG, "extractContent: removed aside");
+        }
+
         //check siblings for images and add them if any available
-        int imgAdded =0;
         Element previousSibling = bestMatchElement.previousElementSibling();
         while(previousSibling != null) {
             if (previousSibling.select("img").size() != 0) {
                 bestMatchElement.prependChild(previousSibling);
+                Log.d(TAG, "extractContent: prepended image " + previousSibling);
                 previousSibling = bestMatchElement.previousElementSibling();
-                imgAdded++;
             } else {
                 previousSibling = previousSibling.previousElementSibling();
             }
@@ -111,14 +134,13 @@ public class ArticleTextExtractor {
         while(nextSibling != null) {
             if (nextSibling.select("img").size() != 0) {
                 bestMatchElement.appendChild(nextSibling);
+                Log.d(TAG, "extractContent: appended image " + nextSibling);
                 nextSibling = bestMatchElement.nextElementSibling();
-                imgAdded++;
             } else {
                 nextSibling = nextSibling.nextElementSibling();
             }
         }
-        System.out.println("ADDED "+imgAdded +" IMAGES!!!");
-        
+
         //search for video tags and fix them if necessary
 //        IF VIDEO TAG LOOKS LIKE THIS:
 //        <video style="position: absolute; top: 0px; display: none; width: 100%; padding-top: 56.25%;">
@@ -145,9 +167,10 @@ public class ArticleTextExtractor {
                 video.attr("controls", true);
                 video.attr("poster", thumb);
                 video.appendElement("source").attr("src", url);
+                Log.d(TAG, "extractContent: fixed video " + url);
             }
         }
-        
+
         //search for img and remove lazy-loading
 //        IF VIDEO TAG LOOKS LIKE THIS:
 //        <figure class="NewsArticle__ChapterImage LazyImage mt-sm" data-lazy-image="{&quot;src&quot;: &quot;/ii/4/5/4/7/2/9/8/8/d51292db9620e5ed.jpeg&quot; }" data-lazy-image-text="Bild lädt...">
@@ -173,17 +196,15 @@ public class ArticleTextExtractor {
             }
             if(src != null) {
                 img.attr("src", src);
+                Log.d(TAG, "extractContent: removed lazy-load " + src);
             }
         }
-        
-        
 
-        if (bestMatchElement != null) {
+        boolean debug  = true;
+        if(debug)
             return bestMatchElement.toString();
-        }
 
-        Log.e(TAG, "extractContent failed. Returning document body.");
-        return doc.select("body").first().toString();
+        return bestMatchElement.toString();
     }
 
     /**
