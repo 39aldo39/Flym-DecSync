@@ -55,11 +55,14 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.util.Log;
 
 import net.etuldan.sparss.Constants;
 import net.etuldan.sparss.utils.PrefUtils;
 
 public class RefreshService extends Service {
+    private static final String TAG = "RefreshService";
+    
     public static final String SIXTY_MINUTES = "3600000";
     private final OnSharedPreferenceChangeListener mListener = new OnSharedPreferenceChangeListener() {
         @Override
@@ -103,6 +106,7 @@ public class RefreshService extends Service {
         try {
             time = Math.max(60000, Integer.parseInt(PrefUtils.getString(PrefUtils.REFRESH_INTERVAL, SIXTY_MINUTES)));
         } catch (Exception ignored) {
+            Log.e(TAG, "Exception", ignored);
         }
 
         long elapsedRealTime = SystemClock.elapsedRealtime();

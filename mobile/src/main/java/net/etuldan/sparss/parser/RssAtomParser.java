@@ -547,7 +547,7 @@ public class RssAtomParser extends DefaultHandler {
                 Date result = format.parse(dateStr);
                 return (result.getTime() > mNow ? new Date(mNow) : result);
             } catch (ParseException ignored) {
-            } // just do nothing
+            } // just try next format
         }
 
         if (tryAllFormat)
@@ -567,7 +567,7 @@ public class RssAtomParser extends DefaultHandler {
                 Date result = format.parse(dateStr);
                 return (result.getTime() > mNow ? new Date(mNow) : result);
             } catch (ParseException ignored) {
-            } // just do nothing
+            } // just try next format
         }
 
         if (tryAllFormat)

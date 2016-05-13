@@ -62,6 +62,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
 
@@ -106,6 +107,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FetcherService extends IntentService {
+    private static final String TAG = "FetcherService";
 
     public static final String ACTION_REFRESH_FEEDS = "net.etuldan.sparss.REFRESH";
     public static final String ACTION_MOBILIZE_FEEDS = "net.etuldan.sparss.MOBILIZE_FEEDS";
@@ -486,6 +488,7 @@ public class FetcherService extends IntentService {
                     try {
                         result = refreshFeed(feedId, keepDateBorderTime);
                     } catch (Exception ignored) {
+                        Log.e(TAG, "Exception", ignored);
                     }
                     return result;
                 }
@@ -499,6 +502,7 @@ public class FetcherService extends IntentService {
                 Future<Integer> f = completionService.take();
                 globalResult += f.get();
             } catch (Exception ignored) {
+                Log.e(TAG, "Exception", ignored);
             }
         }
 
@@ -601,6 +605,7 @@ public class FetcherService extends IntentService {
                                 Xml.findEncodingByName(index2 > -1 ? contentType.substring(index + 8, index2) : contentType.substring(index + 8));
                                 fetchMode = FETCHMODE_DIRECT;
                             } catch (UnsupportedEncodingException ignored) {
+                                Log.e(TAG, "Exception", ignored);
                                 fetchMode = FETCHMODE_REENCODE;
                             }
                         } else {
@@ -626,6 +631,7 @@ public class FetcherService extends IntentService {
                                 Xml.findEncodingByName(xmlDescription.substring(start + 10, xmlDescription.indexOf('"', start + 11)));
                                 fetchMode = FETCHMODE_DIRECT;
                             } catch (UnsupportedEncodingException ignored) {
+                                Log.e(TAG, "Exception", ignored);
                                 fetchMode = FETCHMODE_REENCODE;
                             }
                         } else {
@@ -688,6 +694,7 @@ public class FetcherService extends IntentService {
                                                 index + 8, index2) : contentType.substring(index + 8)));
                                         Xml.parse(reader, handler);
                                     } catch (Exception ignored) {
+                                        Log.e(TAG, "Exception", ignored);
                                     }
                                 } else {
                                     StringReader reader = new StringReader(xmlText);
