@@ -91,7 +91,7 @@
     <string name="to_group_into">Do skupiny</string>
     <string name="add_custom_feed">Pridať vlastný zdroj alebo vyhľadať nový</string>
     <string name="google_news_title">Články Google News</string>
-    <string name="google_news_indicator">Vybrať jednu alebo viac tém na pridanie. Niektoré z nich nemusí Google poskytovať vo vašom jazyku.</string>
+    <string name="google_news_indicator">Vyberte jednu alebo viac tém na pridanie. Niektoré z nich nemusí Google poskytovať vo vašom jazyku.</string>
     <string name="google_news_top_stories">Hlavné témy</string>
     <string name="google_news_world">Svet</string>
     <string name="google_news_business">Podnikanie</string>
