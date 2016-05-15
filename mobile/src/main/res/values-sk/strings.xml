@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
  Copyright (c) 2015 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
@@ -62,13 +62,13 @@
     <string name="error_feed_import">Vybraný súbor nemohol byť importovaný.</string>
     <string name="error_feed_export">Export zlyhal. Na pripojenú SD kartu sa pravdepodobne nedá zapisovať.</string>
     <string name="error_external_storage_not_available">Externý úložný priestor (napr. SD karta) nie je dostupný.</string>
-    <string name="feed_url">URL adresa</string>
+    <string name="feed_url">URL</string>
     <string name="optional">(nepovinné)</string>
     <string name="website_or_feed">(webová stránka alebo zdroj)</string>
     <string name="tab_feed_title">Zdroj</string>
     <string name="tab_filters_title">Filter</string>
-    <string name="feed_title">NÁZOV</string>
-    <string name="feed_filters">PRAVIDLÁ FILTROV</string>
+    <string name="feed_title">Nadpis</string>
+    <string name="feed_filters">Pravidlá filtrov</string>
     <string name="filter_add_title">Pridať pravidlo</string>
     <string name="filter_delete_title">Zmazať pravidlo</string>
     <string name="filter_edit_title">Upraviť pravidlo</string>
@@ -224,7 +224,7 @@
     </string-array>
 
 <string name="menu_show_new_entries">Zobraziť nové články</string>
-    <string name="no_new_entries">Žiadne nové články.</string>
+    <string name="no_new_entries">Žiadne nové články</string>
 
     <string name="feed_cookie">Autentifikačná cookie</string>
     <string name="cookiename">Názov</string>
@@ -244,4 +244,7 @@
     <string name="settings_mark_as_read_description">Zobraziť / skryť tlačidlo</string>
     <string name="settings_show_new_entries">Automaticky zobraziť nové články</string>
     <string name="settings_show_new_entries_description">Ak je vypnuté, tlačidlo „Zobraziť nové články“ bude potrebné pre zobrazenie nových článkov</string>
+    <string name="storage_request_explanation">Pre import a export zdrojov je potrebné povoliť prístup aplikácie k úložnému priestoru.</string>
+    <string name="google_news_custom_topic">Vlastná téma</string>
+
     </resources>
