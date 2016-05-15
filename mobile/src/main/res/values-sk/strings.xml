@@ -75,8 +75,8 @@
     <string name="filter_is_regex">je regulárny výraz</string>
     <string name="filter_apply_to_title">Použiť pre nadpis</string>
     <string name="filter_apply_to_content">Použiť pre obsah</string>
-    <string name="accept">POVOLIŤ</string>
-    <string name="reject">ODMIETNUŤ</string>
+    <string name="accept">ACCEPT</string>
+    <string name="reject">REJECT</string>
     <string name="feed_search">Prehľadať zdroj</string>
     <string name="select_file">Vybrať súbor (SD karta)</string>
     <string name="question_delete_feed">Naozaj chcete zmazať tento zdroj?</string>
