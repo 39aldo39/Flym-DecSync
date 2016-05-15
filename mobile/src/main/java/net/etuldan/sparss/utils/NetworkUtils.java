@@ -37,6 +37,7 @@ import net.etuldan.sparss.provider.FeedData;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -207,6 +208,8 @@ import java.util.regex.Pattern;
                     bitmap.recycle();
                 }
             }
+        }catch (FileNotFoundException e) {
+            Log.d(TAG, "FileNotFoundException: " + e.getMessage());
         } catch (Throwable ignored) {
             Log.e(TAG, "Exception", ignored);
         } finally {
