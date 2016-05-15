@@ -79,20 +79,23 @@ public class ArticleTextExtractor {
         }
 
         if(bestMatchElement != null) {
-            log(TAG, "extractContent: new method worked. <"+bestMatchElement.tagName() + " " + bestMatchElement.attributes().toString() + " " + bestMatchElement.text().length());
+            log(TAG, "extractContent: new method worked. <"+bestMatchElement.tagName() + " " + 
+                    bestMatchElement.attributes().toString() + " length:" + bestMatchElement.text().length());
         }
 
         if(bestMatchElement == null) {
             if(contentIndicator != null) {
                 bestMatchElement = conventionalMatching(nodes, contentIndicator, true);
                 if(bestMatchElement != null) {
-                    log(TAG, "extractContent: conventionalMatching worked, withContentFilter==true " + bestMatchElement.text().length());
+                    log(TAG, "extractContent: conventionalMatching worked, withContentFilter==true <"
+                            +bestMatchElement.tagName() + " " + bestMatchElement.attributes().toString() + " length:" + bestMatchElement.text().length());
                 }
             }
             if (bestMatchElement == null) {
                 bestMatchElement = conventionalMatching(nodes, contentIndicator, false);
                 if(bestMatchElement != null) {
-                    log(TAG, "extractContent: conventionalMatching worked, withContentFilter==false " + bestMatchElement.text().length());
+                    log(TAG, "extractContent: conventionalMatching worked, withContentFilter==false <"
+                            +bestMatchElement.tagName() + " " + bestMatchElement.attributes().toString() + " length:" + bestMatchElement.text().length());
                 }
             }
         }
@@ -204,8 +207,8 @@ public class ArticleTextExtractor {
         Element previousSibling = bestMatchElement.previousElementSibling();
         while(previousSibling != null) {
             if (previousSibling.select("img").size() != 0 &&
-                    previousSibling.children().size() <= 2 //only img and optional description
-                        && previousSibling.text().length() < 160 //only short description 
+                    previousSibling.children().size() <= 3 //only img and optional two descriptions
+                        && previousSibling.text().length() < 200 //only short description 
                         ) {
                     bestMatchElement.prependChild(previousSibling);
                     log(TAG, "extractContent: prepended image " + previousSibling);
@@ -262,7 +265,6 @@ public class ArticleTextExtractor {
 //            }
             int currentWeight = getWeight(entry, contentIndicator);
             if (currentWeight > maxWeight) {
-                currentWeight = getWeight(entry, contentIndicator);
                 maxWeight = currentWeight;
                 bestMatchElement = entry;
 

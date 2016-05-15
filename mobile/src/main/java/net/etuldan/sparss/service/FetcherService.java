@@ -334,12 +334,12 @@ public class FetcherService extends IntentService {
 //                        titleIndicator = Html.fromHtml(titleIndicator).toString();
 //                        titleIndicator = titleIndicator.replaceAll("[\\s\\u00A0]+"," "); //normalize, all whitespaces (incl char(160)) -> single space
                         
-                        connection = NetworkUtils.setupConnection(link,cookieName, cookieValue,httpAuthLoginValue, httpAuthPassValue);
+                        connection = NetworkUtils.setupConnection(link, cookieName, cookieValue,httpAuthLoginValue, httpAuthPassValue);
 
                         String mobilizedHtml = ArticleTextExtractor.extractContent(HtmlUtils.decompressStream(connection.getInputStream()), contentIndicator, titleIndicator);
 
                         if (mobilizedHtml != null) {
-                            mobilizedHtml = HtmlUtils.improveHtmlContent(mobilizedHtml, NetworkUtils.getBaseUrl(link));
+                            mobilizedHtml = HtmlUtils.improveHtmlContent(mobilizedHtml, NetworkUtils.getBaseUrl(connection.getURL().toURI().toString()));
                             ContentValues values = new ContentValues();
                             values.put(EntryColumns.MOBILIZED_HTML, mobilizedHtml);
 

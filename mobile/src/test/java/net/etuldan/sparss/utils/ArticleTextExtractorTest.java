@@ -317,6 +317,46 @@ public class ArticleTextExtractorTest {
                 2,
                 new String[]{"Es una imagen conocida por cualquiera", "esta semana al estadio."});
     }
+
+    @Test
+    public void fullContentIeee() throws Exception {
+        checkArticle("http://feedproxy.google.com/~r/IeeeSpectrumFullText/~3/hgEmJ_v7xsc/engineer-and-investor-in-spat-about-wireless-charging-startup-ubeam",
+                "Engineer and Investor in Spat About Wireless Charging Startup uBeam",
+                "A former uBeam engineer says the company hyped its tech. Investor says he never heard it from him",
+                100,
+                1,
+                new String[]{});
+        checkArticle("http://feedproxy.google.com/~r/IeeeSpectrumFullText/~3/oFh80EAvc2Y/rfonly-logic-could-cut-rfid-size-and-cost",
+                "RF-Only Logic Makes RFID Tags Tinier",
+                "New kind of power supply for RFID and IoT logic circuits could eliminate a sizable chunk of circuitr",
+                100,
+                1,
+                new String[]{});
+        checkArticle("http://feedproxy.google.com/~r/IeeeSpectrumFullText/~3/yVu_mqZy274/quadrotors-have-learned-to-dodge-swords",
+                "Why You Should Be Glad That Quadrotors Have Learned to Dodge Swords",
+                "A Stanford roboticist (and fencer) discusses drones, swords, and why mixing them is such a great ide",
+                100,
+                1,
+                new String[]{});
+        checkArticle("http://feedproxy.google.com/~r/IeeeSpectrumFullText/~3/4m3KXeUcUFs/how-should-a-selfdriving-car-tell-you-it-needs-you-to-take-over",
+                "How Should a Self-Driving Car Tell You to Take the Wheel?",
+                "Experts say self-driving cars should start with vibrations in your seat",
+                100,
+                1,
+                new String[]{});
+        checkArticle("http://feedproxy.google.com/~r/IeeeSpectrumFullText/~3/el6J-BHNFOQ/holoflex-a-flexible-smartphone-with-a-holographic-display",
+                "HoloFlex: A Flexible Smartphone with a Holographic Display",
+                "This prototype smartphone has a holographic lightfield displays glasses-free 3-D images, and a struc",
+                100,
+                1,
+                new String[]{});
+        checkArticle("http://feedproxy.google.com/~r/IeeeSpectrumFullText/~3/d-naCjOY38c/singleatom-sensor-offers-new-view-of-the-nanoscale",
+                "Single-Atom Sensor Offers New View of the Nanoscale",
+                "A so-called nitrogen-vacancy defect sensor provides superb image resolution of minute phenomena",
+                100,
+                1,
+                new String[]{});
+    }
     
     /**
      * Helper method for debugging only.
@@ -333,7 +373,8 @@ public class ArticleTextExtractorTest {
 //                "http://www.sportmediaset.mediaset.it/rss/homepage.xml"
 //                "http://askldjd.com/feed/"
 //                "https://www.nrdc.org/rss.xml"
-                "http://ep00.epimg.net/rss/elpais/portada.xml"
+//                "http://ep00.epimg.net/rss/elpais/portada.xml"
+                "http://feeds.feedburner.com/ieeeSpectrumFullText"
                 ;
         URL url = new URL(rssUrl);
         URLConnection con = url.openConnection();
