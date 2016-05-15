@@ -65,42 +65,42 @@ public class ArticleTextExtractorTest {
     
     @Test
     public void fullContentTus() throws Exception {
-//        checkArticle("http://tusfleestedt.de/index.php/alle-sportberichte/fussball/396-e-juniorinnen-starten-beim-vgh-cup-in-neu-wulmstorf",
-//                "E-Juniorinnen starteten beim VGH-Cup in Neu Wulmstorf",
-//                "Am Sonnabend traten unsere E-Juniorinnen beim landesweiten Sichtungsturnier des NFV in Neu Wulmstorf",
-//                872,
-//                1,
-//                new String[]{"Am Sonnabend traten ", "Erstmals spielten ", "wieder die Torstatistik!"});
-//        checkArticle("http://tusfleestedt.de/index.php/alle-sportberichte/tischtennis/395-tischtennis-1-damenmannschaft-gewinnt-kreispokal",
-//                "Tischtennis: 1. Damenmannschaft gewinnt Kreispokal!",
-//                "Unsere 1. Damenmannschaft hat mit dem Gewinn des Kreispokals eine äußerst erfolgreiche Saison abgesc",
-//                509,
-//                1,
-//                new String[]{"Unsere 1. Damenmannschaft", "Die Meisterschaft in", "gehalten werden kann." });
-//        checkArticle("http://tusfleestedt.de/index.php/homepage/foerderverein/394-foerderverein-bietet-foerdermitgliedschaften-an",
-//                "Förderverein bietet Fördermitgliedschaften an",
-//                "Ein modernes und anspruchsvolles Sportangebot bei moderaten Mitgliedsbeiträgen zu bieten – dies ist ",
-//                1332,
-//                1,
-//                new String[]{});
-//        checkArticle("http://tusfleestedt.de/index.php/sportangebot/kursangebot/fitness/393-smovey",
-//                "Smovey",
-//                "Smoveys bringen Abwechslung in die Sportstunden! Ab 12.05.2016  (6 Termine) Zeit: Donnerstags 10.15 ",
-//                1060,
-//                1,
-//                new String[]{"Smoveys bringen Abwechslung", "12.05., 19.05., 02.06,", "Tel. 04105-4235."});
-//        checkArticle("http://tusfleestedt.de/index.php/sportangebot/kursangebot/tanzen-und-rhythmische-bewegung/390-taenzer-innen-ue60-gesucht",
-//                "Tänzer/innen \"Ü60\" gesucht!",
-//                "Die Chance für Alle, die Lust zu tanzen haben aber partner/innenlos sind! Anfängerkurs „Ü60 Tanzen u",
-//                842,
-//                2,
-//                new String[]{"Die Chance für Alle", "12. Mai bis 16. Juni (5 Termine)", "Tel. 04105/1534081"});
-//        checkArticle("http://tusfleestedt.de/index.php/alle-sportberichte/fussball/389-fussballerinnen-des-tus-fleestedt-wollen-im-neuen-sportzentrum-durchstarten",
-//                "Fußballerinnen des TuS Fleestedt wollen im neuen Sportzentrum durchstarten",
-//                "Seevetal-Fleestedt – Bereits seit über 20 Jahren spielen auch Frauen und Mädchen beim TuS Fleestedt ",
-//                1812,
-//                1,
-//                new String[]{"Seevetal-Fleestedt – Bereits", "Rund 50 Mädchen spielen","Fotos: Ulrich Vergin"});
+        checkArticle("http://tusfleestedt.de/index.php/alle-sportberichte/fussball/396-e-juniorinnen-starten-beim-vgh-cup-in-neu-wulmstorf",
+                "E-Juniorinnen starteten beim VGH-Cup in Neu Wulmstorf",
+                "Am Sonnabend traten unsere E-Juniorinnen beim landesweiten Sichtungsturnier des NFV in Neu Wulmstorf",
+                872,
+                1,
+                new String[]{"Am Sonnabend traten ", "Erstmals spielten ", "wieder die Torstatistik!"});
+        checkArticle("http://tusfleestedt.de/index.php/alle-sportberichte/tischtennis/395-tischtennis-1-damenmannschaft-gewinnt-kreispokal",
+                "Tischtennis: 1. Damenmannschaft gewinnt Kreispokal!",
+                "Unsere 1. Damenmannschaft hat mit dem Gewinn des Kreispokals eine äußerst erfolgreiche Saison abgesc",
+                509,
+                1,
+                new String[]{"Unsere 1. Damenmannschaft", "Die Meisterschaft in", "gehalten werden kann." });
+        checkArticle("http://tusfleestedt.de/index.php/homepage/foerderverein/394-foerderverein-bietet-foerdermitgliedschaften-an",
+                "Förderverein bietet Fördermitgliedschaften an",
+                "Ein modernes und anspruchsvolles Sportangebot bei moderaten Mitgliedsbeiträgen zu bieten – dies ist ",
+                1332,
+                1,
+                new String[]{});
+        checkArticle("http://tusfleestedt.de/index.php/sportangebot/kursangebot/fitness/393-smovey",
+                "Smovey",
+                "Smoveys bringen Abwechslung in die Sportstunden! Ab 12.05.2016  (6 Termine) Zeit: Donnerstags 10.15 ",
+                1060,
+                1,
+                new String[]{"Smoveys bringen Abwechslung", "12.05., 19.05., 02.06,", "Tel. 04105-4235."});
+        checkArticle("http://tusfleestedt.de/index.php/sportangebot/kursangebot/tanzen-und-rhythmische-bewegung/390-taenzer-innen-ue60-gesucht",
+                "Tänzer/innen \"Ü60\" gesucht!",
+                "Die Chance für Alle, die Lust zu tanzen haben aber partner/innenlos sind! Anfängerkurs „Ü60 Tanzen u",
+                842,
+                2,
+                new String[]{"Die Chance für Alle", "12. Mai bis 16. Juni (5 Termine)", "Tel. 04105/1534081"});
+        checkArticle("http://tusfleestedt.de/index.php/alle-sportberichte/fussball/389-fussballerinnen-des-tus-fleestedt-wollen-im-neuen-sportzentrum-durchstarten",
+                "Fußballerinnen des TuS Fleestedt wollen im neuen Sportzentrum durchstarten",
+                "Seevetal-Fleestedt – Bereits seit über 20 Jahren spielen auch Frauen und Mädchen beim TuS Fleestedt ",
+                1812,
+                1,
+                new String[]{"Seevetal-Fleestedt – Bereits", "Rund 50 Mädchen spielen","Fotos: Ulrich Vergin"});
         checkArticle("http://tusfleestedt.de/index.php/50-neues-aus-dem-tus/377-muellsammelaktion-jedermaenner-waren-dabei",
                 "Müllsammelaktion - JederMänner waren dabei",
                 "Lost in Fleestedt Tatort: Müllsammelaktion der Landesjägerschaft am 09.04.2016. Und wir, eine 8-",
@@ -116,7 +116,7 @@ public class ArticleTextExtractorTest {
         checkArticle("http://tusfleestedt.de/index.php/50-neues-aus-dem-tus/374-wellness-massage",
                 "Wellness-Massage ",
                 "Wellness-Massage im Sportzentrum Seevetal Ab Juni 2016 Nach dem Training kommt die Wellness-Massage ",
-                947,
+                964,
                 2,
                 new String[]{"Wellness-Massage im Sportzentrum Seevetal Ab Juni 2016", "0174-3770087."});
         checkArticle("http://tusfleestedt.de/index.php/sportangebot/spartenangebote/fitness/yoga-und-faszientraining",
@@ -180,7 +180,7 @@ public class ArticleTextExtractorTest {
         checkArticle("http://www.chip.de/news/Nvidias-neue-Grafikkarten-GeForce-GTX-1070-und-1080-Release-und-Preis_93379054.html",
                 "Nvidia GTX 1070 & 1080 angekündigt: Sie kommen bald und der Preis steht fest!",
                 "Nvidia hat seine neuen Grafikkarten Geforce GTX 1070 und GTX 1080 vorgestellt. Hier ist alles, was S",
-                4937,
+                4952,
                 11,
                 new String[]{"Nvidia hat seine neuen Grafikkarten Geforce GTX 1070", "Vorgängergeneration deutlich fallen werden.","über 90 mit derselben GTX 1080."});
     }
@@ -233,34 +233,91 @@ public class ArticleTextExtractorTest {
                 0,
                 new String[]{"In the open-source community the so-called ", "(and was also input for some of above points)"});
     }
-
+    
     @Test
     public void fullContentSportmediaset() throws Exception {
         checkArticle("http://www.sportmediaset.mediaset.it/calcio/calcio/serie-a-le-formazioni-in-tempo-reale_1097794-201602a.shtml",
                 "38.A GIORNATA|FORMAZIONI LIVE Abate è out\nSi ferma Perotti: Roma con Dzeko\nInter-Palacio, Juve con Hernanes",
                 "Fascite plantare per il terzino del Milan, in dubbio anche la finale di Coppa Italia. Affaticamento ",
-                6640,
-                2,
-                new String[]{"Empoli (4-3-1-2): Pugliesi", "Udinese (3-5-2): Karnezis", "Mbabkogu, Mancosu e Lasagna. "});
+                8144,
+                0,
+                new String[]{"Empoli (4-3-1-2): Pugliesi", "Udinese (3-5-2): Karnezis", "Indisponibili: Icardi, Medel, Miranda"});
         checkArticle("http://www.sportmediaset.mediaset.it/mercato/mercato/sampaoli-molto-vicino-al-valencia-ciao-lazio_1098174-201602a.shtml",
                 "LA SVOLTA|Sampaoli, ciao Lazio \nValencia a un passo\nSpagnoli su Vidal\n",
                 "L'ex ct del Cile aveva trovato un'intesa coi biancocelesti ma Lotito non era del tutto convinto dell",
-                2450,
-                2,
-                new String[]{"L'ex ct del Cile aveva ", "Antonio Conte per il suo Chelsea."});
+                1497,
+                1,
+                new String[]{"L'ex ct del Cile aveva", "Antonio Conte per il suo Chelsea."});
         checkArticle("http://www.sportmediaset.mediaset.it/altrenotizie/mondo/olimpiadi-di-sochi-il-new-york-times-mosca-ha-barato-decine-di-atleti-russi-sono-stati-dopati-_1098035-201602a.shtml",
                 "ESTERI|Olimpiadi Sochi, New York Times: \"Atleti russi dopati\"",
                 "Lo ha rivelato il direttore del laboratorio anti-doping. Il ministro dello Sport Vitaly Mutko replic",
-                3020,
-                2,
-                new String[]{"Lo ha rivelato il direttore ", "state riportate dall'agenzia Tass. "});
+                2008,
+                1,
+                new String[]{"Lo ha rivelato il direttore ", "state riportate dall'agenzia Tass."});
         checkArticle("http://www.sportmediaset.mediaset.it/speciale/riminiwellness2016/riminiwellness-l-energy-revolution-torna-sulla-riviera-romagnola_1094794-201602a.shtml",
                 "DAL 2 AL 5 GIUGNO|Torna RiminiWellness\nTutte le novità fitness\nper vivere sano e bene",
                 "Undicesima edizione della kermesse: padiglioni interattivi, l'insegnamento al benessere e ospiti pre",
-                3315,
-                5,
+                1879,
+                1,
                 new String[]{"Dal 2 al 5 giugno tutto il meglio ", "si scateneranno in straordinari show cooking."});
     }
+
+    @Test
+    public void fullContentNrdc() throws Exception {
+        checkArticle("https://www.nrdc.org/experts/jake-schmidt/nordic-countries-and-us-announce-continued-climate-actions",
+                "Nordic Countries and U.S. Announce Continued Climate Actions",
+                "",
+                5392,
+                1,
+                new String[]{"co-written with Sarah Lyn Vollmer.", "Jake Schmidt Director, International program"});
+        checkArticle("https://www.nrdc.org/experts/amy-mall/regulators-neglected-stop-oil-and-gas-wastewater-contamination-west-virginia-creek",
+                "Regulators Neglected to Stop Oil and Gas Wastewater Contamination in West Virginia Creek",
+                "",
+                4691,
+                1,
+                new String[]{"The United States Geological Survey recently", "Mall Senior Policy Analyst, Land & Wildlife program"});
+        checkArticle("https://www.nrdc.org/experts/barbara-finamore/tide-turning-private-sector-joins-chinese-government-and-international",
+                "The Tide Is Turning: The Private Sector Joins the Chinese Government and the International Community in Cleaning Up Global Shipping Emissions ",
+                "",
+                4044,
+                3,
+                new String[]{"colleagues Freda Fung, Zhixi Zhu, and Winslow Robertson.", "Finamore Senior Attorney and Asia Director, China program"});
+        checkArticle("https://www.nrdc.org/stories/saving-breeding-grounds-pacific-gray-whale",
+                "Saving the Breeding Grounds of the Pacific Gray Whale",
+                "",
+                3612,
+                1,
+                new String[]{"With its warm, shallow waters bounded", "And so, too, do the Pacific gray whales."});
+    }
+
+    @Test
+    public void fullContentElPais() throws Exception {
+        checkArticle("http://elpais.com/ccaa/2016/05/15/catalunya/1463309032_025957.html#?ref=rss&format=simple&link=link",
+                "Sánchez presenta en Barcelona el equipo con el que aspira a gobernar",
+                "El líder socialista incorpora a su ejecutivo al senegalés Luc André Diouf y a la alcaldesa de Santa ",
+                4855,
+                0,
+                new String[]{"Tras una semana en la que el", "Sevilla, Josep Borrell o Ángel Gabilondo."});
+        checkArticle("http://elpais.com/internacional/2016/05/15/colombia/1463323839_160026.html#?ref=rss&format=simple&link=link",
+                "Paramilitarismo: la guerra que nunca termina en Colombia",
+                "El repunte de la violencia de los herederos de los paramilitares marca la recta final del proceso de",
+                5708,
+                1,
+                new String[]{"El pasado 10 de abril,", "paramilitares que ha tenido Colombia."});
+        checkArticle("http://elpais.com/internacional/2016/05/15/estados_unidos/1463327849_813449.html#?ref=rss&format=simple&link=link",
+                "Mujeres, impuestos, suplantaciones: el pasado que incomoda a Trump",
+                "Nuevas revelaciones de su pasado han puesto a la defensiva al candidato presidencial republicano",
+                6086,
+                0,
+                new String[]{" a mujeres y oscuros casos ", "del republicano se ha distanciado del"});
+        checkArticle("http://elpais.com/elpais/2016/05/15/portada/1463314135_231810.html#?ref=rss&format=simple&link=link",
+                "En el armario del fútbol español",
+                "",
+                22759,
+                2,
+                new String[]{"Es una imagen conocida por cualquiera", "esta semana al estadio."});
+    }
+    
     /**
      * Helper method for debugging only.
      */
@@ -274,7 +331,9 @@ public class ArticleTextExtractorTest {
 //                "https://statuscode.ch/feed.xml"
 //                "http://www.oora.de/startseite/feed.rss"
 //                "http://www.sportmediaset.mediaset.it/rss/homepage.xml"
-                "http://askldjd.com/feed/"
+//                "http://askldjd.com/feed/"
+//                "https://www.nrdc.org/rss.xml"
+                "http://ep00.epimg.net/rss/elpais/portada.xml"
                 ;
         URL url = new URL(rssUrl);
         URLConnection con = url.openConnection();
@@ -294,30 +353,6 @@ public class ArticleTextExtractorTest {
 
             Document d = Jsoup.parse(description);
             System.out.println("checkArticle(\""+link+"\",\n" + "\""+title+"\",\n" +"\""+ d.text().substring(0, Math.min(100, d.text().length()))+"\",\n100,\n1,\nnew String[]{});");
-
-//            Jsoup.parse("<div class=\"feed-description\"><div class=\"\" style=\"margin: 0px; font-size: 11px; -webkit-text-stroke-color: #000000; -webkit-text-stroke-width: initial;\"><strong><span style=\"font-size: 12pt; font-family: arial,helvetica,sans-serif;\">Lost in Fleestedt  </span></strong></div>\n" +
-//                    "<div class=\"\" style=\"margin: 0px; font-size: 11px; -webkit-text-stroke-color: #000000; -webkit-text-stroke-width: initial; min-height: 13px;\"><span style=\"font-family: arial,helvetica,sans-serif;\"> </span></div>\n" +
-//                    "<div class=\"\" style=\"margin: 0px; font-size: 11px; -webkit-text-stroke-color: #000000; -webkit-text-stroke-width: initial;\"><span style=\"font-size: 10pt;\"><span style=\"font-family: arial,helvetica,sans-serif;\"><span style=\"font-family: arial,helvetica,sans-serif;\">Tatort: Müllsammelaktion der Landesjägerschaft am 09.04.2016. Und wir, eine 8-Mann-starke Gruppe der TuS-JederMänner, hatten uns spontan dieser Aktion angeschlossen.</span></span><span style=\"font-family: arial,helvetica,sans-serif;\"><span style=\"font-family: arial,helvetica,sans-serif;\"><br /></span></span></span><p class=\"feed-readmore\"><a target=\"_blank\" href =\"/index.php/50-neues-aus-dem-tus/377-muellsammelaktion-jedermaenner-waren-dabei\">Weiterlesen ...</a></p></div>").text()
-//            Jsoup.parse("<div itemprop=\"articleBody\"> \n" +
-//                    " <div class=\"\" style=\"margin: 0px; font-size: 11px; -webkit-text-stroke-color: #000000; -webkit-text-stroke-width: initial;\">\n" +
-//                    "  <strong><span style=\"font-size: 12pt; font-family: arial,helvetica,sans-serif;\">Lost in Fleestedt &nbsp;</span></strong>\n" +
-//                    " </div> \n" +
-//                    " <div class=\"\" style=\"margin: 0px; font-size: 11px; -webkit-text-stroke-color: #000000; -webkit-text-stroke-width: initial; min-height: 13px;\">\n" +
-//                    "  <span style=\"font-family: arial,helvetica,sans-serif;\">&nbsp;</span>\n" +
-//                    " </div> \n" +
-//                    " <div class=\"\" style=\"margin: 0px; font-size: 11px; -webkit-text-stroke-color: #000000; -webkit-text-stroke-width: initial;\">\n" +
-//                    "  <span style=\"font-size: 10pt;\"><span style=\"font-family: arial,helvetica,sans-serif;\"><span style=\"font-family: arial,helvetica,sans-serif;\">Tatort: Müllsammelaktion der Landesjägerschaft am 09.04.2016. Und wir, eine 8-Mann-starke Gruppe der TuS-JederMänner, hatten uns spontan dieser Aktion angeschlossen.</span></span><span style=\"font-family: arial,helvetica,sans-serif;\"><span style=\"font-family: arial,helvetica,sans-serif;\"><br></span></span></span> </div> </div> </div> ").text();
-//            Jsoup.parse("<div itemprop=\"articleBody\"> \n" +
-//                    " <div class=\"\" style=\"margin: 0px; font-size: 11px; -webkit-text-stroke-color: #000000; -webkit-text-stroke-width: initial;\">\n" +
-//                    "  <strong><span style=\"font-size: 12pt; font-family: arial,helvetica,sans-serif;\">Lost in Fleestedt  </span></strong>\n" +
-//                    " </div> \n" +
-//                    " <div class=\"\" style=\"margin: 0px; font-size: 11px; -webkit-text-stroke-color: #000000; -webkit-text-stroke-width: initial; min-height: 13px;\">\n" +
-//                    "  <span style=\"font-family: arial,helvetica,sans-serif;\"> </span>\n" +
-//                    " </div> \n" +
-//                    " <div class=\"\" style=\"margin: 0px; font-size: 11px; -webkit-text-stroke-color: #000000; -webkit-text-stroke-width: initial;\">\n" +
-//                    "  <span style=\"font-size: 10pt;\"><span style=\"font-family: arial,helvetica,sans-serif;\"><span style=\"font-family: arial,helvetica,sans-serif;\">Tatort: Müllsammelaktion der Landesjägerschaft am 09.04.2016. Und wir, eine 8-Mann-starke Gruppe der TuS-JederMänner, hatten uns spontan dieser Aktion angeschlossen.</span></span><span style=\"font-family: arial,helvetica,sans-serif;\"><span style=\"font-family: arial,helvetica,sans-serif;\"><br></span></span></span> </div> </div> </div> ").text();
-            
-            
         }
         
         
@@ -357,27 +392,31 @@ public class ArticleTextExtractorTest {
 //            String src = e.attr("src");
 //            System.out.println("Image: " + src +": "+e.attr("alt"));
 //        }
-        if (doc.text().length() < maxLength) {
-            System.out.println("###################### GOOD! Content shorter but still complete. ##################################");
-        }
 
-//        //Show in browser
-//        File temp = File.createTempFile("fullArticle", ".html");
-//        System.out.println("temp file: " + temp.toURI().toURL());
-//        BufferedWriter output = new BufferedWriter(new FileWriter(temp));
-//        String mobilizedHtml = HtmlUtils.improveHtmlContent(s, NetworkUtils.getBaseUrl(articleUrl));
-//        output.write(mobilizedHtml);
-//        output.close();
-//        Runtime rTime = Runtime.getRuntime();
-//        String browser = "C:/Program Files/Internet Explorer/iexplore.exe ";
-//        Process pc = rTime.exec(browser + temp.toURI().toURL());
-//        pc.waitFor();
-        
+        try {
+        assertThat("Extracted document is probably too long!", doc.text().length(), is(lessThanOrEqualTo(maxLength)));
         assertEquals("Wrong numbers of images within full content.", numberOfImgs, doc.select("img").size());
         for (String e : excerpts) {
             assertThat(doc.text(), containsString(e));    
         }
-        assertThat("Extracted document is probably too long!", doc.text().length(), is(lessThanOrEqualTo(maxLength)));
+        if (doc.text().length() < maxLength) {
+            System.out.println("###################### GOOD! Content shorter but still complete. ##################################");
+        }
+        }
+        catch(AssertionError e) {
+            //Show in browser
+            File temp = File.createTempFile("fullArticle", ".html");
+            System.out.println("temp file: " + temp.toURI().toURL());
+            BufferedWriter output = new BufferedWriter(new FileWriter(temp));
+            String mobilizedHtml = HtmlUtils.improveHtmlContent(s, NetworkUtils.getBaseUrl(articleUrl));
+            output.write(mobilizedHtml);
+            output.close();
+            Runtime rTime = Runtime.getRuntime();
+            String browser = "C:/Program Files/Internet Explorer/iexplore.exe ";
+            Process pc = rTime.exec(browser + temp.toURI().toURL());
+            pc.waitFor();
+            throw e;
+        }
 
         System.out.println("-------------------------------------------------------------------------------");
     }

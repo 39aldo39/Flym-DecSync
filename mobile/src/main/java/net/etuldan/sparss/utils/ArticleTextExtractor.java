@@ -2,8 +2,6 @@ package net.etuldan.sparss.utils;
 
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Document;
@@ -35,14 +33,20 @@ public class ArticleTextExtractor {
             + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
             + "login|si(debar|gn|ngle)", Pattern.CASE_INSENSITIVE);
 
-    // Most likely positive candidates
+    // Most likely positive candidates for id, class, and attributes of matching node
     private static final Pattern POSITIVE = Pattern.compile("(^(body|content|h?entry|main|page|post|text|blog|story|haupt"
-            + "|arti(cle|kel)|instapaper_body))", Pattern.CASE_INSENSITIVE);
+            + "|(news)?arti(cle|kel)|instapaper_body))", Pattern.CASE_INSENSITIVE);
+
+    // Most likely positive tag name for matching node
+    private static final Pattern POSITIVE_TAG_NAME = Pattern.compile("(^(article|main)$)", Pattern.CASE_INSENSITIVE);
+
+    // Most likely positive attribute for children of a matching parent node
+    private static final Pattern POSITIVE_CHILD_ATTRIBUTE = Pattern.compile("(^(paragra(ph|fo)|section))", Pattern.CASE_INSENSITIVE);
 
     // Most likely negative candidates
     private static final Pattern NEGATIVE = Pattern.compile("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
             + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
-            + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard", Pattern.CASE_INSENSITIVE);
+            + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|paragra(ph|fo)", Pattern.CASE_INSENSITIVE);
 
     private static final Pattern NEGATIVE_STYLE =
             Pattern.compile("hidden|display: ?none|font-size: ?small", Pattern.CASE_INSENSITIVE);
@@ -70,7 +74,9 @@ public class ArticleTextExtractor {
 
         log(TAG, "======================================================");
         log(TAG, "extractContent: " + titleIndicator + "");
-        bestMatchElement = newMatching(nodes, contentIndicator, titleIndicator);
+        if(doc.text().contains(titleIndicator)) { //newMatching can only work if title exists within text. 
+            bestMatchElement = newMatching(nodes, contentIndicator, titleIndicator);
+        }
 
         if(bestMatchElement != null) {
             log(TAG, "extractContent: new method worked. <"+bestMatchElement.tagName() + " " + bestMatchElement.attributes().toString() + " " + bestMatchElement.text().length());
@@ -108,13 +114,9 @@ public class ArticleTextExtractor {
         return bestMatchElement.toString();
     }
 
-    
-    
-
-
     private static void fixImageTags(Element bestMatchElement) {
         //search for img and remove lazy-loading
-//        IF VIDEO TAG LOOKS LIKE THIS:
+//        IF IMAGE TAG LOOKS LIKE THIS:
 //        <figure class="NewsArticle__ChapterImage LazyImage mt-sm" data-lazy-image="{&quot;src&quot;: &quot;/ii/4/5/4/7/2/9/8/8/d51292db9620e5ed.jpeg&quot; }" data-lazy-image-text="Bild lädt...">
 //        <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 4 3'%2F%3E">
 //        ...
@@ -176,13 +178,24 @@ public class ArticleTextExtractor {
             }
         }
     }
-
+    private static final Pattern UNWANTED_TAGS = Pattern.compile("^(aside)$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern UNWANTED_CLASSES = Pattern.compile("^(msgCenter|correlat(ed|i)|breadcrumb|TopNews)$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern UNWANTED_IDS = Pattern.compile("^(commentiMsgCenter|disclaimer|comment-navigation)$", Pattern.CASE_INSENSITIVE);
+    
     private static void removeUnwantedElements(Element bestMatchElement) {
-        //remove child "aside" if available.
-        Element aside = bestMatchElement.select("aside").first();
-        if(aside != null) {
-            aside.remove();
-            log(TAG, "extractContent: removed aside");
+        for (Element child : bestMatchElement.children()) {
+            if (UNWANTED_CLASSES.matcher(child.className()).find()) {
+                child.remove();
+                continue;
+            }
+            if(UNWANTED_TAGS.matcher(child.tagName()).find()) {
+                child.remove();
+                continue;
+            }
+            if(UNWANTED_IDS.matcher(child.id()).find()) {
+                child.remove();
+                continue;
+            }
         }
     }
 
@@ -240,12 +253,16 @@ public class ArticleTextExtractor {
             if (withContentFilter && !text.contains(contentIndicator)) {
                 continue;
             }
-            if(entry.tagName().equals("article"))
-            {
-                maxWeight++;maxWeight--;
-            }
+//            if(entry.tagName().equals("article") || entry.className().equals("NewsArticle"))
+//            {
+//                maxWeight++;maxWeight--;
+//            }
+//            if(entry.attr("itemprop").equals("articleBody")) {
+//                maxWeight++; maxWeight--;
+//            }
             int currentWeight = getWeight(entry, contentIndicator);
             if (currentWeight > maxWeight) {
+                currentWeight = getWeight(entry, contentIndicator);
                 maxWeight = currentWeight;
                 bestMatchElement = entry;
 
@@ -253,6 +270,9 @@ public class ArticleTextExtractor {
                     break;
                 }
             }
+        }
+        if (withContentFilter && maxWeight < 70) {
+            bestMatchElement = null;
         }
         return bestMatchElement;
     }
@@ -267,13 +287,17 @@ public class ArticleTextExtractor {
     private static Element newMatching(Collection<Element> nodes, String contentIndicator, String titleIndicator) {
         int maxWeight = 0;
         Element bestMatchElement = null;
-    
+        
         if(contentIndicator != null) {
             //first largest node which contains content but not title. that is the content we want.
             for (Element entry : nodes) {
-                if(entry.attr("itemprop").equals("articleBody")) {
-                    maxWeight++; maxWeight--;
-                }
+//                if(entry.attr("itemprop").equals("articleBody")) {
+//                    maxWeight++; maxWeight--;
+//                }
+//                if(entry.tagName().equals("article") || entry.className().equals("NewsArticle"))
+//                {
+//                    maxWeight++;maxWeight--;
+//                }
                 String text = entry.text().replaceAll("\u00A0", ""); //entry may contain &nbsp; characters which need to be filtered first.
                 text = Jsoup.parse(text).text(); //now text is normalized (like description from rss feed)
                 if(text.contains(contentIndicator)) {
@@ -293,6 +317,8 @@ public class ArticleTextExtractor {
                                 maxWeight = weight;
                                 bestMatchElement = entry;
                             }
+                            if (POSITIVE_TAG_NAME.matcher(entry.tagName()).find())
+                                maxWeight += 50;
                         }
                     }
                 }
@@ -312,7 +338,8 @@ public class ArticleTextExtractor {
      */
     private static int getWeight(Element e, String contentIndicator) {
         int weight = calcWeight(e);
-        weight += (int) Math.round(e.ownText().length() / 100.0 * 10);
+        //often the wanted elements consists only tags, no text. so this is not needed.
+        //weight += (int) Math.round(e.ownText().length() / 100.0 * 10);
         weight += weightChildNodes(e, contentIndicator);
         return weight;
     }
@@ -351,10 +378,15 @@ public class ArticleTextExtractor {
             //    weight += 100; // We certainly found the item
             //}
 
+            for (Attribute a : child.attributes()                ) {
+                if (POSITIVE_CHILD_ATTRIBUTE.matcher(a.getValue()).find())
+                    weight += 30;
+            }
+
             String ownText = child.ownText();
             int ownTextLength = ownText.length();
             if (ownTextLength > 200) {
-                weight += Math.max(50, ownTextLength / 10);
+                weight += 20;
             }
 
             if (child.tagName().equals("h1") || child.tagName().equals("h2")) {
@@ -391,6 +423,10 @@ public class ArticleTextExtractor {
 
     private static int calcWeight(Element e) {
         int weight = 0;
+
+        if (POSITIVE_TAG_NAME.matcher(e.tagName()).find())
+            weight += 35;
+        
         if (POSITIVE.matcher(e.className()).find())
             weight += 35;
 
@@ -399,6 +435,8 @@ public class ArticleTextExtractor {
 
         //also allow custom HTML attributes, e.g. like Joomla uses: itemprop="articleBody"
         for (Attribute a : e.attributes()                ) {
+            if(a.getKey().equals("class") || a.getKey().equals("id") )
+                continue; //already accounted for above.
             if (POSITIVE.matcher(a.getValue()).find())
                 weight += 35;            
         }
@@ -457,9 +495,13 @@ public class ArticleTextExtractor {
             item.remove();
         }
 
+        //some websites include images inside noscript tags, e.g. https://www.nrdc.org/rss.xml
         Elements noscripts = doc.getElementsByTag("noscript");
         for (Element item : noscripts) {
-            item.remove();
+            if(item.getElementsByTag("img").size() == 0) {
+                //only remove if <noscript> does not contain image
+                item.remove();
+            }
         }
 
         Elements styles = doc.getElementsByTag("style");

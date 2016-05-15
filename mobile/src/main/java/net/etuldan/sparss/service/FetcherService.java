@@ -325,8 +325,7 @@ public class FetcherService extends IntentService {
                         String contentIndicator = entryCursor.getString(abstractHtmlPos);
 
                         Document doc = Jsoup.parse(contentIndicator);
-                        contentIndicator = doc.text().substring(0, 100);
-                        
+                        contentIndicator = doc.text().substring(0, Math.min(doc.text().length(), 100));
                         
                         String titleIndicator = entryCursor.getString(titlePos);
                         doc = Jsoup.parse(titleIndicator);
