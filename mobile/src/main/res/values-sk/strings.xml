@@ -247,4 +247,5 @@
     <string name="storage_request_explanation">Pre import a export zdrojov je potrebné povoliť prístup aplikácie k úložnému priestoru.</string>
     <string name="google_news_custom_topic">Vlastná téma</string>
 
+    <string name="feed_no_summary">&lt; Popis nie je k dispozícii. &gt;</string>
     </resources>
