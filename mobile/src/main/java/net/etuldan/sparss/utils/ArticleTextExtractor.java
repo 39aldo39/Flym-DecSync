@@ -5,6 +5,7 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -26,25 +27,25 @@ public class ArticleTextExtractor {
     private static final String TAG = "ArticleTextExtractor";
 
     // Interesting nodes
-    private static final Pattern NODES = Pattern.compile("p|div|td|h1|h2|article|section|main"); //"main" is used by Joomla CMS
+    private static final Pattern NODES = Pattern.compile("p|div|td|h1|h2|article|section|main", Pattern.CASE_INSENSITIVE); //"main" is used by Joomla CMS
 
     // Unlikely candidates
     private static final Pattern UNLIKELY = Pattern.compile("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
             + "header|menu|re(mark|ply)|rss|sh(are|outbox)|sponsor"
             + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
-            + "login|si(debar|gn|ngle)");
+            + "login|si(debar|gn|ngle)", Pattern.CASE_INSENSITIVE);
 
     // Most likely positive candidates
-    private static final Pattern POSITIVE = Pattern.compile("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-            + "|arti(cle|kel)|instapaper_body");
+    private static final Pattern POSITIVE = Pattern.compile("(^(body|content|h?entry|main|page|post|text|blog|story|haupt"
+            + "|arti(cle|kel)|instapaper_body))", Pattern.CASE_INSENSITIVE);
 
     // Most likely negative candidates
     private static final Pattern NEGATIVE = Pattern.compile("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
             + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
-            + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard");
+            + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard", Pattern.CASE_INSENSITIVE);
 
     private static final Pattern NEGATIVE_STYLE =
-            Pattern.compile("hidden|display: ?none|font-size: ?small");
+            Pattern.compile("hidden|display: ?none|font-size: ?small", Pattern.CASE_INSENSITIVE);
 
     /**
      * @param input            extracts article text from given html string. wasn't tested
@@ -65,40 +66,27 @@ public class ArticleTextExtractor {
 
         // init elements
         Collection<Element> nodes = getNodes(doc);
-        int maxWeight = 0;
         Element bestMatchElement = null;
 
-        Log.d(TAG, "======================================================");
-        Log.d(TAG, "extractContent: " + titleIndicator + "");
-        if(contentIndicator != null) {
-            //first largest node which contains content but not title. that is the content we want.
-            for (Element entry : nodes) {
-                String text = entry.text();
-                if(text.contains(contentIndicator)) {
-                    if(!text.contains(titleIndicator)) {
-                        if(maxWeight < entry.text().length()) { //use whole content length here!
-                            maxWeight = entry.text().length();
-                            bestMatchElement = entry;
-                        }
-                    }
-                }
-            }
-        }
+        log(TAG, "======================================================");
+        log(TAG, "extractContent: " + titleIndicator + "");
+        bestMatchElement = newMatching(nodes, contentIndicator, titleIndicator);
+
         if(bestMatchElement != null) {
-            Log.d(TAG, "extractContent: new method worked. " + bestMatchElement.text().length());
+            log(TAG, "extractContent: new method worked. <"+bestMatchElement.tagName() + " " + bestMatchElement.attributes().toString() + " " + bestMatchElement.text().length());
         }
 
         if(bestMatchElement == null) {
             if(contentIndicator != null) {
                 bestMatchElement = conventionalMatching(nodes, contentIndicator, true);
                 if(bestMatchElement != null) {
-                    Log.d(TAG, "extractContent: conventionalMatching worked, withContentFilter==true " + bestMatchElement.text().length());
+                    log(TAG, "extractContent: conventionalMatching worked, withContentFilter==true " + bestMatchElement.text().length());
                 }
             }
             if (bestMatchElement == null) {
                 bestMatchElement = conventionalMatching(nodes, contentIndicator, false);
                 if(bestMatchElement != null) {
-                    Log.d(TAG, "extractContent: conventionalMatching worked, withContentFilter==false " + bestMatchElement.text().length());
+                    log(TAG, "extractContent: conventionalMatching worked, withContentFilter==false " + bestMatchElement.text().length());
                 }
             }
         }
@@ -108,39 +96,56 @@ public class ArticleTextExtractor {
             return doc.select("body").first().toString();
         }
 
-        Log.d(TAG, "extractContent: -----------------------------------------------------");
-        Log.d(TAG, bestMatchElement.text());
-        Log.d(TAG, "extractContent: -----------------------------------------------------");
+//        log(TAG, "extractContent: -----------------------------------------------------");
+//        log(TAG, bestMatchElement.text());
+//        log(TAG, "extractContent: -----------------------------------------------------");
+        
+        addImageSiblings(bestMatchElement);
+        removeUnwantedElements(bestMatchElement);
+        fixVideoTags(bestMatchElement);
+        fixImageTags(bestMatchElement);
 
-        //remove child "aside" if available.
-        Element aside = bestMatchElement.select("aside").first();
-        if(aside != null) {
-            aside.remove();
-            Log.d(TAG, "extractContent: removed aside");
-        }
+        return bestMatchElement.toString();
+    }
 
-        //check siblings for images and add them if any available
-        Element previousSibling = bestMatchElement.previousElementSibling();
-        while(previousSibling != null) {
-            if (previousSibling.select("img").size() != 0) {
-                bestMatchElement.prependChild(previousSibling);
-                Log.d(TAG, "extractContent: prepended image " + previousSibling);
-                previousSibling = bestMatchElement.previousElementSibling();
-            } else {
-                previousSibling = previousSibling.previousElementSibling();
+    
+    
+
+
+    private static void fixImageTags(Element bestMatchElement) {
+        //search for img and remove lazy-loading
+//        IF VIDEO TAG LOOKS LIKE THIS:
+//        <figure class="NewsArticle__ChapterImage LazyImage mt-sm" data-lazy-image="{&quot;src&quot;: &quot;/ii/4/5/4/7/2/9/8/8/d51292db9620e5ed.jpeg&quot; }" data-lazy-image-text="Bild lädt...">
+//        <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 4 3'%2F%3E">
+//        ...
+//        </figure>
+//        TRANSFORM TO THIS:
+//        <img src="/ii/4/5/4/7/2/9/8/8/d51292db9620e5ed.jpeg">
+        for (Element img : bestMatchElement.getElementsByTag("img")) {
+            String src = null;
+            if(img.parent() != null && img.parent().tag().getName().equals("figure")) {
+                Element parent = img.parent();
+                String json = parent.attr("data-lazy-image");
+//                    JSONObject obj = new JSONObject(json); //does not work.
+//                    src = obj.getString("src");            //WHY?
+                if(json.length() > 7 && json.substring(2, 5).equals("src")) {
+                    json = json.substring(6);//remove "src"
+                    int first = json.indexOf("\"") + 1;
+                    int last = json.indexOf("\"", first);
+                    src = json.substring(first, last);
+                }
+            }
+            if(src == null && img.hasAttr("data-src")) {
+                src = img.attr("data-src");
+            }
+            if(src != null) {
+                img.attr("src", src);
+                log(TAG, "extractContent: removed lazy-load " + src);
             }
         }
-        Element nextSibling = bestMatchElement.nextElementSibling();
-        while(nextSibling != null) {
-            if (nextSibling.select("img").size() != 0) {
-                bestMatchElement.appendChild(nextSibling);
-                Log.d(TAG, "extractContent: appended image " + nextSibling);
-                nextSibling = bestMatchElement.nextElementSibling();
-            } else {
-                nextSibling = nextSibling.nextElementSibling();
-            }
-        }
+    }
 
+    private static void fixVideoTags(Element bestMatchElement) {
         //search for video tags and fix them if necessary
 //        IF VIDEO TAG LOOKS LIKE THIS:
 //        <video style="position: absolute; top: 0px; display: none; width: 100%; padding-top: 56.25%;">
@@ -167,44 +172,55 @@ public class ArticleTextExtractor {
                 video.attr("controls", true);
                 video.attr("poster", thumb);
                 video.appendElement("source").attr("src", url);
-                Log.d(TAG, "extractContent: fixed video " + url);
+                log(TAG, "extractContent: fixed video " + url);
             }
         }
+    }
 
-        //search for img and remove lazy-loading
-//        IF VIDEO TAG LOOKS LIKE THIS:
-//        <figure class="NewsArticle__ChapterImage LazyImage mt-sm" data-lazy-image="{&quot;src&quot;: &quot;/ii/4/5/4/7/2/9/8/8/d51292db9620e5ed.jpeg&quot; }" data-lazy-image-text="Bild lädt...">
-//        <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 4 3'%2F%3E">
-//        ...
-//        </figure>
-//        TRANSFORM TO THIS:
-//        <img src="/ii/4/5/4/7/2/9/8/8/d51292db9620e5ed.jpeg">
-        for (Element img : bestMatchElement.getElementsByTag("img")) {
-            String src = null;
-            if(img.parent() != null && img.parent().tag().getName().equals("figure")) {
-                Element parent = img.parent();
+    private static void removeUnwantedElements(Element bestMatchElement) {
+        //remove child "aside" if available.
+        Element aside = bestMatchElement.select("aside").first();
+        if(aside != null) {
+            aside.remove();
+            log(TAG, "extractContent: removed aside");
+        }
+    }
+
+    private static void addImageSiblings(Element bestMatchElement) {
+        //check siblings for images and add them if any available
+        Element previousSibling = bestMatchElement.previousElementSibling();
+        while(previousSibling != null) {
+            if (previousSibling.select("img").size() != 0 &&
+                    previousSibling.children().size() <= 2 //only img and optional description
+                        && previousSibling.text().length() < 160 //only short description 
+                        ) {
+                    bestMatchElement.prependChild(previousSibling);
+                    log(TAG, "extractContent: prepended image " + previousSibling);
+                    previousSibling = bestMatchElement.previousElementSibling();
                 
-                    String json = parent.attr("data-lazy-image");
-//                    JSONObject obj = new JSONObject(json); //does not work.
-//                    src = obj.getString("src");            //WHY?
-                if(json.length() > 7 && json.substring(2, 5).equals("src")) {
-                    json = json.substring(6);//remove "src"
-                    int first = json.indexOf("\"") + 1;
-                    int last = json.indexOf("\"", first);
-                    src = json.substring(first, last);
-                }
-            }
-            if(src != null) {
-                img.attr("src", src);
-                Log.d(TAG, "extractContent: removed lazy-load " + src);
+            } else {
+                previousSibling = previousSibling.previousElementSibling();
             }
         }
+        Element nextSibling = bestMatchElement.nextElementSibling();
+        while(nextSibling != null) {
+            if (nextSibling.select("img").size() != 0 &&
+                    nextSibling.children().size() <= 2 //only img and optional description
+                        && nextSibling.text().length() < 160 //only short description 
+                        ) {
+                    bestMatchElement.appendChild(nextSibling);
+                    log(TAG, "extractContent: appended image <" + nextSibling.tagName() + " " + nextSibling.attributes());
+                    nextSibling = bestMatchElement.nextElementSibling();
+                
+            } else {
+                nextSibling = nextSibling.nextElementSibling();
+            }
+        }
+    }
 
-        boolean debug  = true;
-        if(debug)
-            return bestMatchElement.toString();
-
-        return bestMatchElement.toString();
+    private static void log(String tag, String s) {
+        Log.d(tag, s);
+        System.out.println(tag + ": " + s);
     }
 
     /**
@@ -224,6 +240,10 @@ public class ArticleTextExtractor {
             if (withContentFilter && !text.contains(contentIndicator)) {
                 continue;
             }
+            if(entry.tagName().equals("article"))
+            {
+                maxWeight++;maxWeight--;
+            }
             int currentWeight = getWeight(entry, contentIndicator);
             if (currentWeight > maxWeight) {
                 maxWeight = currentWeight;
@@ -237,6 +257,50 @@ public class ArticleTextExtractor {
         return bestMatchElement;
     }
 
+    /**
+     * New matching algorithm. Find largest node which contains content but not title.
+     * @param nodes
+     * @param contentIndicator
+     * @param titleIndicator
+     * @return
+     */
+    private static Element newMatching(Collection<Element> nodes, String contentIndicator, String titleIndicator) {
+        int maxWeight = 0;
+        Element bestMatchElement = null;
+    
+        if(contentIndicator != null) {
+            //first largest node which contains content but not title. that is the content we want.
+            for (Element entry : nodes) {
+                if(entry.attr("itemprop").equals("articleBody")) {
+                    maxWeight++; maxWeight--;
+                }
+                String text = entry.text().replaceAll("\u00A0", ""); //entry may contain &nbsp; characters which need to be filtered first.
+                text = Jsoup.parse(text).text(); //now text is normalized (like description from rss feed)
+                if(text.contains(contentIndicator)) {
+                    if(!text.contains(titleIndicator)) {
+                        if(entry.text().length() > 200) { //ignore very small tags
+                            float factor = 1;
+                            if (POSITIVE.matcher(entry.className()).find())
+                                factor *= 1.4;
+                            if (POSITIVE.matcher(entry.id()).find())
+                                factor *= 1.4;
+                            for (Attribute a : entry.attributes()) {
+                                if (POSITIVE.matcher(a.getValue()).find())
+                                    factor *= 1.4;
+                            }
+                            int weight = (int) ((float) entry.text().length() * factor);
+                            if (maxWeight < weight) { //use whole content length here!
+                                maxWeight = weight;
+                                bestMatchElement = entry;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return bestMatchElement;
+    }
+    
     /**
      * Weights current element. By matching it with positive candidates and
      * weighting child nodes. Since it's impossible to predict which exactly
@@ -334,8 +398,10 @@ public class ArticleTextExtractor {
             weight += 40;
 
         //also allow custom HTML attributes, e.g. like Joomla uses: itemprop="articleBody"
-        if (POSITIVE.matcher(e.attributes().toString()).find())
-            weight += 35;
+        for (Attribute a : e.attributes()                ) {
+            if (POSITIVE.matcher(a.getValue()).find())
+                weight += 35;            
+        }
 
         if (UNLIKELY.matcher(e.className()).find())
             weight -= 20;

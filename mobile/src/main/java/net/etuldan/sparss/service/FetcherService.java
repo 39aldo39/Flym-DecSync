@@ -337,7 +337,7 @@ public class FetcherService extends IntentService {
                         
                         connection = NetworkUtils.setupConnection(link,cookieName, cookieValue,httpAuthLoginValue, httpAuthPassValue);
 
-                        String mobilizedHtml = ArticleTextExtractor.extractContent(connection.getInputStream(), contentIndicator, titleIndicator);
+                        String mobilizedHtml = ArticleTextExtractor.extractContent(HtmlUtils.decompressStream(connection.getInputStream()), contentIndicator, titleIndicator);
 
                         if (mobilizedHtml != null) {
                             mobilizedHtml = HtmlUtils.improveHtmlContent(mobilizedHtml, NetworkUtils.getBaseUrl(link));
@@ -433,6 +433,7 @@ public class FetcherService extends IntentService {
                     values.put(TaskColumns.NUMBER_ATTEMPT, nbAttempt + 1);
                     operations.add(ContentProviderOperation.newUpdate(TaskColumns.CONTENT_URI(taskId)).withValues(values).build());
                 }
+                Log.e(TAG, "downloadAllImages: Exception", e);
             }
         }
 
@@ -549,7 +550,7 @@ public class FetcherService extends IntentService {
 
                 if (fetchMode == 0) {
                     if (contentType != null && contentType.startsWith(CONTENT_TYPE_TEXT_HTML)) {
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(HtmlUtils.decompressStream(connection.getInputStream())));
 
                         String line;
                         int posStart = -1;
@@ -616,7 +617,7 @@ public class FetcherService extends IntentService {
                         }
 
                     } else {
-                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(HtmlUtils.decompressStream(connection.getInputStream())));
 
                         char[] chars = new char[20];
 
@@ -655,19 +656,19 @@ public class FetcherService extends IntentService {
                             int index = contentType.indexOf(CHARSET);
                             int index2 = contentType.indexOf(';', index);
 
-                            InputStream inputStream = connection.getInputStream();
+                            InputStream inputStream = HtmlUtils.decompressStream(connection.getInputStream());
                             Xml.parse(inputStream,
                                     Xml.findEncodingByName(index2 > -1 ? contentType.substring(index + 8, index2) : contentType.substring(index + 8)),
                                     handler);
                         } else {
-                            InputStreamReader reader = new InputStreamReader(connection.getInputStream());
+                            InputStreamReader reader = new InputStreamReader(HtmlUtils.decompressStream(connection.getInputStream()));
                             Xml.parse(reader, handler);
                         }
                         break;
                     }
                     case FETCHMODE_REENCODE: {
                         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                        InputStream inputStream = connection.getInputStream();
+                        InputStream inputStream = HtmlUtils.decompressStream(connection.getInputStream());
 
                         byte[] byteBuffer = new byte[4096];
 
@@ -720,6 +721,7 @@ public class FetcherService extends IntentService {
                     values.put(FeedColumns.ERROR, getString(R.string.error_feed_error));
                     cr.update(FeedColumns.CONTENT_URI(id), values, null, null);
                 }
+                Log.e(TAG, "refreshFeed: FileNotFoundException: ", e);
             } catch (Throwable e) {
                 if (handler == null || (!handler.isDone() && !handler.isCancelled())) {
                     ContentValues values = new ContentValues();
@@ -730,6 +732,7 @@ public class FetcherService extends IntentService {
                     values.put(FeedColumns.ERROR, e.getMessage() != null ? e.getMessage() : getString(R.string.error_feed_process));
                     cr.update(FeedColumns.CONTENT_URI(id), values, null, null);
                 }
+                Log.e(TAG, "refreshFeed: Exception: ", e);
             } finally {
 
 				/* check and optionally find favicon */
