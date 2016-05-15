@@ -62,6 +62,9 @@ public class NetworkUtils {
     private static final String FILE_FAVICON = "/favicon.ico";
     private static final String PROTOCOL_SEPARATOR = "://";
 
+    /* used e.g. by http://www.oora.de/startseite/feed.rss */
+    public static final int HTTP_REDIRECT_TEMP = 307;
+
     private static final CookieManager COOKIE_MANAGER = new CookieManager() {{
         CookieHandler.setDefault(this);
     }};
@@ -275,7 +278,8 @@ public class NetworkUtils {
         CookieHandler.setDefault(cookieManager);
         int status = 0;
         boolean first = true;
-        while(first || status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == HttpURLConnection.HTTP_SEE_OTHER) {
+        while(first || status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || 
+                status == HttpURLConnection.HTTP_SEE_OTHER || status == HTTP_REDIRECT_TEMP) {
             if(!first) {
                 url = new URL(connection.getHeaderField("Location"));
             } else {
