@@ -62,7 +62,6 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
 
@@ -104,8 +103,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FetcherService extends IntentService {
-    private static final String TAG = "FetcherService";
-    
+
     public static final String ACTION_REFRESH_FEEDS = "net.etuldan.sparss.REFRESH";
     public static final String ACTION_MOBILIZE_FEEDS = "net.etuldan.sparss.MOBILIZE_FEEDS";
     public static final String ACTION_DOWNLOAD_IMAGES = "net.etuldan.sparss.DOWNLOAD_IMAGES";
@@ -361,7 +359,6 @@ public class FetcherService extends IntentService {
                             }
                         }
                     } catch (Throwable ignored) {
-                        Log.e(TAG, "mobilizeAllEntries: ", ignored);
                     } finally {
                         if (connection != null) {
                             connection.disconnect();
