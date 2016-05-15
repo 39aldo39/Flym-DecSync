@@ -323,39 +323,39 @@ public class ArticleTextExtractorTest {
         checkArticle("http://feedproxy.google.com/~r/IeeeSpectrumFullText/~3/hgEmJ_v7xsc/engineer-and-investor-in-spat-about-wireless-charging-startup-ubeam",
                 "Engineer and Investor in Spat About Wireless Charging Startup uBeam",
                 "A former uBeam engineer says the company hyped its tech. Investor says he never heard it from him",
-                100,
+                4033,
                 1,
-                new String[]{});
+                new String[]{"The engineer whose critical blog post", "Thorp says."});
         checkArticle("http://feedproxy.google.com/~r/IeeeSpectrumFullText/~3/oFh80EAvc2Y/rfonly-logic-could-cut-rfid-size-and-cost",
                 "RF-Only Logic Makes RFID Tags Tinier",
                 "New kind of power supply for RFID and IoT logic circuits could eliminate a sizable chunk of circuitr",
-                100,
-                1,
-                new String[]{});
+                3335,
+                2,
+                new String[]{"Engineers at North Carolina State University", "no part in the RFID project."});
         checkArticle("http://feedproxy.google.com/~r/IeeeSpectrumFullText/~3/yVu_mqZy274/quadrotors-have-learned-to-dodge-swords",
                 "Why You Should Be Glad That Quadrotors Have Learned to Dodge Swords",
                 "A Stanford roboticist (and fencer) discusses drones, swords, and why mixing them is such a great ide",
-                100,
+                6333,
                 1,
-                new String[]{});
+                new String[]{"When that quadrotor fencing video", "Dr. Ross Allen for speaking with us."});
         checkArticle("http://feedproxy.google.com/~r/IeeeSpectrumFullText/~3/4m3KXeUcUFs/how-should-a-selfdriving-car-tell-you-it-needs-you-to-take-over",
                 "How Should a Self-Driving Car Tell You to Take the Wheel?",
                 "Experts say self-driving cars should start with vibrations in your seat",
-                100,
+                5680,
                 1,
-                new String[]{});
+                new String[]{"Someday, the word driver ", "them being suitable for conveying semantics"});
         checkArticle("http://feedproxy.google.com/~r/IeeeSpectrumFullText/~3/el6J-BHNFOQ/holoflex-a-flexible-smartphone-with-a-holographic-display",
                 "HoloFlex: A Flexible Smartphone with a Holographic Display",
                 "This prototype smartphone has a holographic lightfield displays glasses-free 3-D images, and a struc",
-                100,
-                1,
-                new String[]{});
+                4550,
+                4,
+                new String[]{"Based on how things have been going ", "quite hit yet.", "HoloFlex will be presented"});
         checkArticle("http://feedproxy.google.com/~r/IeeeSpectrumFullText/~3/d-naCjOY38c/singleatom-sensor-offers-new-view-of-the-nanoscale",
                 "Single-Atom Sensor Offers New View of the Nanoscale",
                 "A so-called nitrogen-vacancy defect sensor provides superb image resolution of minute phenomena",
-                100,
+                2701,
                 1,
-                new String[]{});
+                new String[]{"It was a eureka moment when IBM ", "the material will behave."});
     }
     
     /**
@@ -420,8 +420,9 @@ public class ArticleTextExtractorTest {
         InputStream in = decompressStream(con.getInputStream());
 
         String s = ArticleTextExtractor.extractContent(in, contentIndicator, titleIndicator);
+        s = HtmlUtils.improveHtmlContent(s, NetworkUtils.getBaseUrl(con.getURL().toURI().toString())); //make image paths absolute
         Document doc = Jsoup.parse(s);
-
+        
         System.out.println(articleUrl);
         String content = doc.text().replaceAll("(.{200})", "$1\n");
 //        System.out.println(content);
