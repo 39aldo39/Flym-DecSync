@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
  Copyright (c) 2015 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
@@ -60,19 +60,15 @@
     <string name="error_feed_process">Zdroj nelze zpracovat.</string>
     <string name="error_feed_url_exists">Adresa již existuje.</string>
     <string name="error_feed_import">Vybraný soubor nemohl být importován.</string>
-    <string name="error_feed_export">Export selhal. Ujistěte se, že se na připojenou SD kartu
-        dá zapisovat.
-    </string>
-    <string name="error_external_storage_not_available">Externí úložný prostor (např. SD karta) není
-        dostupný.
-    </string>
-    <string name="feed_url">URL adresa</string>
+    <string name="error_feed_export">Export selhal. Ujistěte se, že se na připojenou SD kartu dá zapisovat.</string>
+    <string name="error_external_storage_not_available">Externí úložný prostor (např. SD karta) není dostupný.</string>
+    <string name="feed_url">URL</string>
     <string name="optional">(nepovinné)</string>
     <string name="website_or_feed">(webová stránka nebo zdroj)</string>
     <string name="tab_feed_title">Zdroj</string>
     <string name="tab_filters_title">Filtr</string>
     <string name="feed_title">NÁZEV</string>
-    <string name="feed_filters">PRAVIDLA FILTRU</string>
+    <string name="feed_filters">Pravidla filtru</string>
     <string name="filter_add_title">Přidat pravidlo</string>
     <string name="filter_delete_title">Smazat pravidlo</string>
     <string name="filter_edit_title">Upravit pravidlo</string>
@@ -92,9 +88,7 @@
     <string name="edit_group_title">Upravit jméno skupiny</string>
     <string name="message_exported_to">Exportovat do %s.</string>
     <string name="to_group_title">Akce přesunu zdroje</string>
-    <string name="to_group_message">Můžete tento zdroj posunout do a nebo nad tuto skupinu. Co
-        chcete udělat?
-    </string>
+    <string name="to_group_message">Můžete tento zdroj posunout do a nebo nad tuto skupinu. Co chcete udělat?</string>
     <string name="to_group_above">Nad skupinu</string>
     <string name="to_group_into">Do skupiny</string>
     <string name="add_custom_feed">Přidat vlastní zdroj nebo nový vyhledat</string>
@@ -252,6 +246,6 @@
     <string name="settings_mark_as_read_description">Zobrazit / Skrýt tlačítko</string>
     <string name="settings_show_new_entries">Automaticky zobrazovat nové články</string>
     <string name="settings_show_new_entries_description">Pokud je vypnuto, je pro zobrazení nových článků třeba ťuknout na tlačítko Zobrazit nové články</string>
-    <string name="no_new_entries">Žádné nové příspěvky k zobrazení.</string>
+    <string name="no_new_entries">Žádné nové příspěvky k zobrazení</string>
 
     </resources>
