@@ -57,6 +57,7 @@ import android.util.Log;
 
 import net.etuldan.sparss.Constants;
 import net.etuldan.sparss.MainApplication;
+import net.etuldan.sparss.R;
 import net.etuldan.sparss.provider.FeedData;
 import net.etuldan.sparss.provider.FeedData.EntryColumns;
 import net.etuldan.sparss.provider.FeedData.FeedColumns;
@@ -394,9 +395,15 @@ public class RssAtomParser extends DefaultHandler {
                         mainImageUrl = HtmlUtils.getMainImageURL(improvedContent);
                     }
 
-                    if (improvedContent != null) {
-                        values.put(EntryColumns.ABSTRACT, improvedContent);
+                    if (improvedContent != null && !improvedContent.isEmpty()) {
+                        values.put(EntryColumns.ABSTRACT, "lalala" + improvedContent);
+                    } else {
+                        String s = "TEST!";
+                        s += "h";
+                        s = MainApplication.getContext().getString(R.string.feed_no_summary);
+                        values.put(EntryColumns.ABSTRACT, s);
                     }
+                    values.put(EntryColumns.ABSTRACT, "lalala");
                 }
 
                 if (mainImageUrl != null) {
