@@ -267,27 +267,39 @@ public class ArticleTextExtractorTest {
         checkArticle("https://www.nrdc.org/experts/jake-schmidt/nordic-countries-and-us-announce-continued-climate-actions",
                 "Nordic Countries and U.S. Announce Continued Climate Actions",
                 "",
-                5392,
+                5541,
                 1,
                 new String[]{"co-written with Sarah Lyn Vollmer.", "Jake Schmidt Director, International program"});
         checkArticle("https://www.nrdc.org/experts/amy-mall/regulators-neglected-stop-oil-and-gas-wastewater-contamination-west-virginia-creek",
                 "Regulators Neglected to Stop Oil and Gas Wastewater Contamination in West Virginia Creek",
                 "",
-                4691,
+                4860,
                 1,
                 new String[]{"The United States Geological Survey recently", "Mall Senior Policy Analyst, Land & Wildlife program"});
         checkArticle("https://www.nrdc.org/experts/barbara-finamore/tide-turning-private-sector-joins-chinese-government-and-international",
                 "The Tide Is Turning: The Private Sector Joins the Chinese Government and the International Community in Cleaning Up Global Shipping Emissions ",
                 "",
-                4044,
+                4282,
                 3,
                 new String[]{"colleagues Freda Fung, Zhixi Zhu, and Winslow Robertson.", "Finamore Senior Attorney and Asia Director, China program"});
         checkArticle("https://www.nrdc.org/stories/saving-breeding-grounds-pacific-gray-whale",
                 "Saving the Breeding Grounds of the Pacific Gray Whale",
                 "",
-                3612,
+                3860,
                 1,
                 new String[]{"With its warm, shallow waters bounded", "And so, too, do the Pacific gray whales."});
+        checkArticle("https://www.nrdc.org/news/epa-releases-new-methane-regulations",
+                "EPA releases new methane regulations",
+                "",
+                396, //not perfect but good enough.
+                0,
+                new String[]{"The new rules aim to cut methane emissions ", "Mother Jones"});
+        checkArticle("https://www.nrdc.org/news/one-fifth-worlds-plants-are-risk-extinction",
+                "One-fifth of the world's plants are at risk of extinction",
+                "",
+                310,//not perfect but good enough.
+                0,
+                new String[]{"Without plants we would not be here.", "threatened with extinction."});
     }
 
     @Test
@@ -301,7 +313,7 @@ public class ArticleTextExtractorTest {
         checkArticle("http://elpais.com/internacional/2016/05/15/colombia/1463323839_160026.html#?ref=rss&format=simple&link=link",
                 "Paramilitarismo: la guerra que nunca termina en Colombia",
                 "El repunte de la violencia de los herederos de los paramilitares marca la recta final del proceso de",
-                5708,
+                6964,
                 1,
                 new String[]{"El pasado 10 de abril,", "paramilitares que ha tenido Colombia."});
         checkArticle("http://elpais.com/internacional/2016/05/15/estados_unidos/1463327849_813449.html#?ref=rss&format=simple&link=link",
@@ -310,12 +322,6 @@ public class ArticleTextExtractorTest {
                 6086,
                 0,
                 new String[]{" a mujeres y oscuros casos ", "del republicano se ha distanciado del"});
-        checkArticle("http://elpais.com/elpais/2016/05/15/portada/1463314135_231810.html#?ref=rss&format=simple&link=link",
-                "En el armario del fútbol español",
-                "",
-                22759,
-                2,
-                new String[]{"Es una imagen conocida por cualquiera", "esta semana al estadio."});
     }
 
     @Test

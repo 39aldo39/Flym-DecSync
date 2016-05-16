@@ -28,10 +28,10 @@ public class ArticleTextExtractor {
     private static final Pattern NODES = Pattern.compile("p|div|td|h1|h2|article|section|main", Pattern.CASE_INSENSITIVE); //"main" is used by Joomla CMS
 
     // Unlikely candidates
-    private static final Pattern UNLIKELY = Pattern.compile("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
+    private static final Pattern UNLIKELY = Pattern.compile("^(com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
             + "header|menu|re(mark|ply)|rss|sh(are|outbox)|sponsor"
             + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
-            + "login|si(debar|gn|ngle)", Pattern.CASE_INSENSITIVE);
+            + "login|si(debar|gn|ngle))", Pattern.CASE_INSENSITIVE);
 
     // Most likely positive candidates for id, class, and attributes of matching node
     private static final Pattern POSITIVE = Pattern.compile("(^(body|content|h?entry|main|page|post|text|blog|story|haupt"
@@ -84,7 +84,7 @@ public class ArticleTextExtractor {
         }
 
         if(bestMatchElement == null) {
-            if(contentIndicator != null) {
+            if(contentIndicator != null && !contentIndicator.isEmpty()) {
                 bestMatchElement = conventionalMatching(nodes, contentIndicator, true);
                 if(bestMatchElement != null) {
                     log(TAG, "extractContent: conventionalMatching worked, withContentFilter==true <"
@@ -183,7 +183,7 @@ public class ArticleTextExtractor {
     }
     private static final Pattern UNWANTED_TAGS = Pattern.compile("^(aside)$", Pattern.CASE_INSENSITIVE);
     private static final Pattern UNWANTED_CLASSES = Pattern.compile("^(msgCenter|correlat(ed|i)|breadcrumb|TopNews)$", Pattern.CASE_INSENSITIVE);
-    private static final Pattern UNWANTED_IDS = Pattern.compile("^(commentiMsgCenter|disclaimer|comment-navigation)$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern UNWANTED_IDS = Pattern.compile("^(commentiMsgCenter|disclaimer|(comment-)?navigation)$", Pattern.CASE_INSENSITIVE);
     
     private static void removeUnwantedElements(Element bestMatchElement) {
         for (Element child : bestMatchElement.children()) {
@@ -289,8 +289,8 @@ public class ArticleTextExtractor {
     private static Element newMatching(Collection<Element> nodes, String contentIndicator, String titleIndicator) {
         int maxWeight = 0;
         Element bestMatchElement = null;
-        
-        if(contentIndicator != null) {
+
+        if(contentIndicator != null && !contentIndicator.isEmpty()) {
             //first largest node which contains content but not title. that is the content we want.
             for (Element entry : nodes) {
 //                if(entry.attr("itemprop").equals("articleBody")) {
