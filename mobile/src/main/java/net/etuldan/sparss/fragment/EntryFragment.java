@@ -89,9 +89,7 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
     private EntryPagerAdapter mEntryPagerAdapter;
 
     private View mCancelFullscreenBtn;
-
-    private boolean isChecked = false;
-
+    private MenuItem mShowFullContentItem;    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -202,8 +200,8 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
             MenuItem item = menu.findItem(R.id.menu_star);
             item.setTitle(R.string.menu_unstar).setIcon(R.drawable.ic_star);
         }
-        MenuItem item = menu.findItem(R.id.menu_switch_full_original);
-        item.setChecked(mPreferFullText);
+        mShowFullContentItem = menu.findItem(R.id.menu_switch_full_original);
+        mShowFullContentItem.setChecked(mPreferFullText);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -292,8 +290,6 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                     break;
                 }
                 case R.id.menu_switch_full_original: {
-                    isChecked = !item.isChecked();
-                    item.setChecked(isChecked);
                     if(mPreferFullText) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -305,7 +301,6 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                     }else {
                         Cursor cursor = mEntryPagerAdapter.getCursor(mCurrentPagerPos);
                         final boolean alreadyMobilized = !cursor.isNull(mMobilizedHtmlPos);
-
 
                         if (alreadyMobilized) {
                             Log.d(TAG, "onOptionsItemSelected: alreadyMobilized");
@@ -332,12 +327,13 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                                         Toast.makeText(activity, R.string.network_error, Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                                item.setChecked(false);
+                                mPreferFullText = false;
                             }
                         } else {
                             Log.d(TAG, "onOptionsItemSelected: refreshing already in progress");
                         }
                     }
+                    mShowFullContentItem.setChecked(mPreferFullText);
                     break;
                 }
                 default:
@@ -620,6 +616,9 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                         mPreferFullText = false;
                     } else {
                         mPreferFullText = true;
+                    }
+                    if (mShowFullContentItem != null ) {
+                        mShowFullContentItem.setChecked(mPreferFullText);
                     }
                     if (contentText == null) {
                         contentText = "";
