@@ -90,6 +90,7 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.Callable;
@@ -179,34 +180,36 @@ public class FetcherService extends IntentService {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         // Connectivity issue, we quit
-        if (networkInfo == null || networkInfo.getState() != NetworkInfo.State.CONNECTED) {
-            if (ACTION_REFRESH_FEEDS.equals(intent.getAction()) && !isFromAutoRefresh) {
-                // Display a toast in that case
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(FetcherService.this, R.string.network_error, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-            return;
-        }
+//        if (networkInfo == null || networkInfo.getState() != NetworkInfo.State.CONNECTED) {
+//            if (ACTION_REFRESH_FEEDS.equals(intent.getAction()) && !isFromAutoRefresh) {
+//                // Display a toast in that case
+//                mHandler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(FetcherService.this, R.string.network_error, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//            Log.d(TAG, "onHandleIntent: "+intent.getAction()+" aborted due to connectivity problem");
+//            return;
+//        }
 
         boolean skipFetch = isFromAutoRefresh && PrefUtils.getBoolean(PrefUtils.REFRESH_WIFI_ONLY, false)
                 && networkInfo.getType() != ConnectivityManager.TYPE_WIFI;
         // We need to skip the fetching process, so we quit
         if (skipFetch) {
+            Log.d(TAG, "onHandleIntent: abort intent action: " + intent.getAction() + " due to connectivity settings");
             return;
         }
 
+        Log.d(TAG, "onHandleIntent: intent action: " + intent.getAction());
+        PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, true);
         if (ACTION_MOBILIZE_FEEDS.equals(intent.getAction())) {
             mobilizeAllEntries();
             downloadAllImages();
         } else if (ACTION_DOWNLOAD_IMAGES.equals(intent.getAction())) {
             downloadAllImages();
         } else { // == Constants.ACTION_REFRESH_FEEDS
-            PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, true);
-
             if (isFromAutoRefresh) {
                 PrefUtils.putLong(PrefUtils.LAST_SCHEDULED_REFRESH, SystemClock.elapsedRealtime());
             }
@@ -269,9 +272,8 @@ public class FetcherService extends IntentService {
 
             mobilizeAllEntries();
             downloadAllImages();
-
-            PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, false);
         }
+        PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, false);
     }
 
     private void mobilizeAllEntries() {
@@ -296,6 +298,8 @@ public class FetcherService extends IntentService {
 
             if (entryCursor.moveToFirst()) {
                 if (entryCursor.isNull(entryCursor.getColumnIndex(EntryColumns.MOBILIZED_HTML))) { // If we didn't already mobilized it
+                    Log.d(TAG, "mobilizeAllEntries: mobilizing entry " + entryId);
+
                     int linkPos = entryCursor.getColumnIndex(EntryColumns.LINK);
                     int titlePos = entryCursor.getColumnIndex(EntryColumns.TITLE);
                     int abstractHtmlPos = entryCursor.getColumnIndex(EntryColumns.ABSTRACT);
@@ -334,9 +338,8 @@ public class FetcherService extends IntentService {
 
 //                        titleIndicator = Html.fromHtml(titleIndicator).toString();
 //                        titleIndicator = titleIndicator.replaceAll("[\\s\\u00A0]+"," "); //normalize, all whitespaces (incl char(160)) -> single space
-
                             connection = NetworkUtils.setupConnection(link, cookieName, cookieValue, httpAuthLoginValue, httpAuthPassValue);
-
+                            
                             mobilizedHtml = ArticleTextExtractor.extractContent(HtmlUtils.decompressStream(connection.getInputStream()), contentIndicator, titleIndicator);
                             if(mobilizedHtml != null) {
                                 mobilizedHtml = HtmlUtils.improveHtmlContent(mobilizedHtml, NetworkUtils.getBaseUrl(connection.getURL().toURI().toString()));
@@ -372,13 +375,14 @@ public class FetcherService extends IntentService {
                             }
                         }
                     } catch (Throwable ignored) {
-                        Log.e(TAG, "Exception", ignored);
+                        Log.e(TAG, "Exception: " + ignored.getMessage(), ignored);
                     } finally {
                         if (connection != null) {
                             connection.disconnect();
                         }
                     }
                 } else { // We already mobilized it
+                    Log.d(TAG, "mobilizeAllEntries: entry " + entryId + "@" + entryUri + " already mobilized");
                     success = true;
                     operations.add(ContentProviderOperation.newDelete(TaskColumns.CONTENT_URI(taskId)).build());
                 }
