@@ -396,14 +396,10 @@ public class RssAtomParser extends DefaultHandler {
                     }
 
                     if (improvedContent != null && !improvedContent.isEmpty()) {
-                        values.put(EntryColumns.ABSTRACT, "lalala" + improvedContent);
+                        values.put(EntryColumns.ABSTRACT, improvedContent);
                     } else {
-                        String s = "TEST!";
-                        s += "h";
-                        s = MainApplication.getContext().getString(R.string.feed_no_summary);
-                        values.put(EntryColumns.ABSTRACT, s);
+                        values.put(EntryColumns.ABSTRACT, MainApplication.getContext().getString(R.string.feed_no_summary));
                     }
-                    values.put(EntryColumns.ABSTRACT, "lalala");
                 }
 
                 if (mainImageUrl != null) {

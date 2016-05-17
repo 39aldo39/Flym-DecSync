@@ -60,8 +60,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.text.Html;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
@@ -90,9 +88,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
-import java.net.Authenticator;
 import java.net.HttpURLConnection;
-import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -321,25 +317,33 @@ public class FetcherService extends IntentService {
                         final String httpAuthPassValue = cursorFeed.getString(httpAuthPasswordPosition);
                         cursorFeed.close();
 
-                        // Try to find a text indicator for better content extraction
-                        String contentIndicator = entryCursor.getString(abstractHtmlPos);
+                        String fullSummary = entryCursor.getString(abstractHtmlPos);
 
-                        Document doc = Jsoup.parse(contentIndicator);
-                        contentIndicator = doc.text().substring(0, Math.min(doc.text().length(), 100));
-                        
-                        String titleIndicator = entryCursor.getString(titlePos);
-                        doc = Jsoup.parse(titleIndicator);
-                        titleIndicator = doc.text();
-                        
+                        String mobilizedHtml;
+                        if(fullSummary.length() > 1000) {
+                            //if summary is long, it is most probably full text. use it!
+                            mobilizedHtml = fullSummary;
+                        } else {
+                            // Try to find a text indicator for better content extraction
+                            Document doc = Jsoup.parse(fullSummary);
+                            String contentIndicator = doc.text().substring(0, Math.min(doc.text().length(), 100));
+
+                            String titleIndicator = entryCursor.getString(titlePos);
+                            doc = Jsoup.parse(titleIndicator);
+                            titleIndicator = doc.text();
+
 //                        titleIndicator = Html.fromHtml(titleIndicator).toString();
 //                        titleIndicator = titleIndicator.replaceAll("[\\s\\u00A0]+"," "); //normalize, all whitespaces (incl char(160)) -> single space
-                        
-                        connection = NetworkUtils.setupConnection(link, cookieName, cookieValue,httpAuthLoginValue, httpAuthPassValue);
 
-                        String mobilizedHtml = ArticleTextExtractor.extractContent(HtmlUtils.decompressStream(connection.getInputStream()), contentIndicator, titleIndicator);
+                            connection = NetworkUtils.setupConnection(link, cookieName, cookieValue, httpAuthLoginValue, httpAuthPassValue);
+
+                            mobilizedHtml = ArticleTextExtractor.extractContent(HtmlUtils.decompressStream(connection.getInputStream()), contentIndicator, titleIndicator);
+                            if(mobilizedHtml != null) {
+                                mobilizedHtml = HtmlUtils.improveHtmlContent(mobilizedHtml, NetworkUtils.getBaseUrl(connection.getURL().toURI().toString()));
+                            }
+                        }
 
                         if (mobilizedHtml != null) {
-                            mobilizedHtml = HtmlUtils.improveHtmlContent(mobilizedHtml, NetworkUtils.getBaseUrl(connection.getURL().toURI().toString()));
                             ContentValues values = new ContentValues();
                             values.put(EntryColumns.MOBILIZED_HTML, mobilizedHtml);
 

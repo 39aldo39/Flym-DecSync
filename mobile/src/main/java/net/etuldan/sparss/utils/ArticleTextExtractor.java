@@ -100,9 +100,9 @@ public class ArticleTextExtractor {
             }
         }
 
-        if (bestMatchElement == null) {
+        if (bestMatchElement == null || bestMatchElement.text().isEmpty()) {
             Log.e(TAG, "extractContent failed. Returning document body.");
-            return doc.select("body").first().toString();
+            bestMatchElement = doc.select("body").first();
         }
 
 //        log(TAG, "extractContent: -----------------------------------------------------");

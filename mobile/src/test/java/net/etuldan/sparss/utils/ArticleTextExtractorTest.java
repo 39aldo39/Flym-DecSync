@@ -1,42 +1,25 @@
 package net.etuldan.sparss.utils;
 
 import android.content.Context;
-import android.test.AndroidTestCase;
-import android.text.Html;
 
 import net.etuldan.sparss.MainApplication;
-import net.etuldan.sparss.parser.RssAtomParser;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.core.SubstringMatcher;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PushbackInputStream;
-import java.io.Reader;
-import java.io.Writer;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Date;
-import java.util.zip.GZIPInputStream;
 
 
 import javax.xml.parsers.DocumentBuilder;
@@ -45,7 +28,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import static net.etuldan.sparss.utils.HtmlUtils.decompressStream;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
@@ -264,42 +246,48 @@ public class ArticleTextExtractorTest {
 
     @Test
     public void fullContentNrdc() throws Exception {
-        checkArticle("https://www.nrdc.org/experts/jake-schmidt/nordic-countries-and-us-announce-continued-climate-actions",
-                "Nordic Countries and U.S. Announce Continued Climate Actions",
+//        checkArticle("https://www.nrdc.org/experts/jake-schmidt/nordic-countries-and-us-announce-continued-climate-actions",
+//                "Nordic Countries and U.S. Announce Continued Climate Actions",
+//                "",
+//                5541,
+//                1,
+//                new String[]{"co-written with Sarah Lyn Vollmer.", "Jake Schmidt Director, International program"});
+//        checkArticle("https://www.nrdc.org/experts/amy-mall/regulators-neglected-stop-oil-and-gas-wastewater-contamination-west-virginia-creek",
+//                "Regulators Neglected to Stop Oil and Gas Wastewater Contamination in West Virginia Creek",
+//                "",
+//                4860,
+//                1,
+//                new String[]{"The United States Geological Survey recently", "Mall Senior Policy Analyst, Land & Wildlife program"});
+//        checkArticle("https://www.nrdc.org/experts/barbara-finamore/tide-turning-private-sector-joins-chinese-government-and-international",
+//                "The Tide Is Turning: The Private Sector Joins the Chinese Government and the International Community in Cleaning Up Global Shipping Emissions ",
+//                "",
+//                4282,
+//                3,
+//                new String[]{"colleagues Freda Fung, Zhixi Zhu, and Winslow Robertson.", "Finamore Senior Attorney and Asia Director, China program"});
+//        checkArticle("https://www.nrdc.org/stories/saving-breeding-grounds-pacific-gray-whale",
+//                "Saving the Breeding Grounds of the Pacific Gray Whale",
+//                "",
+//                3860,
+//                1,
+//                new String[]{"With its warm, shallow waters bounded", "And so, too, do the Pacific gray whales."});
+//        checkArticle("https://www.nrdc.org/news/epa-releases-new-methane-regulations",
+//                "EPA releases new methane regulations",
+//                "",
+//                396, //not perfect but good enough.
+//                0,
+//                new String[]{"The new rules aim to cut methane emissions ", "Mother Jones"});
+//        checkArticle("https://www.nrdc.org/news/one-fifth-worlds-plants-are-risk-extinction",
+//                "One-fifth of the world's plants are at risk of extinction",
+//                "",
+//                310,//not perfect but good enough.
+//                0,
+//                new String[]{"Without plants we would not be here.", "threatened with extinction."});
+        checkArticle("https://www.nrdc.org/news/worlds-smallest-porpoise-close-extinction",
+                "The world's smallest porpoise is close to extinction",
                 "",
-                5541,
-                1,
-                new String[]{"co-written with Sarah Lyn Vollmer.", "Jake Schmidt Director, International program"});
-        checkArticle("https://www.nrdc.org/experts/amy-mall/regulators-neglected-stop-oil-and-gas-wastewater-contamination-west-virginia-creek",
-                "Regulators Neglected to Stop Oil and Gas Wastewater Contamination in West Virginia Creek",
-                "",
-                4860,
-                1,
-                new String[]{"The United States Geological Survey recently", "Mall Senior Policy Analyst, Land & Wildlife program"});
-        checkArticle("https://www.nrdc.org/experts/barbara-finamore/tide-turning-private-sector-joins-chinese-government-and-international",
-                "The Tide Is Turning: The Private Sector Joins the Chinese Government and the International Community in Cleaning Up Global Shipping Emissions ",
-                "",
-                4282,
-                3,
-                new String[]{"colleagues Freda Fung, Zhixi Zhu, and Winslow Robertson.", "Finamore Senior Attorney and Asia Director, China program"});
-        checkArticle("https://www.nrdc.org/stories/saving-breeding-grounds-pacific-gray-whale",
-                "Saving the Breeding Grounds of the Pacific Gray Whale",
-                "",
-                3860,
-                1,
-                new String[]{"With its warm, shallow waters bounded", "And so, too, do the Pacific gray whales."});
-        checkArticle("https://www.nrdc.org/news/epa-releases-new-methane-regulations",
-                "EPA releases new methane regulations",
-                "",
-                396, //not perfect but good enough.
+                575,
                 0,
-                new String[]{"The new rules aim to cut methane emissions ", "Mother Jones"});
-        checkArticle("https://www.nrdc.org/news/one-fifth-worlds-plants-are-risk-extinction",
-                "One-fifth of the world's plants are at risk of extinction",
-                "",
-                310,//not perfect but good enough.
-                0,
-                new String[]{"Without plants we would not be here.", "threatened with extinction."});
+                new String[]{"Only about 60 vaquitas remain", "by 2022. New York Times"});
     }
 
     @Test
@@ -378,9 +366,9 @@ public class ArticleTextExtractorTest {
 //                "http://www.oora.de/startseite/feed.rss"
 //                "http://www.sportmediaset.mediaset.it/rss/homepage.xml"
 //                "http://askldjd.com/feed/"
-//                "https://www.nrdc.org/rss.xml"
+                "https://www.nrdc.org/rss.xml"
 //                "http://ep00.epimg.net/rss/elpais/portada.xml"
-                "http://feeds.feedburner.com/ieeeSpectrumFullText"
+//                "http://feeds.feedburner.com/ieeeSpectrumFullText"
                 ;
         URL url = new URL(rssUrl);
         URLConnection con = url.openConnection();
