@@ -473,6 +473,8 @@ public class RssAtomParser extends DefaultHandler {
                     }
                 }
             } else {
+                //to fix https://github.com/Etuldan/spaRSS/issues/200
+                //we must delete next line. however, this causes overhead.
                 cancel();
             }
             mDescription = null;

@@ -180,19 +180,19 @@ public class FetcherService extends IntentService {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         // Connectivity issue, we quit
-//        if (networkInfo == null || networkInfo.getState() != NetworkInfo.State.CONNECTED) {
-//            if (ACTION_REFRESH_FEEDS.equals(intent.getAction()) && !isFromAutoRefresh) {
-//                // Display a toast in that case
-//                mHandler.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Toast.makeText(FetcherService.this, R.string.network_error, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//            Log.d(TAG, "onHandleIntent: "+intent.getAction()+" aborted due to connectivity problem");
-//            return;
-//        }
+        if (networkInfo == null || networkInfo.getState() != NetworkInfo.State.CONNECTED) {
+            if (ACTION_REFRESH_FEEDS.equals(intent.getAction()) && !isFromAutoRefresh) {
+                // Display a toast in that case
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(FetcherService.this, R.string.network_error, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            Log.d(TAG, "onHandleIntent: "+intent.getAction()+" aborted due to connectivity problem");
+            return;
+        }
 
         boolean skipFetch = isFromAutoRefresh && PrefUtils.getBoolean(PrefUtils.REFRESH_WIFI_ONLY, false)
                 && networkInfo.getType() != ConnectivityManager.TYPE_WIFI;
@@ -753,7 +753,7 @@ public class FetcherService extends IntentService {
                         }
                     }
                 } catch (Throwable ignored) {
-                    Log.e(TAG, "Exception", ignored);
+                    Log.d(TAG, "Exception favicon could not be retrieved.");
                 }
 
                 if (connection != null) {

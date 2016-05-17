@@ -63,7 +63,10 @@ import net.etuldan.sparss.service.FetcherService;
 import net.etuldan.sparss.utils.PrefUtils;
 import net.etuldan.sparss.utils.UiUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class EntriesListFragment extends SwipeRefreshListFragment {
 
@@ -335,6 +338,7 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
                 return true;
             }
             case R.id.menu_refresh: {
+                downloadUnmobilitedEntries();
                 startRefresh();
                 return true;
             }
@@ -364,6 +368,33 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Schedules all entries which are not mobilized yet, for download.
+     * Then invokes download by calling FetcherService.
+     */
+    private void downloadUnmobilitedEntries() {
+        Cursor cursor = mEntriesCursorAdapter.getCursor();
+        if (cursor != null && !cursor.isClosed()) {
+            int mobilizedPos = cursor.getColumnIndex(EntryColumns.MOBILIZED_HTML);
+            long[] entries = new long[cursor.getCount()];
+            int i = 0;
+            if (cursor.moveToFirst()) {
+                do {
+                    if (cursor.isNull(mobilizedPos)) {
+                        entries[i++] = cursor.getLong(0);
+                        //not mobilized, yet
+//                        entries[i++] = (Long.valueOf(cursor.getPosition()));
+                    }
+                } while (cursor.moveToNext());
+            }
+            if(i > 0) {
+                entries = Arrays.copyOf(entries, i);
+                FetcherService.addEntriesToMobilize(entries);
+                getActivity().startService(new Intent(getActivity(), FetcherService.class).setAction(FetcherService.ACTION_MOBILIZE_FEEDS));
+            }
+        }
     }
 
     private void startRefresh() {
