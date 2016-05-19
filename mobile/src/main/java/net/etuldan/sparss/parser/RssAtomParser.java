@@ -484,7 +484,7 @@ public class RssAtomParser extends DefaultHandler {
         } else if (TAG_NAME.equals(localName) || TAG_AUTHOR.equals(localName) || TAG_CREATOR.equals(localName)) {
             mAuthorTagEntered = false;
 
-            if (mTmpAuthor != null && mTmpAuthor.indexOf("@") == -1) { // no email
+            if (mTmpAuthor != null) {
                 if (mAuthor == null) {
                     mAuthor = new StringBuilder(mTmpAuthor);
                 } else { // this indicates multiple authors
