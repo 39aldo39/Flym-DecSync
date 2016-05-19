@@ -1,7 +1,7 @@
 /**
  * spaRSS
  * <p/>
- * Copyright (c) 2015 Arnaud Renaud-Goud
+ * Copyright (c) 2015-2016 Arnaud Renaud-Goud
  * Copyright (c) 2012-2015 Frederic Julian
  * <p/>
  * This program is free software: you can redistribute it and/or modify
@@ -214,7 +214,7 @@ public class FetcherService extends IntentService {
                 PrefUtils.putLong(PrefUtils.LAST_SCHEDULED_REFRESH, SystemClock.elapsedRealtime());
             }
 
-            long keepTime = Long.parseLong(PrefUtils.getString(PrefUtils.KEEP_TIME, "4")) * 86400000l;
+            long keepTime = Long.parseLong(PrefUtils.getString(PrefUtils.KEEP_TIME, "4")) * 86400000L;
             long keepDateBorderTime = keepTime > 0 ? System.currentTimeMillis() - keepTime : 0;
 
             deleteOldEntries(keepDateBorderTime);

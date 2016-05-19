@@ -1,7 +1,7 @@
 /**
  * spaRSS
  * <p/>
- * Copyright (c) 2015 Arnaud Renaud-Goud
+ * Copyright (c) 2015-2016 Arnaud Renaud-Goud
  * Copyright (c) 2012-2015 Frederic Julian
  * <p/>
  * This program is free software: you can redistribute it and/or modify
@@ -412,14 +412,10 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
 
             // Listen the mobilizing task
             if (FetcherService.hasMobilizationTask(mEntriesIds[mCurrentPagerPos])) {
-//                showSwipeProgress();
-
                 // If the service is not started, start it here to avoid an infinite loading
                 if (!PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false)) {
                     MainApplication.getContext().startService(new Intent(MainApplication.getContext(), FetcherService.class).setAction(FetcherService.ACTION_MOBILIZE_FEEDS));
                 }
-            } else {
-//                hideSwipeProgress();
             }
 
             // Mark the article as read

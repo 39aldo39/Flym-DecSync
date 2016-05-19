@@ -1,7 +1,7 @@
 /**
  * spaRSS
  * <p/>
- * Copyright (c) 2015 Arnaud Renaud-Goud
+ * Copyright (c) 2015-2016 Arnaud Renaud-Goud
  * Copyright (c) 2012-2015 Frederic Julian
  * <p/>
  * This program is free software: you can redistribute it and/or modify
@@ -71,6 +71,7 @@ import net.etuldan.sparss.provider.FeedData.FeedColumns;
 import net.etuldan.sparss.utils.CircleTransform;
 import net.etuldan.sparss.utils.NetworkUtils;
 import net.etuldan.sparss.utils.StringUtils;
+import net.etuldan.sparss.utils.PrefUtils;
 
 public class EntriesCursorAdapter extends ResourceCursorAdapter {
 

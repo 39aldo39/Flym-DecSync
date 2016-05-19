@@ -1,7 +1,7 @@
 /**
  * spaRSS
  * <p/>
- * Copyright (c) 2015 Arnaud Renaud-Goud
+ * Copyright (c) 2015-2016 Arnaud Renaud-Goud
  * Copyright (c) 2012-2015 Frederic Julian
  * <p/>
  * This program is free software: you can redistribute it and/or modify
@@ -167,11 +167,7 @@ public class HtmlUtils {
     }
 
     private static boolean isCorrectImage(String imgUrl) {
-        if (!imgUrl.endsWith(".gif") && !imgUrl.endsWith(".GIF") && !imgUrl.endsWith(".img") && !imgUrl.endsWith(".IMG")) {
-            return true;
-        }
-
-        return false;
+        return !imgUrl.endsWith(".gif") && !imgUrl.endsWith(".GIF") && !imgUrl.endsWith(".img") && !imgUrl.endsWith(".IMG");
     }
 
 

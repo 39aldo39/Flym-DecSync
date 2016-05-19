@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">spaRSS</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+    <string name="app_name">spaRSS</string>
     <string name="about_spaRSS">O spaRSS</string>
     <string name="welcome_title">Witaj w spaRSS. Chciałbyś dodać nowe źródło?</string>
     <string name="never">nigdy</string>
@@ -13,4 +14,4 @@
     <string name="network_error">Problem z internetem</string>
     <string name="loading">Ładowanie…</string>
     <string name="no_result">Brak wyników</string>
-    </resources>
+</resources>

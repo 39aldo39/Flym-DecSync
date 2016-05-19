@@ -1,7 +1,7 @@
 /**
  * spaRSS
  * <p/>
- * Copyright (c) 2015 Arnaud Renaud-Goud
+ * Copyright (c) 2015-2016 Arnaud Renaud-Goud
  * Copyright (c) 2012-2015 Frederic Julian
  * <p/>
  * This program is free software: you can redistribute it and/or modify
@@ -176,8 +176,8 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
     public interface OnFullScreenListener {
-        public void onFullScreenEnabled(boolean isImmersive, boolean isImmersiveFallback);
+        void onFullScreenEnabled(boolean isImmersive, boolean isImmersiveFallback);
 
-        public void onFullScreenDisabled();
+        void onFullScreenDisabled();
     }
 }
