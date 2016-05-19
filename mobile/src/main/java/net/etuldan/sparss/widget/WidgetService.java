@@ -28,6 +28,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -46,6 +47,8 @@ public class WidgetService extends RemoteViewsService {
 }
 
 class WidgetFeedsFactory implements RemoteViewsService.RemoteViewsFactory {
+    private static final String TAG = "WidgetFeedsFactory";
+
     private final int mAppWidgetId, mFontSize;
     private Context mContext = null;
     private Cursor mCursor;
@@ -107,6 +110,7 @@ class WidgetFeedsFactory implements RemoteViewsService.RemoteViewsFactory {
                         }
                     }
                 } catch (Throwable ignored) {
+                    Log.e(TAG, "Exception", ignored);
                 }
             }
         }

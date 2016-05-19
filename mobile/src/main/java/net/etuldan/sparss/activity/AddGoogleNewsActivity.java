@@ -22,6 +22,7 @@ package net.etuldan.sparss.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -36,7 +37,8 @@ import java.net.URLEncoder;
 import java.util.Locale;
 
 public class AddGoogleNewsActivity extends BaseActivity {
-
+    private static final String TAG = "AddGoogleNewsActivity";
+    
     private static final int[] TOPIC_NAME = new int[]{R.string.google_news_top_stories, R.string.google_news_world, R.string.google_news_business,
             R.string.google_news_technology, R.string.google_news_entertainment, R.string.google_news_sports, R.string.google_news_science, R.string.google_news_health};
 
@@ -89,6 +91,7 @@ public class AddGoogleNewsActivity extends BaseActivity {
                 String url = "http://news.google.com/news?hl=" + Locale.getDefault().getLanguage() + "&output=rss&q=" + URLEncoder.encode(custom_topic, "UTF-8");
                 FeedDataContentProvider.addFeed(this, url, custom_topic, true);
             } catch (UnsupportedEncodingException ignored) {
+                Log.e(TAG, "Exception", ignored);
             }
         }
 

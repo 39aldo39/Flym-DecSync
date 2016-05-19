@@ -37,3 +37,9 @@ gradlew.bat
 *~
 *.swp
 gradlew
+*.bak
+
+
+#obsolete files
+wear/
+

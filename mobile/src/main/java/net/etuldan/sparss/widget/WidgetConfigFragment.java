@@ -55,6 +55,7 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -65,7 +66,8 @@ import net.etuldan.sparss.provider.FeedData.FeedColumns;
 import net.etuldan.sparss.utils.PrefUtils;
 
 public class WidgetConfigFragment extends PreferenceFragment {
-
+    private static final String TAG = "WidgetConfigFragment";
+    
     public static final String ARG_WIDGET_ID = "ARG_WIDGET_ID";
     private static final String NAME_COLUMN = "ifnull(" + FeedColumns.NAME + ',' + FeedColumns.URL + ") as title";
 
@@ -139,6 +141,7 @@ public class WidgetConfigFragment extends PreferenceFragment {
                     try {
                         pendingIntent.send();
                     } catch (CanceledException ignored) {
+                        Log.e(TAG, "Exception", ignored);
                     }
 
                     activity.setResult(Activity.RESULT_OK, new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId));

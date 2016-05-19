@@ -50,6 +50,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 
 import net.etuldan.sparss.parser.OPML;
 import net.etuldan.sparss.provider.FeedData.EntryColumns;
@@ -60,6 +61,7 @@ import net.etuldan.sparss.provider.FeedData.TaskColumns;
 import java.io.File;
 
 class DatabaseHelper extends SQLiteOpenHelper {
+    private static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "FeedEx.db";
     private static final int DATABASE_VERSION = 11;
@@ -96,6 +98,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
                                 OPML.importFromFile(OPML.BACKUP_OPML);
                             }
                         } catch (Exception ignored) {
+                            Log.e(TAG, "Exception", ignored);
                         }
                     }
                 }).start();
@@ -107,6 +110,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         try {
             OPML.exportToFile(OPML.BACKUP_OPML);
         } catch (Exception ignored) {
+            Log.e(TAG, "Exception", ignored);
         }
     }
 
@@ -142,6 +146,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
             try {
                 deleteFileOrDir(new File(Environment.getExternalStorageDirectory() + "/FeedEx/"));
             } catch (Exception ignored) {
+                Log.e(TAG, "Exception", ignored);
             }
         }
         if (oldVersion < 5) {
@@ -173,6 +178,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         try {
             database.execSQL(query);
         } catch (Exception ignored) {
+            Log.e(TAG, "Exception", ignored);
         }
     }
 

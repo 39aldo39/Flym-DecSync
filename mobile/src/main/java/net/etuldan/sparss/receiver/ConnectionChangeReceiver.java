@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.SystemClock;
+import android.util.Log;
 
 import net.etuldan.sparss.Constants;
 import net.etuldan.sparss.service.FetcherService;
@@ -32,7 +33,8 @@ import net.etuldan.sparss.service.RefreshService;
 import net.etuldan.sparss.utils.PrefUtils;
 
 public class ConnectionChangeReceiver extends BroadcastReceiver {
-
+    private static final String TAG = "ConnectionChangeReceive";
+    
     private boolean mConnection = false;
 
     @Override
@@ -47,6 +49,7 @@ public class ConnectionChangeReceiver extends BroadcastReceiver {
                 try {
                     time = Math.max(60000, Integer.parseInt(PrefUtils.getString(PrefUtils.REFRESH_INTERVAL, RefreshService.SIXTY_MINUTES)));
                 } catch (Exception ignored) {
+                    Log.e(TAG, "Exception", ignored);
                 }
 
                 long lastRefresh = PrefUtils.getLong(PrefUtils.LAST_SCHEDULED_REFRESH, 0);

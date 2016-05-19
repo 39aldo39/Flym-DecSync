@@ -34,6 +34,7 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -44,6 +45,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -67,6 +69,7 @@ import net.etuldan.sparss.utils.UiUtils;
 import net.etuldan.sparss.view.EntryView;
 
 public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.OnFullScreenListener, LoaderManager.LoaderCallbacks<Cursor>, EntryView.EntryViewManager {
+    private static final String TAG = "EntryFragment";
 
     private static final String STATE_BASE_URI = "STATE_BASE_URI";
     private static final String STATE_CURRENT_PAGER_POS = "STATE_CURRENT_PAGER_POS";
@@ -86,9 +89,7 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
     private EntryPagerAdapter mEntryPagerAdapter;
 
     private View mCancelFullscreenBtn;
-
-    private boolean isChecked = false;
-
+    private MenuItem mShowFullContentItem;    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -175,6 +176,7 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
     public void onResume() {
         super.onResume();
         mEntryPagerAdapter.onResume();
+        PrefUtils.registerOnPrefChangeListener(mPrefListener);
 
         if (((BaseActivity) getActivity()).isFullScreen()) {
             mCancelFullscreenBtn.setVisibility(View.VISIBLE);
@@ -187,6 +189,7 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
     public void onPause() {
         super.onPause();
         mEntryPagerAdapter.onPause();
+        PrefUtils.unregisterOnPrefChangeListener(mPrefListener);
     }
 
     @Override
@@ -197,8 +200,8 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
             MenuItem item = menu.findItem(R.id.menu_star);
             item.setTitle(R.string.menu_unstar).setIcon(R.drawable.ic_star);
         }
-        MenuItem item = menu.findItem(R.id.menu_switch_full_original);
-        item.setChecked(mPreferFullText);
+        mShowFullContentItem = menu.findItem(R.id.menu_switch_full_original);
+        mShowFullContentItem.setChecked(mPreferFullText);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -287,13 +290,12 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                     break;
                 }
                 case R.id.menu_switch_full_original: {
-                    isChecked = !item.isChecked();
-                    item.setChecked(isChecked);
                     if(mPreferFullText) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 mPreferFullText = false;
+                                Log.d(TAG, "run: manual call of displayEntry(), fullText=false");
                                 mEntryPagerAdapter.displayEntry(mCurrentPagerPos, null, true);
                             }
                         });
@@ -301,16 +303,19 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                         Cursor cursor = mEntryPagerAdapter.getCursor(mCurrentPagerPos);
                         final boolean alreadyMobilized = !cursor.isNull(mMobilizedHtmlPos);
 
-
                         if (alreadyMobilized) {
+                            Log.d(TAG, "onOptionsItemSelected: alreadyMobilized");
+                            mPreferFullText = true;
                             activity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mPreferFullText = true;
+                                    Log.d(TAG, "run: manual call of displayEntry(), fullText=true");
                                     mEntryPagerAdapter.displayEntry(mCurrentPagerPos, null, true);
                                 }
                             });
                         } else if (!isRefreshing()) {
+                            Log.d(TAG, "onOptionsItemSelected: about to load article...");
+                            mPreferFullText = false;
                             ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
                             final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
@@ -318,12 +323,6 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                             if (networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED) {
                                 FetcherService.addEntriesToMobilize(new long[]{mEntriesIds[mCurrentPagerPos]});
                                 activity.startService(new Intent(activity, FetcherService.class).setAction(FetcherService.ACTION_MOBILIZE_FEEDS));
-                                activity.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        showSwipeProgress();
-                                    }
-                                });
                             } else {
                                 activity.runOnUiThread(new Runnable() {
                                     @Override
@@ -331,9 +330,13 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                                         Toast.makeText(activity, R.string.network_error, Toast.LENGTH_SHORT).show();
                                     }
                                 });
+                                Log.d(TAG, "onOptionsItemSelected: cannot load article. no internet connection.");
                             }
+                        } else {
+                            Log.d(TAG, "onOptionsItemSelected: refreshing already in progress");
                         }
                     }
+                    mShowFullContentItem.setChecked(mPreferFullText);
                     break;
                 }
                 default:
@@ -391,6 +394,7 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
 
     private void refreshUI(Cursor entryCursor) {
         if (entryCursor != null) {
+            Log.d(TAG, "refreshUI() called with: " + "entryCursor = [" + entryCursor + "]");
             String feedTitle = entryCursor.isNull(mFeedNamePos) ? entryCursor.getString(mFeedUrlPos) : entryCursor.getString(mFeedNamePos);
             BaseActivity activity = (BaseActivity) getActivity();
             activity.setTitle(feedTitle);
@@ -408,14 +412,14 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
 
             // Listen the mobilizing task
             if (FetcherService.hasMobilizationTask(mEntriesIds[mCurrentPagerPos])) {
-                showSwipeProgress();
+//                showSwipeProgress();
 
                 // If the service is not started, start it here to avoid an infinite loading
                 if (!PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false)) {
                     MainApplication.getContext().startService(new Intent(MainApplication.getContext(), FetcherService.class).setAction(FetcherService.ACTION_MOBILIZE_FEEDS));
                 }
             } else {
-                hideSwipeProgress();
+//                hideSwipeProgress();
             }
 
             // Mark the article as read
@@ -603,6 +607,7 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
         }
 
         public void displayEntry(int pagerPos, Cursor newCursor, boolean forceUpdate) {
+            Log.d(TAG, "displayEntry() called with: " + "pagerPos = [" + pagerPos + "], newCursor = [" + newCursor + "], forceUpdate = [" + forceUpdate + "]");
             EntryView view = mEntryViews.get(pagerPos);
             if (view != null) {
                 if (newCursor == null) {
@@ -612,13 +617,14 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                 if (newCursor != null && newCursor.moveToFirst()) {
                     String contentText = newCursor.getString(mMobilizedHtmlPos);
                     if (contentText == null || (forceUpdate && !mPreferFullText)) {
-                        mPreferFullText = false;
                         contentText = newCursor.getString(mAbstractPos);
+                        mPreferFullText = false;
                     } else {
                         mPreferFullText = true;
                     }
                     if (contentText == null) {
                         contentText = "";
+                        mPreferFullText = false;
                     }
 
                     String author = newCursor.getString(mAuthorPos);
@@ -633,6 +639,11 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                     if (pagerPos == mCurrentPagerPos) {
                         refreshUI(newCursor);
                     }
+                }
+                if (mShowFullContentItem != null) {
+                    mShowFullContentItem.setChecked(mPreferFullText);
+                } else {
+                    Log.e(TAG, "displayEntry: mShowFullContentItem == null" );
                 }
             }
         }
@@ -670,6 +681,27 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
             for (int i = 0; i < mEntryViews.size(); i++) {
                 mEntryViews.valueAt(i).onPause();
             }
+        }
+    }
+
+    private final SharedPreferences.OnSharedPreferenceChangeListener mPrefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (PrefUtils.IS_REFRESHING.equals(key)) {
+                Log.d(TAG, "onSharedPreferenceChanged() called with: " + "sharedPreferences = [" + sharedPreferences + "], key = [" + key + "]");
+                refreshSwipeProgress();
+                if (PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false) == false) {
+                    //if refreshing is done, reload
+                    mEntryPagerAdapter.displayEntry(mCurrentPagerPos, null, true);
+                }
+            }
+        }
+    };
+    private void refreshSwipeProgress() {
+        if (PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false)) {
+            showSwipeProgress();
+        } else {
+            hideSwipeProgress();
         }
     }
 }

@@ -40,4 +40,8 @@ public class MainApplication extends Application {
 
         PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, false); // init
     }
+
+    public static void setContext(Context context) {
+        mContext = context;
+    }
 }

@@ -57,6 +57,7 @@ import android.util.Log;
 
 import net.etuldan.sparss.Constants;
 import net.etuldan.sparss.MainApplication;
+import net.etuldan.sparss.R;
 import net.etuldan.sparss.provider.FeedData;
 import net.etuldan.sparss.provider.FeedData.EntryColumns;
 import net.etuldan.sparss.provider.FeedData.FeedColumns;
@@ -394,8 +395,10 @@ public class RssAtomParser extends DefaultHandler {
                         mainImageUrl = HtmlUtils.getMainImageURL(improvedContent);
                     }
 
-                    if (improvedContent != null) {
+                    if (improvedContent != null && !improvedContent.isEmpty()) {
                         values.put(EntryColumns.ABSTRACT, improvedContent);
+                    } else {
+                        values.put(EntryColumns.ABSTRACT, MainApplication.getContext().getString(R.string.feed_no_summary));
                     }
                 }
 
@@ -470,6 +473,8 @@ public class RssAtomParser extends DefaultHandler {
                     }
                 }
             } else {
+                //to fix https://github.com/Etuldan/spaRSS/issues/200
+                //we must delete next line. however, this causes overhead.
                 cancel();
             }
             mDescription = null;
@@ -547,7 +552,7 @@ public class RssAtomParser extends DefaultHandler {
                 Date result = format.parse(dateStr);
                 return (result.getTime() > mNow ? new Date(mNow) : result);
             } catch (ParseException ignored) {
-            } // just do nothing
+            } // just try next format
         }
 
         if (tryAllFormat)
@@ -567,7 +572,7 @@ public class RssAtomParser extends DefaultHandler {
                 Date result = format.parse(dateStr);
                 return (result.getTime() > mNow ? new Date(mNow) : result);
             } catch (ParseException ignored) {
-            } // just do nothing
+            } // just try next format
         }
 
         if (tryAllFormat)

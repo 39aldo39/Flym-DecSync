@@ -32,9 +32,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PushbackInputStream;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 
 public class HtmlUtils {
 
@@ -168,5 +172,17 @@ public class HtmlUtils {
         }
 
         return false;
+    }
+
+
+    public static InputStream decompressStream(InputStream input) throws IOException {
+        PushbackInputStream pb = new PushbackInputStream( input, 2 ); //we need a pushbackstream to look ahead
+        byte [] signature = new byte[2];
+        pb.read( signature ); //read the signature
+        pb.unread( signature ); //push back the signature to the stream
+        if( signature[ 0 ] == (byte) 0x1f && signature[ 1 ] == (byte) 0x8b ) //check if matches standard gzip magic number
+            return new GZIPInputStream( pb );
+        else
+            return pb;
     }
 }

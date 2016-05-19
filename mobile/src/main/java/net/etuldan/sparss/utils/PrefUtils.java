@@ -23,11 +23,13 @@ package net.etuldan.sparss.utils;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import net.etuldan.sparss.MainApplication;
 
 public class PrefUtils {
-
+    private static final String TAG = "PrefUtils";
+    
     public static final String FIRST_OPEN = "FIRST_OPEN";
     public static final String DISPLAY_TIP = "DISPLAY_TIP";
 
@@ -120,14 +122,16 @@ public class PrefUtils {
     public static void registerOnPrefChangeListener(OnSharedPreferenceChangeListener listener) {
         try {
             PreferenceManager.getDefaultSharedPreferences(MainApplication.getContext()).registerOnSharedPreferenceChangeListener(listener);
-        } catch (Exception ignored) { // Seems to be possible to have a NPE here... Why??
+        } catch (Exception ignored) { // Seems to be possible to have a NPE here... Why?? Because MainApplication.getContext() might not be set, yet.
+            Log.e(TAG, "Exception", ignored);
         }
     }
 
     public static void unregisterOnPrefChangeListener(OnSharedPreferenceChangeListener listener) {
         try {
             PreferenceManager.getDefaultSharedPreferences(MainApplication.getContext()).unregisterOnSharedPreferenceChangeListener(listener);
-        } catch (Exception ignored) { // Seems to be possible to have a NPE here... Why??
+        } catch (Exception ignored) { // Seems to be possible to have a NPE here... Why?? Because MainApplication.getContext() might not be set, yet.
+            Log.e(TAG, "Exception", ignored);
         }
     }
 }

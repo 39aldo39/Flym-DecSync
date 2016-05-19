@@ -60,8 +60,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.text.Html;
-import android.text.TextUtils;
+import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
 
@@ -79,6 +78,9 @@ import net.etuldan.sparss.utils.HtmlUtils;
 import net.etuldan.sparss.utils.NetworkUtils;
 import net.etuldan.sparss.utils.PrefUtils;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -86,10 +88,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
-import java.net.Authenticator;
 import java.net.HttpURLConnection;
-import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.Callable;
@@ -103,6 +104,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FetcherService extends IntentService {
+    private static final String TAG = "FetcherService";
 
     public static final String ACTION_REFRESH_FEEDS = "net.etuldan.sparss.REFRESH";
     public static final String ACTION_MOBILIZE_FEEDS = "net.etuldan.sparss.MOBILIZE_FEEDS";
@@ -188,6 +190,7 @@ public class FetcherService extends IntentService {
                     }
                 });
             }
+            Log.d(TAG, "onHandleIntent: "+intent.getAction()+" aborted due to connectivity problem");
             return;
         }
 
@@ -195,17 +198,18 @@ public class FetcherService extends IntentService {
                 && networkInfo.getType() != ConnectivityManager.TYPE_WIFI;
         // We need to skip the fetching process, so we quit
         if (skipFetch) {
+            Log.d(TAG, "onHandleIntent: abort intent action: " + intent.getAction() + " due to connectivity settings");
             return;
         }
 
+        Log.d(TAG, "onHandleIntent: intent action: " + intent.getAction());
+        PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, true);
         if (ACTION_MOBILIZE_FEEDS.equals(intent.getAction())) {
             mobilizeAllEntries();
             downloadAllImages();
         } else if (ACTION_DOWNLOAD_IMAGES.equals(intent.getAction())) {
             downloadAllImages();
         } else { // == Constants.ACTION_REFRESH_FEEDS
-            PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, true);
-
             if (isFromAutoRefresh) {
                 PrefUtils.putLong(PrefUtils.LAST_SCHEDULED_REFRESH, SystemClock.elapsedRealtime());
             }
@@ -268,9 +272,8 @@ public class FetcherService extends IntentService {
 
             mobilizeAllEntries();
             downloadAllImages();
-
-            PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, false);
         }
+        PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, false);
     }
 
     private void mobilizeAllEntries() {
@@ -295,7 +298,10 @@ public class FetcherService extends IntentService {
 
             if (entryCursor.moveToFirst()) {
                 if (entryCursor.isNull(entryCursor.getColumnIndex(EntryColumns.MOBILIZED_HTML))) { // If we didn't already mobilized it
+                    Log.d(TAG, "mobilizeAllEntries: mobilizing entry " + entryId);
+
                     int linkPos = entryCursor.getColumnIndex(EntryColumns.LINK);
+                    int titlePos = entryCursor.getColumnIndex(EntryColumns.TITLE);
                     int abstractHtmlPos = entryCursor.getColumnIndex(EntryColumns.ABSTRACT);
                     int feedIdPos = entryCursor.getColumnIndex(EntryColumns.FEED_ID);
                     HttpURLConnection connection = null;
@@ -315,22 +321,32 @@ public class FetcherService extends IntentService {
                         final String httpAuthPassValue = cursorFeed.getString(httpAuthPasswordPosition);
                         cursorFeed.close();
 
-                        // Try to find a text indicator for better content extraction
-                        String contentIndicator = null;
-                        String text = entryCursor.getString(abstractHtmlPos);
-                        if (!TextUtils.isEmpty(text)) {
-                            text = Html.fromHtml(text).toString();
-                            if (text.length() > 60) {
-                                contentIndicator = text.substring(20, 40);
+                        String fullSummary = entryCursor.getString(abstractHtmlPos);
+
+                        String mobilizedHtml;
+                        if(fullSummary.length() > 1000) {
+                            //if summary is long, it is most probably full text. use it!
+                            mobilizedHtml = fullSummary;
+                        } else {
+                            // Try to find a text indicator for better content extraction
+                            Document doc = Jsoup.parse(fullSummary);
+                            String contentIndicator = doc.text().substring(0, Math.min(doc.text().length(), 100));
+
+                            String titleIndicator = entryCursor.getString(titlePos);
+                            doc = Jsoup.parse(titleIndicator);
+                            titleIndicator = doc.text();
+
+//                        titleIndicator = Html.fromHtml(titleIndicator).toString();
+//                        titleIndicator = titleIndicator.replaceAll("[\\s\\u00A0]+"," "); //normalize, all whitespaces (incl char(160)) -> single space
+                            connection = NetworkUtils.setupConnection(link, cookieName, cookieValue, httpAuthLoginValue, httpAuthPassValue);
+                            
+                            mobilizedHtml = ArticleTextExtractor.extractContent(HtmlUtils.decompressStream(connection.getInputStream()), contentIndicator, titleIndicator);
+                            if(mobilizedHtml != null) {
+                                mobilizedHtml = HtmlUtils.improveHtmlContent(mobilizedHtml, NetworkUtils.getBaseUrl(connection.getURL().toURI().toString()));
                             }
                         }
 
-                        connection = NetworkUtils.setupConnection(link,cookieName, cookieValue,httpAuthLoginValue, httpAuthPassValue);
-
-                        String mobilizedHtml = ArticleTextExtractor.extractContent(connection.getInputStream(), contentIndicator);
-
                         if (mobilizedHtml != null) {
-                            mobilizedHtml = HtmlUtils.improveHtmlContent(mobilizedHtml, NetworkUtils.getBaseUrl(link));
                             ContentValues values = new ContentValues();
                             values.put(EntryColumns.MOBILIZED_HTML, mobilizedHtml);
 
@@ -359,12 +375,14 @@ public class FetcherService extends IntentService {
                             }
                         }
                     } catch (Throwable ignored) {
+                        Log.e(TAG, "Exception: " + ignored.getMessage(), ignored);
                     } finally {
                         if (connection != null) {
                             connection.disconnect();
                         }
                     }
                 } else { // We already mobilized it
+                    Log.d(TAG, "mobilizeAllEntries: entry " + entryId + "@" + entryUri + " already mobilized");
                     success = true;
                     operations.add(ContentProviderOperation.newDelete(TaskColumns.CONTENT_URI(taskId)).build());
                 }
@@ -388,6 +406,7 @@ public class FetcherService extends IntentService {
             try {
                 cr.applyBatch(FeedData.AUTHORITY, operations);
             } catch (Throwable ignored) {
+                Log.e(TAG, "Exception", ignored);
             }
         }
     }
@@ -421,6 +440,7 @@ public class FetcherService extends IntentService {
                     values.put(TaskColumns.NUMBER_ATTEMPT, nbAttempt + 1);
                     operations.add(ContentProviderOperation.newUpdate(TaskColumns.CONTENT_URI(taskId)).withValues(values).build());
                 }
+                Log.e(TAG, "downloadAllImages: Exception", e);
             }
         }
 
@@ -430,6 +450,7 @@ public class FetcherService extends IntentService {
             try {
                 cr.applyBatch(FeedData.AUTHORITY, operations);
             } catch (Throwable ignored) {
+                Log.e(TAG, "Exception", ignored);
             }
         }
     }
@@ -478,6 +499,7 @@ public class FetcherService extends IntentService {
                     try {
                         result = refreshFeed(feedId, keepDateBorderTime);
                     } catch (Exception ignored) {
+                        Log.e(TAG, "Exception", ignored);
                     }
                     return result;
                 }
@@ -491,6 +513,7 @@ public class FetcherService extends IntentService {
                 Future<Integer> f = completionService.take();
                 globalResult += f.get();
             } catch (Exception ignored) {
+                Log.e(TAG, "Exception", ignored);
             }
         }
 
@@ -534,7 +557,7 @@ public class FetcherService extends IntentService {
 
                 if (fetchMode == 0) {
                     if (contentType != null && contentType.startsWith(CONTENT_TYPE_TEXT_HTML)) {
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(HtmlUtils.decompressStream(connection.getInputStream())));
 
                         String line;
                         int posStart = -1;
@@ -593,6 +616,7 @@ public class FetcherService extends IntentService {
                                 Xml.findEncodingByName(index2 > -1 ? contentType.substring(index + 8, index2) : contentType.substring(index + 8));
                                 fetchMode = FETCHMODE_DIRECT;
                             } catch (UnsupportedEncodingException ignored) {
+                                Log.e(TAG, "Exception", ignored);
                                 fetchMode = FETCHMODE_REENCODE;
                             }
                         } else {
@@ -600,7 +624,7 @@ public class FetcherService extends IntentService {
                         }
 
                     } else {
-                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(HtmlUtils.decompressStream(connection.getInputStream())));
 
                         char[] chars = new char[20];
 
@@ -618,6 +642,7 @@ public class FetcherService extends IntentService {
                                 Xml.findEncodingByName(xmlDescription.substring(start + 10, xmlDescription.indexOf('"', start + 11)));
                                 fetchMode = FETCHMODE_DIRECT;
                             } catch (UnsupportedEncodingException ignored) {
+                                Log.e(TAG, "Exception", ignored);
                                 fetchMode = FETCHMODE_REENCODE;
                             }
                         } else {
@@ -638,19 +663,19 @@ public class FetcherService extends IntentService {
                             int index = contentType.indexOf(CHARSET);
                             int index2 = contentType.indexOf(';', index);
 
-                            InputStream inputStream = connection.getInputStream();
+                            InputStream inputStream = HtmlUtils.decompressStream(connection.getInputStream());
                             Xml.parse(inputStream,
                                     Xml.findEncodingByName(index2 > -1 ? contentType.substring(index + 8, index2) : contentType.substring(index + 8)),
                                     handler);
                         } else {
-                            InputStreamReader reader = new InputStreamReader(connection.getInputStream());
+                            InputStreamReader reader = new InputStreamReader(HtmlUtils.decompressStream(connection.getInputStream()));
                             Xml.parse(reader, handler);
                         }
                         break;
                     }
                     case FETCHMODE_REENCODE: {
                         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                        InputStream inputStream = connection.getInputStream();
+                        InputStream inputStream = HtmlUtils.decompressStream(connection.getInputStream());
 
                         byte[] byteBuffer = new byte[4096];
 
@@ -680,6 +705,7 @@ public class FetcherService extends IntentService {
                                                 index + 8, index2) : contentType.substring(index + 8)));
                                         Xml.parse(reader, handler);
                                     } catch (Exception ignored) {
+                                        Log.e(TAG, "Exception", ignored);
                                     }
                                 } else {
                                     StringReader reader = new StringReader(xmlText);
@@ -702,6 +728,7 @@ public class FetcherService extends IntentService {
                     values.put(FeedColumns.ERROR, getString(R.string.error_feed_error));
                     cr.update(FeedColumns.CONTENT_URI(id), values, null, null);
                 }
+                Log.e(TAG, "refreshFeed: FileNotFoundException: ", e);
             } catch (Throwable e) {
                 if (handler == null || (!handler.isDone() && !handler.isCancelled())) {
                     ContentValues values = new ContentValues();
@@ -712,6 +739,7 @@ public class FetcherService extends IntentService {
                     values.put(FeedColumns.ERROR, e.getMessage() != null ? e.getMessage() : getString(R.string.error_feed_process));
                     cr.update(FeedColumns.CONTENT_URI(id), values, null, null);
                 }
+                Log.e(TAG, "refreshFeed: Exception: ", e);
             } finally {
 
 				/* check and optionally find favicon */
@@ -725,6 +753,7 @@ public class FetcherService extends IntentService {
                         }
                     }
                 } catch (Throwable ignored) {
+                    Log.d(TAG, "Exception favicon could not be retrieved.");
                 }
 
                 if (connection != null) {
