@@ -12,6 +12,7 @@
         android:scaleType="centerCrop"/>
 
     <LinearLayout
+        android:id="@+id/feed_item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -42,6 +43,17 @@
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textIsSelectable="false"/>
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.7"
+            android:drawablePadding="3dp"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textIsSelectable="false"
+            android:text="placeholder feed item author" />
 
     </LinearLayout>
 

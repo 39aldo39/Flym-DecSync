@@ -77,7 +77,7 @@ public class EntriesCursorAdapter extends ResourceCursorAdapter {
     private final Uri mUri;
     private final boolean mShowFeedInfo;
     private final CircleTransform mCircleTransform = new CircleTransform();
-    private int mIdPos, mTitlePos, mMainImgPos, mDatePos, mIsReadPos, mFavoritePos, mFeedIdPos, mFeedIconPos, mFeedNamePos;
+    private int mIdPos, mTitlePos, mMainImgPos, mDatePos, mAuthorPos, mIsReadPos, mFavoritePos, mFeedIdPos, mFeedIconPos, mFeedNamePos;
 
     public EntriesCursorAdapter(Context context, Uri uri, Cursor cursor, boolean showFeedInfo) {
         super(context, R.layout.item_entry_list, cursor, 0);
@@ -93,6 +93,7 @@ public class EntriesCursorAdapter extends ResourceCursorAdapter {
             ViewHolder holder = new ViewHolder();
             holder.titleTextView = (TextView) view.findViewById(android.R.id.text1);
             holder.dateTextView = (TextView) view.findViewById(android.R.id.text2);
+            holder.authorTextView = (TextView) view.findViewById(R.id.author);
             holder.mainImgView = (ImageView) view.findViewById(R.id.main_icon);
             holder.starImgView = (ImageView) view.findViewById(R.id.favorite_icon);
             view.setTag(R.id.holder, holder);
@@ -102,6 +103,14 @@ public class EntriesCursorAdapter extends ResourceCursorAdapter {
 
         String titleText = cursor.getString(mTitlePos);
         holder.titleTextView.setText(titleText);
+
+        String authorText = cursor.getString(mAuthorPos);
+        if(authorText == null || authorText.isEmpty()) {
+            holder.authorTextView.setVisibility(View.GONE);
+        } else {
+            holder.authorTextView.setText(authorText);
+            holder.authorTextView.setVisibility(View.VISIBLE);
+        }
 
         final long feedId = cursor.getLong(mFeedIdPos);
         String feedName = cursor.getString(mFeedNamePos);
@@ -136,10 +145,12 @@ public class EntriesCursorAdapter extends ResourceCursorAdapter {
         if (cursor.isNull(mIsReadPos)) {
             holder.titleTextView.setEnabled(true);
             holder.dateTextView.setEnabled(true);
+            holder.authorTextView.setEnabled(true);
             holder.isRead = false;
         } else {
             holder.titleTextView.setEnabled(false);
             holder.dateTextView.setEnabled(false);
+            holder.authorTextView.setEnabled(false);
             holder.isRead = true;
         }
     }
@@ -236,6 +247,7 @@ public class EntriesCursorAdapter extends ResourceCursorAdapter {
             mTitlePos = cursor.getColumnIndex(EntryColumns.TITLE);
             mMainImgPos = cursor.getColumnIndex(EntryColumns.IMAGE_URL);
             mDatePos = cursor.getColumnIndex(EntryColumns.DATE);
+            mAuthorPos = cursor.getColumnIndex(EntryColumns.AUTHOR);
             mIsReadPos = cursor.getColumnIndex(EntryColumns.IS_READ);
             mFavoritePos = cursor.getColumnIndex(EntryColumns.IS_FAVORITE);
             mFeedNamePos = cursor.getColumnIndex(FeedColumns.NAME);
@@ -247,6 +259,7 @@ public class EntriesCursorAdapter extends ResourceCursorAdapter {
     private static class ViewHolder {
         public TextView titleTextView;
         public TextView dateTextView;
+        public TextView authorTextView;
         public ImageView mainImgView;
         public ImageView starImgView;
         public boolean isRead, isFavorite;
