@@ -252,4 +252,6 @@
     <string name="filter_help">Помоћ за филтер</string>
     <string name="google_news_custom_topic">Прилагођена тема</string>
 
+    <string name="feed_no_summary">&lt; Нема резимеа. &gt;</string>
+    <string name="storage_request_explanation">Да бисте могли да увозите/извозите доводе из/у фајл, морате да одобрите приступ складишту.</string>
     </resources>
