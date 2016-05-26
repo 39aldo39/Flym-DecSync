@@ -1,2 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">spaRSS</string>
+    <string name="about_spaRSS">spaRSS Hakkında</string>
+    <string name="welcome_title">spaRSS\'ye hoşgeldin. Yeni bir besleme eklemek ister misin ?</string>
+    <string name="menu_settings">Ayarlar</string>
+    <string name="menu_refresh">Tazele</string>
+    <string name="menu_all_read">Tümünü okundu işaretle</string>
+    <string name="error">Hata</string>
+    <string name="loading">Yükleniyor…</string>
+    <string name="context_menu_delete">Sil</string>
+    <string name="context_menu_edit">Düzenle</string>
+    <string name="passwordhttpAuth">Parola</string>
+    </resources>
