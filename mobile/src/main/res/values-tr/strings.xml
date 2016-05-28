@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">spaRSS</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+    <string name="app_name">spaRSS</string>
     <string name="about_spaRSS">spaRSS Hakkında</string>
     <string name="welcome_title">spaRSS\'ye hoşgeldin. Yeni bir besleme eklemek ister misin ?</string>
     <string name="menu_settings">Ayarlar</string>
@@ -10,4 +11,4 @@
     <string name="context_menu_delete">Sil</string>
     <string name="context_menu_edit">Düzenle</string>
     <string name="passwordhttpAuth">Parola</string>
-    </resources>
+</resources>
