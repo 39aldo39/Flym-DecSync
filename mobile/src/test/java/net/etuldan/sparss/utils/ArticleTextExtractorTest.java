@@ -413,7 +413,7 @@ public class ArticleTextExtractorTest {
         
         InputStream in = decompressStream(con.getInputStream());
 
-        String s = ArticleTextExtractor.extractContent(in, contentIndicator, titleIndicator);
+        String s = ArticleTextExtractor.extractContent(in, contentIndicator);
         s = HtmlUtils.improveHtmlContent(s, NetworkUtils.getBaseUrl(con.getURL().toURI().toString())); //make image paths absolute
         Document doc = Jsoup.parse(s);
         
