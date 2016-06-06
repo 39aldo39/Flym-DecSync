@@ -239,4 +239,6 @@
     <string name="filter_help">Aide à propos des filtres</string>
     <string name="storage_request_explanation">Pour pouvoir importer ou exporter les flux depuis ou vers un fichier, vous devez autoriser l\'application à accéder au stockage interne.</string>
     <string name="feed_no_summary">&lt; Aucun résumé disponible. &gt;</string>
+    <string name="google_news_custom_topic">Entrer un thème personnalisé</string>
+
     </resources>
