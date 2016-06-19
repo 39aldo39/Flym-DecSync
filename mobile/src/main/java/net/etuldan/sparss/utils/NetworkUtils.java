@@ -39,7 +39,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Authenticator;
@@ -51,8 +50,8 @@ import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.ProxySelector;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.List;
-import java.util.regex.Pattern;
 
  public class NetworkUtils {
      private static final String TAG = "NetworkUtils"; 
@@ -126,23 +125,36 @@ import java.util.regex.Pattern;
         }
     }
 
-    public static synchronized void deleteEntriesImagesCache(Uri entriesUri, String selection, String[] selectionArgs) {
+     public static synchronized void deleteEntriesImagesCache(long keepDateBorderTime) {
         if (IMAGE_FOLDER_FILE.exists()) {
-            PictureFilenameFilter filenameFilter = new PictureFilenameFilter();
 
-            Cursor cursor = MainApplication.getContext().getContentResolver().query(entriesUri, FeedData.EntryColumns.PROJECTION_ID, selection, selectionArgs, null);
+            // We need to exclude favorite entries images to this cleanup
+            Cursor cursor = MainApplication.getContext().getContentResolver().query(FeedData.EntryColumns.FAVORITES_CONTENT_URI, FeedData.EntryColumns.PROJECTION_ID, null, null, null);
+            if (cursor != null) {
+                HashSet<Long> favIds = new HashSet<>();
+                while (cursor.moveToNext()) {
+                    favIds.add(cursor.getLong(0));
+                }
 
-            while (cursor.moveToNext()) {
-                filenameFilter.setEntryId(cursor.getString(0));
-
-                File[] files = IMAGE_FOLDER_FILE.listFiles(filenameFilter);
+                File[] files = IMAGE_FOLDER_FILE.listFiles();
                 if (files != null) {
                     for (File file : files) {
-                        file.delete();
+                        if (file.lastModified() < keepDateBorderTime) {
+                            boolean isAFavoriteEntryImage = false;
+                            for (Long favId : favIds) {
+                                if (file.getName().startsWith(favId + ID_SEPARATOR)) {
+                                    isAFavoriteEntryImage = true;
+                                    break;
+                                }
+                            }
+                            if (!isAFavoriteEntryImage) {
+                                file.delete();
+                            }
+                        }
                     }
                 }
+                cursor.close();
             }
-            cursor.close();
         }
     }
 
@@ -311,27 +323,5 @@ import java.util.regex.Pattern;
         }
 
         return connection;
-    }
-
-    private static class PictureFilenameFilter implements FilenameFilter {
-        private static final String REGEX = "__[^\\.]*\\.[A-Za-z]*";
-
-        private Pattern mPattern;
-
-        public PictureFilenameFilter(String entryId) {
-            setEntryId(entryId);
-        }
-
-        public PictureFilenameFilter() {
-        }
-
-        public void setEntryId(String entryId) {
-            mPattern = Pattern.compile(entryId + REGEX);
-        }
-
-        @Override
-        public boolean accept(File dir, String filename) {
-            return mPattern.matcher(filename).find();
-        }
     }
 }

@@ -67,7 +67,6 @@ import net.etuldan.sparss.provider.FeedData.EntryColumns;
 import net.etuldan.sparss.provider.FeedData.FeedColumns;
 import net.etuldan.sparss.provider.FeedData.FilterColumns;
 import net.etuldan.sparss.provider.FeedData.TaskColumns;
-import net.etuldan.sparss.utils.NetworkUtils;
 
 import java.util.Date;
 
@@ -721,12 +720,6 @@ public class FeedDataContentProvider extends ContentProvider {
                 where.append(Constants.DB_AND);
             }
             where.append(selection);
-        }
-
-        // If it's an entry deletion, delete associated cache files
-        // Need to be done before the real entry deletion
-        if (EntryColumns.TABLE_NAME.equals(table)) {
-            NetworkUtils.deleteEntriesImagesCache(uri, where.toString(), selectionArgs);
         }
 
         int count = database.delete(table, where.toString(), selectionArgs);
