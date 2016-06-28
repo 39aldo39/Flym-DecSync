@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
  Copyright (c) 2015-2016 Arnaud Renaud-Goud
  Copyright (c) 2012-2015 Frederic Julian
  Copyright (c) 2010-2012 Stefan Handschuh
@@ -60,7 +61,7 @@
     <string name="error_feed_import">O arquivo selecionado não pôde ser importado.</string>
     <string name="error_feed_export">A exportação falhou. Certifique-se de que o cartão SD esteja montado como gravável.</string>
     <string name="error_external_storage_not_available">O armazenamento externo (ex. cartão SD) não está disponível.</string>
-    <string name="feed_url">Endereço / Url</string>
+    <string name="feed_url">URL</string>
     <string name="optional">(opcional)</string>
     <string name="website_or_feed">(website ou feed)</string>
     <string name="feed_cookie">Cookie de autenticação</string>
@@ -70,9 +71,9 @@
     <string name="tab_filters_title">Filtro</string>
     <string name="tab_advanced_title">Avançado</string>
     <string name="feed_title">Título</string>
-    <string name="feed_filters">REGRAS DE FILTRO</string>
+    <string name="feed_filters">Regras de Filtro</string>
     <string name="filter_add_title">Nova regra</string>
-    <string name="filter_delete_title">Excluir regra</string>
+    <string name="filter_delete_title">Remover regra</string>
     <string name="filter_edit_title">Alterar regra</string>
     <string name="filter_is_regex">é uma expressão regular</string>
     <string name="filter_apply_to_title">Aplicar ao título</string>
@@ -82,7 +83,7 @@
     <string name="feed_search">Busca de feeds</string>
     <string name="select_file">Selecionar o arquivo (SD-root)</string>
     <string name="question_delete_feed">Tem certeza de que deseja excluir este feed?</string>
-    <string name="question_delete_group">Tem certeza de que deseja excluir este grupo e todos os seus feeds?</string>
+    <string name="question_delete_group">"Tem a certeza de que deseja apagar este grupo e todos os seus feeds? "</string>
     <string name="question_delete_filter">Tem certeza de que deseja excluir este filtro?</string>
     <string name="add_group_title">Escolha um nome para o grupo</string>
     <string name="edit_group_title">Altere o nome do grupo</string>
@@ -138,22 +139,22 @@
     <!-- SETTINGS -->
     <string name="settings_category_refresh">Atualização automática</string>
     <string name="settings_refresh_enabled">Habilitar atualização automática</string>
-    <string name="settings_refresh_enabled_description">Habilitar a atualização automática de feeds</string>
+    <string name="settings_refresh_enabled_description">Activar a atualização automática de feeds</string>
     <string name="settings_refresh_interval">Intervalo de atualização</string>
     <string name="settings_category_notifications">Notificações</string>
     <string name="settings_notifications_enabled">Habilitar notificações</string>
-    <string name="settings_notifications_enabled_description">Habilitar notificação para novos artigos</string>
+    <string name="settings_notifications_enabled_description">Activar notificações para novas entradas</string>
     <string name="settings_notifications_ringtone">Toque</string>
     <string name="settings_notifications_ringtone_none">Nenhum</string>
     <string name="settings_notifications_vibrate">Vibrar</string>
-    <string name="settings_notifications_vibrate_description">Habilitar vibração para novos artigos</string>
+    <string name="settings_notifications_vibrate_description">Activar vibração para novas entradas</string>
     <string name="settings_notifications_light">Light</string>
     <string name="settings_notifications_light_description">Ativar led de notificação para novos artigos</string>
     <string name="settings_category_content_presentation">Apresentação de conteúdo</string>
     <string name="settings_light_theme">Tema Claro</string>
     <string name="settings_light_theme_description">Usar o tema claro</string>
     <string name="settings_left_panel">Painel esquerdo</string>
-    <string name="settings_left_panel_description">Mostrar o painel esquerdo ao iniciar o aplicativo</string>
+    <string name="settings_left_panel_description">Mostrar o painel esquerdo ao iniciar a aplicação</string>
     <string name="settings_keep_time">Período que os artigos serão mantidos</string>
     <string name="settings_display_images">Mostrar imagens</string>
     <string name="settings_display_images_description">Mostrar imagens nos artigos</string>
@@ -166,9 +167,9 @@
     <string name="settings_display_entries_fullscreen">Artigos em tela-cheia</string>
     <string name="settings_display_entries_fullscreen_description">Automaticamente mostrar artigos em modo tela-cheia</string>
     <string name="settings_refresh_on_open">Atualizar feeds ao iniciar app</string>
-    <string name="settings_refresh_on_open_description">Atualizar todos os feeds ao iniciar o aplicativo</string>
+    <string name="settings_refresh_on_open_description">Atualiza todos os feeds ao iniciar a aplicação</string>
     <string name="settings_refresh_wifi_only">Atualizar somente em Wi-Fi</string>
-    <string name="settings_refresh_wifi_only_description">Atualização automática somente se houver rede Wi-Fi disponível</string>
+    <string name="settings_refresh_wifi_only_description">Atualização automática apenas se ligação Wi-Fi estiver disponível</string>
     <string name="settings_visible_feeds">Feeds visíveis</string>
     <string name="settings_widget_background">Fundo</string>
     <string name="settings_widget_background_description">Cor de fundo e transparência do widget</string>
@@ -237,4 +238,15 @@
         <item>Sempre</item>
     </string-array>
 
-</resources>
+<string name="menu_show_new_entries">Mostrar novas entradas</string>
+    <string name="storage_request_explanation">Para poder importar ou exportar feeds de ou para um ficheiro, tem de permitir que a aplicação aceda à memoria.</string>
+    <string name="feed_no_summary">&lt; Sem resumo disponível. &gt;</string>
+    <string name="loginhttpAuth">Login</string>
+    <string name="passwordhttpAuth">Palavra-passe</string>
+    <string name="no_new_entries">Sem novas entradas a mostrar</string>
+
+    <string name="feed_httpAuth">Atenticação HTTP</string>
+    <string name="menu_open_in_browser">Abrir no navegador</string>
+    <string name="settings_show_new_entries">Mostrar novas entradas automaticamente</string>
+    <string name="settings_show_new_entries_description">Se desactivado, será preciso um toque no botão Mostrar novas entradas para mostrar novas entradas</string>
+    </resources>
