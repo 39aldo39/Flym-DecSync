@@ -253,4 +253,5 @@
     <string name="storage_request_explanation">Чтобы получить возможность импорта лент из файла или экспорта их в файл, надо разрешить приложению доступ к хранилищу.</string>
     <string name="google_news_custom_topic">Ввести рубрику вручную</string>
 
+    <string name="feed_no_summary">&lt; Нет описания &gt;</string>
     </resources>
