@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
  Copyright (c) 2010-2012 Stefan Handschuh
       modified 2014-2014 Matthias Dill
@@ -42,7 +42,7 @@
     <string name="drawer_open">Navigationsleiste öffnen</string>
     <string name="drawer_close">Navigationsleiste schließen</string>
     <string name="back_again_to_quit">Zum Beenden Zurück-Taste noch einmal drücken</string>
-    <string name="no_new_entries">Keine neuen Einträge vorhanden.</string>
+    <string name="no_new_entries">Keine neuen Einträge vorhanden</string>
 
     <!-- FEEDS -->
     <string name="feeds">Feeds</string>
@@ -62,7 +62,7 @@
     <string name="error_feed_import">Die ausgewählte Datei konnte nicht importiert werden.</string>
     <string name="error_feed_export">Der Export ist fehlgeschlagen. Stelle sicher, dass du eine beschreibbare SD-Karte verfügbar ist.</string>
     <string name="error_external_storage_not_available">Der externe Speicher (z.B. SD-Karte) ist nicht verfügbar.</string>
-    <string name="feed_url">URL-Adresse</string>
+    <string name="feed_url">URL</string>
     <string name="optional">(optional)</string>
     <string name="website_or_feed">(Website oder Feed)</string>
     <string name="feed_cookie">Authentisierungs-Cookie</string>
@@ -74,8 +74,8 @@
     <string name="tab_feed_title">Feed</string>
     <string name="tab_filters_title">Filter</string>
     <string name="tab_advanced_title">Erweitert</string>
-    <string name="feed_title">TITEL</string>
-    <string name="feed_filters">AUSSCHLUSS-FILTER</string>
+    <string name="feed_title">Titel</string>
+    <string name="feed_filters">Filterregeln</string>
     <string name="filter_add_title">Filter hinzufügen</string>
     <string name="filter_delete_title">Filter entfernen</string>
     <string name="filter_edit_title">Filter bearbeiten</string>
@@ -248,4 +248,6 @@
     <string name="filter_help">Filter Hilfe</string>
     <string name="settings_show_new_entries_description">Wenn deaktiviert, ist das Antippen des Buttons Neue Einträge erforderlich, um neue Einträge zu sehen</string>
     <string name="google_news_custom_topic">Eigenes Thema</string>
-</resources>
+<string name="storage_request_explanation">Um Feeds aus einer Datei importieren oder in eine Datei exportieren zu können, benötigt die App Zugriffsrechte auf die SD-Karte.</string>
+    <string name="feed_no_summary">&lt;Keine Zusammenfassung verfügbar&gt;</string>
+    </resources>
