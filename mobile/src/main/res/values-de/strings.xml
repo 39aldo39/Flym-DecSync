@@ -33,7 +33,7 @@
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_refresh">Aktualisieren</string>
     <string name="menu_all_read">Alle als gelesen markieren</string>
-    <string name="menu_show_new_entries">Zeige neue Einträge</string>
+    <string name="menu_show_new_entries">Neue Einträge zeigen</string>
     <string name="spaRSS_feeds">spaRSS-Feeds</string>
     <string name="error">Fehler</string>
     <string name="network_error">Kein Internet</string>
@@ -82,8 +82,8 @@
     <string name="filter_is_regex">ist ein regulärer Ausdruck</string>
     <string name="filter_apply_to_title">Auf den Titel anwenden</string>
     <string name="filter_apply_to_content">Auf den Inhalt anwenden</string>
-    <string name="accept">Annehmen</string>
-    <string name="reject">Zurückweisen</string>
+    <string name="accept">ACCEPT</string>
+    <string name="reject">REJECT</string>
     <string name="feed_search">Feed-Suche</string>
     <string name="select_file">Datei auswählen(SD-root)</string>
     <string name="question_delete_feed">Willst du diesen Feed wirklich löschen?</string>
@@ -102,7 +102,7 @@
     <string name="google_news_top_stories">Schlagzeilen</string>
     <string name="google_news_world">International</string>
     <string name="google_news_business">Wirtschaft</string>
-    <string name="google_news_technology">Wissen/Technik</string>
+    <string name="google_news_technology">Wissenschaft und Technik</string>
     <string name="google_news_entertainment">Unterhaltung</string>
     <string name="google_news_sports">Sport</string>
     <string name="google_news_science">Panorama</string>
@@ -188,7 +188,7 @@
     <string name="settings_proxy_host">Host</string>
     <string name="settings_proxy_port">Port</string>
     <string name="settings_proxy_type">Typ</string>
-    <string name="settings_mark_as_read">Zeige Button "Alle als gelesen markieren"</string>
+    <string name="settings_mark_as_read">Zeige den Button \"Alle als gelesen markieren\"</string>
     <string name="settings_mark_as_read_description">Zeige / verstecke den Button</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">Ein neuer Eintrag</item>
