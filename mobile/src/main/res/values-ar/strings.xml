@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
     <string name="app_name">spaRSS</string>
     <string name="about_spaRSS">عن التطبيق</string>
@@ -18,7 +18,7 @@
     <string name="drawer_open">افتح درج الإنتقال</string>
     <string name="drawer_close">اغلق درج الإنتقال</string>
     <string name="back_again_to_quit">اضغط عودة مرة أخرى للخروج</string>
-    <string name="no_new_entries">لا توجد مدخلات جديدة لعرضها.</string>
+    <string name="no_new_entries">لا توجد مقالات جديدة لعرضها</string>
 
     <string name="feeds">خلاصات</string>
     <string name="menu_add_feed">أضف خلاصة</string>
@@ -35,9 +35,9 @@
     <string name="error_feed_process">لا يمكن معالجة الخلاصة.</string>
     <string name="error_feed_url_exists">العنوان موجود مسبقا.</string>
     <string name="error_feed_import">لا يمكن جلب الملف المحدد.</string>
-    <string name="error_feed_export">"عملية التصدير فشلت، تأكد من امتلاكك لبطاقة تخزين مركبة و قابلة للكتابة. "</string>
-    <string name="error_external_storage_not_available">"الذاكرة الخارجية (مثال: بطاقة SD) غير متوفرة. "</string>
-    <string name="feed_url">عنوان URL</string>
+    <string name="error_feed_export">عملية التصدير فشلت، تأكد من امتلاكك لبطاقة تخزين مركبة و قابلة للكتابة.</string>
+    <string name="error_external_storage_not_available">الذاكرة الخارجية (مثال: بطاقة SD) غير متوفرة.</string>
+    <string name="feed_url">URL</string>
     <string name="optional">(اختيارية)</string>
     <string name="website_or_feed">(موقع الكتروني أو خلاصة)</string>
     <string name="feed_cookie">Authentication Cookie</string>
@@ -68,7 +68,7 @@
     <string name="google_news_entertainment">ترفيه</string>
     <string name="google_news_science">علوم</string>
     <string name="to_group_title">نقل الخلاصة</string>
-    <string name="to_group_message">"بامكانك وضع هذه الخلاصة في هذه المجموعة أو فوقها. أين تريد وضعها؟ "</string>
+    <string name="to_group_message">بامكانك وضع هذه الخلاصة في هذه المجموعة أو فوقها. أين تريد وضعها؟</string>
     <string name="to_group_above">فوق المجموعة</string>
     <string name="to_group_into">في المجموعة</string>
     <string name="add_custom_feed">أضف خلاصة يدويا أو ابحث عنها</string>
@@ -114,15 +114,15 @@
 
     <string name="settings_category_refresh">إعادة تحميل تلقائي</string>
     <string name="settings_refresh_enabled">تفعيل إعادة التحميل التلقائي</string>
-    <string name="settings_refresh_enabled_description">"تفعيل إعادة التحميل التلقائي للخلاصات "</string>
+    <string name="settings_refresh_enabled_description">تفعيل إعادة التحميل التلقائي للخلاصات</string>
     <string name="settings_refresh_interval">فترة إعادة التحميل</string>
     <string name="settings_category_notifications">تنبيهات</string>
     <string name="settings_notifications_enabled">تفعيل التنبيهات</string>
-    <string name="settings_notifications_enabled_description">"تفعيل التنبيهات في حالة مقالات جديدة "</string>
+    <string name="settings_notifications_enabled_description">تفعيل التنبيهات في حالة مقالات جديدة</string>
     <string name="settings_notifications_ringtone">نغمة</string>
     <string name="settings_notifications_ringtone_none">لا أحد</string>
     <string name="settings_notifications_vibrate">إهتزاز</string>
-    <string name="settings_notifications_vibrate_description">"تفعيل الإهتزاز للمقالات الجديدة "</string>
+    <string name="settings_notifications_vibrate_description">تفعيل الإهتزاز للمقالات الجديدة</string>
     <string name="settings_notifications_light">ضوء التنبيهات</string>
     <string name="settings_notifications_light_description">تفعيل ضوء التنبيهات للمقالات الجديدة</string>
     <string name="settings_category_content_presentation">تقديم المحتوى</string>
@@ -142,12 +142,12 @@
     <string name="settings_display_entries_fullscreen">ملء الشاشة التلقائي في المقالات</string>
     <string name="settings_display_entries_fullscreen_description">لإظهار المقالات في وضع الشاشة المملوءة تلقائيا</string>
     <string name="settings_refresh_on_open">إعادة تحميل الخلاصات عند التشغيل</string>
-    <string name="settings_refresh_on_open_description">"لإعادة تحميل جميع الخلاصات بعد تشغيل التطبيق "</string>
+    <string name="settings_refresh_on_open_description">تحيين جميع الخلاصات بعد تشغيل التطبيق</string>
     <string name="settings_refresh_wifi_only">إعادة التحميل فقط على Wi-Fi</string>
-    <string name="settings_refresh_wifi_only_description">"إعادة التحميل التلقائي تتم فقط في حالة وجود اتصال Wi-Fi "</string>
+    <string name="settings_refresh_wifi_only_description">التحيين التلقائي يتم فقط في حالة وجود اتصال Wi-Fi</string>
     <string name="settings_visible_feeds">الخلاصات الظاهرة</string>
     <string name="settings_widget_background">الخلفية</string>
-    <string name="settings_widget_background_description">"لون و شفافية خلفية الـ widget "</string>
+    <string name="settings_widget_background_description">لون و شفافية خلفية الـ widget</string>
     <string name="all_feeds">كل الخلاصات (بما فيها المستقبلية)</string>
     <string name="settings_screen_proxy">Proxy</string>
     <string name="settings_category_network">شبكة</string>
@@ -158,7 +158,7 @@
     <string name="settings_proxy_port">باب (Port)</string>
     <string name="settings_proxy_type">نوع (Type)</string>
     <string name="settings_mark_as_read">إظهار الزر تعليم الكل كمقروء</string>
-    <string name="settings_mark_as_read_description">إظهار / إخفاء الزر (إعادة تشغيل التطبيق مطلوبة)</string>
+    <string name="settings_mark_as_read_description">إظهار / إخفاء الزر</string>
     <string name="settings_show_new_entries">إظهار المقالات الجديدة تلقائيا</string>
     <string name="settings_show_new_entries_description">إذا كانت غير مفعلة، فان الضغط على زر إظهار المقالات الجديدة ضروري لإظهارها</string>
     <plurals name="number_of_new_entries">
@@ -169,5 +169,13 @@
 	<item quantity="many">d% مقالات جديدة</item>
 	<item quantity="other">d% مقالة جديدة</item>
 </plurals>
+
+    <string name="storage_request_explanation">لكي تستطيع استيراد أو تصدير المستخلصات من أو إلى ملف، يجب عليك السماح للتطبيق الدخول لوحدة التخزين.</string>
+    <string name="feed_no_summary">&lt; ملخص غير متوفر. &gt;</string>
+    <string name="feed_httpAuth">مصادقة HTTP</string>
+    <string name="loginhttpAuth">اسم المستخدم</string>
+    <string name="passwordhttpAuth">كلمة المرور</string>
+    <string name="filter_help">مساعدة بخصوص الفلتر</string>
+    <string name="google_news_custom_topic">أدخل موضوع مخصص</string>
 
     </resources>
