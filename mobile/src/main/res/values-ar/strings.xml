@@ -40,7 +40,7 @@
     <string name="feed_url">URL</string>
     <string name="optional">(اختيارية)</string>
     <string name="website_or_feed">(موقع الكتروني أو خلاصة)</string>
-    <string name="feed_cookie">Authentication Cookie</string>
+    <string name="feed_cookie">Cookie المصادقة</string>
     <string name="cookiename">اسم</string>
     <string name="cookievalue">قيمة</string>
     <string name="tab_feed_title">خلاصة</string>
@@ -54,8 +54,8 @@
     <string name="filter_is_regex">هل هي \"regular expression\"</string>
     <string name="filter_apply_to_title">طبق على العنوان</string>
     <string name="filter_apply_to_content">طبق على المحتوى</string>
-    <string name="accept">موافق</string>
-    <string name="reject">أرفض</string>
+    <string name="accept">ACCEPT</string>
+    <string name="reject">REJECT</string>
     <string name="feed_search">البحث عن خلاصة</string>
     <string name="select_file">حدد ملف (SD-root)</string>
     <string name="question_delete_feed">هل فعلا ترغب في حذف هذه الخلاصة؟</string>
