@@ -249,4 +249,6 @@
     <string name="menu_open_in_browser">Abrir no navegador</string>
     <string name="settings_show_new_entries">Mostrar novas entradas automaticamente</string>
     <string name="settings_show_new_entries_description">Se desactivado, será preciso um toque no botão Mostrar novas entradas para mostrar novas entradas</string>
+    <string name="filter_help">Filtrar Ajuda</string>
+    <string name="menu_switch_full_original">Mostrar conteúdo completo</string>
     </resources>
