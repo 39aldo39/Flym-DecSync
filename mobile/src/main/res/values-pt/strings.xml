@@ -59,7 +59,7 @@
     <string name="error_feed_process">O feed não pôde ser processado.</string>
     <string name="error_feed_url_exists">O endereço já existe.</string>
     <string name="error_feed_import">O arquivo selecionado não pôde ser importado.</string>
-    <string name="error_feed_export">A exportação falhou. Certifique-se de que o cartão SD esteja montado como gravável.</string>
+    <string name="error_feed_export">A exportação falhou. Certifique-se de que o cartão SD pode ser escrito.</string>
     <string name="error_external_storage_not_available">O armazenamento externo (ex. cartão SD) não está disponível.</string>
     <string name="feed_url">URL</string>
     <string name="optional">(opcional)</string>
