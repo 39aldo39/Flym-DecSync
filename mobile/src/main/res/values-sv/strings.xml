@@ -81,11 +81,11 @@
     <string name="feed_search">Sök efter feed</string>
     <string name="select_file">Välj fil (SD-root)</string>
     <string name="question_delete_feed">Vill du radera denna feed?</string>
-    <string name="question_delete_group">Vill du radera denna grupp och alla dess feeds?</string>
+    <string name="question_delete_group">"Vill du radera denna grupp och alla dess feeds? "</string>
     <string name="question_delete_filter">Vill du radera denna regel?</string>
     <string name="add_group_title">Ny grupp</string>
     <string name="edit_group_title">Redigera gruppens namn</string>
-    <string name="message_exported_to">Exporterad till %s</string>
+    <string name="message_exported_to">Exporterad till %s.</string>
     <string name="to_group_title">Flytta feed</string>
     <string name="to_group_message">Du kan antingen placera denna feed inuti eller ovanför denna grupp. Vad vill du göra?</string>
     <string name="to_group_above">Utanför gruppen</string>
@@ -116,7 +116,7 @@
     <string name="menu_copy_clipboard">Kopiera länk</string>
     <string name="menu_mark_as_unread">Markera som oläst</string>
     <string name="menu_open_in_browser">Öppna i webbläsare</string>
-    <string name="menu_switch_full_original">Show full content</string>
+    <string name="menu_switch_full_original">Visa fullständigt innehåll</string>
     <string name="share_favorites_title">spaRSS: favoriter</string>
     <string name="copied_clipboard">Länk kopierad</string>
     <string name="get_full_text">Hämta hela texten</string>
@@ -128,7 +128,7 @@
     <string name="file">Fil</string>
     <string name="download_and_save">Ladda ned och spara</string>
     <string name="open_link">Öppna länk</string>
-    <string name="tip_sentence">Tips: svepa åt vänster för att markera som läst, svepa åt höger för att markera som favorit.</string>
+    <string name="tip_sentence">Tips: svep åt vänster för att markera som läst, svep åt höger för att markera som favorit</string>
 
     <!-- WIDGET -->
     <string name="red">Röd</string>
