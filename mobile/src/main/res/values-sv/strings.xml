@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
  Copyright (c) 2010-2012 Stefan Handschuh
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -57,7 +58,7 @@
     <string name="error_feed_url_exists">URL:en existerar redan.</string>
     <string name="error_feed_import">Den valda filen kunde inte importeras.</string>
     <string name="error_feed_export">Exporten har misslyckats. Försäkra dig om att du har ett skrivbart SD-kort monterat.</string>
-    <string name="error_external_storage_not_available">Det externa lagringsmediet (d.v.s. SD-kort) finns ej tillgängligt.</string>
+    <string name="error_external_storage_not_available">Det externa lagringsmediet (d.v.s. SD-kortet) finns ej tillgängligt.</string>
     <string name="feed_url">URL</string>
     <string name="optional">(valfritt)</string>
     <string name="website_or_feed">(webbplats eller feed)</string>
@@ -67,8 +68,8 @@
     <string name="tab_feed_title">Feed</string>
     <string name="tab_filters_title">Filter</string>
     <string name="tab_advanced_title">Avancerad</string>
-    <string name="feed_title">TITEL</string>
-    <string name="feed_filters">FILTRERINGSREGLER</string>
+    <string name="feed_title">Titel</string>
+    <string name="feed_filters">Filterregler</string>
     <string name="filter_add_title">Lägg till regel</string>
     <string name="filter_delete_title">Radera regel</string>
     <string name="filter_edit_title">Redigera regel</string>
@@ -86,7 +87,7 @@
     <string name="edit_group_title">Redigera gruppens namn</string>
     <string name="message_exported_to">Exporterad till %s</string>
     <string name="to_group_title">Flytta feed</string>
-    <string name="to_group_message">Du kan flytta denna feed varken in till gruppen eller utanför gruppen. Vad vill du göra?</string>
+    <string name="to_group_message">Du kan antingen placera denna feed inuti eller ovanför denna grupp. Vad vill du göra?</string>
     <string name="to_group_above">Utanför gruppen</string>
     <string name="to_group_into">In till gruppen</string>
     <string name="add_custom_feed">Lägg till eller sök efter en feed</string>
@@ -138,15 +139,15 @@
     <!-- SETTINGS -->
     <string name="settings_category_refresh">Automatisk uppdatering</string>
     <string name="settings_refresh_enabled">Uppdatera automatiskt</string>
-    <string name="settings_refresh_enabled_description">Uppdatera alla feeds automatiskt</string>
+    <string name="settings_refresh_enabled_description">Aktivera automatisk uppdatering av feeds</string>
     <string name="settings_refresh_interval">Uppdateringsintervall</string>
     <string name="settings_category_notifications">Påminnelser</string>
     <string name="settings_notifications_enabled">Visa påminnelser</string>
-    <string name="settings_notifications_enabled_description">Visa påminnelser då nytt feed innehåll finns</string>
+    <string name="settings_notifications_enabled_description">Aktivera aviseringar då nya poster finns</string>
     <string name="settings_notifications_ringtone">Ringsignal</string>
     <string name="settings_notifications_ringtone_none">Ingen</string>
     <string name="settings_notifications_vibrate">Vibrera</string>
-    <string name="settings_notifications_vibrate_description">Vibrera vid nytt feed innehåll</string>
+    <string name="settings_notifications_vibrate_description">Aktivera vibration då nya poster finns</string>
     <string name="settings_notifications_light">Ljus</string>
     <string name="settings_notifications_light_description">Tända lysdioden vid nytt feed innehåll</string>
     <string name="settings_category_content_presentation">Innehållspresentation</string>
@@ -166,9 +167,9 @@
     <string name="settings_display_entries_fullscreen">Automatisk helskärm</string>
     <string name="settings_display_entries_fullscreen_description">Visa inlägg automatiskt i helskärm</string>
     <string name="settings_refresh_on_open">Uppdatera feeds vid start</string>
-    <string name="settings_refresh_on_open_description">Uppdatera alla feeds när applikationen öppnas</string>
+    <string name="settings_refresh_on_open_description">Uppdaterar alla feeder när applikationen öppnas</string>
     <string name="settings_refresh_wifi_only">Uppdatera endast via Wi-Fi</string>
-    <string name="settings_refresh_wifi_only_description">Uppdatera automatisk endast när ett Wi-Fi-nätverk är tillgänglig</string>
+    <string name="settings_refresh_wifi_only_description">Automatisk uppdatering utförs endast då ett Wi-Fi-nätverk är tillgängligt</string>
     <string name="settings_visible_feeds">Synliga feeds</string>
     <string name="settings_widget_background">Bakgrund</string>
     <string name="settings_widget_background_description">Färg och transparens för widgetens bakgrund</string>
@@ -237,4 +238,17 @@
         <item>Alltid</item>
     </string-array>
 
-</resources>
+<string name="menu_show_new_entries">Visa nya poster</string>
+    <string name="no_new_entries">Ina nya poster att visa</string>
+
+    <string name="storage_request_explanation">För att kunna importera eller exportera feed:er från eller till en fil måste du tillåta appen att få åtkomst till lagringsminnet.</string>
+    <string name="feed_no_summary">&lt; Ingen sammanfattning tillgänglig. &gt;</string>
+    <string name="feed_httpAuth">HTTP-autentisering</string>
+    <string name="loginhttpAuth">Inloggningsnamn</string>
+    <string name="passwordhttpAuth">Lösenord</string>
+    <string name="filter_help">Filterhjälp</string>
+    <string name="google_news_custom_topic">Ange anpassat ämne</string>
+
+    <string name="settings_show_new_entries">Visa automatisk nya poster</string>
+    <string name="settings_show_new_entries_description">Om inaktiverat kommer ett klick på knappen Visa nya poster att krävas för att visa nya poster</string>
+    </resources>
