@@ -233,7 +233,7 @@
     </string-array>
 
 <string name="menu_show_new_entries">Sarrera berriak erakutsi</string>
-    <string name="no_new_entries">Ez dago sarrera berririk erakusteko.</string>
+    <string name="no_new_entries">Ez dago sarrera berririk erakusteko</string>
 
     <string name="feed_cookie">Autentikazio cookiea</string>
     <string name="cookiename">Izena</string>
