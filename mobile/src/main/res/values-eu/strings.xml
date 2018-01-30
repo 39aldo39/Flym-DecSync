@@ -65,13 +65,13 @@
 	<string name="error_external_storage_not_available">Kanpoko biltegia (adib. SD-txartela) ez dago
         eskuragarri.
     </string>
-    <string name="feed_url">URL helbidea</string>
+    <string name="feed_url">URL-a</string>
     <string name="optional">(hautazkoa)</string>
     <string name="website_or_feed">(webgune edo jarioa)</string>
     <string name="tab_feed_title">Jarioa</string>
     <string name="tab_filters_title">Iragazkia</string>
-    <string name="feed_title">IZENBURUA</string>
-    <string name="feed_filters">IRAGAZKI ARAUAK</string>
+    <string name="feed_title">Izenburua</string>
+    <string name="feed_filters">Iragazki-arauak</string>
     <string name="filter_add_title">Araua gehitu</string>
     <string name="filter_delete_title">Araua ezabatu</string>
     <string name="filter_edit_title">Araua editatu</string>
@@ -143,14 +143,11 @@
     <!-- SETTINGS -->
     <string name="settings_category_refresh">Freskatze automatikoa</string>
     <string name="settings_refresh_enabled">Freskatze automatikoa gaitu</string>
-    <string name="settings_refresh_enabled_description">Jarioen freskatze automatikoa gaitu
-    </string>
+    <string name="settings_refresh_enabled_description">"Gaitu jarioen freskatze automatikoa "</string>
     <string name="settings_refresh_interval">Freskatze tartea</string>
     <string name="settings_category_notifications">Jakinarazpenak</string>
     <string name="settings_notifications_enabled">Jakinarazpenak gaitu</string>
-    <string name="settings_notifications_enabled_description">Jakinarazpenak gaitu sarrera berriak 
-        badaude
-    </string>
+    <string name="settings_notifications_enabled_description">"Gaitu jakinarazpenak sarrera berriak daudenean "</string>
     <string name="settings_notifications_ringtone">Dei-tonua</string>
     <string name="settings_notifications_ringtone_none">None</string>
     <string name="settings_notifications_vibrate">Dardaratu</string>
@@ -259,4 +256,5 @@
     <string name="filter_help">Iragazkiaren laguntza</string>
     <string name="google_news_custom_topic">Gai pertsonalizatua sartu</string>
 
+    <string name="feed_no_summary">&lt; Ez dago laburpenik eskuragarri. &gt;</string>
     </resources>
