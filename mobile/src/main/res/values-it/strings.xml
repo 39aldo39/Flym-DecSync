@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
  Copyright (c) 2013-2014 Danilo Treffiletti
 
@@ -57,13 +57,11 @@
     <string name="error_feed_process">Il feed non può essere elaborato.</string>
     <string name="error_feed_url_exists">L\'indirizzo è già presente.</string>
     <string name="error_feed_import">Il file selezionato non può essere importato.</string>
-    <string name="error_feed_export">L\'esportazione è fallita. Controllare di avere una scheda SD
-        scrivibile e correttamente montata.
-    </string>
+    <string name="error_feed_export">L\'esportazione è fallita. Controllare di avere una scheda SD scrivibile.</string>
     <string name="error_external_storage_not_available">L\'archivio esterno (per esempio la scheda SD)
         non è disponibile.
     </string>
-    <string name="feed_url">Indirizzo URL</string>
+    <string name="feed_url">URL</string>
     <string name="optional">(opzionale)</string>
     <string name="website_or_feed">(sito web o feed)</string>
     <string name="feed_cookie">Cookie di autenticazione</string>
@@ -72,8 +70,8 @@
     <string name="tab_feed_title">Feed</string>
     <string name="tab_filters_title">Filtri</string>
     <string name="tab_advanced_title">Avanzate</string>
-    <string name="feed_title">TITOLO</string>
-    <string name="feed_filters">REGOLE FILTRO</string>
+    <string name="feed_title">Titolo</string>
+    <string name="feed_filters">Regole filtro</string>
     <string name="filter_add_title">Aggiungi filtro</string>
     <string name="filter_delete_title">Elimina filtro</string>
     <string name="filter_edit_title">Modifica filtro</string>
@@ -91,9 +89,7 @@
     <string name="edit_group_title">Modifica nome del gruppo</string>
     <string name="message_exported_to">Esportato su %s.</string>
     <string name="to_group_title">Azione spostamento feed</string>
-    <string name="to_group_message">Puoi sia spostare il feed dentro il gruppo sia prima del gruppo.
-        Cosa vuoi fare?
-    </string>
+    <string name="to_group_message">Puoi spostare il feed sia dentro sia prima del gruppo. Cosa vuoi fare\?</string>
     <string name="to_group_above">Sopra il gruppo</string>
     <string name="to_group_into">Dentro il gruppo</string>
     <string name="add_custom_feed">Aggiungi un feed personale o cercane uno</string>
@@ -182,7 +178,7 @@
         dell\'applicazione
     </string>
     <string name="settings_refresh_wifi_only">Aggiorna solo in Wi-Fi</string>
-    <string name="settings_refresh_wifi_only_description">"L\'aggiornamento automatico viene eseguito solo quando si è connessi ad una rete Wi-Fi "</string>
+    <string name="settings_refresh_wifi_only_description">L\'aggiornamento automatico verrà eseguito solo se una rete Wi-Fi è disponibile</string>
     <string name="settings_visible_feeds">Feed visibili</string>
     <string name="settings_widget_background">Sfondo</string>
     <string name="settings_widget_background_description">Colore e trasparenza dello sfondo del widget
@@ -256,4 +252,14 @@
 <string name="menu_show_new_entries">Mostra nuovi articoli</string>
     <string name="settings_show_new_entries">Mostra automaticamente nuovi articoli</string>
     <string name="settings_show_new_entries_description">Se disabilitato, bisogna premere sul bottone Mostra nuovi articoli per mostrare i nuovi articoli</string>
+    <string name="no_new_entries">Nessun nuovo articolo da mostrare</string>
+
+    <string name="storage_request_explanation">Per poter importare o esportare i feed da o in un file, devi permettere l\'app di accedere alla memoria.</string>
+    <string name="feed_no_summary">&lt; Nessun riassunto disponibile. &gt;</string>
+    <string name="feed_httpAuth">Autenticazione HTTP</string>
+    <string name="loginhttpAuth">Login</string>
+    <string name="passwordhttpAuth">Password</string>
+    <string name="filter_help">Aiuto filtri</string>
+    <string name="google_news_custom_topic">Inserisci argomento personalizzato</string>
+
     </resources>
