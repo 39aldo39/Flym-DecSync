@@ -20,6 +20,7 @@
 
 package org.decsync.sparss.activity;
 
+import android.content.ContentResolver;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -80,7 +81,8 @@ public class AddGoogleNewsActivity extends BaseActivity {
                 if (TOPIC_CODES[topic] != null) {
                     url += "&topic=" + TOPIC_CODES[topic];
                 }
-                FeedDataContentProvider.addFeed(this, url, getString(TOPIC_NAME[topic]), true);
+                ContentResolver cr = getContentResolver();
+                FeedDataContentProvider.addFeed(cr, this, url, getString(TOPIC_NAME[topic]), true);
             }
         }
 
@@ -89,7 +91,8 @@ public class AddGoogleNewsActivity extends BaseActivity {
         {
             try {
                 String url = "http://news.google.com/news?hl=" + Locale.getDefault().getLanguage() + "&output=rss&q=" + URLEncoder.encode(custom_topic, "UTF-8");
-                FeedDataContentProvider.addFeed(this, url, custom_topic, true);
+                ContentResolver cr = getContentResolver();
+                FeedDataContentProvider.addFeed(cr, this, url, custom_topic, true);
             } catch (UnsupportedEncodingException ignored) {
                 Log.e(TAG, "Exception", ignored);
             }

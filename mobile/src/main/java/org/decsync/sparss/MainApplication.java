@@ -21,8 +21,13 @@
 package org.decsync.sparss;
 
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 
+import org.decsync.sparss.service.DecsyncService;
 import org.decsync.sparss.utils.PrefUtils;
 
 public class MainApplication extends Application {
@@ -37,7 +42,6 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
-
         PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, false); // init
     }
 

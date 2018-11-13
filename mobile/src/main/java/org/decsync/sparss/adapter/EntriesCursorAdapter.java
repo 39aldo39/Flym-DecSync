@@ -69,6 +69,7 @@ import org.decsync.sparss.provider.FeedData;
 import org.decsync.sparss.provider.FeedData.EntryColumns;
 import org.decsync.sparss.provider.FeedData.FeedColumns;
 import org.decsync.sparss.utils.CircleTransform;
+import org.decsync.sparss.utils.DB;
 import org.decsync.sparss.utils.NetworkUtils;
 import org.decsync.sparss.utils.StringUtils;
 import org.decsync.sparss.utils.PrefUtils;
@@ -173,9 +174,9 @@ public class EntriesCursorAdapter extends ResourceCursorAdapter {
             new Thread() {
                 @Override
                 public void run() {
-                    ContentResolver cr = MainApplication.getContext().getContentResolver();
                     Uri entryUri = ContentUris.withAppendedId(mUri, id);
-                    cr.update(entryUri, holder.isRead ? FeedData.getReadContentValues() : FeedData.getUnreadContentValues(), null, null);
+                    ContentResolver cr = MainApplication.getContext().getContentResolver();
+                    DB.update(cr, entryUri, holder.isRead ? FeedData.getReadContentValues() : FeedData.getUnreadContentValues(), null, null);
                 }
             }.start();
         }
@@ -199,9 +200,9 @@ public class EntriesCursorAdapter extends ResourceCursorAdapter {
                     ContentValues values = new ContentValues();
                     values.put(EntryColumns.IS_FAVORITE, holder.isFavorite ? 1 : 0);
 
-                    ContentResolver cr = MainApplication.getContext().getContentResolver();
                     Uri entryUri = ContentUris.withAppendedId(mUri, id);
-                    cr.update(entryUri, values, null, null);
+                    ContentResolver cr = MainApplication.getContext().getContentResolver();
+                    DB.update(cr, entryUri, values, null, null);
                 }
             }.start();
         }
@@ -211,9 +212,9 @@ public class EntriesCursorAdapter extends ResourceCursorAdapter {
         new Thread() {
             @Override
             public void run() {
-                ContentResolver cr = MainApplication.getContext().getContentResolver();
                 String where = EntryColumns.WHERE_UNREAD + Constants.DB_AND + '(' + EntryColumns.FETCH_DATE + Constants.DB_IS_NULL + Constants.DB_OR + EntryColumns.FETCH_DATE + "<=" + untilDate + ')';
-                cr.update(mUri, FeedData.getReadContentValues(), where, null);
+                ContentResolver cr = MainApplication.getContext().getContentResolver();
+                DB.update(cr, mUri, FeedData.getReadContentValues(), where, null);
             }
         }.start();
     }

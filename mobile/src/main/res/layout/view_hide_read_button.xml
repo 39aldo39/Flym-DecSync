@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.melnykov.fab.FloatingActionButton xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.FloatingActionButton xmlns:android="http://schemas.android.com/apk/res/android"
                                        xmlns:fab="http://schemas.android.com/apk/res-auto"
                                        android:id="@+id/hide_read_button"
                                        android:layout_width="wrap_content"
@@ -7,7 +7,7 @@
                                        android:layout_gravity="bottom|right"
                                        android:layout_margin="16dp"
                                        android:onClick="onClickHideRead"
-                                       android:src="@drawable/ic_visibility"
-                                       fab:fab_colorNormal="?attr/colorPrimary"
-                                       fab:fab_colorPressed="?attr/colorPrimaryDark"
-                                       fab:fab_colorRipple="?attr/colorPrimaryDark"/>
+                                       android:src="@drawable/ic_visibility"/>
+                                       <!--fab:fab_colorNormal="?attr/colorPrimary"-->
+                                       <!--fab:fab_colorPressed="?attr/colorPrimaryDark"-->
+                                       <!--fab:fab_colorRipple="?attr/colorPrimaryDark"-->

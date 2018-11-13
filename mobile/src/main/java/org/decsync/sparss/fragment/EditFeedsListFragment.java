@@ -51,6 +51,7 @@ import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -58,8 +59,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -81,12 +83,12 @@ import org.decsync.sparss.activity.AddGoogleNewsActivity;
 import org.decsync.sparss.adapter.FeedsCursorAdapter;
 import org.decsync.sparss.parser.OPML;
 import org.decsync.sparss.provider.FeedData.FeedColumns;
+import org.decsync.sparss.utils.DB;
 import org.decsync.sparss.view.DragNDropExpandableListView;
 import org.decsync.sparss.view.DragNDropListener;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -139,8 +141,8 @@ public class EditFeedsListFragment extends ListFragment {
                                     new Thread() {
                                         @Override
                                         public void run() {
-                                            ContentResolver cr = getActivity().getContentResolver();
-                                            cr.delete(FeedColumns.CONTENT_URI(feedId), null, null);
+                                            ContentResolver cr = MainApplication.getContext().getContentResolver();
+                                            DB.delete(cr, FeedColumns.CONTENT_URI(feedId), null, null);
                                         }
                                     }.start();
                                 }
@@ -203,10 +205,10 @@ public class EditFeedsListFragment extends ListFragment {
                                         public void run() {
                                             String groupName = input.getText().toString();
                                             if (!groupName.isEmpty()) {
-                                                ContentResolver cr = getActivity().getContentResolver();
                                                 ContentValues values = new ContentValues();
                                                 values.put(FeedColumns.NAME, groupName);
-                                                cr.update(FeedColumns.CONTENT_URI(groupId), values, null, null);
+                                                ContentResolver cr = getActivity().getContentResolver();
+                                                DB.update(cr, FeedColumns.CONTENT_URI(groupId), values, null, null);
                                             }
                                         }
                                     }.start();
@@ -227,7 +229,7 @@ public class EditFeedsListFragment extends ListFragment {
                                         @Override
                                         public void run() {
                                             ContentResolver cr = getActivity().getContentResolver();
-                                            cr.delete(FeedColumns.GROUPS_CONTENT_URI(groupId), null, null);
+                                            DB.delete(cr, FeedColumns.GROUPS_CONTENT_URI(groupId), null, null);
                                         }
                                     }.start();
                                 }
@@ -283,7 +285,7 @@ public class EditFeedsListFragment extends ListFragment {
         mListView.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                ActionBarActivity activity = (ActionBarActivity) getActivity();
+                AppCompatActivity activity = (AppCompatActivity) getActivity();
                 if (activity != null) {
                     String title = ((TextView) view.findViewById(android.R.id.text1)).getText().toString();
                     Matcher m = Pattern.compile("(.*) \\([0-9]+\\)$").matcher(title);
@@ -345,7 +347,7 @@ public class EditFeedsListFragment extends ListFragment {
                                     values.put(FeedColumns.GROUP_ID, mListView.getItemIdAtPosition(flatPosTo));
 
                                     ContentResolver cr = getActivity().getContentResolver();
-                                    cr.update(FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
+                                    DB.update(cr, FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
                                     cr.notifyChange(FeedColumns.GROUPS_CONTENT_URI, null);
                                 }
                             }).setNegativeButton(R.string.to_group_above, new DialogInterface.OnClickListener() {
@@ -370,22 +372,23 @@ public class EditFeedsListFragment extends ListFragment {
     private void moveItem(boolean fromIsGroup, boolean toIsGroup, boolean fromIsFeedWithoutGroup, long packedPosTo, int packedGroupPosTo,
                           int flatPosFrom) {
         ContentValues values = new ContentValues();
-        ContentResolver cr = getActivity().getContentResolver();
+        Context context = getActivity();
+        ContentResolver cr = context.getContentResolver();
 
         if (fromIsGroup && toIsGroup) {
             values.put(FeedColumns.PRIORITY, packedGroupPosTo + 1);
-            cr.update(FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
+            DB.update(cr, FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
         } else if (!fromIsGroup && toIsGroup) {
             values.put(FeedColumns.PRIORITY, packedGroupPosTo + 1);
             values.putNull(FeedColumns.GROUP_ID);
-            cr.update(FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
+            DB.update(cr, FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
         } else if ((!fromIsGroup && !toIsGroup) || (fromIsFeedWithoutGroup && !toIsGroup)) {
             int groupPrio = ExpandableListView.getPackedPositionChild(packedPosTo) + 1;
             values.put(FeedColumns.PRIORITY, groupPrio);
 
             int flatGroupPosTo = mListView.getFlatListPosition(ExpandableListView.getPackedPositionForGroup(packedGroupPosTo));
             values.put(FeedColumns.GROUP_ID, mListView.getItemIdAtPosition(flatGroupPosTo));
-            cr.update(FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
+            DB.update(cr, FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
         }
     }
 
@@ -434,11 +437,11 @@ public class EditFeedsListFragment extends ListFragment {
                                     public void run() {
                                         String groupName = input.getText().toString();
                                         if (!groupName.isEmpty()) {
-                                            ContentResolver cr = getActivity().getContentResolver();
                                             ContentValues values = new ContentValues();
                                             values.put(FeedColumns.IS_GROUP, true);
                                             values.put(FeedColumns.NAME, groupName);
-                                            cr.insert(FeedColumns.GROUPS_CONTENT_URI, values);
+                                            ContentResolver cr = getActivity().getContentResolver();
+                                            DB.insert(cr, FeedColumns.GROUPS_CONTENT_URI, values);
                                         }
                                     }
                                 }.start();
@@ -563,6 +566,7 @@ public class EditFeedsListFragment extends ListFragment {
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        Log.w("RSS Import", e);
                                         Toast.makeText(getActivity(), R.string.error_feed_import, Toast.LENGTH_LONG).show();
                                     }
                                 });

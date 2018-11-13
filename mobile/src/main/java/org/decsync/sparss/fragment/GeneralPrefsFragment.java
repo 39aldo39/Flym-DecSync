@@ -45,8 +45,10 @@
 
 package org.decsync.sparss.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -54,12 +56,18 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import org.decsync.sparss.MainApplication;
 import org.decsync.sparss.R;
+import org.decsync.sparss.service.DecsyncService;
 import org.decsync.sparss.service.RefreshService;
+import org.decsync.sparss.utils.DecsyncUtils;
 import org.decsync.sparss.utils.PrefUtils;
+
+import static org.decsync.sparss.activity.GeneralPrefsActivity.PERMISSIONS_REQUEST_DECSYNC;
 
 public class GeneralPrefsFragment extends PreferenceFragment {
 
@@ -99,6 +107,28 @@ public class GeneralPrefsFragment extends PreferenceFragment {
                 android.os.Process.killProcess(android.os.Process.myPid()); // Restart the app
 
                 // this return statement will never be reached
+                return true;
+            }
+        });
+
+        preference = findPreference(PrefUtils.DECSYNC_ENABLED);
+        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Activity activity = getActivity();
+                if (activity == null) {
+                    return false;
+                }
+                if (Boolean.TRUE.equals(newValue)) {
+                    if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        DecsyncUtils.INSTANCE.initSync(activity);
+                    } else {
+                        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_DECSYNC);
+                        return false;
+                    }
+                } else {
+                    activity.stopService(new Intent(activity, DecsyncService.class));
+                }
                 return true;
             }
         });

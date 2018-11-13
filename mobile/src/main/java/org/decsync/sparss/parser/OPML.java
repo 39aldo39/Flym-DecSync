@@ -56,6 +56,7 @@ import org.decsync.sparss.Constants;
 import org.decsync.sparss.MainApplication;
 import org.decsync.sparss.provider.FeedData.FeedColumns;
 import org.decsync.sparss.provider.FeedData.FilterColumns;
+import org.decsync.sparss.utils.DB;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -78,7 +79,7 @@ public class OPML {
     private static final String[] FILTERS_PROJECTION = new String[]{FilterColumns.FILTER_TEXT, FilterColumns.IS_REGEX,
             FilterColumns.IS_APPLIED_TO_TITLE, FilterColumns.IS_ACCEPT_RULE};
 
-    private static final String START = "<?xml version='1.0' encoding='utf-8'?>\n<opml version='1.1'>\n<head>\n<title>spaRSS export</title>\n<dateCreated>";
+    private static final String START = "<?xml version='1.0' encoding='utf-8'?>\n<opml version='1.1'>\n<head>\n<title>spaRSS DecSync export</title>\n<dateCreated>";
     private static final String AFTER_DATE = "</dateCreated>\n</head>\n<body>\n";
     private static final String OUTLINE_TITLE = "\t<outline title='";
     private static final String OUTLINE_XMLURL = "' type='rss' xmlUrl='";
@@ -95,6 +96,21 @@ public class OPML {
 
     private static final OPMLParser mParser = new OPMLParser();
     private static boolean mAutoBackupEnabled = true;
+
+    public static void importBackupFile() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try
+                {
+                    // Perform automated import of the backup
+                    OPML.importFromFile(OPML.BACKUP_OPML);
+                }
+                catch (Exception ig){
+                }
+            }
+        }).start();
+    }
 
     public static void importFromFile(String filename) throws IOException, SAXException {
         if (BACKUP_OPML.equals(filename)) {
@@ -247,7 +263,7 @@ public class OPML {
                         Cursor cursor = cr.query(FeedColumns.GROUPS_CONTENT_URI, null, FeedColumns.NAME + Constants.DB_ARG, new String[]{title}, null);
 
                         if (!cursor.moveToFirst()) {
-                            mGroupId = cr.insert(FeedColumns.GROUPS_CONTENT_URI, values).getLastPathSegment();
+                            mGroupId = DB.insert(cr, FeedColumns.GROUPS_CONTENT_URI, values).getLastPathSegment();
                         }
                         cursor.close();
                     }
@@ -267,7 +283,7 @@ public class OPML {
                             new String[]{url}, null);
                     mFeedId = null;
                     if (!cursor.moveToFirst()) {
-                        mFeedId = cr.insert(FeedColumns.CONTENT_URI, values).getLastPathSegment();
+                        mFeedId = DB.insert(cr, FeedColumns.CONTENT_URI, values).getLastPathSegment();
                     }
                     cursor.close();
                 }
@@ -280,7 +296,7 @@ public class OPML {
                     values.put(FilterColumns.IS_ACCEPT_RULE, Constants.TRUE.equals(attributes.getValue("", ATTRIBUTE_IS_ACCEPT_RULE)));
 
                     ContentResolver cr = MainApplication.getContext().getContentResolver();
-                    cr.insert(FilterColumns.FILTERS_FOR_FEED_CONTENT_URI(mFeedId), values);
+                    DB.insert(cr, FilterColumns.FILTERS_FOR_FEED_CONTENT_URI(mFeedId), values);
                 }
             }
         }

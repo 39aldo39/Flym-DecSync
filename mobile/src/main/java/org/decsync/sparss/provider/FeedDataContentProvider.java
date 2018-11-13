@@ -24,10 +24,10 @@
  * <p/>
  * Copyright (c) 2010-2012 Stefan Handschuh
  * <p/>
- * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * Permission is hereby granted, free of charge, to any person obtaining a Copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * to use, Copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  * <p/>
@@ -67,6 +67,7 @@ import org.decsync.sparss.provider.FeedData.EntryColumns;
 import org.decsync.sparss.provider.FeedData.FeedColumns;
 import org.decsync.sparss.provider.FeedData.FilterColumns;
 import org.decsync.sparss.provider.FeedData.TaskColumns;
+import org.decsync.sparss.utils.DB;
 
 import java.util.Date;
 
@@ -126,23 +127,33 @@ public class FeedDataContentProvider extends ContentProvider {
 
     private DatabaseHelper mDatabaseHelper;
 
-    public static void addFeed(Context context, String url, String name, boolean retrieveFullText) {
-        addFeed(context, url, name, retrieveFullText, "", "", 0);
+    public static Uri addFeed(ContentResolver cr, Context context, String url, String name, boolean retrieveFullText) {
+        return addFeed(cr, context, url, name, retrieveFullText, "", "", 0);
     }
 
-    public static void addFeed(Context context, String url, String name, boolean retrieveFullText, String cookieName, String cookieValue, Integer keepTime) {
-        ContentResolver cr = context.getContentResolver();
+    public static Uri addFeed(ContentResolver cr, Context context, String url, String name, boolean retrieveFullText, boolean updateDecsync) {
+        return addFeed(cr, context, url, name, retrieveFullText, "", "", 0, updateDecsync);
+    }
 
+    public static Uri addFeed(ContentResolver cr, Context context, String url, String name, boolean retrieveFullText, String cookieName, String cookieValue, Integer keepTime) {
+        return addFeed(cr, context, url, name, retrieveFullText, cookieName, cookieValue, keepTime, true);
+    }
+
+    public static Uri addFeed(ContentResolver cr, Context context, String url, String name, boolean retrieveFullText, String cookieName, String cookieValue, Integer keepTime, boolean updateDecsync) {
         if (!url.startsWith(Constants.HTTP_SCHEME) && !url.startsWith(Constants.HTTPS_SCHEME)) {
             url = Constants.HTTP_SCHEME + url;
         }
 
-        Cursor cursor = cr.query(FeedColumns.CONTENT_URI, null, FeedColumns.URL + Constants.DB_ARG,
-                new String[]{url}, null);
+        Cursor cursor = cr.query(FeedColumns.CONTENT_URI, FeedColumns.PROJECTION_ID,
+                FeedColumns.URL + Constants.DB_ARG, new String[]{url}, null);
 
         if (cursor.moveToFirst()) {
+            long feedId = cursor.getLong(0);
             cursor.close();
-            Toast.makeText(context, R.string.error_feed_url_exists, Toast.LENGTH_SHORT).show();
+            if (context != null) {
+                Toast.makeText(context, R.string.error_feed_url_exists, Toast.LENGTH_SHORT).show();
+            }
+            return FeedColumns.CONTENT_URI(feedId);
         } else {
             cursor.close();
             ContentValues values = new ContentValues();
@@ -157,7 +168,7 @@ public class FeedDataContentProvider extends ContentProvider {
             values.put(FeedColumns.COOKIE_NAME, cookieName);
             values.put(FeedColumns.COOKIE_VALUE, cookieValue);
             values.put(FeedColumns.KEEP_TIME, keepTime);
-            cr.insert(FeedColumns.CONTENT_URI, values);
+            return DB.insert(cr, FeedColumns.CONTENT_URI, values, updateDecsync);
         }
     }
 

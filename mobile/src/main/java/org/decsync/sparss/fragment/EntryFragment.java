@@ -64,6 +64,7 @@ import org.decsync.sparss.provider.FeedData;
 import org.decsync.sparss.provider.FeedData.EntryColumns;
 import org.decsync.sparss.provider.FeedData.FeedColumns;
 import org.decsync.sparss.service.FetcherService;
+import org.decsync.sparss.utils.DB;
 import org.decsync.sparss.utils.PrefUtils;
 import org.decsync.sparss.utils.UiUtils;
 import org.decsync.sparss.view.EntryView;
@@ -228,7 +229,7 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                             ContentValues values = new ContentValues();
                             values.put(EntryColumns.IS_FAVORITE, mFavorite ? 1 : 0);
                             ContentResolver cr = MainApplication.getContext().getContentResolver();
-                            cr.update(uri, values, null, null);
+                            DB.update(cr, uri, values, null, null);
 
                             // Update the cursor
                             Cursor updatedCursor = cr.query(uri, null, null, null, null);
@@ -272,7 +273,7 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                         @Override
                         public void run() {
                             ContentResolver cr = MainApplication.getContext().getContentResolver();
-                            cr.update(uri, FeedData.getUnreadContentValues(), null, null);
+                            DB.update(cr, uri, FeedData.getUnreadContentValues(), null, null);
                         }
                     }.start();
                     activity.finish();
@@ -425,7 +426,7 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                     @Override
                     public void run() {
                         ContentResolver cr = MainApplication.getContext().getContentResolver();
-                        cr.update(uri, FeedData.getReadContentValues(), null, null);
+                        DB.update(cr, uri, FeedData.getReadContentValues(), null, null);
 
                         // Update the cursor
                         Cursor updatedCursor = cr.query(uri, null, null, null, null);

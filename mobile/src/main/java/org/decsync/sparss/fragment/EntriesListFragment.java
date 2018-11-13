@@ -50,7 +50,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.melnykov.fab.FloatingActionButton;
+import android.support.design.widget.FloatingActionButton;
 
 import org.decsync.sparss.Constants;
 import org.decsync.sparss.R;

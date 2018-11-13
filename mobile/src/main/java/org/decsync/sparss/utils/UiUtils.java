@@ -32,7 +32,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.melnykov.fab.FloatingActionButton;
+import android.support.design.widget.FloatingActionButton;
 
 import org.decsync.sparss.MainApplication;
 import org.decsync.sparss.R;
@@ -84,9 +84,9 @@ public class UiUtils {
     static public void updateHideReadButton(FloatingActionButton drawerHideReadButton) {
         if (drawerHideReadButton != null) {
             if (PrefUtils.getBoolean(PrefUtils.SHOW_READ, true)) {
-                drawerHideReadButton.setColorNormalResId(getAttrResource(drawerHideReadButton.getContext(), R.attr.colorAccent, R.color.light_primary_color));
+                drawerHideReadButton.setBackgroundColor(getAttrResource(drawerHideReadButton.getContext(), R.attr.colorAccent, R.color.light_primary_color));
             } else {
-                drawerHideReadButton.setColorNormalResId(R.color.light_disabled);
+                drawerHideReadButton.setBackgroundColor(R.color.light_disabled);
             }
         }
     }

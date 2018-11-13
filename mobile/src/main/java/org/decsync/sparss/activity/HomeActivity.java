@@ -36,6 +36,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -48,8 +49,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.melnykov.fab.FloatingActionButton;
-
 import org.decsync.sparss.Constants;
 import org.decsync.sparss.R;
 import org.decsync.sparss.adapter.DrawerAdapter;
@@ -58,8 +57,11 @@ import org.decsync.sparss.parser.OPML;
 import org.decsync.sparss.provider.FeedData;
 import org.decsync.sparss.provider.FeedData.EntryColumns;
 import org.decsync.sparss.provider.FeedData.FeedColumns;
+import org.decsync.sparss.service.DecsyncService;
 import org.decsync.sparss.service.FetcherService;
 import org.decsync.sparss.service.RefreshService;
+import org.decsync.sparss.utils.DecsyncUtils;
+import org.decsync.sparss.utils.DecsyncUtilsKt;
 import org.decsync.sparss.utils.PrefUtils;
 import org.decsync.sparss.utils.UiUtils;
 
@@ -81,6 +83,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
     private static final int LOADER_ID = 0;
     private static final int SEARCH_DRAWER_POSITION = -1;
     private static final int PERMISSIONS_REQUEST_IMPORT_FROM_OPML = 1;
+    private static final int PERMISSIONS_REQUEST_DECSYNC = 2;
 
     private EntriesListFragment mEntriesFragment;
     private DrawerLayout mDrawerLayout;
@@ -89,6 +92,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
     private DrawerAdapter mDrawerAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private FloatingActionButton mDrawerHideReadButton;
+    private boolean mFirstOpen;
     private final SharedPreferences.OnSharedPreferenceChangeListener mShowReadListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -183,25 +187,39 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         } else {
             stopService(new Intent(this, RefreshService.class));
         }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            PrefUtils.putBoolean(PrefUtils.DECSYNC_ENABLED, false);
+        }
+        if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
+            Intent intent = new Intent(this, DecsyncService.class);
+            startService(intent);
+            DecsyncUtils.INSTANCE.getDecsync().executeAllNewEntries(getContentResolver());
+        } else {
+            stopService(new Intent(this, DecsyncService.class));
+        }
         if (PrefUtils.getBoolean(PrefUtils.REFRESH_ON_OPEN_ENABLED, false)) {
             if (!PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false)) {
                 startService(new Intent(HomeActivity.this, FetcherService.class).setAction(FetcherService.ACTION_REFRESH_FEEDS));
             }
         }
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && new File(OPML.BACKUP_OPML).exists())
-        {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-                builder.setMessage(R.string.storage_request_explanation).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-                    public void onClick(DialogInterface dialog, int id) {
-                        ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_IMPORT_FROM_OPML);
-                    }
-                });
-                builder.show();
-            }
-            else
-            {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_IMPORT_FROM_OPML);
+        mFirstOpen = PrefUtils.getBoolean(PrefUtils.FIRST_OPEN, true);
+        if (mFirstOpen) {
+            PrefUtils.putBoolean(PrefUtils.FIRST_OPEN, false);
+
+            boolean decsyncExists = new File(DecsyncUtilsKt.getDir()).exists();
+            boolean opmlExists = new File(OPML.BACKUP_OPML).exists();
+            boolean importOPML = !decsyncExists && opmlExists;
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                PrefUtils.putBoolean(PrefUtils.DECSYNC_ENABLED, true);
+                if (importOPML) {
+                    OPML.importBackupFile();
+                } else {
+                    DecsyncUtils.INSTANCE.initSync(this);
+                }
+            } else {
+                int requestCode = importOPML ? PERMISSIONS_REQUEST_IMPORT_FROM_OPML : PERMISSIONS_REQUEST_DECSYNC;
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
             }
         }
     }
@@ -391,8 +409,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         mDrawerList.setItemChecked(position, true);
 
         // First open => we open the drawer for you
-        if (PrefUtils.getBoolean(PrefUtils.FIRST_OPEN, true)) {
-            PrefUtils.putBoolean(PrefUtils.FIRST_OPEN, false);
+        if (mFirstOpen) {
             if (mDrawerLayout != null) {
                 mDrawerLayout.postDelayed(new Runnable() {
                     @Override
@@ -452,20 +469,14 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         switch (requestCode)
         {
             case PERMISSIONS_REQUEST_IMPORT_FROM_OPML:
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try
-                            {
-                                // Perform automated import of the backup
-                                OPML.importFromFile(OPML.BACKUP_OPML);
-                            }
-                            catch (Exception ig){
-                            }
-                        }
-                    }).start();
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    PrefUtils.putBoolean(PrefUtils.DECSYNC_ENABLED, true);
+                    OPML.importBackupFile();
+                }
+            case PERMISSIONS_REQUEST_DECSYNC:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    PrefUtils.putBoolean(PrefUtils.DECSYNC_ENABLED, true);
+                    DecsyncUtils.INSTANCE.initSync(this);
                 }
         }
     }

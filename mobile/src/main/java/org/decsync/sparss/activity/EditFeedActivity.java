@@ -62,7 +62,6 @@ import android.os.Bundle;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -86,6 +85,7 @@ import org.decsync.sparss.loader.BaseLoader;
 import org.decsync.sparss.provider.FeedData.FeedColumns;
 import org.decsync.sparss.provider.FeedData.FilterColumns;
 import org.decsync.sparss.provider.FeedDataContentProvider;
+import org.decsync.sparss.utils.DB;
 import org.decsync.sparss.utils.NetworkUtils;
 import org.decsync.sparss.utils.UiUtils;
 
@@ -171,7 +171,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                                                     values.put(FilterColumns.IS_REGEX, regexCheckBox.isChecked());
                                                     values.put(FilterColumns.IS_APPLIED_TO_TITLE, applyTitleRadio.isChecked());
                                                     values.put(FilterColumns.IS_ACCEPT_RULE, acceptRadio.isChecked());
-                                                    if (cr.update(FilterColumns.CONTENT_URI, values, FilterColumns._ID + '=' + filterId, null) > 0) {
+                                                    if (DB.update(cr, FilterColumns.CONTENT_URI, values, FilterColumns._ID + '=' + filterId, null) > 0) {
                                                         cr.notifyChange(
                                                                 FilterColumns.FILTERS_FOR_FEED_CONTENT_URI(getIntent().getData().getLastPathSegment()),
                                                                 null);
@@ -198,7 +198,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                                         @Override
                                         public void run() {
                                             ContentResolver cr = getContentResolver();
-                                            if (cr.delete(FilterColumns.CONTENT_URI, FilterColumns._ID + '=' + filterId, null) > 0) {
+                                            if (DB.delete(cr, FilterColumns.CONTENT_URI, FilterColumns._ID + '=' + filterId, null) > 0) {
                                                 cr.notifyChange(FilterColumns.FILTERS_FOR_FEED_CONTENT_URI(getIntent().getData().getLastPathSegment()),
                                                         null);
                                             }
@@ -381,7 +381,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                     values.put(FeedColumns.FETCH_MODE, 0);
                     values.putNull(FeedColumns.ERROR);
 
-                    cr.update(getIntent().getData(), values, null, null);
+                    DB.update(cr, getIntent().getData(), values, null, null);
                 }
             } catch (Exception ignored) {
             } finally {
@@ -441,7 +441,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                                     values.put(FilterColumns.IS_ACCEPT_RULE, ((RadioButton) dialogView.findViewById(R.id.acceptRadio)).isChecked());
 
                                     ContentResolver cr = getContentResolver();
-                                    cr.insert(FilterColumns.FILTERS_FOR_FEED_CONTENT_URI(feedId), values);
+                                    DB.insert(cr, FilterColumns.FILTERS_FOR_FEED_CONTENT_URI(feedId), values);
                                 }
                             }
                         }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -519,7 +519,8 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                FeedDataContentProvider.addFeed(EditFeedActivity.this, data.get(which).get(FEED_SEARCH_URL), name.isEmpty() ? data.get(which).get(FEED_SEARCH_TITLE) : name, mRetrieveFulltextCb.isChecked(), cookieName, cookieValue, keepTime);
+                                ContentResolver cr = getContentResolver();
+                                FeedDataContentProvider.addFeed(cr, EditFeedActivity.this, data.get(which).get(FEED_SEARCH_URL), name.isEmpty() ? data.get(which).get(FEED_SEARCH_TITLE) : name, mRetrieveFulltextCb.isChecked(), cookieName, cookieValue, keepTime);
 
                                 setResult(RESULT_OK);
                                 finish();
@@ -534,7 +535,8 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                 }
             });
         } else {
-            FeedDataContentProvider.addFeed(EditFeedActivity.this, urlOrSearch, name, mRetrieveFulltextCb.isChecked(), cookieName, cookieValue, keepTime);
+            ContentResolver cr = getContentResolver();
+            FeedDataContentProvider.addFeed(cr, EditFeedActivity.this, urlOrSearch, name, mRetrieveFulltextCb.isChecked(), cookieName, cookieValue, keepTime);
 
             setResult(RESULT_OK);
             finish();

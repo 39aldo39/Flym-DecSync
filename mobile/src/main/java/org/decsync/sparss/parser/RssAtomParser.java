@@ -63,6 +63,8 @@ import org.decsync.sparss.provider.FeedData.EntryColumns;
 import org.decsync.sparss.provider.FeedData.FeedColumns;
 import org.decsync.sparss.provider.FeedData.FilterColumns;
 import org.decsync.sparss.service.FetcherService;
+import org.decsync.sparss.utils.DB;
+import org.decsync.sparss.utils.DecsyncUtils;
 import org.decsync.sparss.utils.HtmlUtils;
 import org.decsync.sparss.utils.NetworkUtils;
 
@@ -75,10 +77,18 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.decsync.library.UtilsKt.equalsJSON;
 
 public class RssAtomParser extends DefaultHandler {
     private static final String TAG = RssAtomParser.class.getSimpleName();
@@ -110,6 +120,7 @@ public class RssAtomParser extends DefaultHandler {
     private static final String TAG_RELATED = "related";
     private static final String TAG_VIA = "via";
     private static final String TAG_GUID = "guid";
+    private static final String TAG_ID = "id";
     private static final String TAG_AUTHOR = "author";
     private static final String TAG_CREATOR = "creator";
     private static final String TAG_NAME = "name";
@@ -139,6 +150,7 @@ public class RssAtomParser extends DefaultHandler {
 
     private final Date mRealLastUpdateDate;
     private final String mId;
+    private final String mUrl;
     private final Uri mFeedEntriesUri;
     private final String mFeedName;
     private final String mFeedBaseUrl;
@@ -146,6 +158,7 @@ public class RssAtomParser extends DefaultHandler {
     private final FeedFilters mFilters;
     private final ArrayList<ContentProviderOperation> mInserts = new ArrayList<>();
     private final ArrayList<ArrayList<String>> mInsertedEntriesImages = new ArrayList<>();
+    private final Map<List<String>, ArrayList<Object>> mArticleMap = new HashMap<>();
     private long mNewRealLastUpdate;
     private boolean mEntryTagEntered = false;
     private boolean mTitleTagEntered = false;
@@ -157,6 +170,7 @@ public class RssAtomParser extends DefaultHandler {
     private boolean mDateTagEntered = false;
     private boolean mLastBuildDateTagEntered = false;
     private boolean mGuidTagEntered = false;
+    private boolean mIdTagEntered = false;
     private boolean mAuthorTagEntered = false;
     private StringBuilder mTitle;
     private StringBuilder mDateStringBuilder;
@@ -183,6 +197,7 @@ public class RssAtomParser extends DefaultHandler {
         mRealLastUpdateDate = realLastUpdateDate;
         mNewRealLastUpdate = realLastUpdateDate.getTime();
         mId = id;
+        mUrl = url;
         mFeedName = feedName;
         mFeedEntriesUri = EntryColumns.ENTRIES_FOR_FEED_CONTENT_URI(id);
         mRetrieveFullText = retrieveFullText;
@@ -288,6 +303,9 @@ public class RssAtomParser extends DefaultHandler {
         } else if (TAG_GUID.equals(localName)) {
             mGuidTagEntered = true;
             mGuid = new StringBuilder();
+        } else if (TAG_ID.equals(localName)) {
+            mIdTagEntered = true;
+            mGuid = new StringBuilder();
         } else if (TAG_NAME.equals(localName) || TAG_AUTHOR.equals(localName) || TAG_CREATOR.equals(localName)) {
             mAuthorTagEntered = true;
             if (mTmpAuthor == null) {
@@ -324,7 +342,7 @@ public class RssAtomParser extends DefaultHandler {
             mDescription.append(ch, start, length);
         } else if (mUpdatedTagEntered || mPubDateTagEntered || mPublishedTagEntered || mDateTagEntered || mLastBuildDateTagEntered) {
             mDateStringBuilder.append(ch, start, length);
-        } else if (mGuidTagEntered) {
+        } else if (mGuidTagEntered || mIdTagEntered) {
             mGuid.append(ch, start, length);
         } else if (mAuthorTagEntered) {
             mTmpAuthor.append(ch, start, length);
@@ -377,6 +395,7 @@ public class RssAtomParser extends DefaultHandler {
             }
 
             if (mTitle != null && (mEntryDate == null || (mEntryDate.after(mRealLastUpdateDate) && mEntryDate.after(mKeepDateBorder)))) {
+                ContentResolver cr = MainApplication.getContext().getContentResolver();
                 ContentValues values = new ContentValues();
 
                 if (mEntryDate != null && mEntryDate.getTime() > mNewRealLastUpdate) {
@@ -451,12 +470,11 @@ public class RssAtomParser extends DefaultHandler {
                             guidString} : new String[]{entryLinkString});
 
                     // First, try to update the feed
-                    ContentResolver cr = MainApplication.getContext().getContentResolver();
                     boolean isUpdated = (!entryLinkString.isEmpty() || guidString != null)
-                            && cr.update(mFeedEntriesUri, values, existenceStringBuilder.toString(), existenceValues) != 0;
+                            && DB.update(cr, mFeedEntriesUri, values, existenceStringBuilder.toString(), existenceValues) != 0;
 
                     // Insert it only if necessary
-                    if (!isUpdated && !updateOnly) {
+                    if (!isUpdated && !updateOnly && guidString != null) {
                         // We put the date only for new entry (no need to change the past, you may already read it)
                         if (mEntryDate != null) {
                             values.put(EntryColumns.DATE, mEntryDate.getTime());
@@ -469,6 +487,17 @@ public class RssAtomParser extends DefaultHandler {
                         // We cannot update, we need to insert it
                         mInsertedEntriesImages.add(imagesUrls);
                         mInserts.add(ContentProviderOperation.newInsert(mFeedEntriesUri).withValues(values).build());
+                        Calendar date = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                        date.setTime(mEntryDate != null ? mEntryDate : new Date(mNow));
+                        String year = String.format("%04d", date.get(Calendar.YEAR));
+                        String month = String.format("%02d", date.get(Calendar.MONTH) + 1);
+                        String day = String.format("%02d", date.get(Calendar.DAY_OF_MONTH));
+                        for (String type : new String[]{"read", "marked"}) {
+                            List<String> path = Arrays.asList("articles", type, year, month, day);
+                            ArrayList<Object> guids = mArticleMap.containsKey(path) ? mArticleMap.get(path) : new ArrayList<>();
+                            guids.add(guidString);
+                            mArticleMap.put(path, guids);
+                        }
 
                         mNewCount++;
                     }
@@ -492,6 +521,8 @@ public class RssAtomParser extends DefaultHandler {
             mDone = true;
         } else if (TAG_GUID.equals(localName)) {
             mGuidTagEntered = false;
+        } else if (TAG_ID.equals(localName)) {
+            mIdTagEntered = false;
         } else if (TAG_NAME.equals(localName) || TAG_AUTHOR.equals(localName) || TAG_CREATOR.equals(localName)) {
             mAuthorTagEntered = false;
 
@@ -626,6 +657,18 @@ public class RssAtomParser extends DefaultHandler {
         try {
             if (!mInserts.isEmpty()) {
                 ContentProviderResult[] results = cr.applyBatch(FeedData.AUTHORITY, mInserts);
+                for (Map.Entry<List<String>, ArrayList<Object>> entry : mArticleMap.entrySet()) {
+                    List<String> path = entry.getKey();
+                    ArrayList<Object> guids = entry.getValue();
+                    DecsyncUtils.INSTANCE.getDecsync().executeStoredEntries(path, cr, key -> {
+                        for (Object guid : guids) {
+                            if (equalsJSON(guid, key)) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    });
+                }
 
                 if (mFetchImages) {
                     for (int i = 0; i < results.length; ++i) {
@@ -656,7 +699,7 @@ public class RssAtomParser extends DefaultHandler {
         values.putNull(FeedColumns.ERROR);
         values.put(FeedColumns.LAST_UPDATE, System.currentTimeMillis() - 3000); // by precaution to not miss some feeds
         values.put(FeedData.FeedColumns.REAL_LAST_UPDATE, mNewRealLastUpdate);
-        cr.update(FeedColumns.CONTENT_URI(mId), values, null, null);
+        DB.update(cr, FeedColumns.CONTENT_URI(mId), values, null, null);
 
         super.endDocument();
     }

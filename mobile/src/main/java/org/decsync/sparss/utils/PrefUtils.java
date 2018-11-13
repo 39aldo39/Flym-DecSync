@@ -69,6 +69,8 @@ public class PrefUtils {
 
     public static final String SHOW_READ = "show_read";
 
+    public static final String DECSYNC_ENABLED = "decsync.enabled";
+
     public static boolean getBoolean(String key, boolean defValue) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(MainApplication.getContext());
         return settings.getBoolean(key, defValue);
