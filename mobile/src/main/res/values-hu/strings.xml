@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">spaRSS</string>
+<resources><string name="app_name">spaRSS DecSync</string>
     <string name="about_spaRSS">A spaRSS névjegye</string>
     <string name="welcome_title">Üdvözli a spaRSS. Szeretne hozzáadni egy hírforrást?</string>
     <string name="never">soha</string>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
-    <string name="app_name">spaRSS</string>
+    <string name="app_name">spaRSS DecSync</string>
     <string name="about_spaRSS">spaRSS について</string>
     <string name="welcome_title">spaRSS へようこそ。フィードを追加しますか?</string>
     <string name="never">しない</string>

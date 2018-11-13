@@ -6,7 +6,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "net.etuldan.sparss"
+        applicationId "org.decsync.sparss"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 75
@@ -41,10 +41,10 @@ android {
 
     productFlavors {
         floss {
-            applicationId 'net.etuldan.sparss.floss'
+            applicationId 'org.decsync.sparss.floss'
         }
         gplay {
-            applicationId 'net.etuldan.sparss'
+            applicationId 'org.decsync.sparss'
         }
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="net.etuldan.sparss"
+          package="org.decsync.sparss"
           android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <permission
-        android:name="net.etuldan.sparss.provider.WRITE_PERMISSION"
+        android:name="org.decsync.sparss.provider.WRITE_PERMISSION"
         android:protectionLevel="signature"/>
 
     <application
@@ -24,9 +24,9 @@
 
         <provider
             android:name=".provider.FeedDataContentProvider"
-            android:authorities="net.etuldan.sparss.provider.FeedData"
+            android:authorities="org.decsync.sparss.provider.FeedData"
             android:exported="true"
-            android:writePermission="net.etuldan.sparss.provider.WRITE_PERMISSION"/>
+            android:writePermission="org.decsync.sparss.provider.WRITE_PERMISSION"/>
 
         <activity
             android:name=".activity.HomeActivity"

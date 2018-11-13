@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
-    <string name="app_name">spaRSS</string>
+    <string name="app_name">spaRSS DecSync</string>
     <string name="about_spaRSS">عن التطبيق</string>
     <string name="welcome_title">مرحبا بك في spaRSS. هل ترغب في إضافة خلاصة جديدة؟</string>
     <string name="never">أبدا</string>

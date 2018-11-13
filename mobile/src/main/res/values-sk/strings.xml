@@ -26,7 +26,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
     <!-- GENERAL -->
-    <string name="app_name">spaRSS</string>
+    <string name="app_name">spaRSS DecSync</string>
     <string name="about_spaRSS">O aplikácii spaRSS</string>
     <string name="welcome_title">Vitajte v aplikácii spaRSS. Chcete pridať nový zdroj?</string>
     <string name="never">nikdy</string>

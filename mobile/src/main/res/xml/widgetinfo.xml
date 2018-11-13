@@ -1,6 +1,6 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:tools="http://schemas.android.com/tools"
-                    android:configure="net.etuldan.sparss.widget.WidgetConfigActivity"
+                    android:configure="org.decsync.sparss.widget.WidgetConfigActivity"
                     android:initialLayout="@layout/widget"
                     android:minHeight="180dp"
                     android:minResizeHeight="110dp"

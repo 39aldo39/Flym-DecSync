@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/entry_fragment"
-        class="net.etuldan.sparss.fragment.EditFeedsListFragment"
+        class="org.decsync.sparss.fragment.EditFeedsListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

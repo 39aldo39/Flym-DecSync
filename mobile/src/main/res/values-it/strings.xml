@@ -23,7 +23,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
     <!-- GENERAL -->
-    <string name="app_name">spaRSS</string>
+    <string name="app_name">spaRSS DecSync</string>
     <string name="about_spaRSS">A proposito di spaRSS</string>
     <string name="welcome_title">Benvenuto su spaRSS. Vorresti aggiungere un feed?</string>
     <string name="never">mai</string>
