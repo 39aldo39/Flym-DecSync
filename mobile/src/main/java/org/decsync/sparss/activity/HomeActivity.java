@@ -61,11 +61,13 @@ import org.decsync.sparss.service.DecsyncService;
 import org.decsync.sparss.service.FetcherService;
 import org.decsync.sparss.service.RefreshService;
 import org.decsync.sparss.utils.DecsyncUtils;
-import org.decsync.sparss.utils.DecsyncUtilsKt;
 import org.decsync.sparss.utils.PrefUtils;
 import org.decsync.sparss.utils.UiUtils;
 
 import java.io.File;
+
+import static org.decsync.library.DecsyncKt.getDecsyncSubdir;
+import static org.decsync.library.DecsyncKt.getDefaultDecsyncBaseDir;
 
 public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -206,7 +208,9 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         if (mFirstOpen) {
             PrefUtils.putBoolean(PrefUtils.FIRST_OPEN, false);
 
-            boolean decsyncExists = new File(DecsyncUtilsKt.getDir()).exists();
+            String baseDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncBaseDir());
+            String dir = getDecsyncSubdir(baseDir, "rss", null);
+            boolean decsyncExists = new File(dir).exists();
             boolean opmlExists = new File(OPML.BACKUP_OPML).exists();
             boolean importOPML = !decsyncExists && opmlExists;
 

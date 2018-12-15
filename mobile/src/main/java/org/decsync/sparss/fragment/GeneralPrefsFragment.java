@@ -60,6 +60,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
+import com.nononsenseapps.filepicker.FilePickerActivity;
+import com.nononsenseapps.filepicker.Utils;
+
 import org.decsync.sparss.MainApplication;
 import org.decsync.sparss.R;
 import org.decsync.sparss.service.DecsyncService;
@@ -67,9 +70,12 @@ import org.decsync.sparss.service.RefreshService;
 import org.decsync.sparss.utils.DecsyncUtils;
 import org.decsync.sparss.utils.PrefUtils;
 
+import static org.decsync.library.DecsyncKt.getDefaultDecsyncBaseDir;
 import static org.decsync.sparss.activity.GeneralPrefsActivity.PERMISSIONS_REQUEST_DECSYNC;
 
 public class GeneralPrefsFragment extends PreferenceFragment {
+
+    private static final int CHOOSE_DECSYNC_DIRECTORY = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +84,7 @@ public class GeneralPrefsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.general_preferences);
 
         setRingtoneSummary();
+        setDecsyncDirSummary();
 
         Preference preference = findPreference(PrefUtils.REFRESH_ENABLED);
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -132,6 +139,19 @@ public class GeneralPrefsFragment extends PreferenceFragment {
                 return true;
             }
         });
+
+        preference = findPreference(PrefUtils.DECSYNC_DIRECTORY);
+        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent(getActivity(), FilePickerActivity.class);
+                intent.putExtra(FilePickerActivity.EXTRA_ALLOW_CREATE_DIR, true);
+                intent.putExtra(FilePickerActivity.EXTRA_MODE, FilePickerActivity.MODE_DIR);
+                intent.putExtra(FilePickerActivity.EXTRA_START_PATH, PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncBaseDir()));
+                startActivityForResult(intent, CHOOSE_DECSYNC_DIRECTORY);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -156,6 +176,30 @@ public class GeneralPrefsFragment extends PreferenceFragment {
                 ringtone_preference.setSummary(R.string.settings_notifications_ringtone_none);
             } else {
                 ringtone_preference.setSummary(ringtone.getTitle(MainApplication.getContext()));
+            }
+        }
+    }
+
+    private void setDecsyncDirSummary() {
+        Preference preference = findPreference(PrefUtils.DECSYNC_DIRECTORY);
+        String dir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncBaseDir());
+        preference.setSummary(dir);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CHOOSE_DECSYNC_DIRECTORY) {
+            Uri uri = data == null ? null : data.getData();
+            if (resultCode == Activity.RESULT_OK && uri != null) {
+                String oldDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncBaseDir());
+                String newDir = Utils.getFileForUri(uri).getPath();
+                if (!oldDir.equals(newDir)) {
+                    PrefUtils.putString(PrefUtils.DECSYNC_DIRECTORY, newDir);
+                    setDecsyncDirSummary();
+                    DecsyncUtils.INSTANCE.directoryChanged(getActivity());
+                }
             }
         }
     }

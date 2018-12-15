@@ -251,6 +251,14 @@
         android:layout_height="wrap_content"
         android:title="@string/settings_category_decsync">
 
+        <PreferenceScreen
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:title="@string/settings_decsync_about">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://github.com/39aldo39/DecSync" />
+        </PreferenceScreen>
+
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -258,6 +266,13 @@
             android:key="decsync.enabled"
             android:summary="@string/settings_decsync_enabled_description"
             android:title="@string/settings_decsync_enabled"/>
+
+        <Preference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:dependency="decsync.enabled"
+            android:key="decsync.directory"
+            android:title="@string/settings_decsync_directory"/>
 
     </PreferenceCategory>
 

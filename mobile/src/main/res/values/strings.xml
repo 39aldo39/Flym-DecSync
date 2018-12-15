@@ -197,9 +197,11 @@
     <string name="settings_mark_as_read_description">Show / Hide the button</string>
     <string name="settings_show_new_entries">Automatically show new entries</string>
     <string name="settings_show_new_entries_description">If disabled, a tap on the "Show new entries" button will be required to show new entries</string>
-    <string name="settings_category_decsync">DecSync RSS</string>
-    <string name="settings_decsync_enabled">Enable DecSync RSS</string>
+    <string name="settings_category_decsync">DecSync</string>
+    <string name="settings_decsync_about">About DecSync</string>
+    <string name="settings_decsync_enabled">Enable DecSync</string>
     <string name="settings_decsync_enabled_description">Sync with other RSS readers</string>
+    <string name="settings_decsync_directory">DecSync directory</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">One new entry</item>
         <item quantity="other">%d new entries</item>

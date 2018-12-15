@@ -32,7 +32,6 @@ import org.decsync.sparss.utils.DB.feedUrlToFeedId
 import org.json.JSONObject
 import kotlin.concurrent.thread
 
-val dir = getDecsyncSubdir(null, "rss")
 val ownAppId = getAppId("spaRSS")
 
 object DecsyncUtils {
@@ -40,6 +39,8 @@ object DecsyncUtils {
 
     fun getDecsync(): Decsync<ContentResolver> {
         if (mDecsync == null) {
+            val baseDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncBaseDir())
+            val dir = getDecsyncSubdir(baseDir, "rss")
             val listeners = listOf(
                     ReadMarkListener(true),
                     ReadMarkListener(false),
@@ -52,6 +53,12 @@ object DecsyncUtils {
             mDecsync = Decsync(dir, ownAppId, listeners)
         }
         return mDecsync!!
+    }
+
+    fun directoryChanged(context: Context) {
+        context.stopService(Intent(context, DecsyncService::class.java))
+        mDecsync = null
+        initSync(context)
     }
 
     fun initSync(context: Context) {
