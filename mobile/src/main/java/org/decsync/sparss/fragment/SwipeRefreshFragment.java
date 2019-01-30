@@ -21,12 +21,12 @@ package org.decsync.sparss.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.decsync.sparss.R;
-import org.decsync.sparss.view.SwipeRefreshLayout;
 
 public abstract class SwipeRefreshFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
