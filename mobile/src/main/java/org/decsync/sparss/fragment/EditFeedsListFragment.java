@@ -587,7 +587,7 @@ public class EditFeedsListFragment extends ListFragment {
                 || Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
             try {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("file/*");
+                intent.setType("*/*");
                 startActivityForResult(intent, REQUEST_PICK_OPML_FILE);
             }
             catch (Exception unused)
