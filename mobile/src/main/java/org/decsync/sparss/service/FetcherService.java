@@ -46,7 +46,8 @@
 package org.decsync.sparss.service;
 
 import android.app.IntentService;
-import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
@@ -58,8 +59,10 @@ import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -126,6 +129,8 @@ public class FetcherService extends IntentService {
     private static final Pattern FEED_LINK_PATTERN = Pattern.compile(
             "[.]*<link[^>]* ((rel=alternate|rel=\"alternate\")[^>]* href=\"[^\"]*\"|href=\"[^\"]*\"[^>]* (rel=alternate|rel=\"alternate\"))[^>]*>",
             Pattern.CASE_INSENSITIVE);
+
+    private static final String CHANNEL_NEW_ENTRIES = "new_entries";
 
     private final Handler mHandler;
 
@@ -228,13 +233,22 @@ public class FetcherService extends IntentService {
                     cursor.close();
 
                     if (newCount > 0) {
+                        if (Build.VERSION.SDK_INT >= 26 && Constants.NOTIF_MGR != null) {
+                            String name = getString(R.string.channel_new_entries_name);
+                            String descriptionText = getString(R.string.channel_new_entries_description);
+                            int importance = NotificationManager.IMPORTANCE_LOW;
+                            NotificationChannel channel = new NotificationChannel(CHANNEL_NEW_ENTRIES, name, importance);
+                            channel.setDescription(descriptionText);
+                            Constants.NOTIF_MGR.createNotificationChannel(channel);
+                        }
+
                         String text = getResources().getQuantityString(R.plurals.number_of_new_entries, newCount, newCount);
 
                         Intent notificationIntent = new Intent(FetcherService.this, HomeActivity.class);
                         PendingIntent contentIntent = PendingIntent.getActivity(FetcherService.this, 0, notificationIntent,
                                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-                        Notification.Builder notifBuilder = new Notification.Builder(MainApplication.getContext()) //
+                        NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(MainApplication.getContext(), CHANNEL_NEW_ENTRIES) //
                                 .setContentIntent(contentIntent) //
                                 .setSmallIcon(R.drawable.ic_statusbar_rss) //
                                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)) //
@@ -259,7 +273,7 @@ public class FetcherService extends IntentService {
                         }
 
                         if (Constants.NOTIF_MGR != null) {
-                            Constants.NOTIF_MGR.notify(0, notifBuilder.getNotification());
+                            Constants.NOTIF_MGR.notify(0, notifBuilder.build());
                         }
                     }
                 } else if (Constants.NOTIF_MGR != null) {

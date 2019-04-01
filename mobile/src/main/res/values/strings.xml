@@ -207,6 +207,10 @@
         <item quantity="other">%d new entries</item>
     </plurals>
 
+    <!-- Notification channel -->
+    <string name="channel_new_entries_name">New entries</string>
+    <string name="channel_new_entries_description">Notification shown for new entries</string>
+
     <string-array name="settings_intervals">
         <item>1 minute</item>
         <item>5 minutes</item>
