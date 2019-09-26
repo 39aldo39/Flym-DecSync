@@ -69,6 +69,7 @@ import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
 
+import org.decsync.library.Decsync;
 import org.decsync.sparss.Constants;
 import org.decsync.sparss.MainApplication;
 import org.decsync.sparss.R;
@@ -282,7 +283,10 @@ public class FetcherService extends IntentService {
             }
 
             if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
-                DecsyncUtils.INSTANCE.getDecsync().executeAllNewEntries(getContentResolver());
+                Decsync<ContentResolver> decsync = DecsyncUtils.INSTANCE.getDecsync();
+                if (decsync != null) {
+                    decsync.executeAllNewEntries(getContentResolver());
+                }
             }
             mobilizeAllEntries();
             downloadAllImages();

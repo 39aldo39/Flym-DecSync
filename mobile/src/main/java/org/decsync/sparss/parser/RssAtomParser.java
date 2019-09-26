@@ -55,6 +55,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 
+import org.decsync.library.Decsync;
 import org.decsync.sparss.Constants;
 import org.decsync.sparss.MainApplication;
 import org.decsync.sparss.R;
@@ -657,17 +658,20 @@ public class RssAtomParser extends DefaultHandler {
         try {
             if (!mInserts.isEmpty()) {
                 ContentProviderResult[] results = cr.applyBatch(FeedData.AUTHORITY, mInserts);
-                for (Map.Entry<List<String>, ArrayList<Object>> entry : mArticleMap.entrySet()) {
-                    List<String> path = entry.getKey();
-                    ArrayList<Object> guids = entry.getValue();
-                    DecsyncUtils.INSTANCE.getDecsync().executeStoredEntries(path, cr, key -> {
-                        for (Object guid : guids) {
-                            if (equalsJSON(guid, key)) {
-                                return true;
+                Decsync<ContentResolver> decsync = DecsyncUtils.INSTANCE.getDecsync();
+                if (decsync != null) {
+                    for (Map.Entry<List<String>, ArrayList<Object>> entry : mArticleMap.entrySet()) {
+                        List<String> path = entry.getKey();
+                        ArrayList<Object> guids = entry.getValue();
+                        decsync.executeStoredEntries(path, cr, key -> {
+                            for (Object guid : guids) {
+                                if (equalsJSON(guid, key)) {
+                                    return true;
+                                }
                             }
-                        }
-                        return false;
-                    });
+                            return false;
+                        });
+                    }
                 }
 
                 if (mFetchImages) {

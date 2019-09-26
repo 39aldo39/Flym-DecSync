@@ -24,10 +24,12 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import org.decsync.sparss.provider.FeedData
 import org.decsync.sparss.provider.FeedDataContentProvider.addFeed
 import org.decsync.sparss.service.DecsyncService
 import org.decsync.library.*
+import org.decsync.sparss.MainApplication
 import org.decsync.sparss.utils.DB.feedUrlToFeedId
 import org.json.JSONObject
 import kotlin.concurrent.thread
@@ -37,22 +39,35 @@ val ownAppId = getAppId("spaRSS")
 object DecsyncUtils {
     private var mDecsync: Decsync<ContentResolver>? = null
 
-    fun getDecsync(): Decsync<ContentResolver> {
-        if (mDecsync == null) {
-            val baseDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncBaseDir())
-            val dir = getDecsyncSubdir(baseDir, "rss")
-            val listeners = listOf(
-                    ReadMarkListener(true),
-                    ReadMarkListener(false),
-                    SubscriptionsListener(),
-                    FeedNamesListener(),
-                    CategoriesListener(),
-                    CategoryNamesListener(),
-                    CategoryParentsListener()
-            )
-            mDecsync = Decsync(dir, ownAppId, listeners)
+    private fun getNewDecsync(): Decsync<ContentResolver>? {
+        val baseDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncBaseDir())
+        val dir = getDecsyncSubdir(baseDir, "rss")
+        val listeners = listOf(
+                ReadMarkListener(true),
+                ReadMarkListener(false),
+                SubscriptionsListener(),
+                FeedNamesListener(),
+                CategoriesListener(),
+                CategoryNamesListener(),
+                CategoryParentsListener()
+        )
+        return try {
+            Decsync(dir, ownAppId, listeners)
+        } catch (e: DecsyncException) {
+            val context = MainApplication.getContext()
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+            null
         }
-        return mDecsync!!
+    }
+
+    fun getDecsync(): Decsync<ContentResolver>? {
+        if (mDecsync == null && PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
+            mDecsync = getNewDecsync()
+            if (mDecsync == null) {
+                PrefUtils.putBoolean(PrefUtils.DECSYNC_ENABLED, false)
+            }
+        }
+        return mDecsync
     }
 
     fun directoryChanged(context: Context) {
@@ -61,13 +76,14 @@ object DecsyncUtils {
         initSync(context)
     }
 
-    fun initSync(context: Context) {
+    fun initSync(context: Context): Boolean {
+        val decsync = getNewDecsync() ?: return false
         thread {
-            val decsync = DecsyncUtils.getDecsync()
             decsync.initStoredEntries()
             decsync.executeStoredEntries(listOf("feeds", "subscriptions"), context.contentResolver)
             context.startService(Intent(context, DecsyncService::class.java))
         }
+        return true
     }
 
     class ReadMarkListener constructor(private val isReadEntry: Boolean) : OnSubdirEntryUpdateListener<ContentResolver> {
@@ -268,7 +284,7 @@ object DecsyncUtils {
         values.put(FeedData.FeedColumns.NAME, category)
         values.put(FeedData.FeedColumns.URL, category)
         val newGroupId = DB.insert(cr, FeedData.FeedColumns.GROUPS_CONTENT_URI, values, false).lastPathSegment
-        getDecsync().executeStoredEntries(listOf("categories", "names"), cr, keyPred = { equalsJSON(it, category) })
+        getDecsync()?.executeStoredEntries(listOf("categories", "names"), cr, keyPred = { equalsJSON(it, category) })
         return newGroupId
     }
 
@@ -283,7 +299,7 @@ object DecsyncUtils {
     }
 
     fun executePostSubscribeActions(feedUrl: String, cr: ContentResolver) {
-        getDecsync().executeStoredEntries(listOf("feeds", "names"), cr, keyPred = { equalsJSON(it, feedUrl) })
-        getDecsync().executeStoredEntries(listOf("feeds", "categories"), cr, keyPred = { equalsJSON(it, feedUrl) })
+        getDecsync()?.executeStoredEntries(listOf("feeds", "names"), cr, keyPred = { equalsJSON(it, feedUrl) })
+        getDecsync()?.executeStoredEntries(listOf("feeds", "categories"), cr, keyPred = { equalsJSON(it, feedUrl) })
     }
 }

@@ -23,6 +23,7 @@ package org.decsync.sparss.activity;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -49,6 +50,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.decsync.library.Decsync;
 import org.decsync.sparss.Constants;
 import org.decsync.sparss.R;
 import org.decsync.sparss.adapter.DrawerAdapter;
@@ -195,7 +197,10 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
             Intent intent = new Intent(this, DecsyncService.class);
             startService(intent);
-            DecsyncUtils.INSTANCE.getDecsync().executeAllNewEntries(getContentResolver());
+            Decsync<ContentResolver> decsync = DecsyncUtils.INSTANCE.getDecsync();
+            if (decsync != null) {
+                decsync.executeAllNewEntries(getContentResolver());
+            }
         } else {
             stopService(new Intent(this, DecsyncService.class));
         }

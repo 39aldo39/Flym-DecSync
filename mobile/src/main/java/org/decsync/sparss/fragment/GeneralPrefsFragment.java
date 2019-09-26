@@ -128,7 +128,7 @@ public class GeneralPrefsFragment extends PreferenceFragment {
                 }
                 if (Boolean.TRUE.equals(newValue)) {
                     if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                        DecsyncUtils.INSTANCE.initSync(activity);
+                        return DecsyncUtils.INSTANCE.initSync(activity);
                     } else {
                         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_DECSYNC);
                         return false;

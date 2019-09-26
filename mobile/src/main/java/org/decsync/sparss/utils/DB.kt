@@ -46,11 +46,11 @@ object DB {
                             val groupId = values.getAsString(FeedData.FeedColumns.GROUP_ID)
                             val category = groupToCategory(groupId, cr)
 
-                            getDecsync().setEntry(listOf("feeds", "subscriptions"), feedUrl, true)
+                            getDecsync()?.setEntry(listOf("feeds", "subscriptions"), feedUrl, true)
                             if (name != null) {
-                                getDecsync().setEntry(listOf("feeds", "names"), feedUrl, name)
+                                getDecsync()?.setEntry(listOf("feeds", "names"), feedUrl, name)
                             }
-                            getDecsync().setEntry(listOf("feeds", "categories"), feedUrl, category)
+                            getDecsync()?.setEntry(listOf("feeds", "categories"), feedUrl, category)
                         }
                     }
                 }
@@ -110,7 +110,7 @@ object DB {
 
                                 cursor.moveToNext()
                             }
-                            getDecsync().setEntries(entries)
+                            getDecsync()?.setEntries(entries)
                         }
                     }
                 }
@@ -151,7 +151,7 @@ object DB {
 
             cursor.moveToNext()
         }
-        getDecsync().setEntries(entries)
+        getDecsync()?.setEntries(entries)
     }
 
     @JvmOverloads
@@ -189,7 +189,7 @@ object DB {
 
             cursor.moveToNext()
         }
-        DecsyncUtils.getDecsync().setEntriesForPath(listOf("feeds", "subscriptions"), entries)
+        DecsyncUtils.getDecsync()?.setEntriesForPath(listOf("feeds", "subscriptions"), entries)
     }
 
     private fun groupToCategory(groupId: String?, cr: ContentResolver): Any {
@@ -209,7 +209,7 @@ object DB {
                     val values = ContentValues()
                     values.put(FeedData.FeedColumns.URL, category)
                     cr.update(FeedData.FeedColumns.CONTENT_URI(groupId), values, null, null)
-                    getDecsync().setEntry(listOf("categories", "names"), category, name)
+                    getDecsync()?.setEntry(listOf("categories", "names"), category, name)
                 }
             }
         }
