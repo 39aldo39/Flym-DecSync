@@ -23,7 +23,7 @@ package org.decsync.sparss.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;

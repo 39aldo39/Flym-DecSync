@@ -25,42 +25,51 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import kotlinx.serialization.json.*
+import org.decsync.library.Decsync
+import org.decsync.library.DecsyncException
+import org.decsync.library.getAppId
+import org.decsync.library.getDefaultDecsyncDir
 import org.decsync.sparss.provider.FeedData
 import org.decsync.sparss.provider.FeedDataContentProvider.addFeed
 import org.decsync.sparss.service.DecsyncService
-import org.decsync.library.*
 import org.decsync.sparss.MainApplication
 import org.decsync.sparss.utils.DB.feedUrlToFeedId
-import org.json.JSONObject
 import kotlin.concurrent.thread
 
 val ownAppId = getAppId("spaRSS")
+const val TAG = "DecsyncUtils"
 
+class Extra(val cr: ContentResolver)
+
+@ExperimentalStdlibApi
 object DecsyncUtils {
-    private var mDecsync: Decsync<ContentResolver>? = null
+    private var mDecsync: Decsync<Extra>? = null
 
-    private fun getNewDecsync(): Decsync<ContentResolver>? {
-        val baseDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncBaseDir())
-        val dir = getDecsyncSubdir(baseDir, "rss")
-        val listeners = listOf(
-                ReadMarkListener(true),
-                ReadMarkListener(false),
-                SubscriptionsListener(),
-                FeedNamesListener(),
-                CategoriesListener(),
-                CategoryNamesListener(),
-                CategoryParentsListener()
-        )
-        return try {
-            Decsync(dir, ownAppId, listeners)
+    private fun getNewDecsync(): Decsync<Extra>? {
+        val decsyncDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir())
+        try {
+            val decsync = Decsync<Extra>(decsyncDir, "rss", null, ownAppId)
+            decsync.addListener(listOf("articles", "read")) { path, entry, extra ->
+                readMarkListener(true, path, entry, extra)
+            }
+            decsync.addListener(listOf("articles", "marked")) { path, entry, extra ->
+                readMarkListener(false, path, entry, extra)
+            }
+            decsync.addListener(listOf("feeds", "subscriptions"), ::subscriptionsListener)
+            decsync.addListener(listOf("feeds", "names"), ::feedNamesListener)
+            decsync.addListener(listOf("feeds", "categories"), ::categoriesListener)
+            decsync.addListener(listOf("categories", "names"), ::categoryNamesListener)
+            decsync.addListener(listOf("categories", "parents"), ::categoryParentsListener)
+            return decsync
         } catch (e: DecsyncException) {
             val context = MainApplication.getContext()
             Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-            null
+            return null
         }
     }
 
-    fun getDecsync(): Decsync<ContentResolver>? {
+    fun getDecsync(): Decsync<Extra>? {
         if (mDecsync == null && PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
             mDecsync = getNewDecsync()
             if (mDecsync == null) {
@@ -80,173 +89,106 @@ object DecsyncUtils {
         val decsync = getNewDecsync() ?: return false
         thread {
             decsync.initStoredEntries()
-            decsync.executeStoredEntries(listOf("feeds", "subscriptions"), context.contentResolver)
+            val extra = Extra(context.contentResolver)
+            decsync.executeStoredEntriesForPath(listOf("feeds", "subscriptions"), extra)
             context.startService(Intent(context, DecsyncService::class.java))
         }
         return true
     }
 
-    class ReadMarkListener constructor(private val isReadEntry: Boolean) : OnSubdirEntryUpdateListener<ContentResolver> {
-        override val subdir = listOf("articles", if (isReadEntry) "read" else "marked")
+    private fun readMarkListener(isReadEntry: Boolean, path: List<String>, entry: Decsync.Entry, extra: Extra) {
+        Log.d(TAG, "Execute " + (if (isReadEntry) "read" else "mark") + " entry $entry")
+        val entryColumn = if (isReadEntry) FeedData.EntryColumns.IS_READ else FeedData.EntryColumns.IS_FAVORITE
+        val guid = entry.key.content
+        val value = entry.value.boolean
 
-        override fun onSubdirEntryUpdate(path: List<String>, entry: Decsync.Entry, cr: ContentResolver) {
-            Log.d(TAG, "Execute " + (if (isReadEntry) "read" else "mark") + " entry $entry")
-            val entryColumn = if(isReadEntry) FeedData.EntryColumns.IS_READ else FeedData.EntryColumns.IS_FAVORITE
-            val guid = entry.key
-            if (guid !is String) {
-                Log.w(TAG, "Invalid guid $guid")
-                return
-            }
-            val value = entry.value
-            if (value !is Boolean) {
-                Log.w(TAG, "Invalid boolean $value")
-                return
-            }
-
-            val values = ContentValues()
-            if (value) {
-                values.put(entryColumn, true)
-            } else {
-                values.putNull(entryColumn)
-            }
-            DB.update(cr, FeedData.EntryColumns.ALL_ENTRIES_CONTENT_URI, values,
-                    FeedData.EntryColumns.GUID + "=?", arrayOf(guid), false)
+        val values = ContentValues()
+        if (value) {
+            values.put(entryColumn, true)
+        } else {
+            values.putNull(entryColumn)
         }
+        DB.update(extra.cr, FeedData.EntryColumns.ALL_ENTRIES_CONTENT_URI, values,
+                FeedData.EntryColumns.GUID + "=?", arrayOf(guid), false)
     }
 
-    class SubscriptionsListener : OnSubfileEntryUpdateListener<ContentResolver> {
-        override val subfile = listOf("feeds", "subscriptions")
+    private fun subscriptionsListener(path: List<String>, entry: Decsync.Entry, extra: Extra) {
+        Log.d(TAG, "Execute subscribe entry $entry")
+        val feedUrl = entry.key.content
+        val subscribed = entry.value.boolean
 
-        override fun onSubfileEntryUpdate(entry: Decsync.Entry, cr: ContentResolver) {
-            Log.d(TAG, "Execute subscribe entry $entry")
-            val feedUrl = entry.key
-            if (feedUrl !is String) {
-                Log.w(TAG, "Invalid feed $feedUrl")
-                return
-            }
-            val subscribed = entry.value
-            if (subscribed !is Boolean) {
-                Log.w(TAG, "Invalid subscribed boolean $subscribed")
-                return
-            }
-
-            if (subscribed) {
-                addFeed(cr, null, feedUrl, "", false, false)
-            } else {
-                val feedId = feedUrlToFeedId(feedUrl, cr)
-                if (feedId == null) {
-                    Log.i(TAG, "Unknown feed $feedUrl")
-                    return
-                }
-                val groupId = getGroupId(feedId, cr)
-                if (groupId != null) {
-                    removeGroupIfEmpty(groupId, cr)
-                }
-                DB.delete(cr, FeedData.FeedColumns.CONTENT_URI(feedId), null, null, false)
-            }
-        }
-    }
-
-    class FeedNamesListener : OnSubfileEntryUpdateListener<ContentResolver> {
-        override val subfile = listOf("feeds", "names")
-
-        override fun onSubfileEntryUpdate(entry: Decsync.Entry, cr: ContentResolver) {
-            Log.d(TAG, "Execute rename entry $entry")
-            val feedUrl = entry.key
-            if (feedUrl !is String) {
-                Log.w(TAG, "Invalid feed $feedUrl")
-                return
-            }
-            val name = entry.value
-            if (name !is String) {
-                Log.w(TAG, "Invalid name $name")
-                return
-            }
-
-            val feedId = feedUrlToFeedId(feedUrl, cr)
+        if (subscribed) {
+            addFeed(extra.cr, null, feedUrl, "", false, false)
+        } else {
+            val feedId = feedUrlToFeedId(feedUrl, extra.cr)
             if (feedId == null) {
                 Log.i(TAG, "Unknown feed $feedUrl")
                 return
             }
-            val values = ContentValues()
-            values.put(FeedData.FeedColumns.NAME, name)
-            DB.update(cr, FeedData.FeedColumns.CONTENT_URI(feedId), values, null, null, false)
+            val groupId = getGroupId(feedId, extra.cr)
+            if (groupId != null) {
+                removeGroupIfEmpty(groupId, extra.cr)
+            }
+            DB.delete(extra.cr, FeedData.FeedColumns.CONTENT_URI(feedId), null, null, false)
         }
     }
 
-    class CategoriesListener : OnSubfileEntryUpdateListener<ContentResolver> {
-        override val subfile = listOf("feeds", "categories")
+    private fun feedNamesListener(path: List<String>, entry: Decsync.Entry, extra: Extra) {
+        Log.d(TAG, "Execute rename entry $entry")
+        val feedUrl = entry.key.content
+        val name = entry.value.content
 
-        override fun onSubfileEntryUpdate(entry: Decsync.Entry, cr: ContentResolver) {
-            Log.d(TAG, "Execute move entry $entry")
-            val feedUrl = entry.key
-            if (feedUrl !is String) {
-                Log.w(TAG, "Invalid feed $feedUrl")
-                return
-            }
-            val categoryJson = entry.value
-            val category = when (categoryJson) {
-                JSONObject.NULL -> null
-                is String -> categoryJson
-                else -> {
-                    Log.w(TAG, "Invalid category $categoryJson")
-                    return
-                }
-            }
-
-            val feedId = feedUrlToFeedId(feedUrl, cr)
-            if (feedId == null) {
-                Log.i(TAG, "Unknown feed $feedUrl")
-                return
-            }
-            val oldGroupId = getGroupId(feedId, cr)
-            val groupId = categoryToGroupId(category, cr)
-            val values = ContentValues()
-            values.put(FeedData.FeedColumns.GROUP_ID, groupId)
-            DB.update(cr, FeedData.FeedColumns.CONTENT_URI(feedId), values, null, null, false)
-            removeGroupIfEmpty(oldGroupId, cr)
+        val feedId = feedUrlToFeedId(feedUrl, extra.cr)
+        if (feedId == null) {
+            Log.i(TAG, "Unknown feed $feedUrl")
+            return
         }
+        val values = ContentValues()
+        values.put(FeedData.FeedColumns.NAME, name)
+        DB.update(extra.cr, FeedData.FeedColumns.CONTENT_URI(feedId), values, null, null, false)
     }
 
-    class CategoryNamesListener : OnSubfileEntryUpdateListener<ContentResolver> {
-        override val subfile = listOf("categories", "names")
+    private fun categoriesListener(path: List<String>, entry: Decsync.Entry, extra: Extra) {
+        Log.d(TAG, "Execute move entry $entry")
+        val feedUrl = entry.key.content
+        val category = entry.value.contentOrNull
 
-        override fun onSubfileEntryUpdate(entry: Decsync.Entry, cr: ContentResolver) {
-            Log.d(TAG, "Execute category rename entry $entry")
-            val category = entry.key
-            if (category !is String) {
-                Log.w(TAG, "Invalid category $category")
-                return
-            }
-            val name = entry.value
-            if (name !is String) {
-                Log.w(TAG, "Invalid name $name")
-                return
-            }
-
-            val groupId = categoryToOptGroupId(category, cr)
-            if (groupId == null) {
-                Log.i(TAG, "Unknown category $category")
-                return
-            }
-            val values = ContentValues()
-            values.put(FeedData.FeedColumns.NAME, name)
-            DB.update(cr, FeedData.FeedColumns.CONTENT_URI(groupId), values, null, null, false)
+        val feedId = feedUrlToFeedId(feedUrl, extra.cr)
+        if (feedId == null) {
+            Log.i(TAG, "Unknown feed $feedUrl")
+            return
         }
+        val oldGroupId = getGroupId(feedId, extra.cr)
+        val groupId = categoryToGroupId(category, extra.cr)
+        val values = ContentValues()
+        values.put(FeedData.FeedColumns.GROUP_ID, groupId)
+        DB.update(extra.cr, FeedData.FeedColumns.CONTENT_URI(feedId), values, null, null, false)
+        removeGroupIfEmpty(oldGroupId, extra.cr)
     }
 
-    class CategoryParentsListener : OnSubfileEntryUpdateListener<ContentResolver> {
-        override val subfile = listOf("categories", "parents")
+    private fun categoryNamesListener(path: List<String>, entry: Decsync.Entry, extra: Extra) {
+        Log.d(TAG, "Execute category rename entry $entry")
+        val category = entry.key.content
+        val name = entry.value.content
 
-        override fun onSubfileEntryUpdate(entry: Decsync.Entry, cr: ContentResolver) {
-            Log.i(TAG, "Nested folders are not supported in spaRSS")
+        val groupId = categoryToOptGroupId(category, extra.cr)
+        if (groupId == null) {
+            Log.i(TAG, "Unknown category $category")
+            return
         }
+        val values = ContentValues()
+        values.put(FeedData.FeedColumns.NAME, name)
+        DB.update(extra.cr, FeedData.FeedColumns.CONTENT_URI(groupId), values, null, null, false)
+    }
+
+    private fun categoryParentsListener(path: List<String>, entry: Decsync.Entry, extra: Extra) {
+        Log.i(TAG, "Nested folders are not supported in spaRSS")
     }
 
     private fun getGroupId(feedId: String, cr: ContentResolver): String? {
         var groupId: String? = null
         cr.query(FeedData.FeedColumns.CONTENT_URI(feedId), arrayOf(FeedData.FeedColumns.GROUP_ID),
-                null, null, null).use { cursor ->
+                null, null, null)!!.use { cursor ->
             if (cursor.moveToFirst()) {
                 groupId = cursor.getString(0)
             }
@@ -260,7 +202,7 @@ object DecsyncUtils {
         }
 
         return cr.query(FeedData.FeedColumns.GROUPS_CONTENT_URI, arrayOf(FeedData.FeedColumns._ID),
-                FeedData.FeedColumns.URL + "=?", arrayOf(category), null).use { cursor ->
+                FeedData.FeedColumns.URL + "=?", arrayOf(category), null)!!.use { cursor ->
             if (cursor.moveToFirst()) {
                 cursor.getString(0)
             } else {
@@ -283,15 +225,16 @@ object DecsyncUtils {
         values.put(FeedData.FeedColumns.IS_GROUP, 1)
         values.put(FeedData.FeedColumns.NAME, category)
         values.put(FeedData.FeedColumns.URL, category)
-        val newGroupId = DB.insert(cr, FeedData.FeedColumns.GROUPS_CONTENT_URI, values, false).lastPathSegment
-        getDecsync()?.executeStoredEntries(listOf("categories", "names"), cr, keyPred = { equalsJSON(it, category) })
+        val newGroupId = DB.insert(cr, FeedData.FeedColumns.GROUPS_CONTENT_URI, values, false)?.lastPathSegment ?: return null
+        val extra = Extra(cr)
+        getDecsync()?.executeStoredEntry(listOf("categories", "names"), JsonLiteral(category), extra)
         return newGroupId
     }
 
     private fun removeGroupIfEmpty(groupId: String?, cr: ContentResolver) {
         if (groupId == null) return
         cr.query(FeedData.FeedColumns.CONTENT_URI, FeedData.FeedColumns.PROJECTION_GROUP_ID,
-                FeedData.FeedColumns.GROUP_ID + "=?", arrayOf(groupId), null).use { cursor ->
+                FeedData.FeedColumns.GROUP_ID + "=?", arrayOf(groupId), null)!!.use { cursor ->
             if (!cursor.moveToFirst()) {
                 DB.delete(cr, FeedData.FeedColumns.GROUPS_CONTENT_URI(groupId), null, null, false)
             }
@@ -299,7 +242,8 @@ object DecsyncUtils {
     }
 
     fun executePostSubscribeActions(feedUrl: String, cr: ContentResolver) {
-        getDecsync()?.executeStoredEntries(listOf("feeds", "names"), cr, keyPred = { equalsJSON(it, feedUrl) })
-        getDecsync()?.executeStoredEntries(listOf("feeds", "categories"), cr, keyPred = { equalsJSON(it, feedUrl) })
+        val extra = Extra(cr)
+        getDecsync()?.executeStoredEntry(listOf("feeds", "names"), JsonLiteral(feedUrl), extra)
+        getDecsync()?.executeStoredEntry(listOf("feeds", "categories"), JsonLiteral(feedUrl), extra)
     }
 }

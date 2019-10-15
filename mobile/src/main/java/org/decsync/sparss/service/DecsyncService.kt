@@ -20,15 +20,16 @@
 package org.decsync.sparss.service
 
 import android.app.Service
-import android.content.ContentResolver
 import android.content.Intent
 import android.os.IBinder
-import org.decsync.sparss.utils.DecsyncUtils.getDecsync
 import org.decsync.library.Decsync
+import org.decsync.sparss.utils.DecsyncUtils.getDecsync
+import org.decsync.sparss.utils.Extra
 
+@ExperimentalStdlibApi
 class DecsyncService : Service() {
 
-    private var mDecsync: Decsync<ContentResolver>? = null
+    private var mDecsync: Decsync<Extra>? = null
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -39,7 +40,6 @@ class DecsyncService : Service() {
         if (mDecsync == null) {
             mDecsync = getDecsync()
         }
-        mDecsync?.initObserver(contentResolver)
         return START_STICKY
     }
 }

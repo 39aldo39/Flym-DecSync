@@ -23,7 +23,6 @@ package org.decsync.sparss.activity;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
-import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,13 +36,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -63,13 +62,13 @@ import org.decsync.sparss.service.DecsyncService;
 import org.decsync.sparss.service.FetcherService;
 import org.decsync.sparss.service.RefreshService;
 import org.decsync.sparss.utils.DecsyncUtils;
+import org.decsync.sparss.utils.Extra;
 import org.decsync.sparss.utils.PrefUtils;
 import org.decsync.sparss.utils.UiUtils;
 
 import java.io.File;
 
-import static org.decsync.library.DecsyncKt.getDecsyncSubdir;
-import static org.decsync.library.DecsyncKt.getDefaultDecsyncBaseDir;
+import static org.decsync.library.UtilsKt.getDefaultDecsyncDir;
 
 public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -197,9 +196,10 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
             Intent intent = new Intent(this, DecsyncService.class);
             startService(intent);
-            Decsync<ContentResolver> decsync = DecsyncUtils.INSTANCE.getDecsync();
+            Decsync<Extra> decsync = DecsyncUtils.INSTANCE.getDecsync();
             if (decsync != null) {
-                decsync.executeAllNewEntries(getContentResolver());
+                Extra extra = new Extra(getContentResolver());
+                decsync.executeAllNewEntries(extra);
             }
         } else {
             stopService(new Intent(this, DecsyncService.class));
@@ -213,9 +213,8 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         if (mFirstOpen) {
             PrefUtils.putBoolean(PrefUtils.FIRST_OPEN, false);
 
-            String baseDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncBaseDir());
-            String dir = getDecsyncSubdir(baseDir, "rss", null);
-            boolean decsyncExists = new File(dir).exists();
+            String decsyncDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir());
+            boolean decsyncExists = new File(decsyncDir).exists();
             boolean opmlExists = new File(OPML.BACKUP_OPML).exists();
             boolean importOPML = !decsyncExists && opmlExists;
 

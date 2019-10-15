@@ -56,8 +56,8 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.nononsenseapps.filepicker.FilePickerActivity;
@@ -70,7 +70,7 @@ import org.decsync.sparss.service.RefreshService;
 import org.decsync.sparss.utils.DecsyncUtils;
 import org.decsync.sparss.utils.PrefUtils;
 
-import static org.decsync.library.DecsyncKt.getDefaultDecsyncBaseDir;
+import static org.decsync.library.UtilsKt.getDefaultDecsyncDir;
 import static org.decsync.sparss.activity.GeneralPrefsActivity.PERMISSIONS_REQUEST_DECSYNC;
 
 public class GeneralPrefsFragment extends PreferenceFragment {
@@ -147,7 +147,7 @@ public class GeneralPrefsFragment extends PreferenceFragment {
                 Intent intent = new Intent(getActivity(), FilePickerActivity.class);
                 intent.putExtra(FilePickerActivity.EXTRA_ALLOW_CREATE_DIR, true);
                 intent.putExtra(FilePickerActivity.EXTRA_MODE, FilePickerActivity.MODE_DIR);
-                intent.putExtra(FilePickerActivity.EXTRA_START_PATH, PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncBaseDir()));
+                intent.putExtra(FilePickerActivity.EXTRA_START_PATH, PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir()));
                 startActivityForResult(intent, CHOOSE_DECSYNC_DIRECTORY);
                 return true;
             }
@@ -182,7 +182,7 @@ public class GeneralPrefsFragment extends PreferenceFragment {
 
     private void setDecsyncDirSummary() {
         Preference preference = findPreference(PrefUtils.DECSYNC_DIRECTORY);
-        String dir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncBaseDir());
+        String dir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir());
         preference.setSummary(dir);
     }
 
@@ -193,7 +193,7 @@ public class GeneralPrefsFragment extends PreferenceFragment {
         if (requestCode == CHOOSE_DECSYNC_DIRECTORY) {
             Uri uri = data == null ? null : data.getData();
             if (resultCode == Activity.RESULT_OK && uri != null) {
-                String oldDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncBaseDir());
+                String oldDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir());
                 String newDir = Utils.getFileForUri(uri).getPath();
                 if (!oldDir.equals(newDir)) {
                     PrefUtils.putString(PrefUtils.DECSYNC_DIRECTORY, newDir);

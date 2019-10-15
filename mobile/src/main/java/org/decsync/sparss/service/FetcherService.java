@@ -62,7 +62,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -82,6 +82,7 @@ import org.decsync.sparss.provider.FeedData.TaskColumns;
 import org.decsync.sparss.utils.ArticleTextExtractor;
 import org.decsync.sparss.utils.DB;
 import org.decsync.sparss.utils.DecsyncUtils;
+import org.decsync.sparss.utils.Extra;
 import org.decsync.sparss.utils.HtmlUtils;
 import org.decsync.sparss.utils.NetworkUtils;
 import org.decsync.sparss.utils.PrefUtils;
@@ -283,9 +284,10 @@ public class FetcherService extends IntentService {
             }
 
             if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
-                Decsync<ContentResolver> decsync = DecsyncUtils.INSTANCE.getDecsync();
+                Extra extra = new Extra(getContentResolver());
+                Decsync<Extra> decsync = DecsyncUtils.INSTANCE.getDecsync();
                 if (decsync != null) {
-                    decsync.executeAllNewEntries(getContentResolver());
+                    decsync.executeAllNewEntries(extra);
                 }
             }
             mobilizeAllEntries();

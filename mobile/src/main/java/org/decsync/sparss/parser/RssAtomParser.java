@@ -66,6 +66,7 @@ import org.decsync.sparss.provider.FeedData.FilterColumns;
 import org.decsync.sparss.service.FetcherService;
 import org.decsync.sparss.utils.DB;
 import org.decsync.sparss.utils.DecsyncUtils;
+import org.decsync.sparss.utils.Extra;
 import org.decsync.sparss.utils.HtmlUtils;
 import org.decsync.sparss.utils.NetworkUtils;
 
@@ -81,15 +82,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.decsync.library.UtilsKt.equalsJSON;
+import kotlinx.serialization.json.JsonElement;
+import kotlinx.serialization.json.JsonLiteral;
 
 public class RssAtomParser extends DefaultHandler {
     private static final String TAG = RssAtomParser.class.getSimpleName();
@@ -159,7 +158,7 @@ public class RssAtomParser extends DefaultHandler {
     private final FeedFilters mFilters;
     private final ArrayList<ContentProviderOperation> mInserts = new ArrayList<>();
     private final ArrayList<ArrayList<String>> mInsertedEntriesImages = new ArrayList<>();
-    private final Map<List<String>, ArrayList<Object>> mArticleMap = new HashMap<>();
+    private final ArrayList<Decsync.StoredEntry> mStoredEntries = new ArrayList<>();
     private long mNewRealLastUpdate;
     private boolean mEntryTagEntered = false;
     private boolean mTitleTagEntered = false;
@@ -493,12 +492,9 @@ public class RssAtomParser extends DefaultHandler {
                         String year = String.format("%04d", date.get(Calendar.YEAR));
                         String month = String.format("%02d", date.get(Calendar.MONTH) + 1);
                         String day = String.format("%02d", date.get(Calendar.DAY_OF_MONTH));
-                        for (String type : new String[]{"read", "marked"}) {
-                            List<String> path = Arrays.asList("articles", type, year, month, day);
-                            ArrayList<Object> guids = mArticleMap.containsKey(path) ? mArticleMap.get(path) : new ArrayList<>();
-                            guids.add(guidString);
-                            mArticleMap.put(path, guids);
-                        }
+                        JsonElement guid = new JsonLiteral(guidString);
+                        mStoredEntries.add(new Decsync.StoredEntry(Arrays.asList("articles", "read", year, month, day), guid));
+                        mStoredEntries.add(new Decsync.StoredEntry(Arrays.asList("articles", "marked", year, month, day), guid));
 
                         mNewCount++;
                     }
@@ -658,20 +654,10 @@ public class RssAtomParser extends DefaultHandler {
         try {
             if (!mInserts.isEmpty()) {
                 ContentProviderResult[] results = cr.applyBatch(FeedData.AUTHORITY, mInserts);
-                Decsync<ContentResolver> decsync = DecsyncUtils.INSTANCE.getDecsync();
+                Extra extra = new Extra(cr);
+                Decsync<Extra> decsync = DecsyncUtils.INSTANCE.getDecsync();
                 if (decsync != null) {
-                    for (Map.Entry<List<String>, ArrayList<Object>> entry : mArticleMap.entrySet()) {
-                        List<String> path = entry.getKey();
-                        ArrayList<Object> guids = entry.getValue();
-                        decsync.executeStoredEntries(path, cr, key -> {
-                            for (Object guid : guids) {
-                                if (equalsJSON(guid, key)) {
-                                    return true;
-                                }
-                            }
-                            return false;
-                        });
-                    }
+                    decsync.executeStoredEntries(mStoredEntries, extra);
                 }
 
                 if (mFetchImages) {
