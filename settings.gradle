@@ -1,1 +1,1 @@
-include ':mobile', ':libdecsync'
+include ':mobile'
