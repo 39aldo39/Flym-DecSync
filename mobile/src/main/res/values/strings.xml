@@ -202,6 +202,7 @@
     <string name="settings_decsync_enabled">Enable DecSync</string>
     <string name="settings_decsync_enabled_description">Sync with other RSS readers</string>
     <string name="settings_decsync_directory">DecSync directory</string>
+    <string name="settings_decsync_directory_reset">Reset DecSync directory</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">One new entry</item>
         <item quantity="other">%d new entries</item>

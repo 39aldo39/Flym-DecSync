@@ -47,6 +47,7 @@ package org.decsync.sparss.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.Ringtone;
@@ -56,6 +57,8 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
@@ -84,7 +87,6 @@ public class GeneralPrefsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.general_preferences);
 
         setRingtoneSummary();
-        setDecsyncDirSummary();
 
         Preference preference = findPreference(PrefUtils.REFRESH_ENABLED);
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -141,6 +143,7 @@ public class GeneralPrefsFragment extends PreferenceFragment {
         });
 
         preference = findPreference(PrefUtils.DECSYNC_DIRECTORY);
+        preference.setSummary(PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir()));
         preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -149,6 +152,25 @@ public class GeneralPrefsFragment extends PreferenceFragment {
                 intent.putExtra(FilePickerActivity.EXTRA_MODE, FilePickerActivity.MODE_DIR);
                 intent.putExtra(FilePickerActivity.EXTRA_START_PATH, PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir()));
                 startActivityForResult(intent, CHOOSE_DECSYNC_DIRECTORY);
+                return true;
+            }
+        });
+
+        preference = findPreference(PrefUtils.DECSYNC_DIRECTORY_RESET);
+        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Reset DecSync directory")
+                        .setMessage("Do you want to reset the DecSync directory to the default location '" + getDefaultDecsyncDir() + "'?")
+                        .setNegativeButton("No", null)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                setDecsyncDir(getDefaultDecsyncDir());
+                            }
+                        })
+                        .show();
                 return true;
             }
         });
@@ -180,10 +202,10 @@ public class GeneralPrefsFragment extends PreferenceFragment {
         }
     }
 
-    private void setDecsyncDirSummary() {
-        Preference preference = findPreference(PrefUtils.DECSYNC_DIRECTORY);
-        String dir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir());
-        preference.setSummary(dir);
+    private void setDecsyncDir(String dir) {
+        PrefUtils.putString(PrefUtils.DECSYNC_DIRECTORY, dir);
+        findPreference(PrefUtils.DECSYNC_DIRECTORY).setSummary(dir);
+        DecsyncUtils.INSTANCE.directoryChanged(getActivity());
     }
 
     @Override
@@ -196,9 +218,7 @@ public class GeneralPrefsFragment extends PreferenceFragment {
                 String oldDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir());
                 String newDir = Utils.getFileForUri(uri).getPath();
                 if (!oldDir.equals(newDir)) {
-                    PrefUtils.putString(PrefUtils.DECSYNC_DIRECTORY, newDir);
-                    setDecsyncDirSummary();
-                    DecsyncUtils.INSTANCE.directoryChanged(getActivity());
+                    setDecsyncDir(newDir);
                 }
             }
         }
