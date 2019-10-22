@@ -24,7 +24,7 @@
 
     <!-- GENERAL -->
     <string name="app_name">spaRSS DecSync</string>
-    <string name="about_spaRSS">Про spaRSS</string>
+    <string name="about_spaRSS">Про spaRSS DecSync</string>
     <string name="welcome_title">Добро пожаловать в spaRSS! Хотите добавить новую ленту?</string>
     <string name="never">никогда</string>
     <string name="update">Обновление</string>

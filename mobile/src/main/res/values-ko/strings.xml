@@ -25,7 +25,7 @@
 
     <!-- GENERAL -->
     <string name="app_name">spaRSS DecSync</string>
-    <string name="about_spaRSS">spaRSS 정보</string>
+    <string name="about_spaRSS">spaRSS DecSync 정보</string>
     <string name="welcome_title">spaRSS 사용을 환영합니다. 피드를 추가하시겠습니까?</string>
     <string name="never">하지 않음</string>
     <string name="update">업데이트</string>

@@ -24,7 +24,7 @@
 
     <!-- GENERAL -->
     <string name="app_name">spaRSS DecSync</string>
-    <string name="about_spaRSS">关于spaRSS</string>
+    <string name="about_spaRSS">关于spaRSS DecSync</string>
     <string name="welcome_title">欢迎使用spaRSS。需要添加一个源吗？</string>
     <string name="never">从未</string>
     <string name="update">更新</string>

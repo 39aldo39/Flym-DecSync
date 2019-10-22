@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">spaRSS</string>
-    <string name="about_spaRSS">Om spaRSS</string>
+<resources><string name="app_name">spaRSS DecSync</string>
+    <string name="about_spaRSS">Om spaRSS DecSync</string>
     <string name="welcome_title">Velkommen til spaRSS. Vil du legge til en kilde?</string>
     <string name="never">aldri</string>
     <string name="update">Oppdater</string>

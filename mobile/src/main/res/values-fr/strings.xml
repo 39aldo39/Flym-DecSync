@@ -26,7 +26,7 @@
 
     <!-- GENERAL -->
     <string name="app_name">spaRSS DecSync</string>
-    <string name="about_spaRSS">À propos de spaRSS</string>
+    <string name="about_spaRSS">À propos de spaRSS DecSync</string>
     <string name="welcome_title">Bienvenue sur spaRSS. Voulez-vous ajouter un flux ?</string>
     <string name="never">jamais</string>
     <string name="update">Mise à jour</string>

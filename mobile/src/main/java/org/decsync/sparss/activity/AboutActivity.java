@@ -48,9 +48,9 @@ public class AboutActivity extends BaseActivity {
         PackageManager manager = this.getPackageManager();
         try {
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            title = "spaRSS version " + info.versionName;
+            title = "spaRSS DecSync version " + info.versionName;
         } catch (NameNotFoundException unused) {
-            title = "spaRSS";
+            title = "spaRSS DecSync";
         }
         TextView titleView = (TextView) findViewById(R.id.about_title);
         titleView.setText(title);

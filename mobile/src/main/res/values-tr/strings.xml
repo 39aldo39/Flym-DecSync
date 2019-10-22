@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
     <string name="app_name">spaRSS DecSync</string>
-    <string name="about_spaRSS">spaRSS Hakkında</string>
+    <string name="about_spaRSS">spaRSS DecSync Hakkında</string>
     <string name="welcome_title">spaRSS\'ye hoşgeldin. Yeni bir besleme eklemek ister misin ?</string>
     <string name="menu_settings">Ayarlar</string>
     <string name="menu_refresh">Tazele</string>

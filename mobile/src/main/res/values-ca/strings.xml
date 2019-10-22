@@ -23,7 +23,7 @@
 
     <!-- GENERAL -->
     <string name="app_name">spaRSS DecSync</string>
-    <string name="about_spaRSS">About spaRSS</string>
+    <string name="about_spaRSS">About spaRSS DecSync</string>
     <string name="welcome_title">Welcome to spaRSS. Would you like to add one feed?</string>
     <string name="never">mai</string>
     <string name="update">Actualitza</string>

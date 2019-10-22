@@ -27,7 +27,7 @@
 
     <!-- GENERAL -->
     <string name="app_name">spaRSS DecSync</string>
-    <string name="about_spaRSS">O aplikaci spaRSS</string>
+    <string name="about_spaRSS">O aplikaci spaRSS DecSync</string>
     <string name="welcome_title">Vítejte v aplikaci spaRSS. Chcete přidat nový zdroj?</string>
     <string name="never">nikdy</string>
     <string name="update">aktualizováno</string>

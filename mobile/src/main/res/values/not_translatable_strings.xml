@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="about_us_copyright" translatable="false">Copyright 2015–2016 Arnaud Renaud-Goud</string>
+    <string name="about_us_copyright" translatable="false">Copyright 2018–2019 Aldo Gunsing</string>
     <string name="about_us_content" translatable="false"><![CDATA[
-    Project Website : https://github.com/Etuldan/spaRSS <br /><br />
+    Project Website : https://github.com/39aldo39/spaRSS-DecSync <br /><br />
     <b>Community</b><br/>
     • Ildar Mulyukov<br/><br/>
 
     <b>Developers</b><br/>
+    • Aldo Gunsing<br/>
     • Arnaud Renaud-Goud<br/>
     • equiem<br/>
     • Frédéric Julian<br/>
@@ -29,9 +30,6 @@
     • Jozef Jaroščiak<br/>
     • Matthias Dill<br/>
     • Mladen Pejaković<br/><br />
-    spaRSS use Weblate for translations.<br />
-    Weblate is a collaborative and opensource platform for translation of various software. See https://weblate.org . They also offer for opensource software a free hosting.
-    If you want to improve spaRSS translations, please use https://hosted.weblate.org/projects/sparss/strings/ (no programming skill required at all)<br /><br />
 
     This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. See http://www.gnu.org/licenses<br/><br/>
     Some parts of this software are based on \'Sparse rss\', Copyright 2010-2012 Stefan Handschuch, under the MIT license.
