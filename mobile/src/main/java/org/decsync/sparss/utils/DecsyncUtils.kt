@@ -24,76 +24,73 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import android.widget.Toast
-import kotlinx.serialization.json.*
+import androidx.appcompat.app.AlertDialog
+import kotlinx.serialization.json.JsonLiteral
+import kotlinx.serialization.json.boolean
+import kotlinx.serialization.json.content
+import kotlinx.serialization.json.contentOrNull
 import org.decsync.library.Decsync
 import org.decsync.library.DecsyncException
+import org.decsync.library.DecsyncPrefUtils
 import org.decsync.library.getAppId
-import org.decsync.library.getDefaultDecsyncDir
 import org.decsync.sparss.provider.FeedData
 import org.decsync.sparss.provider.FeedDataContentProvider.addFeed
-import org.decsync.sparss.service.DecsyncService
-import org.decsync.sparss.MainApplication
+import org.decsync.sparss.service.FetcherService
 import org.decsync.sparss.utils.DB.feedUrlToFeedId
 import kotlin.concurrent.thread
 
 val ownAppId = getAppId("spaRSS")
 const val TAG = "DecsyncUtils"
 
-class Extra(val cr: ContentResolver)
+class Extra(val context: Context)
 
 @ExperimentalStdlibApi
 object DecsyncUtils {
     private var mDecsync: Decsync<Extra>? = null
 
-    private fun getNewDecsync(): Decsync<Extra>? {
-        val decsyncDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir())
-        try {
-            val decsync = Decsync<Extra>(decsyncDir, "rss", null, ownAppId)
-            decsync.addListener(listOf("articles", "read")) { path, entry, extra ->
-                readMarkListener(true, path, entry, extra)
-            }
-            decsync.addListener(listOf("articles", "marked")) { path, entry, extra ->
-                readMarkListener(false, path, entry, extra)
-            }
-            decsync.addListener(listOf("feeds", "subscriptions"), ::subscriptionsListener)
-            decsync.addListener(listOf("feeds", "names"), ::feedNamesListener)
-            decsync.addListener(listOf("feeds", "categories"), ::categoriesListener)
-            decsync.addListener(listOf("categories", "names"), ::categoryNamesListener)
-            decsync.addListener(listOf("categories", "parents"), ::categoryParentsListener)
-            return decsync
-        } catch (e: DecsyncException) {
-            val context = MainApplication.getContext()
-            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-            return null
+    private fun getNewDecsync(context: Context): Decsync<Extra> {
+        val decsyncDir = DecsyncPrefUtils.getDecsyncDir(context) ?: throw Exception("No DecSync directory configured")
+        val cr = context.contentResolver
+        val decsync = org.decsync.library.getDecsync<Extra>(decsyncDir, cr, "rss", null, ownAppId)
+        decsync.addListener(listOf("articles", "read")) { path, entry, extra ->
+            readMarkListener(true, path, entry, extra)
         }
+        decsync.addListener(listOf("articles", "marked")) { path, entry, extra ->
+            readMarkListener(false, path, entry, extra)
+        }
+        decsync.addListener(listOf("feeds", "subscriptions"), ::subscriptionsListener)
+        decsync.addListener(listOf("feeds", "names"), ::feedNamesListener)
+        decsync.addListener(listOf("feeds", "categories"), ::categoriesListener)
+        decsync.addListener(listOf("categories", "names"), ::categoryNamesListener)
+        decsync.addListener(listOf("categories", "parents"), ::categoryParentsListener)
+        return decsync
     }
 
-    fun getDecsync(): Decsync<Extra>? {
+    fun getDecsync(context: Context): Decsync<Extra>? {
         if (mDecsync == null && PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
-            mDecsync = getNewDecsync()
-            if (mDecsync == null) {
+            try {
+                mDecsync = getNewDecsync(context)
+            } catch (e: Exception) {
+                AlertDialog.Builder(context)
+                        .setTitle("DecSync")
+                        .setMessage(e.message)
+                        .setPositiveButton("OK") { _, _ -> }
+                        .show()
                 PrefUtils.putBoolean(PrefUtils.DECSYNC_ENABLED, false)
             }
         }
         return mDecsync
     }
 
-    fun directoryChanged(context: Context) {
-        context.stopService(Intent(context, DecsyncService::class.java))
+    fun initSync(context: Context) {
         mDecsync = null
-        initSync(context)
-    }
-
-    fun initSync(context: Context): Boolean {
-        val decsync = getNewDecsync() ?: return false
+        val decsync = getDecsync(context) ?: return
         thread {
             decsync.initStoredEntries()
-            val extra = Extra(context.contentResolver)
+            val extra = Extra(context)
             decsync.executeStoredEntriesForPath(listOf("feeds", "subscriptions"), extra)
-            context.startService(Intent(context, DecsyncService::class.java))
+            context.startService(Intent(context, FetcherService::class.java).setAction(FetcherService.ACTION_REFRESH_FEEDS))
         }
-        return true
     }
 
     private fun readMarkListener(isReadEntry: Boolean, path: List<String>, entry: Decsync.Entry, extra: Extra) {
@@ -101,6 +98,7 @@ object DecsyncUtils {
         val entryColumn = if (isReadEntry) FeedData.EntryColumns.IS_READ else FeedData.EntryColumns.IS_FAVORITE
         val guid = entry.key.content
         val value = entry.value.boolean
+        val context = extra.context
 
         val values = ContentValues()
         if (value) {
@@ -108,7 +106,7 @@ object DecsyncUtils {
         } else {
             values.putNull(entryColumn)
         }
-        DB.update(extra.cr, FeedData.EntryColumns.ALL_ENTRIES_CONTENT_URI, values,
+        DB.update(context, FeedData.EntryColumns.ALL_ENTRIES_CONTENT_URI, values,
                 FeedData.EntryColumns.GUID + "=?", arrayOf(guid), false)
     }
 
@@ -116,20 +114,22 @@ object DecsyncUtils {
         Log.d(TAG, "Execute subscribe entry $entry")
         val feedUrl = entry.key.content
         val subscribed = entry.value.boolean
+        val context = extra.context
+        val cr = context.contentResolver
 
         if (subscribed) {
-            addFeed(extra.cr, null, feedUrl, "", false, false)
+            addFeed(cr, context, feedUrl, "", false, false)
         } else {
-            val feedId = feedUrlToFeedId(feedUrl, extra.cr)
+            val feedId = feedUrlToFeedId(feedUrl, cr)
             if (feedId == null) {
                 Log.i(TAG, "Unknown feed $feedUrl")
                 return
             }
-            val groupId = getGroupId(feedId, extra.cr)
+            val groupId = getGroupId(feedId, cr)
             if (groupId != null) {
-                removeGroupIfEmpty(groupId, extra.cr)
+                removeGroupIfEmpty(groupId, context)
             }
-            DB.delete(extra.cr, FeedData.FeedColumns.CONTENT_URI(feedId), null, null, false)
+            DB.delete(context, FeedData.FeedColumns.CONTENT_URI(feedId), null, null, false)
         }
     }
 
@@ -137,48 +137,54 @@ object DecsyncUtils {
         Log.d(TAG, "Execute rename entry $entry")
         val feedUrl = entry.key.content
         val name = entry.value.content
+        val context = extra.context
+        val cr = context.contentResolver
 
-        val feedId = feedUrlToFeedId(feedUrl, extra.cr)
+        val feedId = feedUrlToFeedId(feedUrl, cr)
         if (feedId == null) {
             Log.i(TAG, "Unknown feed $feedUrl")
             return
         }
         val values = ContentValues()
         values.put(FeedData.FeedColumns.NAME, name)
-        DB.update(extra.cr, FeedData.FeedColumns.CONTENT_URI(feedId), values, null, null, false)
+        DB.update(context, FeedData.FeedColumns.CONTENT_URI(feedId), values, null, null, false)
     }
 
     private fun categoriesListener(path: List<String>, entry: Decsync.Entry, extra: Extra) {
         Log.d(TAG, "Execute move entry $entry")
         val feedUrl = entry.key.content
         val category = entry.value.contentOrNull
+        val context = extra.context
+        val cr = context.contentResolver
 
-        val feedId = feedUrlToFeedId(feedUrl, extra.cr)
+        val feedId = feedUrlToFeedId(feedUrl, cr)
         if (feedId == null) {
             Log.i(TAG, "Unknown feed $feedUrl")
             return
         }
-        val oldGroupId = getGroupId(feedId, extra.cr)
-        val groupId = categoryToGroupId(category, extra.cr)
+        val oldGroupId = getGroupId(feedId, cr)
+        val groupId = categoryToGroupId(category, context)
         val values = ContentValues()
         values.put(FeedData.FeedColumns.GROUP_ID, groupId)
-        DB.update(extra.cr, FeedData.FeedColumns.CONTENT_URI(feedId), values, null, null, false)
-        removeGroupIfEmpty(oldGroupId, extra.cr)
+        DB.update(context, FeedData.FeedColumns.CONTENT_URI(feedId), values, null, null, false)
+        removeGroupIfEmpty(oldGroupId, context)
     }
 
     private fun categoryNamesListener(path: List<String>, entry: Decsync.Entry, extra: Extra) {
         Log.d(TAG, "Execute category rename entry $entry")
         val category = entry.key.content
         val name = entry.value.content
+        val context = extra.context
+        val cr = context.contentResolver
 
-        val groupId = categoryToOptGroupId(category, extra.cr)
+        val groupId = categoryToOptGroupId(category, cr)
         if (groupId == null) {
             Log.i(TAG, "Unknown category $category")
             return
         }
         val values = ContentValues()
         values.put(FeedData.FeedColumns.NAME, name)
-        DB.update(extra.cr, FeedData.FeedColumns.CONTENT_URI(groupId), values, null, null, false)
+        DB.update(context, FeedData.FeedColumns.CONTENT_URI(groupId), values, null, null, false)
     }
 
     private fun categoryParentsListener(path: List<String>, entry: Decsync.Entry, extra: Extra) {
@@ -211,10 +217,11 @@ object DecsyncUtils {
         }
     }
 
-    private fun categoryToGroupId(category: String?, cr: ContentResolver): String? {
+    private fun categoryToGroupId(category: String?, context: Context): String? {
         if (category == null) {
             return null
         }
+        val cr = context.contentResolver
 
         val groupId = categoryToOptGroupId(category, cr)
         if (groupId != null) {
@@ -225,25 +232,26 @@ object DecsyncUtils {
         values.put(FeedData.FeedColumns.IS_GROUP, 1)
         values.put(FeedData.FeedColumns.NAME, category)
         values.put(FeedData.FeedColumns.URL, category)
-        val newGroupId = DB.insert(cr, FeedData.FeedColumns.GROUPS_CONTENT_URI, values, false)?.lastPathSegment ?: return null
-        val extra = Extra(cr)
-        getDecsync()?.executeStoredEntry(listOf("categories", "names"), JsonLiteral(category), extra)
+        val newGroupId = DB.insert(context, FeedData.FeedColumns.GROUPS_CONTENT_URI, values, false)?.lastPathSegment ?: return null
+        val extra = Extra(context)
+        getDecsync(context)?.executeStoredEntry(listOf("categories", "names"), JsonLiteral(category), extra)
         return newGroupId
     }
 
-    private fun removeGroupIfEmpty(groupId: String?, cr: ContentResolver) {
+    private fun removeGroupIfEmpty(groupId: String?, context: Context) {
         if (groupId == null) return
+        val cr = context.contentResolver
         cr.query(FeedData.FeedColumns.CONTENT_URI, FeedData.FeedColumns.PROJECTION_GROUP_ID,
                 FeedData.FeedColumns.GROUP_ID + "=?", arrayOf(groupId), null)!!.use { cursor ->
             if (!cursor.moveToFirst()) {
-                DB.delete(cr, FeedData.FeedColumns.GROUPS_CONTENT_URI(groupId), null, null, false)
+                DB.delete(context, FeedData.FeedColumns.GROUPS_CONTENT_URI(groupId), null, null, false)
             }
         }
     }
 
-    fun executePostSubscribeActions(feedUrl: String, cr: ContentResolver) {
-        val extra = Extra(cr)
-        getDecsync()?.executeStoredEntry(listOf("feeds", "names"), JsonLiteral(feedUrl), extra)
-        getDecsync()?.executeStoredEntry(listOf("feeds", "categories"), JsonLiteral(feedUrl), extra)
+    fun executePostSubscribeActions(feedUrl: String, context: Context) {
+        val extra = Extra(context)
+        getDecsync(context)?.executeStoredEntry(listOf("feeds", "names"), JsonLiteral(feedUrl), extra)
+        getDecsync(context)?.executeStoredEntry(listOf("feeds", "categories"), JsonLiteral(feedUrl), extra)
     }
 }

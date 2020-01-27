@@ -45,21 +45,14 @@
 
 package org.decsync.sparss.activity;
 
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.PreferenceFragment;
 import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 
 import org.decsync.sparss.R;
-import org.decsync.sparss.utils.DecsyncUtils;
-import org.decsync.sparss.utils.PrefUtils;
 import org.decsync.sparss.utils.UiUtils;
 
 public class GeneralPrefsActivity extends BaseActivity {
-
-    public static final int PERMISSIONS_REQUEST_DECSYNC = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,20 +74,5 @@ public class GeneralPrefsActivity extends BaseActivity {
                 return true;
         }
         return true;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
-    {
-        switch (requestCode)
-        {
-            case PERMISSIONS_REQUEST_DECSYNC:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    DecsyncUtils.INSTANCE.initSync(this);
-                    PreferenceFragment fragment = (PreferenceFragment) getFragmentManager().findFragmentById(R.id.entry_fragment);
-                    CheckBoxPreference preference = (CheckBoxPreference) fragment.findPreference(PrefUtils.DECSYNC_ENABLED);
-                    preference.setChecked(true);
-                }
-        }
     }
 }

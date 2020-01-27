@@ -45,48 +45,36 @@
 
 package org.decsync.sparss.fragment;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import android.text.TextUtils;
+import androidx.documentfile.provider.DocumentFile;
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
-import com.nononsenseapps.filepicker.FilePickerActivity;
-import com.nononsenseapps.filepicker.Utils;
-
+import org.decsync.library.DecsyncPrefUtils;
 import org.decsync.sparss.MainApplication;
 import org.decsync.sparss.R;
-import org.decsync.sparss.service.DecsyncService;
 import org.decsync.sparss.service.RefreshService;
 import org.decsync.sparss.utils.DecsyncUtils;
 import org.decsync.sparss.utils.PrefUtils;
 
-import static org.decsync.library.UtilsKt.getDefaultDecsyncDir;
-import static org.decsync.sparss.activity.GeneralPrefsActivity.PERMISSIONS_REQUEST_DECSYNC;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
-public class GeneralPrefsFragment extends PreferenceFragment {
+public class GeneralPrefsFragment extends PreferenceFragmentCompat {
 
-    private static final int CHOOSE_DECSYNC_DIRECTORY = 0;
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        addPreferencesFromResource(R.xml.general_preferences);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        addPreferencesFromResource(R.xml.general_preferences);
-
-        setRingtoneSummary();
 
         Preference preference = findPreference(PrefUtils.REFRESH_ENABLED);
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -129,98 +117,30 @@ public class GeneralPrefsFragment extends PreferenceFragment {
                     return false;
                 }
                 if (Boolean.TRUE.equals(newValue)) {
-                    if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                        return DecsyncUtils.INSTANCE.initSync(activity);
-                    } else {
-                        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_DECSYNC);
-                        return false;
-                    }
-                } else {
-                    activity.stopService(new Intent(activity, DecsyncService.class));
+                    DecsyncPrefUtils.INSTANCE.chooseDecsyncDir(GeneralPrefsFragment.this);
+                    return false;
                 }
                 return true;
             }
         });
-
-        preference = findPreference(PrefUtils.DECSYNC_DIRECTORY);
-        preference.setSummary(PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir()));
-        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent(getActivity(), FilePickerActivity.class);
-                intent.putExtra(FilePickerActivity.EXTRA_ALLOW_CREATE_DIR, true);
-                intent.putExtra(FilePickerActivity.EXTRA_MODE, FilePickerActivity.MODE_DIR);
-                intent.putExtra(FilePickerActivity.EXTRA_START_PATH, PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir()));
-                startActivityForResult(intent, CHOOSE_DECSYNC_DIRECTORY);
-                return true;
-            }
-        });
-
-        preference = findPreference(PrefUtils.DECSYNC_DIRECTORY_RESET);
-        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Reset DecSync directory")
-                        .setMessage("Do you want to reset the DecSync directory to the default location '" + getDefaultDecsyncDir() + "'?")
-                        .setNegativeButton("No", null)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                setDecsyncDir(getDefaultDecsyncDir());
-                            }
-                        })
-                        .show();
-                return true;
-            }
-        });
-    }
-
-    @Override
-    public void onResume() {
-        // The ringtone summary text should be updated using
-        // OnSharedPreferenceChangeListener(), but I can't get it to work.
-        // Updating in onResume is a very simple hack that seems to work, but is inefficient.
-        setRingtoneSummary();
-
-        super.onResume();
-
-    }
-
-    private void setRingtoneSummary() {
-        Preference ringtone_preference = findPreference(PrefUtils.NOTIFICATIONS_RINGTONE);
-        Uri ringtoneUri = Uri.parse(PrefUtils.getString(PrefUtils.NOTIFICATIONS_RINGTONE, ""));
-        if (TextUtils.isEmpty(ringtoneUri.toString())) {
-            ringtone_preference.setSummary(R.string.settings_notifications_ringtone_none);
-        } else {
-            Ringtone ringtone = RingtoneManager.getRingtone(MainApplication.getContext(), ringtoneUri);
-            if (ringtone == null) {
-                ringtone_preference.setSummary(R.string.settings_notifications_ringtone_none);
-            } else {
-                ringtone_preference.setSummary(ringtone.getTitle(MainApplication.getContext()));
-            }
-        }
-    }
-
-    private void setDecsyncDir(String dir) {
-        PrefUtils.putString(PrefUtils.DECSYNC_DIRECTORY, dir);
-        findPreference(PrefUtils.DECSYNC_DIRECTORY).setSummary(dir);
-        DecsyncUtils.INSTANCE.directoryChanged(getActivity());
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CHOOSE_DECSYNC_DIRECTORY) {
-            Uri uri = data == null ? null : data.getData();
-            if (resultCode == Activity.RESULT_OK && uri != null) {
-                String oldDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir());
-                String newDir = Utils.getFileForUri(uri).getPath();
-                if (!oldDir.equals(newDir)) {
-                    setDecsyncDir(newDir);
+        Activity activity = getActivity();
+        DecsyncPrefUtils.INSTANCE.chooseDecsyncDirResult(activity, requestCode, resultCode, data, new Function1<DocumentFile, Unit>() {
+            @Override
+            public Unit invoke(DocumentFile decsyncDir) {
+                PrefUtils.putBoolean(PrefUtils.DECSYNC_ENABLED, true);
+                CheckBoxPreference preference = findPreference(PrefUtils.DECSYNC_ENABLED);
+                if (preference != null) {
+                    preference.setChecked(true);
                 }
+                DecsyncUtils.INSTANCE.initSync(activity);
+                return Unit.INSTANCE;
             }
-        }
+        });
     }
 }

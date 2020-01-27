@@ -47,8 +47,9 @@ package org.decsync.sparss.parser;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
-import android.os.Environment;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Xml;
 
@@ -63,16 +64,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 public class OPML {
-
-    public static final String BACKUP_OPML = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/spaRSS_auto_backup.opml";
 
     private static final String[] FEEDS_PROJECTION = new String[]{FeedColumns._ID, FeedColumns.IS_GROUP, FeedColumns.NAME, FeedColumns.URL,
             FeedColumns.RETRIEVE_FULLTEXT};
@@ -95,44 +92,36 @@ public class OPML {
     private static final String CLOSING = "</body>\n</opml>\n";
 
     private static final OPMLParser mParser = new OPMLParser();
-    private static boolean mAutoBackupEnabled = true;
 
-    public static void importBackupFile() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try
-                {
-                    // Perform automated import of the backup
-                    OPML.importFromFile(OPML.BACKUP_OPML);
-                }
-                catch (Exception ig){
-                }
-            }
-        }).start();
-    }
-
-    public static void importFromFile(String filename) throws IOException, SAXException {
-        if (BACKUP_OPML.equals(filename)) {
-            mAutoBackupEnabled = false;  // Do not write the auto backup file while reading it...
+    public static void importFromUri(ContentResolver cr, Uri uri) throws IOException, SAXException {
+        InputStream stream = cr.openInputStream(uri);
+        if (stream == null) {
+            throw new IOException("Cannot open input stream of " + uri);
         }
-
         try {
-            Xml.parse(new InputStreamReader(new FileInputStream(filename)), mParser);
+            importFromStream(stream);
         } finally {
-            mAutoBackupEnabled = true;
+            stream.close();
         }
     }
 
-    public static void importFromFile(InputStream input) throws IOException, SAXException {
+    public static void importFromStream(InputStream input) throws IOException, SAXException {
         Xml.parse(new InputStreamReader(input), mParser);
     }
 
-    public static void exportToFile(String filename) throws IOException {
-        if (BACKUP_OPML.equals(filename) && !mAutoBackupEnabled) {
-            return;
+    public static void exportToUri(ContentResolver cr, Uri uri) throws IOException {
+        OutputStream stream = cr.openOutputStream(uri);
+        if (stream == null) {
+            throw new IOException("Cannot open output stream of " + uri);
         }
+        try {
+            exportToStream(stream);
+        } finally {
+            stream.close();
+        }
+    }
 
+    public static void exportToStream(OutputStream output) throws IOException {
         Cursor cursor = MainApplication.getContext().getContentResolver()
                 .query(FeedColumns.GROUPS_CONTENT_URI, FEEDS_PROJECTION, null, null, null);
 
@@ -214,10 +203,7 @@ public class OPML {
 
         cursor.close();
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-
-        writer.write(builder.toString());
-        writer.close();
+        output.write(builder.toString().getBytes());
     }
 
     private static class OPMLParser extends DefaultHandler {
@@ -252,7 +238,8 @@ public class OPML {
                     title = attributes.getValue("", ATTRIBUTE_TEXT);
                 }
 
-                ContentResolver cr = MainApplication.getContext().getContentResolver();
+                Context context = MainApplication.getContext();
+                ContentResolver cr = context.getContentResolver();
 
                 if (url == null) { // No url => this is a group
                     if (title != null) {
@@ -263,7 +250,7 @@ public class OPML {
                         Cursor cursor = cr.query(FeedColumns.GROUPS_CONTENT_URI, null, FeedColumns.NAME + Constants.DB_ARG, new String[]{title}, null);
 
                         if (!cursor.moveToFirst()) {
-                            mGroupId = DB.insert(cr, FeedColumns.GROUPS_CONTENT_URI, values).getLastPathSegment();
+                            mGroupId = DB.insert(context, FeedColumns.GROUPS_CONTENT_URI, values).getLastPathSegment();
                         }
                         cursor.close();
                     }
@@ -283,7 +270,7 @@ public class OPML {
                             new String[]{url}, null);
                     mFeedId = null;
                     if (!cursor.moveToFirst()) {
-                        mFeedId = DB.insert(cr, FeedColumns.CONTENT_URI, values).getLastPathSegment();
+                        mFeedId = DB.insert(context, FeedColumns.CONTENT_URI, values).getLastPathSegment();
                     }
                     cursor.close();
                 }
@@ -295,8 +282,8 @@ public class OPML {
                     values.put(FilterColumns.IS_APPLIED_TO_TITLE, Constants.TRUE.equals(attributes.getValue("", ATTRIBUTE_IS_APPLIED_TO_TITLE)));
                     values.put(FilterColumns.IS_ACCEPT_RULE, Constants.TRUE.equals(attributes.getValue("", ATTRIBUTE_IS_ACCEPT_RULE)));
 
-                    ContentResolver cr = MainApplication.getContext().getContentResolver();
-                    DB.insert(cr, FilterColumns.FILTERS_FOR_FEED_CONTENT_URI(mFeedId), values);
+                    Context context = MainApplication.getContext();
+                    DB.insert(context, FilterColumns.FILTERS_FOR_FEED_CONTENT_URI(mFeedId), values);
                 }
             }
         }
