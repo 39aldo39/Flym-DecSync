@@ -228,11 +228,10 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                         public void run() {
                             ContentValues values = new ContentValues();
                             values.put(EntryColumns.IS_FAVORITE, mFavorite ? 1 : 0);
-                            Context context = MainApplication.getContext();
-                            DB.update(context, uri, values, null, null);
+                            ContentResolver cr = MainApplication.getContext().getContentResolver();
+                            DB.update(cr, uri, values, null, null);
 
                             // Update the cursor
-                            ContentResolver cr = context.getContentResolver();
                             Cursor updatedCursor = cr.query(uri, null, null, null, null);
                             updatedCursor.moveToFirst();
                             mEntryPagerAdapter.setUpdatedCursor(mCurrentPagerPos, updatedCursor);
@@ -273,8 +272,8 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                     new Thread() {
                         @Override
                         public void run() {
-                            Context context = MainApplication.getContext();
-                            DB.update(context, uri, FeedData.getUnreadContentValues(), null, null);
+                            ContentResolver cr = MainApplication.getContext().getContentResolver();
+                            DB.update(cr, uri, FeedData.getUnreadContentValues(), null, null);
                         }
                     }.start();
                     activity.finish();
@@ -426,11 +425,10 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Context context = MainApplication.getContext();
-                        DB.update(context, uri, FeedData.getReadContentValues(), null, null);
+                        ContentResolver cr = MainApplication.getContext().getContentResolver();
+                        DB.update(cr, uri, FeedData.getReadContentValues(), null, null);
 
                         // Update the cursor
-                        ContentResolver cr = context.getContentResolver();
                         Cursor updatedCursor = cr.query(uri, null, null, null, null);
                         updatedCursor.moveToFirst();
                         mEntryPagerAdapter.setUpdatedCursor(mCurrentPagerPos, updatedCursor);

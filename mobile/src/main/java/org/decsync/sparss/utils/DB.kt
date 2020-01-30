@@ -21,7 +21,6 @@ package org.decsync.sparss.utils
 
 import android.content.ContentResolver
 import android.content.ContentValues
-import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import kotlinx.serialization.json.JsonElement
@@ -37,8 +36,7 @@ import java.util.*
 object DB {
     @JvmOverloads
     @JvmStatic
-    fun insert(context: Context, uri: Uri, values: ContentValues, updateDecsync: Boolean = true): Uri? {
-        val cr = context.contentResolver
+    fun insert(cr: ContentResolver, uri: Uri, values: ContentValues, updateDecsync: Boolean = true): Uri? {
         val isGroup = values.getAsBoolean(FeedData.FeedColumns.IS_GROUP) ?: false
         if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
             when (cr.getType(uri)) {
@@ -48,13 +46,13 @@ object DB {
                             val feedUrl = values.getAsString(FeedData.FeedColumns.URL)
                             val name = values.getAsString(FeedData.FeedColumns.NAME)
                             val groupId = values.getAsString(FeedData.FeedColumns.GROUP_ID)
-                            val category = groupToCategory(groupId, context)
+                            val category = groupToCategory(groupId, cr)
 
-                            getDecsync(context)?.setEntry(listOf("feeds", "subscriptions"), JsonLiteral(feedUrl), JsonLiteral(true))
+                            getDecsync()?.setEntry(listOf("feeds", "subscriptions"), JsonLiteral(feedUrl), JsonLiteral(true))
                             if (name != null) {
-                                getDecsync(context)?.setEntry(listOf("feeds", "names"), JsonLiteral(feedUrl), JsonLiteral(name))
+                                getDecsync()?.setEntry(listOf("feeds", "names"), JsonLiteral(feedUrl), JsonLiteral(name))
                             }
-                            getDecsync(context)?.setEntry(listOf("feeds", "categories"), JsonLiteral(feedUrl), category)
+                            getDecsync()?.setEntry(listOf("feeds", "categories"), JsonLiteral(feedUrl), category)
                         }
                     }
                 }
@@ -66,7 +64,7 @@ object DB {
             when (cr.getType(uri)) {
                 "vnd.android.cursor.item/vnd.spaRSS.feed", "vnd.android.cursor.dir/vnd.spaRSS.feed" -> {
                     if (!isGroup) {
-                        executePostSubscribeActions(values.getAsString(FeedData.FeedColumns.URL), context)
+                        executePostSubscribeActions(values.getAsString(FeedData.FeedColumns.URL), cr)
                     }
                 }
             }
@@ -76,8 +74,7 @@ object DB {
 
     @JvmOverloads
     @JvmStatic
-    fun update(context: Context, uri: Uri, values: ContentValues, selection: String?, selectionArgs: Array<String>?, updateDecsync: Boolean = true): Int {
-        val cr = context.contentResolver
+    fun update(cr: ContentResolver, uri: Uri, values: ContentValues, selection: String?, selectionArgs: Array<String>?, updateDecsync: Boolean = true): Int {
         if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
             when (cr.getType(uri)) {
                 "vnd.android.cursor.item/vnd.spaRSS.feed", "vnd.android.cursor.dir/vnd.spaRSS.feed" -> {
@@ -108,14 +105,14 @@ object DB {
                                         entries.add(Decsync.EntryWithPath(listOf("feeds", "names"), JsonLiteral(url), JsonLiteral(name)))
                                     }
                                     if (newUrl || origGroupId != null && origGroupId != groupId || origGroupId == null && groupId != null) {
-                                        val category = groupToCategory(groupId, context)
+                                        val category = groupToCategory(groupId, cr)
                                         entries.add(Decsync.EntryWithPath(listOf("feeds", "categories"), JsonLiteral(url), category))
                                     }
                                 }
 
                                 cursor.moveToNext()
                             }
-                            getDecsync(context)?.setEntries(entries)
+                            getDecsync()?.setEntries(entries)
                         }
                     }
                 }
@@ -124,13 +121,13 @@ object DB {
                         if (values.containsKey(FeedData.EntryColumns.IS_READ)) {
                             cr.query(uri, null, selection, selectionArgs, null).use { cursor ->
                                 val read = java.lang.Boolean.TRUE == values.getAsBoolean(FeedData.EntryColumns.IS_READ)
-                                setReadOrMarkEntries(context, "read", cursor!!, read)
+                                setReadOrMarkEntries("read", cursor!!, read)
                             }
                         }
                         if (values.containsKey(FeedData.EntryColumns.IS_FAVORITE)) {
                             cr.query(uri, null, selection, selectionArgs, null).use { cursor ->
                                 val marked = java.lang.Boolean.TRUE == values.getAsBoolean(FeedData.EntryColumns.IS_FAVORITE)
-                                setReadOrMarkEntries(context, "marked", cursor!!, marked)
+                                setReadOrMarkEntries("marked", cursor!!, marked)
                             }
                         }
                     }
@@ -141,7 +138,7 @@ object DB {
         return cr.update(uri, values, selection, selectionArgs)
     }
 
-    private fun setReadOrMarkEntries(context: Context, type: String, cursor: Cursor, value: Boolean) {
+    private fun setReadOrMarkEntries(type: String, cursor: Cursor, value: Boolean) {
         val entries = mutableListOf<Decsync.EntryWithPath>()
         cursor.moveToFirst()
         while (!cursor.isAfterLast) {
@@ -156,19 +153,18 @@ object DB {
 
             cursor.moveToNext()
         }
-        getDecsync(context)?.setEntries(entries)
+        getDecsync()?.setEntries(entries)
     }
 
     @JvmOverloads
     @JvmStatic
-    fun delete(context: Context, uri: Uri, selection: String?, selectionArgs: Array<String>?, updateDecsync: Boolean = true): Int {
-        val cr = context.contentResolver
+    fun delete(cr: ContentResolver, uri: Uri, selection: String?, selectionArgs: Array<String>?, updateDecsync: Boolean = true): Int {
         if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
             when (cr.getType(uri)) {
                 "vnd.android.cursor.item/vnd.spaRSS.feed", "vnd.android.cursor.dir/vnd.spaRSS.feed" -> {
                     if (updateDecsync) {
                         cr.query(uri, null, selection, selectionArgs, null)!!.use {
-                            setUnsubscribeEntries(context, it)
+                            setUnsubscribeEntries(cr, it)
                         }
                     }
                 }
@@ -178,8 +174,7 @@ object DB {
         return cr.delete(uri, selection, selectionArgs)
     }
 
-    private fun setUnsubscribeEntries(context: Context, cursor: Cursor) {
-        val cr = context.contentResolver
+    private fun setUnsubscribeEntries(cr: ContentResolver, cursor: Cursor) {
         val entries = mutableListOf<Decsync.Entry>()
         cursor.moveToFirst()
         while (!cursor.isAfterLast) {
@@ -187,7 +182,7 @@ object DB {
                 val groupId = cursor.getString(cursor.getColumnIndex(FeedData.FeedColumns._ID))
                 cr.query(FeedData.FeedColumns.CONTENT_URI, null,
                         FeedData.FeedColumns.GROUP_ID + "=?", arrayOf(groupId), null)!!.use {
-                    setUnsubscribeEntries(context, it)
+                    setUnsubscribeEntries(cr, it)
                 }
             } else {
                 val feedUrl = cursor.getString(cursor.getColumnIndex(FeedData.FeedColumns.URL))
@@ -196,14 +191,13 @@ object DB {
 
             cursor.moveToNext()
         }
-        getDecsync(context)?.setEntriesForPath(listOf("feeds", "subscriptions"), entries)
+        getDecsync()?.setEntriesForPath(listOf("feeds", "subscriptions"), entries)
     }
 
-    private fun groupToCategory(groupId: String?, context: Context): JsonElement {
+    private fun groupToCategory(groupId: String?, cr: ContentResolver): JsonElement {
         if (groupId == null) {
             return JsonNull
         }
-        val cr = context.contentResolver
         cr.query(FeedData.FeedColumns.GROUPS_CONTENT_URI(groupId),
                 arrayOf(FeedData.FeedColumns.URL, FeedData.FeedColumns.NAME),
                 null, null, null)!!.use { cursor ->
@@ -217,7 +211,7 @@ object DB {
             val values = ContentValues()
             values.put(FeedData.FeedColumns.URL, categoryNew)
             cr.update(FeedData.FeedColumns.CONTENT_URI(groupId), values, null, null)
-            getDecsync(context)?.setEntry(listOf("categories", "names"), categoryNewJson, JsonLiteral(name))
+            getDecsync()?.setEntry(listOf("categories", "names"), categoryNewJson, JsonLiteral(name))
             return categoryNewJson
         }
     }

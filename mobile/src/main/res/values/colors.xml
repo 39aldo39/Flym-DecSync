@@ -35,8 +35,4 @@
     <color name="light_primary_color">@color/Indigo_500</color>
     <color name="light_primary_color_light">@color/Indigo_50</color>
     <color name="light_accent_color">@color/light_A100</color>
-
-    <color name="bg_intro_welcome">#673AB7</color>
-    <color name="bg_intro_directory">#3F51B5</color>
-    <color name="img_intro_directory">#404040</color>
 </resources>

@@ -23,27 +23,23 @@ package org.decsync.sparss.view;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import androidx.preference.ListPreference;
-
-public class AutoSummaryListPreference extends ListPreference {
+public class AutoSummaryListPreference extends android.preference.ListPreference {
 
     public AutoSummaryListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
-    public CharSequence getSummary() {
-        CharSequence entry = getEntry();
-        CharSequence summary = super.getSummary();
-        if (summary == null || entry == null) {
-            return null;
+    protected void onDialogClosed(boolean positiveResult) {
+        super.onDialogClosed(positiveResult);
+        if (positiveResult) {
+            setSummary(getEntry());
         }
-        return String.format(summary.toString(), entry);
     }
 
     @Override
-    public void setValue(final String value) {
-        super.setValue(value);
-        notifyChanged();
+    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+        super.onSetInitialValue(restoreValue, defaultValue);
+        setSummary(getEntry());
     }
 }

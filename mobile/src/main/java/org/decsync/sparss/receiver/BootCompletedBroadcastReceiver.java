@@ -49,6 +49,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import org.decsync.sparss.service.DecsyncService;
 import org.decsync.sparss.service.RefreshService;
 import org.decsync.sparss.utils.PrefUtils;
 
@@ -58,6 +59,9 @@ public class BootCompletedBroadcastReceiver extends BroadcastReceiver {
         PrefUtils.putLong(PrefUtils.LAST_SCHEDULED_REFRESH, 0);
         if (PrefUtils.getBoolean(PrefUtils.REFRESH_ENABLED, true)) {
             context.startService(new Intent(context, RefreshService.class));
+        }
+        if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
+            context.startService(new Intent(context, DecsyncService.class));
         }
     }
 

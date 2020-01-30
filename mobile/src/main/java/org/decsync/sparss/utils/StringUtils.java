@@ -20,6 +20,9 @@
 
 package org.decsync.sparss.utils;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+
 import org.decsync.sparss.MainApplication;
 
 import java.math.BigInteger;
@@ -30,14 +33,20 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class StringUtils {
 
     private static final DateFormat TIME_FORMAT = android.text.format.DateFormat.getTimeFormat(MainApplication.getContext());
     private static final int SIX_HOURS = 21600000; // six hours in milliseconds
-    private static DateFormat DATE_SHORT_FORMAT;
+    private static DateFormat DATE_SHORT_FORMAT = null;
 
     static {
-        DATE_SHORT_FORMAT = new SimpleDateFormat(android.text.format.DateFormat.getBestDateTimePattern(MainApplication.getContext().getResources().getConfiguration().locale, "d MMM"));
+        // getBestTimePattern() is only available in API 18 and up (Android 4.3 and better)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            DATE_SHORT_FORMAT = new SimpleDateFormat(android.text.format.DateFormat.getBestDateTimePattern(MainApplication.getContext().getResources().getConfiguration().locale, "d MMM"));
+        } else {
+            DATE_SHORT_FORMAT = android.text.format.DateFormat.getDateFormat(MainApplication.getContext());
+        }
     }
 
     static public String getDateTimeString(long timestamp) {

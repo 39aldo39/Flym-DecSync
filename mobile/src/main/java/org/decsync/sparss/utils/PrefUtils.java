@@ -29,8 +29,7 @@ import org.decsync.sparss.MainApplication;
 
 public class PrefUtils {
     private static final String TAG = "PrefUtils";
-
-    public static final String INTRO_DONE = "INTRO_DONE";
+    
     public static final String FIRST_OPEN = "FIRST_OPEN";
     public static final String DISPLAY_TIP = "DISPLAY_TIP";
 
@@ -71,6 +70,8 @@ public class PrefUtils {
     public static final String SHOW_READ = "show_read";
 
     public static final String DECSYNC_ENABLED = "decsync.enabled";
+    public static final String DECSYNC_DIRECTORY = "decsync.directory";
+    public static final String DECSYNC_DIRECTORY_RESET = "decsync.directory_reset";
 
     public static boolean getBoolean(String key, boolean defValue) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(MainApplication.getContext());
