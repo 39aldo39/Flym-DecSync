@@ -29,7 +29,8 @@ import org.decsync.sparss.MainApplication;
 
 public class PrefUtils {
     private static final String TAG = "PrefUtils";
-    
+
+    public static final String APP_VERSION = "APP_VERSION";
     public static final String FIRST_OPEN = "FIRST_OPEN";
     public static final String DISPLAY_TIP = "DISPLAY_TIP";
 
