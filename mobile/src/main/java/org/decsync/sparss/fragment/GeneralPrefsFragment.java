@@ -73,8 +73,8 @@ import org.decsync.sparss.service.RefreshService;
 import org.decsync.sparss.utils.DecsyncUtils;
 import org.decsync.sparss.utils.PrefUtils;
 
-import static org.decsync.library.UtilsKt.getDefaultDecsyncDir;
 import static org.decsync.sparss.activity.GeneralPrefsActivity.PERMISSIONS_REQUEST_DECSYNC;
+import static org.decsync.sparss.utils.DecsyncUtilsKt.getDefaultDecsyncDir;
 
 public class GeneralPrefsFragment extends PreferenceFragment {
 

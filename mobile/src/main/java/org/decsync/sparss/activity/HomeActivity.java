@@ -68,7 +68,7 @@ import org.decsync.sparss.utils.UiUtils;
 
 import java.io.File;
 
-import static org.decsync.library.UtilsKt.getDefaultDecsyncDir;
+import static org.decsync.sparss.utils.DecsyncUtilsKt.getDefaultDecsyncDir;
 
 public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -205,7 +205,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
             Decsync<Extra> decsync = DecsyncUtils.INSTANCE.getDecsync();
             if (decsync != null) {
                 Extra extra = new Extra(getContentResolver());
-                decsync.executeAllNewEntries(extra);
+                decsync.executeAllNewEntries(extra, true);
             }
         } else {
             stopService(new Intent(this, DecsyncService.class));

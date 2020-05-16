@@ -23,21 +23,23 @@ import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import kotlinx.serialization.json.*
 import org.decsync.library.Decsync
 import org.decsync.library.DecsyncException
 import org.decsync.library.getAppId
-import org.decsync.library.getDefaultDecsyncDir
 import org.decsync.sparss.provider.FeedData
 import org.decsync.sparss.provider.FeedDataContentProvider.addFeed
 import org.decsync.sparss.service.DecsyncService
 import org.decsync.sparss.MainApplication
 import org.decsync.sparss.utils.DB.feedUrlToFeedId
+import java.io.File
 import kotlin.concurrent.thread
 
 val ownAppId = getAppId("spaRSS")
+val defaultDecsyncDir = "${Environment.getExternalStorageDirectory()}/DecSync"
 const val TAG = "DecsyncUtils"
 
 class Extra(val cr: ContentResolver)
@@ -47,7 +49,7 @@ object DecsyncUtils {
     private var mDecsync: Decsync<Extra>? = null
 
     private fun getNewDecsync(): Decsync<Extra>? {
-        val decsyncDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir())
+        val decsyncDir = File(PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, defaultDecsyncDir))
         try {
             val decsync = Decsync<Extra>(decsyncDir, "rss", null, ownAppId)
             decsync.addListener(listOf("articles", "read")) { path, entry, extra ->
@@ -90,7 +92,7 @@ object DecsyncUtils {
         thread {
             decsync.initStoredEntries()
             val extra = Extra(context.contentResolver)
-            decsync.executeStoredEntriesForPath(listOf("feeds", "subscriptions"), extra)
+            decsync.executeStoredEntriesForPathExact(listOf("feeds", "subscriptions"), extra)
             context.startService(Intent(context, DecsyncService::class.java))
         }
         return true

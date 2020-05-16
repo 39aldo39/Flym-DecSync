@@ -287,7 +287,7 @@ public class FetcherService extends IntentService {
                 Extra extra = new Extra(getContentResolver());
                 Decsync<Extra> decsync = DecsyncUtils.INSTANCE.getDecsync();
                 if (decsync != null) {
-                    decsync.executeAllNewEntries(extra);
+                    decsync.executeAllNewEntries(extra, false);
                 }
             }
             mobilizeAllEntries();
