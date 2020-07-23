@@ -212,6 +212,11 @@ public class FetcherService extends IntentService {
         } else if (ACTION_DOWNLOAD_IMAGES.equals(intent.getAction())) {
             downloadAllImages();
         } else { // == Constants.ACTION_REFRESH_FEEDS
+            PrefUtils.checkAppUpgrade();
+            if (PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false) ||
+                    !PrefUtils.getBoolean(PrefUtils.INTRO_DONE, false)) {
+                return;
+            }
             PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, true);
 
             if (isFromAutoRefresh) {
@@ -284,8 +289,8 @@ public class FetcherService extends IntentService {
             }
 
             if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
-                Extra extra = new Extra(getContentResolver());
-                Decsync<Extra> decsync = DecsyncUtils.INSTANCE.getDecsync();
+                Extra extra = new Extra(this);
+                Decsync<Extra> decsync = DecsyncUtils.INSTANCE.getDecsync(this);
                 if (decsync != null) {
                     decsync.executeAllNewEntries(extra, false);
                 }
@@ -374,7 +379,7 @@ public class FetcherService extends IntentService {
                                 values.put(EntryColumns.IMAGE_URL, mainImgUrl);
                             }
 
-                            if (DB.update(cr, entryUri, values, null, null) > 0) {
+                            if (DB.update(this, entryUri, values, null, null) > 0) {
                                 success = true;
                                 operations.add(ContentProviderOperation.newDelete(TaskColumns.CONTENT_URI(taskId)).build());
                                 if (imgUrlsToDownload != null && !imgUrlsToDownload.isEmpty()) {
@@ -593,7 +598,7 @@ public class FetcherService extends IntentService {
                                             url = feedUrl + '/' + url;
                                         }
                                         values.put(FeedColumns.URL, url);
-                                        DB.update(cr, FeedColumns.CONTENT_URI(id), values, null, null);
+                                        DB.update(this, FeedColumns.CONTENT_URI(id), values, null, null);
                                         connection.disconnect();
                                         connection = NetworkUtils.setupConnection(new URL(url));
                                         contentType = connection.getContentType();
@@ -654,7 +659,7 @@ public class FetcherService extends IntentService {
 
                     ContentValues values = new ContentValues();
                     values.put(FeedColumns.FETCH_MODE, fetchMode);
-                    DB.update(cr, FeedColumns.CONTENT_URI(id), values, null, null);
+                    DB.update(this, FeedColumns.CONTENT_URI(id), values, null, null);
                 }
 
                 switch (fetchMode) {
@@ -726,7 +731,7 @@ public class FetcherService extends IntentService {
                     values.put(FeedColumns.FETCH_MODE, 0);
 
                     values.put(FeedColumns.ERROR, getString(R.string.error_feed_error));
-                    DB.update(cr, FeedColumns.CONTENT_URI(id), values, null, null);
+                    DB.update(this, FeedColumns.CONTENT_URI(id), values, null, null);
                 }
             } catch (Throwable e) {
                 if (handler == null || (!handler.isDone() && !handler.isCancelled())) {
@@ -737,7 +742,7 @@ public class FetcherService extends IntentService {
 
                     values.put(FeedColumns.ERROR, e.getMessage() != null ? e.getMessage() : getString(R.string.error_feed_process));
                     Log.w("spaRSS", "The feed can not be processed", e);
-                    DB.update(cr, FeedColumns.CONTENT_URI(id), values, null, null);
+                    DB.update(this, FeedColumns.CONTENT_URI(id), values, null, null);
                 }
             } finally {
 

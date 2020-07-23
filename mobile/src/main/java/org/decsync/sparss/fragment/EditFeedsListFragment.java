@@ -45,7 +45,6 @@
 
 package org.decsync.sparss.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListFragment;
@@ -54,14 +53,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -87,16 +82,13 @@ import org.decsync.sparss.utils.DB;
 import org.decsync.sparss.view.DragNDropExpandableListView;
 import org.decsync.sparss.view.DragNDropListener;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EditFeedsListFragment extends ListFragment {
 
     private static final int REQUEST_PICK_OPML_FILE = 1;
-    private static final int PERMISSIONS_REQUEST_IMPORT_FROM_OPML = 1;
-    private static final int PERMISSIONS_REQUEST_EXPORT_TO_OPML = 2;
+    private static final int REQUEST_SAVE_OPML_FILE = 2;
 
     private final ActionMode.Callback mFeedActionModeCallback = new ActionMode.Callback() {
 
@@ -141,8 +133,8 @@ public class EditFeedsListFragment extends ListFragment {
                                     new Thread() {
                                         @Override
                                         public void run() {
-                                            ContentResolver cr = MainApplication.getContext().getContentResolver();
-                                            DB.delete(cr, FeedColumns.CONTENT_URI(feedId), null, null);
+                                            Context context = MainApplication.getContext();
+                                            DB.delete(context, FeedColumns.CONTENT_URI(feedId), null, null);
                                         }
                                     }.start();
                                 }
@@ -207,8 +199,8 @@ public class EditFeedsListFragment extends ListFragment {
                                             if (!groupName.isEmpty()) {
                                                 ContentValues values = new ContentValues();
                                                 values.put(FeedColumns.NAME, groupName);
-                                                ContentResolver cr = getActivity().getContentResolver();
-                                                DB.update(cr, FeedColumns.CONTENT_URI(groupId), values, null, null);
+                                                Context context = getActivity();
+                                                DB.update(context, FeedColumns.CONTENT_URI(groupId), values, null, null);
                                             }
                                         }
                                     }.start();
@@ -228,8 +220,8 @@ public class EditFeedsListFragment extends ListFragment {
                                     new Thread() {
                                         @Override
                                         public void run() {
-                                            ContentResolver cr = getActivity().getContentResolver();
-                                            DB.delete(cr, FeedColumns.GROUPS_CONTENT_URI(groupId), null, null);
+                                            Context context = getActivity();
+                                            DB.delete(context, FeedColumns.GROUPS_CONTENT_URI(groupId), null, null);
                                         }
                                     }.start();
                                 }
@@ -346,8 +338,9 @@ public class EditFeedsListFragment extends ListFragment {
                                     values.put(FeedColumns.PRIORITY, 1);
                                     values.put(FeedColumns.GROUP_ID, mListView.getItemIdAtPosition(flatPosTo));
 
-                                    ContentResolver cr = getActivity().getContentResolver();
-                                    DB.update(cr, FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
+                                    Context context = getActivity();
+                                    ContentResolver cr = context.getContentResolver();
+                                    DB.update(context, FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
                                     cr.notifyChange(FeedColumns.GROUPS_CONTENT_URI, null);
                                 }
                             }).setNegativeButton(R.string.to_group_above, new DialogInterface.OnClickListener() {
@@ -373,22 +366,21 @@ public class EditFeedsListFragment extends ListFragment {
                           int flatPosFrom) {
         ContentValues values = new ContentValues();
         Context context = getActivity();
-        ContentResolver cr = context.getContentResolver();
 
         if (fromIsGroup && toIsGroup) {
             values.put(FeedColumns.PRIORITY, packedGroupPosTo + 1);
-            DB.update(cr, FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
+            DB.update(context, FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
         } else if (!fromIsGroup && toIsGroup) {
             values.put(FeedColumns.PRIORITY, packedGroupPosTo + 1);
             values.putNull(FeedColumns.GROUP_ID);
-            DB.update(cr, FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
+            DB.update(context, FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
         } else if ((!fromIsGroup && !toIsGroup) || (fromIsFeedWithoutGroup && !toIsGroup)) {
             int groupPrio = ExpandableListView.getPackedPositionChild(packedPosTo) + 1;
             values.put(FeedColumns.PRIORITY, groupPrio);
 
             int flatGroupPosTo = mListView.getFlatListPosition(ExpandableListView.getPackedPositionForGroup(packedGroupPosTo));
             values.put(FeedColumns.GROUP_ID, mListView.getItemIdAtPosition(flatGroupPosTo));
-            DB.update(cr, FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
+            DB.update(context, FeedColumns.CONTENT_URI(mListView.getItemIdAtPosition(flatPosFrom)), values, null, null);
         }
     }
 
@@ -440,8 +432,8 @@ public class EditFeedsListFragment extends ListFragment {
                                             ContentValues values = new ContentValues();
                                             values.put(FeedColumns.IS_GROUP, true);
                                             values.put(FeedColumns.NAME, groupName);
-                                            ContentResolver cr = getActivity().getContentResolver();
-                                            DB.insert(cr, FeedColumns.GROUPS_CONTENT_URI, values);
+                                            Context context = getActivity();
+                                            DB.insert(context, FeedColumns.GROUPS_CONTENT_URI, values);
                                         }
                                     }
                                 }.start();
@@ -449,40 +441,12 @@ public class EditFeedsListFragment extends ListFragment {
                         }).setNegativeButton(android.R.string.cancel, null).show();
                 return true;
             }
-            case R.id.menu_export:
+            case R.id.menu_export: {
+                exportToOpml();
+                return true;
+            }
             case R.id.menu_import: {
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    // Should we explain?
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
-                        builder.setMessage(R.string.storage_request_explanation).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialogInterface, int id) {
-                                if (item.getItemId() == R.id.menu_export) {
-                                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_EXPORT_TO_OPML);
-                                } else if (item.getItemId() == R.id.menu_import) {
-                                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_IMPORT_FROM_OPML);
-                                }
-                            }
-                        }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialogInterface, int id) {
-                                //Canceled Dialog
-                            }
-                        });
-                        builder.show();
-                    } else {
-                        if (item.getItemId() == R.id.menu_export) {
-                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_EXPORT_TO_OPML);
-                        } else if (item.getItemId() == R.id.menu_import) {
-                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_IMPORT_FROM_OPML);
-                        }
-                    }
-                } else {
-                    if (item.getItemId() == R.id.menu_export) {
-                        exportToOpml();
-                    } else if (item.getItemId() == R.id.menu_import) {
-                        importFromOpml();
-                    }
-                }
+                importFromOpml();
                 return true;
             }
         }
@@ -491,131 +455,32 @@ public class EditFeedsListFragment extends ListFragment {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
-    {
-        switch (requestCode)
-        {
-            case PERMISSIONS_REQUEST_EXPORT_TO_OPML: {
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    exportToOpml();
-                }
-                return;
-            }
-            case PERMISSIONS_REQUEST_IMPORT_FROM_OPML: {
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    importFromOpml();
-                }
-                return;
-            }
-        }
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
-        if (requestCode == REQUEST_PICK_OPML_FILE) {
-            if (resultCode == Activity.RESULT_OK) {
-                new Thread(new Runnable() { // To not block the UI
-                    @Override
-                    public void run() {
-                        try {
-                            OPML.importFromFile(data.getData().getPath()); // Try to read it by its path
-                        } catch (Exception e) {
-                            try { // Try to read it directly as an InputStream (for Google Drive)
-                                OPML.importFromFile(MainApplication.getContext().getContentResolver().openInputStream(data.getData()));
-                            } catch (Exception unused) {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getActivity(), R.string.error_feed_import, Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        }
-                    }
-                }).start();
-            } else {
-                displayCustomFilePicker();
-            }
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void displayCustomFilePicker() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        builder.setTitle(R.string.select_file);
-
-        try {
-            final String[] fileNames = Environment.getExternalStorageDirectory().list(new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String filename) {
-                    return new File(dir, filename).isFile();
-                }
-            });
-            builder.setItems(fileNames, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, final int which) {
-                    new Thread(new Runnable() { // To not block the UI
-                        @Override
-                        public void run() {
-                            try {
-                                OPML.importFromFile(Environment.getExternalStorageDirectory().toString() + File.separator
-                                        + fileNames[which]);
-                            } catch (Exception e) {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Log.w("RSS Import", e);
-                                        Toast.makeText(getActivity(), R.string.error_feed_import, Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        }
-                    }).start();
-                }
-            });
-            builder.show();
-        } catch (Exception unused) {
-            Toast.makeText(getActivity(), R.string.error_feed_import, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void importFromOpml()
-    {
-        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
-                || Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
-            try {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");
-                startActivityForResult(intent, REQUEST_PICK_OPML_FILE);
-            }
-            catch (Exception unused)
-            {
-                displayCustomFilePicker();
-            }
-        } else {
-            Toast.makeText(getActivity(), R.string.error_external_storage_not_available, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void exportToOpml()
-    {
-        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            new Thread(new Runnable() {
+        if (requestCode == REQUEST_PICK_OPML_FILE && resultCode == Activity.RESULT_OK) {
+            new Thread(new Runnable() { // To not block the UI
                 @Override
                 public void run() {
+                    Uri uri = data.getData();
                     try {
-                        final String filename = Environment.getExternalStorageDirectory().toString() + "/spaRSS_"
-                                + System.currentTimeMillis()+".opml";
-                        OPML.exportToFile(filename);
+                        OPML.importFromUri(getActivity().getContentResolver(), uri);
+                    } catch (Exception e) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getActivity(), String.format(getString(R.string.message_exported_to), filename),
-                                        Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), R.string.error_feed_import, Toast.LENGTH_LONG).show();
                             }
                         });
+                    }
+                }
+            }).start();
+        }
+        if (requestCode == REQUEST_SAVE_OPML_FILE && resultCode == Activity.RESULT_OK) {
+            new Thread(new Runnable() { // To not block the UI
+                @Override
+                public void run() {
+                    Uri uri = data.getData();
+                    try {
+                        OPML.exportToUri(getActivity().getContentResolver(), uri);
                     } catch (Exception e) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -626,8 +491,25 @@ public class EditFeedsListFragment extends ListFragment {
                     }
                 }
             }).start();
-        } else {
-            Toast.makeText(getActivity(), R.string.error_external_storage_not_available, Toast.LENGTH_LONG).show();
         }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void importFromOpml()
+    {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        startActivityForResult(intent, REQUEST_PICK_OPML_FILE);
+    }
+
+    private void exportToOpml()
+    {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_TITLE, "spaRSS.opml");
+        startActivityForResult(intent, REQUEST_SAVE_OPML_FILE);
     }
 }

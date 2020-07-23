@@ -22,6 +22,8 @@ package org.decsync.sparss.utils;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Build;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -30,6 +32,7 @@ import org.decsync.sparss.MainApplication;
 public class PrefUtils {
     private static final String TAG = "PrefUtils";
 
+    public static final String INTRO_DONE = "INTRO_DONE";
     public static final String APP_VERSION = "APP_VERSION";
     public static final String FIRST_OPEN = "FIRST_OPEN";
     public static final String DISPLAY_TIP = "DISPLAY_TIP";
@@ -71,8 +74,9 @@ public class PrefUtils {
     public static final String SHOW_READ = "show_read";
 
     public static final String DECSYNC_ENABLED = "decsync.enabled";
-    public static final String DECSYNC_DIRECTORY = "decsync.directory";
-    public static final String DECSYNC_DIRECTORY_RESET = "decsync.directory_reset";
+    public static final String DECSYNC_USE_SAF = "decsync.use_saf";
+    public static final String DECSYNC_FILE = "decsync.directory";
+    public static final String DECSYNC_FILE_RESET = "decsync.directory_reset";
 
     public static boolean getBoolean(String key, boolean defValue) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(MainApplication.getContext());
@@ -137,6 +141,26 @@ public class PrefUtils {
             PreferenceManager.getDefaultSharedPreferences(MainApplication.getContext()).unregisterOnSharedPreferenceChangeListener(listener);
         } catch (Exception ignored) { // Seems to be possible to have a NPE here... Why?? Because MainApplication.getContext() might not be set, yet.
             Log.e(TAG, "Exception", ignored);
+        }
+    }
+
+    public static void checkAppUpgrade() {
+        int currentAppVersion = 2;
+        int appVersion = getInt(APP_VERSION, 0);
+        if (appVersion != currentAppVersion) {
+            if (appVersion > 0) {
+                if (appVersion < 2) {
+                    putBoolean(INTRO_DONE, true);
+                }
+            }
+            putInt(APP_VERSION, currentAppVersion);
+        }
+
+        if (Build.VERSION.SDK_INT >= 29 &&
+                !getBoolean(DECSYNC_USE_SAF, false) &&
+                !Environment.isExternalStorageLegacy()) {
+            putBoolean(DECSYNC_USE_SAF, true);
+            putBoolean(INTRO_DONE, false);
         }
     }
 }

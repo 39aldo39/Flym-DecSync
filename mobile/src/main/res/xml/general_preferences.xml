@@ -26,6 +26,7 @@
         <org.decsync.sparss.view.AutoSummaryListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:summary="%s"
             android:defaultValue="1800000"
             android:dependency="refresh.enabled"
             android:entries="@array/settings_intervals"
@@ -77,6 +78,7 @@
         <org.decsync.sparss.view.AutoSummaryListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:summary="%s"
             android:defaultValue="4"
             android:entries="@array/settings_keep_times"
             android:entryValues="@array/settings_keep_time_values"
@@ -87,6 +89,7 @@
         <org.decsync.sparss.view.AutoSummaryListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:summary="%s"
             android:defaultValue="0"
             android:entries="@array/settings_font_sizes"
             android:entryValues="@array/settings_font_size_values"
@@ -113,6 +116,7 @@
         <org.decsync.sparss.view.AutoSummaryListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:summary="%s"
             android:defaultValue="WIFI_ONLY_PRELOAD"
             android:dependency="display_images"
             android:entries="@array/settings_preload_image_modes"
@@ -166,14 +170,6 @@
             android:key="notifications.enabled"
             android:summary="@string/settings_notifications_enabled_description"
             android:title="@string/settings_notifications_enabled"/>
-
-        <RingtonePreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:dependency="notifications.enabled"
-            android:key="notifications.ringtone"
-            android:ringtoneType="notification"
-            android:title="@string/settings_notifications_ringtone"/>
 
         <CheckBoxPreference
             android:layout_width="wrap_content"
@@ -259,6 +255,7 @@
                 android:data="https://github.com/39aldo39/DecSync" />
         </PreferenceScreen>
 
+
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -272,14 +269,14 @@
             android:layout_height="wrap_content"
             android:dependency="decsync.enabled"
             android:key="decsync.directory"
-            android:title="@string/settings_decsync_directory"/>
+            android:title="@string/settings_decsync_file"/>
 
         <Preference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:dependency="decsync.enabled"
             android:key="decsync.directory_reset"
-            android:title="@string/settings_decsync_directory_reset"/>
+            android:title="@string/settings_decsync_file_reset"/>
 
     </PreferenceCategory>
 

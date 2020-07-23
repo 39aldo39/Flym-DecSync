@@ -171,7 +171,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                                                     values.put(FilterColumns.IS_REGEX, regexCheckBox.isChecked());
                                                     values.put(FilterColumns.IS_APPLIED_TO_TITLE, applyTitleRadio.isChecked());
                                                     values.put(FilterColumns.IS_ACCEPT_RULE, acceptRadio.isChecked());
-                                                    if (DB.update(cr, FilterColumns.CONTENT_URI, values, FilterColumns._ID + '=' + filterId, null) > 0) {
+                                                    if (DB.update(EditFeedActivity.this, FilterColumns.CONTENT_URI, values, FilterColumns._ID + '=' + filterId, null) > 0) {
                                                         cr.notifyChange(
                                                                 FilterColumns.FILTERS_FOR_FEED_CONTENT_URI(getIntent().getData().getLastPathSegment()),
                                                                 null);
@@ -198,7 +198,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                                         @Override
                                         public void run() {
                                             ContentResolver cr = getContentResolver();
-                                            if (DB.delete(cr, FilterColumns.CONTENT_URI, FilterColumns._ID + '=' + filterId, null) > 0) {
+                                            if (DB.delete(EditFeedActivity.this, FilterColumns.CONTENT_URI, FilterColumns._ID + '=' + filterId, null) > 0) {
                                                 cr.notifyChange(FilterColumns.FILTERS_FOR_FEED_CONTENT_URI(getIntent().getData().getLastPathSegment()),
                                                         null);
                                             }
@@ -347,7 +347,6 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
     protected void onDestroy() {
         if (getIntent().getAction().equals(Intent.ACTION_EDIT)) {
             String url = mUrlEditText.getText().toString();
-            ContentResolver cr = getContentResolver();
 
             Cursor cursor = null;
             try {
@@ -381,7 +380,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                     values.put(FeedColumns.FETCH_MODE, 0);
                     values.putNull(FeedColumns.ERROR);
 
-                    DB.update(cr, getIntent().getData(), values, null, null);
+                    DB.update(this, getIntent().getData(), values, null, null);
                 }
             } catch (Exception ignored) {
             } finally {
@@ -440,8 +439,7 @@ public class EditFeedActivity extends BaseActivity implements LoaderManager.Load
                                     values.put(FilterColumns.IS_APPLIED_TO_TITLE, ((RadioButton) dialogView.findViewById(R.id.applyTitleRadio)).isChecked());
                                     values.put(FilterColumns.IS_ACCEPT_RULE, ((RadioButton) dialogView.findViewById(R.id.acceptRadio)).isChecked());
 
-                                    ContentResolver cr = getContentResolver();
-                                    DB.insert(cr, FilterColumns.FILTERS_FOR_FEED_CONTENT_URI(feedId), values);
+                                    DB.insert(EditFeedActivity.this, FilterColumns.FILTERS_FOR_FEED_CONTENT_URI(feedId), values);
                                 }
                             }
                         }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

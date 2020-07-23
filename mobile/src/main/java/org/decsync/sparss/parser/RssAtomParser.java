@@ -49,6 +49,7 @@ import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.text.Html;
@@ -395,7 +396,7 @@ public class RssAtomParser extends DefaultHandler {
             }
 
             if (mTitle != null && (mEntryDate == null || (mEntryDate.after(mRealLastUpdateDate) && mEntryDate.after(mKeepDateBorder)))) {
-                ContentResolver cr = MainApplication.getContext().getContentResolver();
+                Context context = MainApplication.getContext();
                 ContentValues values = new ContentValues();
 
                 if (mEntryDate != null && mEntryDate.getTime() > mNewRealLastUpdate) {
@@ -471,7 +472,7 @@ public class RssAtomParser extends DefaultHandler {
 
                     // First, try to update the feed
                     boolean isUpdated = (!entryLinkString.isEmpty() || guidString != null)
-                            && DB.update(cr, mFeedEntriesUri, values, existenceStringBuilder.toString(), existenceValues) != 0;
+                            && DB.update(context, mFeedEntriesUri, values, existenceStringBuilder.toString(), existenceValues) != 0;
 
                     // Insert it only if necessary
                     if (!isUpdated && !updateOnly && guidString != null) {
@@ -649,13 +650,14 @@ public class RssAtomParser extends DefaultHandler {
 
     @Override
     public void endDocument() throws SAXException {
-        ContentResolver cr = MainApplication.getContext().getContentResolver();
+        Context context = MainApplication.getContext();
+        ContentResolver cr = context.getContentResolver();
 
         try {
             if (!mInserts.isEmpty()) {
                 ContentProviderResult[] results = cr.applyBatch(FeedData.AUTHORITY, mInserts);
-                Extra extra = new Extra(cr);
-                Decsync<Extra> decsync = DecsyncUtils.INSTANCE.getDecsync();
+                Extra extra = new Extra(context);
+                Decsync<Extra> decsync = DecsyncUtils.INSTANCE.getDecsync(context);
                 if (decsync != null) {
                     decsync.executeStoredEntries(mStoredEntries, extra);
                 }
@@ -689,7 +691,7 @@ public class RssAtomParser extends DefaultHandler {
         values.putNull(FeedColumns.ERROR);
         values.put(FeedColumns.LAST_UPDATE, System.currentTimeMillis() - 3000); // by precaution to not miss some feeds
         values.put(FeedData.FeedColumns.REAL_LAST_UPDATE, mNewRealLastUpdate);
-        DB.update(cr, FeedColumns.CONTENT_URI(mId), values, null, null);
+        DB.update(context, FeedColumns.CONTENT_URI(mId), values, null, null);
 
         super.endDocument();
     }

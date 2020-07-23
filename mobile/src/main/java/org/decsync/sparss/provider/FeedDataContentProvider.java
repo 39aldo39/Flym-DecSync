@@ -150,7 +150,7 @@ public class FeedDataContentProvider extends ContentProvider {
         if (cursor.moveToFirst()) {
             long feedId = cursor.getLong(0);
             cursor.close();
-            if (context != null) {
+            if (updateDecsync) {
                 Toast.makeText(context, R.string.error_feed_url_exists, Toast.LENGTH_SHORT).show();
             }
             return FeedColumns.CONTENT_URI(feedId);
@@ -168,7 +168,7 @@ public class FeedDataContentProvider extends ContentProvider {
             values.put(FeedColumns.COOKIE_NAME, cookieName);
             values.put(FeedColumns.COOKIE_VALUE, cookieValue);
             values.put(FeedColumns.KEEP_TIME, keepTime);
-            return DB.insert(cr, FeedColumns.CONTENT_URI, values, updateDecsync);
+            return DB.insert(context, FeedColumns.CONTENT_URI, values, updateDecsync);
         }
     }
 
@@ -371,7 +371,6 @@ public class FeedDataContentProvider extends ContentProvider {
                 cursor.close();
 
                 newId = database.insert(FeedColumns.TABLE_NAME, null, values);
-                mDatabaseHelper.exportToOPML();
 
                 break;
             }
@@ -554,10 +553,6 @@ public class FeedDataContentProvider extends ContentProvider {
 
         int count = database.update(table, values, where.toString(), selectionArgs);
 
-        if (FeedColumns.TABLE_NAME.equals(table)
-                && (values.containsKey(FeedColumns.NAME) || values.containsKey(FeedColumns.URL) || values.containsKey(FeedColumns.PRIORITY))) {
-            mDatabaseHelper.exportToOPML();
-        }
         if (count > 0) {
             notifyChangeOnAllUris(matchCode, uri);
         }
@@ -736,10 +731,6 @@ public class FeedDataContentProvider extends ContentProvider {
         int count = database.delete(table, where.toString(), selectionArgs);
 
         if (count > 0) {
-            if (FeedColumns.TABLE_NAME.equals(table)) {
-                mDatabaseHelper.exportToOPML();
-            }
-
             notifyChangeOnAllUris(matchCode, uri);
         }
         return count;

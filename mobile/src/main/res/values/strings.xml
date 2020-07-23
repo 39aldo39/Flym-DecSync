@@ -45,6 +45,16 @@
     <string name="back_again_to_quit">Press back once more to exit</string>
     <string name="no_new_entries">No new entries to display</string>
 
+    <!-- IntroActivity -->
+    <string name="title_activity_intro">Introduction</string>
+    <string name="intro_welcome_title">Welcome to spaRSS DecSync</string>
+    <string name="intro_welcome_desc">spaRSS DecSync is a fork of spaRSS which adds synchronization using DecSync</string>
+    <string name="intro_directory_title">DecSync Directory</string>
+    <string name="intro_directory_desc">To start synchronizing, all you have to do is synchronize the DecSync directory</string>
+    <string name="intro_directory_button">Choose directory</string>
+    <string name="intro_directory_checkbox">Enable DecSync synchronization</string>
+    <string name="intro_directory_select">Please select a DecSync directory</string>
+
     <!-- FEEDS -->
     <string name="feeds">Feeds</string>
     <string name="menu_add_feed">Add feed</string>
@@ -201,8 +211,11 @@
     <string name="settings_decsync_about">About DecSync</string>
     <string name="settings_decsync_enabled">Enable DecSync</string>
     <string name="settings_decsync_enabled_description">Sync with other RSS readers</string>
-    <string name="settings_decsync_directory">DecSync directory</string>
-    <string name="settings_decsync_directory_reset">Reset DecSync directory</string>
+    <string name="settings_decsync_file">DecSync directory</string>
+    <string name="settings_decsync_file_reset">Reset DecSync directory</string>
+    <string name="settings_decsync_file_reset_title">Reset DecSync directory</string>
+    <string name="settings_decsync_file_reset_message">Do you want to reset the DecSync directory to the default location \'%s\'?</string>
+    <string name="settings_decsync_dir_not_configured">No DecSync directory configured</string>
     <plurals name="number_of_new_entries">
         <item quantity="one">One new entry</item>
         <item quantity="other">%d new entries</item>

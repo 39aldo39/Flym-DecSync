@@ -20,7 +20,6 @@
 
 package org.decsync.sparss.activity;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -28,7 +27,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -37,7 +35,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -54,21 +51,15 @@ import org.decsync.sparss.Constants;
 import org.decsync.sparss.R;
 import org.decsync.sparss.adapter.DrawerAdapter;
 import org.decsync.sparss.fragment.EntriesListFragment;
-import org.decsync.sparss.parser.OPML;
 import org.decsync.sparss.provider.FeedData;
 import org.decsync.sparss.provider.FeedData.EntryColumns;
 import org.decsync.sparss.provider.FeedData.FeedColumns;
-import org.decsync.sparss.service.DecsyncService;
 import org.decsync.sparss.service.FetcherService;
 import org.decsync.sparss.service.RefreshService;
 import org.decsync.sparss.utils.DecsyncUtils;
 import org.decsync.sparss.utils.Extra;
 import org.decsync.sparss.utils.PrefUtils;
 import org.decsync.sparss.utils.UiUtils;
-
-import java.io.File;
-
-import static org.decsync.sparss.utils.DecsyncUtilsKt.getDefaultDecsyncDir;
 
 public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -85,8 +76,6 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
 
     private static final int LOADER_ID = 0;
     private static final int SEARCH_DRAWER_POSITION = -1;
-    private static final int PERMISSIONS_REQUEST_IMPORT_FROM_OPML = 1;
-    private static final int PERMISSIONS_REQUEST_DECSYNC = 2;
 
     private EntriesListFragment mEntriesFragment;
     private DrawerLayout mDrawerLayout;
@@ -95,7 +84,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
     private DrawerAdapter mDrawerAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private FloatingActionButton mDrawerHideReadButton;
-    private boolean mFirstOpen;
+    private boolean mFirstOpen = false;
     private final SharedPreferences.OnSharedPreferenceChangeListener mShowReadListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -119,10 +108,18 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         UiUtils.setPreferenceTheme(this);
         super.onCreate(savedInstanceState);
 
-        int currentAppVersion = 1;
-        int appVersion = PrefUtils.getInt(PrefUtils.APP_VERSION, 0);
-        if (appVersion != currentAppVersion) {
-            PrefUtils.putInt(PrefUtils.APP_VERSION, currentAppVersion);
+        PrefUtils.checkAppUpgrade();
+
+        if (!PrefUtils.getBoolean(PrefUtils.INTRO_DONE, false)) {
+            Intent intent = new Intent(this, IntroActivity.class);
+            startActivity(intent);
+            super.finish();
+            return;
+        } else {
+            mFirstOpen = PrefUtils.getBoolean(PrefUtils.FIRST_OPEN, true);
+            if (mFirstOpen) {
+                PrefUtils.putBoolean(PrefUtils.FIRST_OPEN, false);
+            }
         }
 
         setContentView(R.layout.activity_home);
@@ -196,44 +193,16 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         } else {
             stopService(new Intent(this, RefreshService.class));
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            PrefUtils.putBoolean(PrefUtils.DECSYNC_ENABLED, false);
-        }
-        if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
-            Intent intent = new Intent(this, DecsyncService.class);
-            startService(intent);
-            Decsync<Extra> decsync = DecsyncUtils.INSTANCE.getDecsync();
+        if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false) && !mFirstOpen) {
+            Decsync<Extra> decsync = DecsyncUtils.INSTANCE.getDecsync(this);
             if (decsync != null) {
-                Extra extra = new Extra(getContentResolver());
+                Extra extra = new Extra(this);
                 decsync.executeAllNewEntries(extra, true);
             }
-        } else {
-            stopService(new Intent(this, DecsyncService.class));
         }
         if (PrefUtils.getBoolean(PrefUtils.REFRESH_ON_OPEN_ENABLED, false)) {
             if (!PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false)) {
                 startService(new Intent(HomeActivity.this, FetcherService.class).setAction(FetcherService.ACTION_REFRESH_FEEDS));
-            }
-        }
-        mFirstOpen = PrefUtils.getBoolean(PrefUtils.FIRST_OPEN, true);
-        if (mFirstOpen) {
-            PrefUtils.putBoolean(PrefUtils.FIRST_OPEN, false);
-
-            String decsyncDir = PrefUtils.getString(PrefUtils.DECSYNC_DIRECTORY, getDefaultDecsyncDir());
-            boolean decsyncExists = new File(decsyncDir).exists();
-            boolean opmlExists = new File(OPML.BACKUP_OPML).exists();
-            boolean importOPML = !decsyncExists && opmlExists;
-
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                PrefUtils.putBoolean(PrefUtils.DECSYNC_ENABLED, true);
-                if (importOPML) {
-                    OPML.importBackupFile();
-                } else {
-                    DecsyncUtils.INSTANCE.initSync(this);
-                }
-            } else {
-                int requestCode = importOPML ? PERMISSIONS_REQUEST_IMPORT_FROM_OPML : PERMISSIONS_REQUEST_DECSYNC;
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
             }
         }
     }
@@ -423,7 +392,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         mDrawerList.setItemChecked(position, true);
 
         // First open => we open the drawer for you
-        if (mFirstOpen) {
+        if (mFirstOpen && !PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
             if (mDrawerLayout != null) {
                 mDrawerLayout.postDelayed(new Runnable() {
                     @Override
@@ -475,23 +444,5 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
             getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString() + " (" + String.valueOf(mNewEntriesNumber) + ")" );
         }
         invalidateOptionsMenu();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
-    {
-        switch (requestCode)
-        {
-            case PERMISSIONS_REQUEST_IMPORT_FROM_OPML:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    PrefUtils.putBoolean(PrefUtils.DECSYNC_ENABLED, true);
-                    OPML.importBackupFile();
-                }
-            case PERMISSIONS_REQUEST_DECSYNC:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    PrefUtils.putBoolean(PrefUtils.DECSYNC_ENABLED, true);
-                    DecsyncUtils.INSTANCE.initSync(this);
-                }
-        }
     }
 }
