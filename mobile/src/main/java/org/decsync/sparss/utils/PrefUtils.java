@@ -33,6 +33,7 @@ public class PrefUtils {
     private static final String TAG = "PrefUtils";
 
     public static final String INTRO_DONE = "INTRO_DONE";
+    public static final String UPDATE_FORCES_SAF = "UPDATE_FORCES_SAF";
     public static final String APP_VERSION = "APP_VERSION";
     public static final String FIRST_OPEN = "FIRST_OPEN";
     public static final String DISPLAY_TIP = "DISPLAY_TIP";
@@ -160,7 +161,10 @@ public class PrefUtils {
                 !getBoolean(DECSYNC_USE_SAF, false) &&
                 !Environment.isExternalStorageLegacy()) {
             putBoolean(DECSYNC_USE_SAF, true);
-            putBoolean(INTRO_DONE, false);
+            if (getBoolean(INTRO_DONE, false) &&
+                    getBoolean(DECSYNC_ENABLED, false)) {
+                putBoolean(UPDATE_FORCES_SAF, true);
+            }
         }
     }
 }

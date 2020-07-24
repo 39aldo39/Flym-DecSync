@@ -214,7 +214,8 @@ public class FetcherService extends IntentService {
         } else { // == Constants.ACTION_REFRESH_FEEDS
             PrefUtils.checkAppUpgrade();
             if (PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false) ||
-                    !PrefUtils.getBoolean(PrefUtils.INTRO_DONE, false)) {
+                    !PrefUtils.getBoolean(PrefUtils.INTRO_DONE, false) ||
+                    PrefUtils.getBoolean(PrefUtils.UPDATE_FORCES_SAF, false)) {
                 return;
             }
             PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, true);

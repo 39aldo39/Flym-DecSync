@@ -158,6 +158,10 @@
             android:name=".activity.IntroActivity"
             android:label="@string/title_activity_intro"
             android:theme="@style/IntroTheme" />
+        <activity
+            android:name=".activity.SafUpdateActivity"
+            android:label="@string/title_activity_saf_update"
+            android:theme="@style/IntroTheme" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

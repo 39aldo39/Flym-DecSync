@@ -121,6 +121,12 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
                 PrefUtils.putBoolean(PrefUtils.FIRST_OPEN, false);
             }
         }
+        if (PrefUtils.getBoolean(PrefUtils.UPDATE_FORCES_SAF, false)) {
+            Intent intent = new Intent(this, SafUpdateActivity.class);
+            startActivity(intent);
+            super.finish();
+            return;
+        }
 
         setContentView(R.layout.activity_home);
 

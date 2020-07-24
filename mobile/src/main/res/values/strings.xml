@@ -55,6 +55,10 @@
     <string name="intro_directory_checkbox">Enable DecSync synchronization</string>
     <string name="intro_directory_select">Please select a DecSync directory</string>
 
+    <!-- SafUpdateActivity -->
+    <string name="title_activity_saf_update">Android update</string>
+    <string name="saf_update_desc">Due to an Android update you need to reselect the DecSync directory</string>
+
     <!-- FEEDS -->
     <string name="feeds">Feeds</string>
     <string name="menu_add_feed">Add feed</string>
