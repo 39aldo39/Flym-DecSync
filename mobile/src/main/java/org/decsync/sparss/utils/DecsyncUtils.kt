@@ -40,7 +40,6 @@ import org.decsync.sparss.service.FetcherService
 import org.decsync.sparss.utils.DB.feedUrlToFeedId
 import java.io.File
 import kotlin.concurrent.thread
-import kotlin.time.ExperimentalTime
 
 val ownAppId = getAppId("spaRSS")
 val defaultDecsyncDir = "${Environment.getExternalStorageDirectory()}/DecSync"
@@ -49,7 +48,6 @@ const val TAG = "DecsyncUtils"
 class Extra(val context: Context)
 
 @ExperimentalStdlibApi
-@ExperimentalTime
 object DecsyncUtils {
     private var mDecsync: Decsync<Extra>? = null
 

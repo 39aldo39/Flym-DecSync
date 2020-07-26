@@ -26,13 +26,11 @@ import org.decsync.sparss.utils.DecsyncUtils
 import org.decsync.sparss.utils.PrefUtils
 import org.decsync.sparss.utils.defaultDecsyncDir
 import java.io.File
-import kotlin.time.ExperimentalTime
 
 const val CHOOSE_DECSYNC_FILE = 0
 const val PERMISSIONS_REQUEST_INTRO_DONE = 20
 
 @ExperimentalStdlibApi
-@ExperimentalTime
 class IntroActivity : AppIntro2() {
     private val slideDirectory = SlideDirectory()
 
@@ -46,7 +44,6 @@ class IntroActivity : AppIntro2() {
         addSlide(slideDirectory)
     }
 
-    @ExperimentalTime
     override fun onIntroFinished() {
         super.onIntroFinished()
 

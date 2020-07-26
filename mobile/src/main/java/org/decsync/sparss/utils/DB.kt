@@ -32,10 +32,8 @@ import org.decsync.sparss.provider.FeedData
 import org.decsync.sparss.utils.DecsyncUtils.executePostSubscribeActions
 import org.decsync.sparss.utils.DecsyncUtils.getDecsync
 import java.util.*
-import kotlin.time.ExperimentalTime
 
 @ExperimentalStdlibApi
-@ExperimentalTime
 object DB {
     @JvmOverloads
     @JvmStatic

@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_saf_update.*
 import org.decsync.library.DecsyncPrefUtils
 import org.decsync.sparss.R
 import org.decsync.sparss.utils.PrefUtils
-import kotlin.time.ExperimentalTime
 
 @ExperimentalStdlibApi
 class SafUpdateActivity : AppIntro2() {
