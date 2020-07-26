@@ -97,11 +97,8 @@ import java.util.regex.Pattern
 @ExperimentalStdlibApi
 class FetcherWorker(val context: Context, params: WorkerParameters) : Worker(context, params) {
 
-    private val mHandler: Handler
-
     init {
         HttpURLConnection.setFollowRedirects(true)
-        mHandler = Handler()
     }
 
     override fun doWork(): Result {
@@ -115,9 +112,7 @@ class FetcherWorker(val context: Context, params: WorkerParameters) : Worker(con
             if (networkInfo == null || networkInfo.state != NetworkInfo.State.CONNECTED) {
                 if (ACTION_REFRESH_FEEDS == action) {
                     // Display a toast in that case
-                    mHandler.post {
-                        Toast.makeText(context, R.string.network_error, Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(context, R.string.network_error, Toast.LENGTH_SHORT).show()
                 }
                 return Result.failure()
             }
