@@ -666,7 +666,7 @@ public class RssAtomParser extends DefaultHandler {
                     for (int i = 0; i < results.length; ++i) {
                         ArrayList<String> images = mInsertedEntriesImages.get(i);
                         if (images != null) {
-                            FetcherService.addImagesToDownload(results[i].uri.getLastPathSegment(), images);
+                            FetcherService.Companion.addImagesToDownload(results[i].uri.getLastPathSegment(), images);
                         }
                     }
                 }
@@ -677,7 +677,7 @@ public class RssAtomParser extends DefaultHandler {
                         entriesId[i] = Long.valueOf(results[i].uri.getLastPathSegment());
                     }
 
-                    FetcherService.addEntriesToMobilize(entriesId);
+                    FetcherService.Companion.addEntriesToMobilize(entriesId);
                 }
             }
         } catch (Exception e) {

@@ -130,7 +130,7 @@ public class HtmlUtils {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        FetcherService.addImagesToDownload(String.valueOf(entryId), imagesToDl);
+                        FetcherService.Companion.addImagesToDownload(String.valueOf(entryId), imagesToDl);
                         Context context = MainApplication.getContext();
                         context.startService(new Intent(context, FetcherService.class).setAction(FetcherService.ACTION_DOWNLOAD_IMAGES));
                     }

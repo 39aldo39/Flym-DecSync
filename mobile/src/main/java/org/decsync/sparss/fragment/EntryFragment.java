@@ -323,7 +323,7 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
 
                             // since we have acquired the networkInfo, we use it for basic checks
                             if (networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED) {
-                                FetcherService.addEntriesToMobilize(new long[]{mEntriesIds[mCurrentPagerPos]});
+                                FetcherService.Companion.addEntriesToMobilize(new long[]{mEntriesIds[mCurrentPagerPos]});
                                 activity.startService(new Intent(activity, FetcherService.class).setAction(FetcherService.ACTION_MOBILIZE_FEEDS));
                             } else {
                                 activity.runOnUiThread(new Runnable() {
@@ -413,7 +413,7 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
             activity.invalidateOptionsMenu();
 
             // Listen the mobilizing task
-            if (FetcherService.hasMobilizationTask(mEntriesIds[mCurrentPagerPos])) {
+            if (FetcherService.Companion.hasMobilizationTask(mEntriesIds[mCurrentPagerPos])) {
                 // If the service is not started, start it here to avoid an infinite loading
                 if (!PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false)) {
                     MainApplication.getContext().startService(new Intent(MainApplication.getContext(), FetcherService.class).setAction(FetcherService.ACTION_MOBILIZE_FEEDS));
