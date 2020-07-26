@@ -29,11 +29,13 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.work.Constraints;
+import androidx.work.Data;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import org.decsync.sparss.Constants;
 import org.decsync.sparss.MainApplication;
 import org.decsync.sparss.worker.FetcherWorker;
 
@@ -170,9 +172,14 @@ public class PrefUtils {
             Constraints constraints = new Constraints.Builder()
                     .setRequiredNetworkType(onlyWifi ? NetworkType.UNMETERED : NetworkType.CONNECTED)
                     .build();
+            Data inputData = new Data.Builder()
+                    .putString(FetcherWorker.ACTION, FetcherWorker.ACTION_REFRESH_FEEDS)
+                    .putBoolean(Constants.FROM_AUTO_REFRESH, true)
+                    .build();
             PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(FetcherWorker.class, minutesInt, TimeUnit.MINUTES)
                     .setInitialDelay(minutesInt, TimeUnit.MINUTES)
                     .setConstraints(constraints)
+                    .setInputData(inputData)
                     .build();
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(REFRESH_ENABLED, ExistingPeriodicWorkPolicy.REPLACE, workRequest);
         } else {
