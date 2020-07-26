@@ -55,6 +55,8 @@ class IntroActivity : AppIntro2() {
             DecsyncUtils.initSync(this)
         }
 
+        PrefUtils.updateAutomaticRefresh(this, null, null, null)
+
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()

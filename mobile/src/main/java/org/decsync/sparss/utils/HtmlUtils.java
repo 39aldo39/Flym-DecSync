@@ -21,13 +21,17 @@
 package org.decsync.sparss.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
+
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import org.decsync.sparss.Constants;
 import org.decsync.sparss.MainApplication;
-import org.decsync.sparss.service.FetcherService;
 
+import org.decsync.sparss.worker.FetcherWorker;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
@@ -130,9 +134,15 @@ public class HtmlUtils {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        FetcherService.Companion.addImagesToDownload(String.valueOf(entryId), imagesToDl);
+                        FetcherWorker.Companion.addImagesToDownload(String.valueOf(entryId), imagesToDl);
                         Context context = MainApplication.getContext();
-                        context.startService(new Intent(context, FetcherService.class).setAction(FetcherService.ACTION_DOWNLOAD_IMAGES));
+                        Data inputData = new Data.Builder()
+                                .putString(FetcherWorker.ACTION, FetcherWorker.ACTION_DOWNLOAD_IMAGES)
+                                .build();
+                        WorkRequest workRequest = new OneTimeWorkRequest.Builder(FetcherWorker.class)
+                                .setInputData(inputData)
+                                .build();
+                        WorkManager.getInstance(context).enqueue(workRequest);
                     }
                 }).start();
             }

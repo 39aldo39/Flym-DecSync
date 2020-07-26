@@ -26,6 +26,10 @@ import android.content.Intent
 import android.os.Environment
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
 import kotlinx.serialization.json.JsonLiteral
 import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.content
@@ -36,8 +40,8 @@ import org.decsync.library.getAppId
 import org.decsync.sparss.R
 import org.decsync.sparss.provider.FeedData
 import org.decsync.sparss.provider.FeedDataContentProvider.addFeed
-import org.decsync.sparss.service.FetcherService
 import org.decsync.sparss.utils.DB.feedUrlToFeedId
+import org.decsync.sparss.worker.FetcherWorker
 import java.io.File
 import kotlin.concurrent.thread
 
@@ -97,7 +101,14 @@ object DecsyncUtils {
             decsync.initStoredEntries()
             val extra = Extra(context)
             decsync.executeStoredEntriesForPathExact(listOf("feeds", "subscriptions"), extra)
-            context.startService(Intent(context, FetcherService::class.java).setAction(FetcherService.ACTION_REFRESH_FEEDS))
+
+            val inputData = Data.Builder()
+                    .putString(FetcherWorker.ACTION, FetcherWorker.ACTION_REFRESH_FEEDS)
+                    .build()
+            val workRequest: WorkRequest = OneTimeWorkRequest.Builder(FetcherWorker::class.java)
+                    .setInputData(inputData)
+                    .build()
+            WorkManager.getInstance(context).enqueue(workRequest)
         }
     }
 

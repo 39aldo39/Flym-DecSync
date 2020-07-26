@@ -52,9 +52,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.decsync.sparss.service
+package org.decsync.sparss.worker
 
-import android.app.IntentService
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -68,13 +67,14 @@ import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
-import android.os.SystemClock
 import android.text.Html
 import android.text.TextUtils
 import android.util.Log
 import android.util.Xml
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import org.decsync.sparss.Constants
 import org.decsync.sparss.MainApplication
 import org.decsync.sparss.R
@@ -95,7 +95,7 @@ import java.util.concurrent.Executors
 import java.util.regex.Pattern
 
 @ExperimentalStdlibApi
-class FetcherService : IntentService(FetcherService::class.java.simpleName) {
+class FetcherWorker(val context: Context, params: WorkerParameters) : Worker(context, params) {
 
     private val mHandler: Handler
 
@@ -104,63 +104,51 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
         mHandler = Handler()
     }
 
-    public override fun onHandleIntent(intent: Intent?) {
-        if (intent == null) { // No intent, we quit
-            return
-        }
+    override fun doWork(): Result {
+        val action = inputData.getString(ACTION)
+        val isFromAutoRefresh = inputData.getBoolean(Constants.FROM_AUTO_REFRESH, false)
 
-        val isFromAutoRefresh = intent.getBooleanExtra(Constants.FROM_AUTO_REFRESH, false)
-
-        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = connectivityManager.activeNetworkInfo
-        // Connectivity issue, we quit
-        if (networkInfo == null || networkInfo.state != NetworkInfo.State.CONNECTED) {
-            if (ACTION_REFRESH_FEEDS == intent.action && !isFromAutoRefresh) {
-                // Display a toast in that case
-                mHandler.post {
-                    Toast.makeText(this@FetcherService, R.string.network_error, Toast.LENGTH_SHORT).show()
+        if (!isFromAutoRefresh) {
+            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = connectivityManager.activeNetworkInfo
+            // Connectivity issue, we quit
+            if (networkInfo == null || networkInfo.state != NetworkInfo.State.CONNECTED) {
+                if (ACTION_REFRESH_FEEDS == action) {
+                    // Display a toast in that case
+                    mHandler.post {
+                        Toast.makeText(context, R.string.network_error, Toast.LENGTH_SHORT).show()
+                    }
                 }
+                return Result.failure()
             }
-            return
         }
 
-        val skipFetch = (isFromAutoRefresh && PrefUtils.getBoolean(PrefUtils.REFRESH_WIFI_ONLY, false)
-                && networkInfo.type != ConnectivityManager.TYPE_WIFI)
-        // We need to skip the fetching process, so we quit
-        if (skipFetch) {
-            return
-        }
-
-        if (ACTION_MOBILIZE_FEEDS == intent.action) {
+        if (ACTION_MOBILIZE_FEEDS == action) {
             mobilizeAllEntries()
             downloadAllImages()
-        } else if (ACTION_DOWNLOAD_IMAGES == intent.action) {
+        } else if (ACTION_DOWNLOAD_IMAGES == action) {
             downloadAllImages()
         } else { // == Constants.ACTION_REFRESH_FEEDS
-            PrefUtils.checkAppUpgrade()
+            PrefUtils.checkAppUpgrade(context)
             if (PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false) ||
                     !PrefUtils.getBoolean(PrefUtils.INTRO_DONE, false) ||
                     PrefUtils.getBoolean(PrefUtils.UPDATE_FORCES_SAF, false)) {
-                return
+                return Result.failure()
             }
             PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, true)
-
-            if (isFromAutoRefresh) {
-                PrefUtils.putLong(PrefUtils.LAST_SCHEDULED_REFRESH, SystemClock.elapsedRealtime())
-            }
 
             val keepTime = PrefUtils.getString(PrefUtils.KEEP_TIME, "4").toLong() * 86400000L
             val keepDateBorderTime = if (keepTime > 0) System.currentTimeMillis() - keepTime else 0
 
             deleteOldEntries(keepDateBorderTime)
 
-            val feedId = intent.getStringExtra(Constants.FEED_ID)
+            val feedId = inputData.getString(Constants.FEED_ID)
             var newCount = feedId?.let { refreshFeed(it, keepDateBorderTime) }
                     ?: refreshFeeds(keepDateBorderTime)
 
             if (newCount > 0) {
                 if (PrefUtils.getBoolean(PrefUtils.NOTIFICATIONS_ENABLED, true)) {
-                    val cursor = contentResolver.query(EntryColumns.CONTENT_URI, arrayOf(Constants.DB_COUNT), EntryColumns.WHERE_UNREAD, null, null)
+                    val cursor = context.contentResolver.query(EntryColumns.CONTENT_URI, arrayOf(Constants.DB_COUNT), EntryColumns.WHERE_UNREAD, null, null)
 
                     cursor!!.moveToFirst()
                     newCount = cursor.getInt(0) // The number has possibly changed
@@ -168,28 +156,28 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 
                     if (newCount > 0) {
                         if (Build.VERSION.SDK_INT >= 26 && Constants.NOTIF_MGR != null) {
-                            val name = getString(R.string.channel_new_entries_name)
-                            val descriptionText = getString(R.string.channel_new_entries_description)
+                            val name = context.getString(R.string.channel_new_entries_name)
+                            val descriptionText = context.getString(R.string.channel_new_entries_description)
                             val importance = NotificationManager.IMPORTANCE_LOW
                             val channel = NotificationChannel(CHANNEL_NEW_ENTRIES, name, importance)
                             channel.description = descriptionText
                             Constants.NOTIF_MGR.createNotificationChannel(channel)
                         }
 
-                        val text = resources.getQuantityString(R.plurals.number_of_new_entries, newCount, newCount)
+                        val text = context.resources.getQuantityString(R.plurals.number_of_new_entries, newCount, newCount)
 
-                        val notificationIntent = Intent(this@FetcherService, HomeActivity::class.java)
-                        val contentIntent = PendingIntent.getActivity(this@FetcherService, 0, notificationIntent,
+                        val notificationIntent = Intent(context, HomeActivity::class.java)
+                        val contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
                                 PendingIntent.FLAG_UPDATE_CURRENT)
 
                         val notifBuilder = NotificationCompat.Builder(MainApplication.getContext(), CHANNEL_NEW_ENTRIES) //
                                 .setContentIntent(contentIntent) //
                                 .setSmallIcon(R.drawable.ic_statusbar_rss) //
-                                .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)) //
+                                .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher)) //
                                 .setTicker(text) //
                                 .setWhen(System.currentTimeMillis()) //
                                 .setAutoCancel(true) //
-                                .setContentTitle(getString(R.string.spaRSS_feeds)) //
+                                .setContentTitle(context.getString(R.string.spaRSS_feeds)) //
                                 .setContentText(text) //
                                 .setLights(-0x1, 0, 0)
 
@@ -214,18 +202,20 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
             }
 
             if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
-                val extra = Extra(this)
-                getDecsync(this)?.executeAllNewEntries(extra, false)
+                val extra = Extra(context)
+                getDecsync(context)?.executeAllNewEntries(extra, false)
             }
             mobilizeAllEntries()
             downloadAllImages()
 
             PrefUtils.putBoolean(PrefUtils.IS_REFRESHING, false)
         }
+
+        return Result.success()
     }
 
     private fun mobilizeAllEntries() {
-        val cr = contentResolver
+        val cr = context.contentResolver
         val cursor = cr.query(TaskColumns.CONTENT_URI, arrayOf(TaskColumns._ID, TaskColumns.ENTRY_ID, TaskColumns.NUMBER_ATTEMPT),
                 TaskColumns.IMG_URL_TO_DL + Constants.DB_IS_NULL, null, null)
 
@@ -301,7 +291,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                                 values.put(EntryColumns.IMAGE_URL, mainImgUrl)
                             }
 
-                            if (update(this, entryUri, values, null, null) > 0) {
+                            if (update(context, entryUri, values, null, null) > 0) {
                                 success = true
                                 operations.add(ContentProviderOperation.newDelete(TaskColumns.CONTENT_URI(taskId)).build())
                                 if (imgUrlsToDownload != null && imgUrlsToDownload.isNotEmpty()) {
@@ -405,7 +395,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
     }
 
     private fun refreshFeeds(keepDateBorderTime: Long): Int {
-        val cr = contentResolver
+        val cr = context.contentResolver
         val cursor = cr.query(FeedColumns.CONTENT_URI, FeedColumns.PROJECTION_ID, null, null, null)
         val nbFeed = cursor!!.count
 
@@ -446,7 +436,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
     private fun refreshFeed(feedId: String, keepDateBorderTime: Long): Int {
         var handler: RssAtomParser? = null
 
-        val cr = contentResolver
+        val cr = context.contentResolver
         val cursor = cr.query(FeedColumns.CONTENT_URI(feedId), null, null, null, null)
 
         if (cursor!!.moveToFirst()) {
@@ -511,7 +501,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                                             url = "$feedUrl/$url"
                                         }
                                         values.put(FeedColumns.URL, url)
-                                        update(this, FeedColumns.CONTENT_URI(id), values, null, null)
+                                        update(context, FeedColumns.CONTENT_URI(id), values, null, null)
                                         connection!!.disconnect()
                                         connection = NetworkUtils.setupConnection(URL(url))
                                         contentType = connection.contentType
@@ -572,7 +562,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 
                     val values = ContentValues()
                     values.put(FeedColumns.FETCH_MODE, fetchMode)
-                    update(this, FeedColumns.CONTENT_URI(id), values, null, null)
+                    update(context, FeedColumns.CONTENT_URI(id), values, null, null)
                 }
 
                 when (fetchMode) {
@@ -641,8 +631,8 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                     // resets the fetch mode to determine it again later
                     values.put(FeedColumns.FETCH_MODE, 0)
 
-                    values.put(FeedColumns.ERROR, getString(R.string.error_feed_error))
-                    update(this, FeedColumns.CONTENT_URI(id), values, null, null)
+                    values.put(FeedColumns.ERROR, context.getString(R.string.error_feed_error))
+                    update(context, FeedColumns.CONTENT_URI(id), values, null, null)
                 }
             } catch (e: Throwable) {
                 if (handler == null || !handler.isDone && !handler.isCancelled) {
@@ -651,9 +641,9 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                     // resets the fetch mode to determine it again later
                     values.put(FeedColumns.FETCH_MODE, 0)
 
-                    values.put(FeedColumns.ERROR, if (e.message != null) e.message else getString(R.string.error_feed_process))
+                    values.put(FeedColumns.ERROR, if (e.message != null) e.message else context.getString(R.string.error_feed_process))
                     Log.w("spaRSS", "The feed can not be processed", e)
-                    update(this, FeedColumns.CONTENT_URI(id), values, null, null)
+                    update(context, FeedColumns.CONTENT_URI(id), values, null, null)
                 }
             } finally {
                 /* check and optionally find favicon */
@@ -661,9 +651,9 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                     if (handler != null && cursor.getBlob(iconPosition) == null) {
                         val feedLink = handler.feedLink
                         if (feedLink != null) {
-                            NetworkUtils.retrieveFavicon(this, URL(feedLink), id)
+                            NetworkUtils.retrieveFavicon(context, URL(feedLink), id)
                         } else {
-                            NetworkUtils.retrieveFavicon(this, connection!!.url, id)
+                            NetworkUtils.retrieveFavicon(context, connection!!.url, id)
                         }
                     }
                 } catch (ignored: Throwable) {
@@ -679,6 +669,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
     }
 
     companion object {
+        const val ACTION = "action"
         const val ACTION_REFRESH_FEEDS = "org.decsync.sparss.REFRESH"
         const val ACTION_MOBILIZE_FEEDS = "org.decsync.sparss.MOBILIZE_FEEDS"
         const val ACTION_DOWNLOAD_IMAGES = "org.decsync.sparss.DOWNLOAD_IMAGES"

@@ -36,15 +36,15 @@
     ]]></string>
 
     <string-array name="settings_interval_values" translatable="false">
-        <item>60000</item>
-        <item>300000</item>
-        <item>900000</item>
-        <item>1800000</item>
-        <item>3600000</item>
-        <item>7200000</item>
-        <item>21600000</item>
-        <item>43200000</item>
-        <item>86400000</item>
+        <item>1</item>
+        <item>5</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>360</item>
+        <item>720</item>
+        <item>1440</item>
     </string-array>
     <string-array name="settings_keep_time_values" translatable="false">
         <item>1</item>

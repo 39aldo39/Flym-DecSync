@@ -34,6 +34,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.SearchView;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
+
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
@@ -59,9 +64,9 @@ import org.decsync.sparss.adapter.EntriesCursorAdapter;
 import org.decsync.sparss.provider.FeedData;
 import org.decsync.sparss.provider.FeedData.EntryColumns;
 import org.decsync.sparss.provider.FeedDataContentProvider;
-import org.decsync.sparss.service.FetcherService;
 import org.decsync.sparss.utils.PrefUtils;
 import org.decsync.sparss.utils.UiUtils;
+import org.decsync.sparss.worker.FetcherWorker;
 
 import java.util.Date;
 
@@ -360,12 +365,18 @@ public class EntriesListFragment extends SwipeRefreshListFragment {
 
     private void startRefresh() {
         if (!PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false)) {
+            String feedId = null;
             if (mUri != null && FeedDataContentProvider.URI_MATCHER.match(mUri) == FeedDataContentProvider.URI_ENTRIES_FOR_FEED) {
-                getActivity().startService(new Intent(getActivity(), FetcherService.class).setAction(FetcherService.ACTION_REFRESH_FEEDS).putExtra(Constants.FEED_ID,
-                        mUri.getPathSegments().get(1)));
-            } else {
-                getActivity().startService(new Intent(getActivity(), FetcherService.class).setAction(FetcherService.ACTION_REFRESH_FEEDS));
+                feedId = mUri.getPathSegments().get(1);
             }
+            Data inputData = new Data.Builder()
+                    .putString(FetcherWorker.ACTION, FetcherWorker.ACTION_REFRESH_FEEDS)
+                    .putString(Constants.FEED_ID, feedId)
+                    .build();
+            WorkRequest workRequest = new OneTimeWorkRequest.Builder(FetcherWorker.class)
+                    .setInputData(inputData)
+                    .build();
+            WorkManager.getInstance(getActivity()).enqueue(workRequest);
         }
     }
 

@@ -66,7 +66,6 @@ import com.nononsenseapps.filepicker.Utils;
 import org.decsync.library.DecsyncPrefUtils;
 import org.decsync.sparss.MainApplication;
 import org.decsync.sparss.R;
-import org.decsync.sparss.service.RefreshService;
 import org.decsync.sparss.utils.DecsyncUtils;
 import org.decsync.sparss.utils.PrefUtils;
 
@@ -93,15 +92,25 @@ public class GeneralPrefsFragment extends PreferenceFragmentCompat {
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Activity activity = getActivity();
-                if (activity != null) {
-                    if (Boolean.TRUE.equals(newValue)) {
-                        activity.startService(new Intent(activity, RefreshService.class));
-                    } else {
-                        PrefUtils.putLong(PrefUtils.LAST_SCHEDULED_REFRESH, 0);
-                        activity.stopService(new Intent(activity, RefreshService.class));
-                    }
-                }
+                PrefUtils.updateAutomaticRefresh(requireActivity(), (Boolean)newValue, null, null);
+                return true;
+            }
+        });
+
+        preference = findPreference(PrefUtils.REFRESH_INTERVAL_MINUTES);
+        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                PrefUtils.updateAutomaticRefresh(requireActivity(), null, (String)newValue, null);
+                return true;
+            }
+        });
+
+        preference = findPreference(PrefUtils.REFRESH_WIFI_ONLY);
+        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                PrefUtils.updateAutomaticRefresh(requireActivity(), null, null, (Boolean)newValue);
                 return true;
             }
         });

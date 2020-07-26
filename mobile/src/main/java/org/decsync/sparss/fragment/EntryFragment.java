@@ -45,6 +45,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
+
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -63,11 +68,11 @@ import org.decsync.sparss.activity.BaseActivity;
 import org.decsync.sparss.provider.FeedData;
 import org.decsync.sparss.provider.FeedData.EntryColumns;
 import org.decsync.sparss.provider.FeedData.FeedColumns;
-import org.decsync.sparss.service.FetcherService;
 import org.decsync.sparss.utils.DB;
 import org.decsync.sparss.utils.PrefUtils;
 import org.decsync.sparss.utils.UiUtils;
 import org.decsync.sparss.view.EntryView;
+import org.decsync.sparss.worker.FetcherWorker;
 
 public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.OnFullScreenListener, LoaderManager.LoaderCallbacks<Cursor>, EntryView.EntryViewManager {
     private static final String TAG = "EntryFragment";
@@ -323,8 +328,15 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
 
                             // since we have acquired the networkInfo, we use it for basic checks
                             if (networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED) {
-                                FetcherService.Companion.addEntriesToMobilize(new long[]{mEntriesIds[mCurrentPagerPos]});
-                                activity.startService(new Intent(activity, FetcherService.class).setAction(FetcherService.ACTION_MOBILIZE_FEEDS));
+                                FetcherWorker.Companion.addEntriesToMobilize(new long[]{mEntriesIds[mCurrentPagerPos]});
+
+                                Data inputData = new Data.Builder()
+                                        .putString(FetcherWorker.ACTION, FetcherWorker.ACTION_MOBILIZE_FEEDS)
+                                        .build();
+                                WorkRequest workRequest = new OneTimeWorkRequest.Builder(FetcherWorker.class)
+                                        .setInputData(inputData)
+                                        .build();
+                                WorkManager.getInstance(activity).enqueue(workRequest);
                             } else {
                                 activity.runOnUiThread(new Runnable() {
                                     @Override
@@ -413,10 +425,16 @@ public class EntryFragment extends SwipeRefreshFragment implements BaseActivity.
             activity.invalidateOptionsMenu();
 
             // Listen the mobilizing task
-            if (FetcherService.Companion.hasMobilizationTask(mEntriesIds[mCurrentPagerPos])) {
+            if (FetcherWorker.Companion.hasMobilizationTask(mEntriesIds[mCurrentPagerPos])) {
                 // If the service is not started, start it here to avoid an infinite loading
                 if (!PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false)) {
-                    MainApplication.getContext().startService(new Intent(MainApplication.getContext(), FetcherService.class).setAction(FetcherService.ACTION_MOBILIZE_FEEDS));
+                    Data inputData = new Data.Builder()
+                            .putString(FetcherWorker.ACTION, FetcherWorker.ACTION_MOBILIZE_FEEDS)
+                            .build();
+                    WorkRequest workRequest = new OneTimeWorkRequest.Builder(FetcherWorker.class)
+                            .setInputData(inputData)
+                            .build();
+                    WorkManager.getInstance(activity).enqueue(workRequest);
                 }
             }
 

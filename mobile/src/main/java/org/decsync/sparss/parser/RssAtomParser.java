@@ -64,13 +64,13 @@ import org.decsync.sparss.provider.FeedData;
 import org.decsync.sparss.provider.FeedData.EntryColumns;
 import org.decsync.sparss.provider.FeedData.FeedColumns;
 import org.decsync.sparss.provider.FeedData.FilterColumns;
-import org.decsync.sparss.service.FetcherService;
 import org.decsync.sparss.utils.DB;
 import org.decsync.sparss.utils.DecsyncUtils;
 import org.decsync.sparss.utils.Extra;
 import org.decsync.sparss.utils.HtmlUtils;
 import org.decsync.sparss.utils.NetworkUtils;
 
+import org.decsync.sparss.worker.FetcherWorker;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -666,7 +666,7 @@ public class RssAtomParser extends DefaultHandler {
                     for (int i = 0; i < results.length; ++i) {
                         ArrayList<String> images = mInsertedEntriesImages.get(i);
                         if (images != null) {
-                            FetcherService.Companion.addImagesToDownload(results[i].uri.getLastPathSegment(), images);
+                            FetcherWorker.Companion.addImagesToDownload(results[i].uri.getLastPathSegment(), images);
                         }
                     }
                 }
@@ -677,7 +677,7 @@ public class RssAtomParser extends DefaultHandler {
                         entriesId[i] = Long.valueOf(results[i].uri.getLastPathSegment());
                     }
 
-                    FetcherService.Companion.addEntriesToMobilize(entriesId);
+                    FetcherWorker.Companion.addEntriesToMobilize(entriesId);
                 }
             }
         } catch (Exception e) {

@@ -20,6 +20,7 @@
 
 package org.decsync.sparss.utils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
@@ -27,7 +28,16 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
 import org.decsync.sparss.MainApplication;
+import org.decsync.sparss.worker.FetcherWorker;
+
+import java.util.concurrent.TimeUnit;
 
 public class PrefUtils {
     private static final String TAG = "PrefUtils";
@@ -40,7 +50,8 @@ public class PrefUtils {
 
     public static final String IS_REFRESHING = "IS_REFRESHING";
 
-    public static final String REFRESH_INTERVAL = "refresh.interval";
+    public static final String REFRESH_INTERVAL_MINUTES = "refresh.interval_minutes";
+    public static final String REFRESH_INTERVAL_OLD = "refresh.interval";
     public static final String REFRESH_ENABLED = "refresh.enabled";
     public static final String REFRESH_ON_OPEN_ENABLED = "refreshonopen.enabled";
     public static final String REFRESH_WIFI_ONLY = "refreshwifionly.enabled";
@@ -69,8 +80,6 @@ public class PrefUtils {
 
     public static final String FONT_SIZE = "fontsize";
     public static final String FONT_SERIF = "font_serif";
-
-    public static final String LAST_SCHEDULED_REFRESH = "lastscheduledrefresh";
 
     public static final String SHOW_READ = "show_read";
 
@@ -145,13 +154,45 @@ public class PrefUtils {
         }
     }
 
-    public static void checkAppUpgrade() {
-        int currentAppVersion = 2;
+    public static void updateAutomaticRefresh(Context context, Boolean enabled, String minutes, Boolean onlyWifi) {
+        if (enabled == null) {
+            enabled = getBoolean(REFRESH_ENABLED, true);
+        }
+        if (minutes == null) {
+            minutes = getString(REFRESH_INTERVAL_MINUTES, "30");
+        }
+        if (onlyWifi == null) {
+            onlyWifi = getBoolean(REFRESH_WIFI_ONLY, false);
+        }
+
+        int minutesInt = Integer.parseInt(minutes);
+        if (enabled) {
+            Constraints constraints = new Constraints.Builder()
+                    .setRequiredNetworkType(onlyWifi ? NetworkType.UNMETERED : NetworkType.CONNECTED)
+                    .build();
+            PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(FetcherWorker.class, minutesInt, TimeUnit.MINUTES)
+                    .setInitialDelay(minutesInt, TimeUnit.MINUTES)
+                    .setConstraints(constraints)
+                    .build();
+            WorkManager.getInstance(context).enqueueUniquePeriodicWork(REFRESH_ENABLED, ExistingPeriodicWorkPolicy.REPLACE, workRequest);
+        } else {
+            WorkManager.getInstance(context).cancelUniqueWork(REFRESH_ENABLED);
+        }
+    }
+
+    public static void checkAppUpgrade(Context context) {
+        int currentAppVersion = 3;
         int appVersion = getInt(APP_VERSION, 0);
         if (appVersion != currentAppVersion) {
             if (appVersion > 0) {
                 if (appVersion < 2) {
                     putBoolean(INTRO_DONE, true);
+                }
+                if (appVersion < 3) {
+                    int intervalMilliSeconds = Integer.parseInt(getString(REFRESH_INTERVAL_OLD, "1800000"));
+                    int intervalMinutes = intervalMilliSeconds / 60000;
+                    putString(REFRESH_INTERVAL_MINUTES, Integer.toString(intervalMinutes));
+                    updateAutomaticRefresh(context, null, null, null);
                 }
             }
             putInt(APP_VERSION, currentAppVersion);

@@ -23,8 +23,6 @@
         android:theme="@style/Theme.Light"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <service android:name=".service.RefreshService"/>
-        <service android:name=".service.FetcherService"/>
 
         <provider
             android:name=".provider.FeedDataContentProvider"
@@ -198,18 +196,6 @@
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
         <service android:name=".widget.TickerWidgetService"/>
-
-        <receiver android:name=".receiver.BootCompletedBroadcastReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".receiver.ConnectionChangeReceiver">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".service.RefreshService$RefreshAlarmReceiver"/>
     </application>
 
 </manifest>

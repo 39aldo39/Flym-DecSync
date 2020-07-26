@@ -27,12 +27,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:summary="%s"
-            android:defaultValue="1800000"
+            android:defaultValue="30"
             android:dependency="refresh.enabled"
             android:entries="@array/settings_intervals"
             android:entryValues="@array/settings_interval_values"
             android:inputType="number"
-            android:key="refresh.interval"
+            android:key="refresh.interval_minutes"
             android:title="@string/settings_refresh_interval"/>
 
         <CheckBoxPreference

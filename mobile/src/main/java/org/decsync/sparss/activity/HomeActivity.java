@@ -40,6 +40,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -54,12 +59,11 @@ import org.decsync.sparss.fragment.EntriesListFragment;
 import org.decsync.sparss.provider.FeedData;
 import org.decsync.sparss.provider.FeedData.EntryColumns;
 import org.decsync.sparss.provider.FeedData.FeedColumns;
-import org.decsync.sparss.service.FetcherService;
-import org.decsync.sparss.service.RefreshService;
 import org.decsync.sparss.utils.DecsyncUtils;
 import org.decsync.sparss.utils.Extra;
 import org.decsync.sparss.utils.PrefUtils;
 import org.decsync.sparss.utils.UiUtils;
+import org.decsync.sparss.worker.FetcherWorker;
 
 public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -108,7 +112,7 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         UiUtils.setPreferenceTheme(this);
         super.onCreate(savedInstanceState);
 
-        PrefUtils.checkAppUpgrade();
+        PrefUtils.checkAppUpgrade(this);
 
         if (!PrefUtils.getBoolean(PrefUtils.INTRO_DONE, false)) {
             Intent intent = new Intent(this, IntroActivity.class);
@@ -193,12 +197,6 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
 
         getLoaderManager().initLoader(LOADER_ID, null, this);
 
-        if (PrefUtils.getBoolean(PrefUtils.REFRESH_ENABLED, true)) {
-            // starts the service independent to this activity
-            startService(new Intent(this, RefreshService.class));
-        } else {
-            stopService(new Intent(this, RefreshService.class));
-        }
         if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false) && !mFirstOpen) {
             Decsync<Extra> decsync = DecsyncUtils.INSTANCE.getDecsync(this);
             if (decsync != null) {
@@ -208,7 +206,13 @@ public class HomeActivity extends BaseActivity implements LoaderManager.LoaderCa
         }
         if (PrefUtils.getBoolean(PrefUtils.REFRESH_ON_OPEN_ENABLED, false)) {
             if (!PrefUtils.getBoolean(PrefUtils.IS_REFRESHING, false)) {
-                startService(new Intent(HomeActivity.this, FetcherService.class).setAction(FetcherService.ACTION_REFRESH_FEEDS));
+                Data inputData = new Data.Builder()
+                        .putString(FetcherWorker.ACTION, FetcherWorker.ACTION_REFRESH_FEEDS)
+                        .build();
+                WorkRequest workRequest = new OneTimeWorkRequest.Builder(FetcherWorker.class)
+                        .setInputData(inputData)
+                        .build();
+                WorkManager.getInstance(this).enqueue(workRequest);
             }
         }
     }
