@@ -142,6 +142,11 @@ class FetcherWorker(val context: Context, params: WorkerParameters) : Worker(con
 
             deleteOldEntries(keepDateBorderTime)
 
+            if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
+                val extra = Extra(context)
+                getDecsync(context)?.executeAllNewEntries(extra, false)
+            }
+
             val feedId = inputData.getString(Constants.FEED_ID)
             var newCount = feedId?.let { refreshFeed(it, keepDateBorderTime) }
                     ?: refreshFeeds(keepDateBorderTime)
@@ -201,10 +206,6 @@ class FetcherWorker(val context: Context, params: WorkerParameters) : Worker(con
                 }
             }
 
-            if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
-                val extra = Extra(context)
-                getDecsync(context)?.executeAllNewEntries(extra, false)
-            }
             mobilizeAllEntries()
             downloadAllImages()
 
