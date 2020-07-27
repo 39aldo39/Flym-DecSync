@@ -44,6 +44,7 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="back_again_to_quit">Press back once more to exit</string>
     <string name="no_new_entries">No new entries to display</string>
+    <string name="decsync_disabled">DecSync support disabled</string>
 
     <!-- IntroActivity -->
     <string name="title_activity_intro">Introduction</string>

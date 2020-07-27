@@ -84,8 +84,8 @@ object DecsyncUtils {
             } catch (e: Exception) {
                 Log.e(TAG, "", e)
                 AlertDialog.Builder(context)
-                        .setTitle("DecSync")
-                        .setMessage(e.message)
+                        .setTitle(R.string.decsync_disabled)
+                        .setMessage(e.localizedMessage)
                         .setPositiveButton("OK") { _, _ -> }
                         .show()
                 PrefUtils.putBoolean(PrefUtils.DECSYNC_ENABLED, false)
