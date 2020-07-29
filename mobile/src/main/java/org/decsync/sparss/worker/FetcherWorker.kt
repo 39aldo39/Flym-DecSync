@@ -104,6 +104,7 @@ class FetcherWorker(val context: Context, params: WorkerParameters) : Worker(con
     override fun doWork(): Result {
         val action = inputData.getString(ACTION)
         val isFromAutoRefresh = inputData.getBoolean(Constants.FROM_AUTO_REFRESH, false)
+        val isFromInitSync = inputData.getBoolean(Constants.FROM_INIT_SYNC, false)
 
         if (!isFromAutoRefresh) {
             val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -139,7 +140,12 @@ class FetcherWorker(val context: Context, params: WorkerParameters) : Worker(con
 
             if (PrefUtils.getBoolean(PrefUtils.DECSYNC_ENABLED, false)) {
                 val extra = Extra(context)
-                getDecsync(context)?.executeAllNewEntries(extra, false)
+                if (isFromInitSync) {
+                    getDecsync(context)?.initStoredEntries()
+                    getDecsync(context)?.executeStoredEntriesForPathExact(listOf("feeds", "subscriptions"), extra)
+                } else {
+                    getDecsync(context)?.executeAllNewEntries(extra, false)
+                }
             }
 
             val feedId = inputData.getString(Constants.FEED_ID)

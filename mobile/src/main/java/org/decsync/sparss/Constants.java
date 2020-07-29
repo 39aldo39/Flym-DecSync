@@ -71,6 +71,7 @@ public final class Constants {
     public static final String UTF8 = "UTF-8";
 
     public static final String FROM_AUTO_REFRESH = "from_auto_refresh";
+    public static final String FROM_INIT_SYNC = "from_init_sync";
 
     public static final String MIMETYPE_TEXT_PLAIN = "text/plain";
 

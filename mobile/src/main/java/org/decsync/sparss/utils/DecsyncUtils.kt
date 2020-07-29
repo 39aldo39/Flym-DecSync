@@ -22,7 +22,6 @@ package org.decsync.sparss.utils
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.os.Environment
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
@@ -37,13 +36,13 @@ import kotlinx.serialization.json.contentOrNull
 import org.decsync.library.Decsync
 import org.decsync.library.DecsyncPrefUtils
 import org.decsync.library.getAppId
+import org.decsync.sparss.Constants
 import org.decsync.sparss.R
 import org.decsync.sparss.provider.FeedData
 import org.decsync.sparss.provider.FeedDataContentProvider.addFeed
 import org.decsync.sparss.utils.DB.feedUrlToFeedId
 import org.decsync.sparss.worker.FetcherWorker
 import java.io.File
-import kotlin.concurrent.thread
 
 val ownAppId = getAppId("spaRSS")
 val defaultDecsyncDir = "${Environment.getExternalStorageDirectory()}/DecSync"
@@ -96,20 +95,14 @@ object DecsyncUtils {
 
     fun initSync(context: Context) {
         mDecsync = null
-        val decsync = getDecsync(context) ?: return
-        thread {
-            decsync.initStoredEntries()
-            val extra = Extra(context)
-            decsync.executeStoredEntriesForPathExact(listOf("feeds", "subscriptions"), extra)
-
-            val inputData = Data.Builder()
-                    .putString(FetcherWorker.ACTION, FetcherWorker.ACTION_REFRESH_FEEDS)
-                    .build()
-            val workRequest: WorkRequest = OneTimeWorkRequest.Builder(FetcherWorker::class.java)
-                    .setInputData(inputData)
-                    .build()
-            WorkManager.getInstance(context).enqueue(workRequest)
-        }
+        val inputData = Data.Builder()
+                .putString(FetcherWorker.ACTION, FetcherWorker.ACTION_REFRESH_FEEDS)
+                .putBoolean(Constants.FROM_INIT_SYNC, true)
+                .build()
+        val workRequest: WorkRequest = OneTimeWorkRequest.Builder(FetcherWorker::class.java)
+                .setInputData(inputData)
+                .build()
+        WorkManager.getInstance(context).enqueue(workRequest)
     }
 
     private fun readMarkListener(isReadEntry: Boolean, path: List<String>, entry: Decsync.Entry, extra: Extra) {
