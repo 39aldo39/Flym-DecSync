@@ -56,6 +56,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.preference.CheckBoxPreference;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
@@ -98,6 +99,7 @@ public class GeneralPrefsFragment extends PreferenceFragmentCompat {
         });
 
         preference = findPreference(PrefUtils.REFRESH_INTERVAL_MINUTES);
+        preference.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance());
         preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -129,6 +131,15 @@ public class GeneralPrefsFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
+
+        preference = findPreference(PrefUtils.KEEP_TIME);
+        preference.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance());
+
+        preference = findPreference(PrefUtils.FONT_SIZE);
+        preference.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance());
+
+        preference = findPreference(PrefUtils.PRELOAD_IMAGE_MODE);
+        preference.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance());
 
         if (PrefUtils.getBoolean(PrefUtils.DECSYNC_USE_SAF, false)) {
             preference = findPreference(PrefUtils.DECSYNC_ENABLED);
