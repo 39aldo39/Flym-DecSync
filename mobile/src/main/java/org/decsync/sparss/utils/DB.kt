@@ -25,8 +25,8 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonLiteral
 import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonPrimitive
 import org.decsync.library.Decsync
 import org.decsync.sparss.provider.FeedData
 import org.decsync.sparss.utils.DecsyncUtils.executePostSubscribeActions
@@ -50,11 +50,11 @@ object DB {
                             val groupId = values.getAsString(FeedData.FeedColumns.GROUP_ID)
                             val category = groupToCategory(groupId, context)
 
-                            getDecsync(context)?.setEntry(listOf("feeds", "subscriptions"), JsonLiteral(feedUrl), JsonLiteral(true))
+                            getDecsync(context)?.setEntry(listOf("feeds", "subscriptions"), JsonPrimitive(feedUrl), JsonPrimitive(true))
                             if (name != null) {
-                                getDecsync(context)?.setEntry(listOf("feeds", "names"), JsonLiteral(feedUrl), JsonLiteral(name))
+                                getDecsync(context)?.setEntry(listOf("feeds", "names"), JsonPrimitive(feedUrl), JsonPrimitive(name))
                             }
-                            getDecsync(context)?.setEntry(listOf("feeds", "categories"), JsonLiteral(feedUrl), category)
+                            getDecsync(context)?.setEntry(listOf("feeds", "categories"), JsonPrimitive(feedUrl), category)
                         }
                     }
                 }
@@ -96,20 +96,20 @@ object DB {
                                 var newUrl = false
                                 if (isGroup) {
                                     if (origName != name) {
-                                        entries.add(Decsync.EntryWithPath(listOf("categories", "names"), JsonLiteral(url), JsonLiteral(name)))
+                                        entries.add(Decsync.EntryWithPath(listOf("categories", "names"), JsonPrimitive(url), JsonPrimitive(name)))
                                     }
                                 } else {
                                     if (origUrl != null && origUrl != url) {
-                                        entries.add(Decsync.EntryWithPath(listOf("feeds", "subscriptions"), JsonLiteral(origUrl), JsonLiteral(false)))
-                                        entries.add(Decsync.EntryWithPath(listOf("feeds", "subscriptions"), JsonLiteral(url), JsonLiteral(true)))
+                                        entries.add(Decsync.EntryWithPath(listOf("feeds", "subscriptions"), JsonPrimitive(origUrl), JsonPrimitive(false)))
+                                        entries.add(Decsync.EntryWithPath(listOf("feeds", "subscriptions"), JsonPrimitive(url), JsonPrimitive(true)))
                                         newUrl = true
                                     }
                                     if (newUrl || origName != name) {
-                                        entries.add(Decsync.EntryWithPath(listOf("feeds", "names"), JsonLiteral(url), JsonLiteral(name)))
+                                        entries.add(Decsync.EntryWithPath(listOf("feeds", "names"), JsonPrimitive(url), JsonPrimitive(name)))
                                     }
                                     if (newUrl || origGroupId != null && origGroupId != groupId || origGroupId == null && groupId != null) {
                                         val category = groupToCategory(groupId, context)
-                                        entries.add(Decsync.EntryWithPath(listOf("feeds", "categories"), JsonLiteral(url), category))
+                                        entries.add(Decsync.EntryWithPath(listOf("feeds", "categories"), JsonPrimitive(url), category))
                                     }
                                 }
 
@@ -152,7 +152,7 @@ object DB {
             val day = "%02d".format(date.get(Calendar.DAY_OF_MONTH))
             val path = listOf("articles", type, year, month, day)
             val guid = cursor.getString(cursor.getColumnIndex(FeedData.EntryColumns.GUID))
-            entries.add(Decsync.EntryWithPath(path, JsonLiteral(guid), JsonLiteral(value)))
+            entries.add(Decsync.EntryWithPath(path, JsonPrimitive(guid), JsonPrimitive(value)))
 
             cursor.moveToNext()
         }
@@ -191,7 +191,7 @@ object DB {
                 }
             } else {
                 val feedUrl = cursor.getString(cursor.getColumnIndex(FeedData.FeedColumns.URL))
-                entries.add(Decsync.Entry(JsonLiteral(feedUrl), JsonLiteral(false)))
+                entries.add(Decsync.Entry(JsonPrimitive(feedUrl), JsonPrimitive(false)))
             }
 
             cursor.moveToNext()
@@ -209,15 +209,15 @@ object DB {
                 null, null, null)!!.use { cursor ->
             if (!cursor.moveToFirst()) return JsonNull
             val categoryOld = cursor.getString(0)
-            if (categoryOld != null) return JsonLiteral(categoryOld)
+            if (categoryOld != null) return JsonPrimitive(categoryOld)
             val name = cursor.getString(1)
 
             val categoryNew = "catID%05d".format(Random().nextInt(100000))
-            val categoryNewJson = JsonLiteral(categoryNew)
+            val categoryNewJson = JsonPrimitive(categoryNew)
             val values = ContentValues()
             values.put(FeedData.FeedColumns.URL, categoryNew)
             cr.update(FeedData.FeedColumns.CONTENT_URI(groupId), values, null, null)
-            getDecsync(context)?.setEntry(listOf("categories", "names"), categoryNewJson, JsonLiteral(name))
+            getDecsync(context)?.setEntry(listOf("categories", "names"), categoryNewJson, JsonPrimitive(name))
             return categoryNewJson
         }
     }

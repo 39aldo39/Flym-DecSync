@@ -89,7 +89,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kotlinx.serialization.json.JsonElement;
-import kotlinx.serialization.json.JsonLiteral;
+import kotlinx.serialization.json.JsonElementKt;
 
 public class RssAtomParser extends DefaultHandler {
     private static final String TAG = RssAtomParser.class.getSimpleName();
@@ -493,7 +493,7 @@ public class RssAtomParser extends DefaultHandler {
                         String year = String.format("%04d", date.get(Calendar.YEAR));
                         String month = String.format("%02d", date.get(Calendar.MONTH) + 1);
                         String day = String.format("%02d", date.get(Calendar.DAY_OF_MONTH));
-                        JsonElement guid = new JsonLiteral(guidString);
+                        JsonElement guid = JsonElementKt.JsonPrimitive(guidString);
                         mStoredEntries.add(new Decsync.StoredEntry(Arrays.asList("articles", "read", year, month, day), guid));
                         mStoredEntries.add(new Decsync.StoredEntry(Arrays.asList("articles", "marked", year, month, day), guid));
 

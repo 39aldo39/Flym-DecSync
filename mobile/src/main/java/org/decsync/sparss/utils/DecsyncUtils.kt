@@ -29,10 +29,7 @@ import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
-import kotlinx.serialization.json.JsonLiteral
-import kotlinx.serialization.json.boolean
-import kotlinx.serialization.json.content
-import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.*
 import org.decsync.library.Decsync
 import org.decsync.library.DecsyncPrefUtils
 import org.decsync.library.getAppId
@@ -108,8 +105,8 @@ object DecsyncUtils {
     private fun readMarkListener(isReadEntry: Boolean, path: List<String>, entry: Decsync.Entry, extra: Extra) {
         Log.d(TAG, "Execute " + (if (isReadEntry) "read" else "mark") + " entry $entry")
         val entryColumn = if (isReadEntry) FeedData.EntryColumns.IS_READ else FeedData.EntryColumns.IS_FAVORITE
-        val guid = entry.key.content
-        val value = entry.value.boolean
+        val guid = entry.key.jsonPrimitive.content
+        val value = entry.value.jsonPrimitive.boolean
         val context = extra.context
 
         val values = ContentValues()
@@ -124,8 +121,8 @@ object DecsyncUtils {
 
     private fun subscriptionsListener(path: List<String>, entry: Decsync.Entry, extra: Extra) {
         Log.d(TAG, "Execute subscribe entry $entry")
-        val feedUrl = entry.key.content
-        val subscribed = entry.value.boolean
+        val feedUrl = entry.key.jsonPrimitive.content
+        val subscribed = entry.value.jsonPrimitive.boolean
         val context = extra.context
         val cr = context.contentResolver
 
@@ -147,8 +144,8 @@ object DecsyncUtils {
 
     private fun feedNamesListener(path: List<String>, entry: Decsync.Entry, extra: Extra) {
         Log.d(TAG, "Execute rename entry $entry")
-        val feedUrl = entry.key.content
-        val name = entry.value.content
+        val feedUrl = entry.key.jsonPrimitive.content
+        val name = entry.value.jsonPrimitive.content
         val context = extra.context
         val cr = context.contentResolver
 
@@ -164,8 +161,8 @@ object DecsyncUtils {
 
     private fun categoriesListener(path: List<String>, entry: Decsync.Entry, extra: Extra) {
         Log.d(TAG, "Execute move entry $entry")
-        val feedUrl = entry.key.content
-        val category = entry.value.contentOrNull
+        val feedUrl = entry.key.jsonPrimitive.content
+        val category = entry.value.jsonPrimitive.contentOrNull
         val context = extra.context
         val cr = context.contentResolver
 
@@ -184,8 +181,8 @@ object DecsyncUtils {
 
     private fun categoryNamesListener(path: List<String>, entry: Decsync.Entry, extra: Extra) {
         Log.d(TAG, "Execute category rename entry $entry")
-        val category = entry.key.content
-        val name = entry.value.content
+        val category = entry.key.jsonPrimitive.content
+        val name = entry.value.jsonPrimitive.content
         val context = extra.context
         val cr = context.contentResolver
 
@@ -246,7 +243,7 @@ object DecsyncUtils {
         values.put(FeedData.FeedColumns.URL, category)
         val newGroupId = DB.insert(context, FeedData.FeedColumns.GROUPS_CONTENT_URI, values, false)?.lastPathSegment ?: return null
         val extra = Extra(context)
-        getDecsync(context)?.executeStoredEntry(listOf("categories", "names"), JsonLiteral(category), extra)
+        getDecsync(context)?.executeStoredEntry(listOf("categories", "names"), JsonPrimitive(category), extra)
         return newGroupId
     }
 
@@ -263,7 +260,7 @@ object DecsyncUtils {
 
     fun executePostSubscribeActions(feedUrl: String, context: Context) {
         val extra = Extra(context)
-        getDecsync(context)?.executeStoredEntry(listOf("feeds", "names"), JsonLiteral(feedUrl), extra)
-        getDecsync(context)?.executeStoredEntry(listOf("feeds", "categories"), JsonLiteral(feedUrl), extra)
+        getDecsync(context)?.executeStoredEntry(listOf("feeds", "names"), JsonPrimitive(feedUrl), extra)
+        getDecsync(context)?.executeStoredEntry(listOf("feeds", "categories"), JsonPrimitive(feedUrl), extra)
     }
 }
