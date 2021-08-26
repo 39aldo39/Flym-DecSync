@@ -23,7 +23,9 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.OpenableColumns
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -42,6 +44,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_edit_feed.view.*
 import kotlinx.android.synthetic.main.fragment_entries.*
 import kotlinx.android.synthetic.main.view_main_drawer_header.*
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import net.fred.feedex.R
 import net.frju.flym.App
 import net.frju.flym.data.entities.Feed
@@ -58,6 +61,7 @@ import net.frju.flym.ui.feeds.FeedAdapter
 import net.frju.flym.ui.feeds.FeedGroup
 import net.frju.flym.ui.feeds.FeedListEditActivity
 import net.frju.flym.ui.settings.SettingsActivity
+import net.frju.flym.ui.settings.SettingsFragment
 import net.frju.flym.utils.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk21.listeners.onClick
@@ -91,6 +95,8 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
     private val feedGroups = mutableListOf<FeedGroup>()
     private val feedAdapter = FeedAdapter(feedGroups)
 
+    @ExperimentalStdlibApi
+    @ObsoleteCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         setupNoActionBarTheme()
 
@@ -258,6 +264,27 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
             goToEntriesList(null)
         }
 
+        if (Build.VERSION.SDK_INT >= 29 && !Environment.isExternalStorageLegacy()) {
+            if (getPrefBoolean(PrefConstants.DECSYNC_ENABLED, false) &&
+                    !getPrefBoolean(PrefConstants.DECSYNC_USE_SAF, false)) {
+                putPrefBoolean(PrefConstants.DECSYNC_ENABLED, false)
+                putPrefBoolean(PrefConstants.UPDATE_FORCES_SAF, true)
+            }
+            putPrefBoolean(PrefConstants.DECSYNC_USE_SAF, true)
+        }
+        if (getPrefBoolean(PrefConstants.UPDATE_FORCES_SAF, false)) {
+            AlertDialog.Builder(this)
+                    .setTitle(R.string.saf_update)
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        putPrefBoolean(PrefConstants.UPDATE_FORCES_SAF, false)
+                        startActivity<SettingsActivity>(SettingsFragment.EXTRA_SELECT_SAF_DIR to true)
+                    }
+                    .setNegativeButton(R.string.disable_decsync) { _, _ ->
+                        putPrefBoolean(PrefConstants.UPDATE_FORCES_SAF, false)
+                    }
+                    .show()
+        }
+
         if (getPrefBoolean(PrefConstants.REFRESH_ON_STARTUP, defValue = true)) {
             try { // Some people seems to sometimes have a IllegalStateException on this
                 startService(Intent(this, FetcherService::class.java)
@@ -266,6 +293,8 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
             } catch (t: Throwable) {
                 // Nothing to do, the refresh can still be triggered manually
             }
+        } else if (getPrefBoolean(PrefConstants.DECSYNC_ENABLED, false)) {
+            DecsyncUtils.withDecsync(this) { executeAllNewEntries(Extra(), true) }
         }
 
         AutoRefreshJobService.initAutoRefresh(this)
