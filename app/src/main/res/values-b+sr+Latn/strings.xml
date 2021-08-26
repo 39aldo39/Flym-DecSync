@@ -6,7 +6,7 @@
         <item quantity="few">Novih članaka: %d</item>
         <item quantity="other">Novih članaka: %d</item>
     </plurals>
-    <string name="app_name">Flim</string>
+    <string name="app_name">Flim DecSync</string>
     <string name="about_flym">O Flimu</string>
     <string name="welcome_title">Dobrodošli u Flim. Da li želite da dodate novi dovod?</string>
     <string name="cannot_find_feeds">Dovodi nisu pronađeni</string>

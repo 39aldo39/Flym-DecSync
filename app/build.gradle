@@ -10,7 +10,7 @@ androidExtensions {
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "net.frju.flym"
+        applicationId "org.decsync.flym"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 40

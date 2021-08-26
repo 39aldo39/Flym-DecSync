@@ -5,8 +5,8 @@
         <item quantity="one">Uma nova entrada</item>
         <item quantity="other">%d novas entradas</item>
     </plurals>
-    <string name="app_name">Flym</string>
-    <string name="about_flym">Sobre o Flym</string>
+    <string name="app_name">Flym DecSync</string>
+    <string name="about_flym">Sobre o Flym DecSync</string>
     <string name="welcome_title">Bem-vindo ao Flym. Gostaria de adicionar um feed?</string>
     <string name="cannot_find_feeds">Nenhum feed foi encontrado</string>
     <string name="menu_settings">Configurações</string>

@@ -5,8 +5,8 @@
         <item quantity="one">Yeni bir öğe</item>
         <item quantity="other">%d yeni öğe</item>
     </plurals>
-    <string name="app_name">Flym</string>
-    <string name="about_flym">Flym Hakkında</string>
+    <string name="app_name">Flym DecSync</string>
+    <string name="about_flym">Flym DecSync Hakkında</string>
     <string name="welcome_title">Flym\'e hoşgeldiniz. Yayın eklemek ister misiniz?</string>
     <string name="cannot_find_feeds">Yayın bulunamadı</string>
     <string name="menu_settings">Ayarlar</string>

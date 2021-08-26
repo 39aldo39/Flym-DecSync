@@ -7,7 +7,7 @@
         <item quantity="many">%d новых записей</item>
         <item quantity="other">%d новых записей</item>
     </plurals>
-    <string name="app_name">Flym</string>
+    <string name="app_name">Flym DecSync</string>
     <string name="about_flym">О программе</string>
     <string name="welcome_title">Добро пожаловать в Flym. Хотите добавить новую ленту?</string>
     <string name="cannot_find_feeds">Ленты не найдены</string>

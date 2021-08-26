@@ -5,7 +5,7 @@
         <item quantity="one">Egy új bejegyzés</item>
         <item quantity="other">%d új bejegyzés</item>
     </plurals>
-    <string name="app_name">Flym</string>
+    <string name="app_name">Flym DecSync</string>
     <string name="about_flym">A Flym-ről</string>
     <string name="welcome_title">Üdvözöljük a Flym-ben. Szeretne hozzáadni hírcsatornákat?</string>
     <string name="cannot_find_feeds">Nem található hírcsatorna</string>

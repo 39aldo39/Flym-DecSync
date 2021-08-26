@@ -5,7 +5,7 @@
         <item quantity="one">Un artículo nuevo</item>
         <item quantity="other">%d artículos nuevos</item>
     </plurals>
-    <string name="about_flym">Sobre Flym</string>
+    <string name="about_flym">Sobre Flym DecSync</string>
     <string name="welcome_title">Bienvenido a Flym ¿Quieres añadir una fuente?</string>
     <string name="cannot_find_feeds">No encontré fuentes</string>
     <string name="menu_settings">Configuración</string>

@@ -7,7 +7,7 @@
         <item quantity="many">%d nových článkov</item>
         <item quantity="other">%d nových článkov</item>
     </plurals>
-    <string name="about_flym">O aplikácii Flym</string>
+    <string name="about_flym">O aplikácii Flym DecSync</string>
     <string name="welcome_title">Vitajte v aplikácii Flym. Chcete pridať nový zdroj?</string>
     <string name="cannot_find_feeds">No feeds has been found</string>
     <string name="menu_settings">Nastavenia</string>

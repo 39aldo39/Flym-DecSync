@@ -4,8 +4,8 @@
     <plurals name="number_of_new_entries">
         <item quantity="other">%d 篇新文章</item>
     </plurals>
-    <string name="app_name">Flym</string>
-    <string name="about_flym">关于 Flym</string>
+    <string name="app_name">Flym DecSync</string>
+    <string name="about_flym">关于 Flym DecSync</string>
     <string name="welcome_title">欢迎使用 Flym 。需要添加一个订阅源吗？</string>
     <string name="cannot_find_feeds">未发现订阅源</string>
     <string name="menu_settings">设置</string>
