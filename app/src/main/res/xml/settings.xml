@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:title="@string/settings_category_general">
 
-        <net.frju.flym.ui.views.AutoSummaryListPreference
+        <org.decsync.flym.ui.views.AutoSummaryListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="DARK"
@@ -34,7 +34,7 @@
         android:title="@string/settings_category_article_appearance">
 
 
-        <net.frju.flym.ui.views.AutoSummaryListPreference
+        <org.decsync.flym.ui.views.AutoSummaryListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="0"
@@ -52,7 +52,7 @@
             android:summary="@string/settings_display_images_description"
             android:title="@string/settings_display_images" />
 
-        <net.frju.flym.ui.views.AutoSummaryListPreference
+        <org.decsync.flym.ui.views.AutoSummaryListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="WIFI_ONLY_PRELOAD"
@@ -111,7 +111,7 @@
             android:summary="@string/settings_sort_order"
             android:title="@string/settings_sort_order_title" />
 
-        <net.frju.flym.ui.views.AutoSummaryListPreference
+        <org.decsync.flym.ui.views.AutoSummaryListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="4"
@@ -121,7 +121,7 @@
             android:key="keep_time"
             android:title="@string/settings_keep_time" />
 
-        <net.frju.flym.ui.views.AutoSummaryListPreference
+        <org.decsync.flym.ui.views.AutoSummaryListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="0"
@@ -161,7 +161,7 @@
             android:summary="@string/settings_refresh_enabled_description"
             android:title="@string/settings_refresh_enabled" />
 
-        <net.frju.flym.ui.views.AutoSummaryListPreference
+        <org.decsync.flym.ui.views.AutoSummaryListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="7200"

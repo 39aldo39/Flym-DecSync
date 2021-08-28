@@ -20,13 +20,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <net.frju.flym.ui.views.SwipeRefreshLayout
+    <org.decsync.flym.ui.views.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <net.frju.flym.ui.views.EmptyRecyclerView
+        <org.decsync.flym.ui.views.EmptyRecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -35,7 +35,7 @@
             android:paddingBottom="@dimen/recycler_view_bottom_padding_with_nav"
             android:scrollbars="vertical" />
 
-    </net.frju.flym.ui.views.SwipeRefreshLayout>
+    </org.decsync.flym.ui.views.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/empty_view"

@@ -20,7 +20,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <net.frju.flym.ui.views.SwipeRefreshLayout
+    <org.decsync.flym.ui.views.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,13 +33,13 @@
             android:scrollbars="vertical"
             android:background="?attr/colorBackground">
 
-            <net.frju.flym.ui.entrydetails.EntryDetailsView
+            <org.decsync.flym.ui.entrydetails.EntryDetailsView
                 android:id="@+id/entry_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </androidx.core.widget.NestedScrollView>
 
-    </net.frju.flym.ui.views.SwipeRefreshLayout>
+    </org.decsync.flym.ui.views.SwipeRefreshLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
