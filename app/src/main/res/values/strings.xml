@@ -144,6 +144,7 @@
     <string name="settings_decsync_enabled">Enable DecSync</string>
     <string name="settings_decsync_enabled_description">Sync with other RSS readers</string>
     <string name="settings_decsync_dir_not_configured">No DecSync directory configured</string>
+    <string name="settings_decsync_manage_data">Manage DecSync data</string>
 
     <!-- DecSync -->
     <string name="saf_update">Due to an Android update you need to reselect the DecSync directory</string>

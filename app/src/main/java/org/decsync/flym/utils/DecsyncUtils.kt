@@ -17,10 +17,7 @@ import org.decsync.flym.data.utils.PrefConstants.DECSYNC_FILE
 import org.decsync.flym.data.utils.PrefConstants.DECSYNC_USE_SAF
 import org.decsync.flym.data.utils.PrefConstants.UPDATE_FORCES_SAF
 import org.decsync.flym.service.FetcherService
-import org.decsync.library.Decsync
-import org.decsync.library.DecsyncChannel
-import org.decsync.library.DecsyncPrefUtils
-import org.decsync.library.getAppId
+import org.decsync.library.*
 import org.jetbrains.anko.notificationManager
 import java.io.File
 
@@ -32,8 +29,18 @@ private const val ERROR_NOTIFICATION_ID = 1
 class Extra
 
 @ExperimentalStdlibApi
-@ObsoleteCoroutinesApi
 object DecsyncUtils {
+    fun getDecsyncDir(context: Context): NativeFile {
+        return if (context.getPrefBoolean(DECSYNC_USE_SAF, false)) {
+            val uri = DecsyncPrefUtils.getDecsyncDir(context) ?: throw Exception(context.getString(R.string.settings_decsync_dir_not_configured))
+            nativeFileFromDirUri(context, uri)
+        } else {
+            val file = File(context.getPrefString(DECSYNC_FILE, defaultDecsyncDir))
+            nativeFileFromFile(file)
+        }
+    }
+
+    @ObsoleteCoroutinesApi
     private val decsyncChannel = object: DecsyncChannel<Extra, Context>() {
         override fun isDecsyncEnabled(context: Context): Boolean {
             if (!context.getPrefBoolean(DECSYNC_ENABLED, false)) return false
@@ -49,13 +56,8 @@ object DecsyncUtils {
         }
 
         override fun getNewDecsync(context: Context): Decsync<Extra> {
-            val decsync = if (context.getPrefBoolean(DECSYNC_USE_SAF, false)) {
-                val decsyncDir = DecsyncPrefUtils.getDecsyncDir(context) ?: throw Exception(context.getString(R.string.settings_decsync_dir_not_configured))
-                Decsync<Extra>(context, decsyncDir, "rss", null, ownAppId)
-            } else {
-                val decsyncDir = File(context.getPrefString(DECSYNC_FILE, defaultDecsyncDir))
-                Decsync<Extra>(decsyncDir, "rss", null, ownAppId)
-            }
+            val decsyncDir = getDecsyncDir(context)
+            val decsync = Decsync<Extra>(decsyncDir, "rss", null, ownAppId)
             decsync.addMultiListener(listOf("articles", "read"), DecsyncListeners::readListener)
             decsync.addMultiListener(listOf("articles", "marked"), DecsyncListeners::markedListener)
             decsync.addListener(listOf("feeds", "subscriptions"), DecsyncListeners::subscriptionsListener)
@@ -94,10 +96,12 @@ object DecsyncUtils {
         }
     }
 
+    @ObsoleteCoroutinesApi
     fun withDecsync(context: Context, action: Decsync<Extra>.() -> Unit) {
         decsyncChannel.withDecsync(context, action)
     }
 
+    @ObsoleteCoroutinesApi
     fun initSync(context: Context) {
         decsyncChannel.initSyncWith(context) {
             // Initialize DecSync and subscribe to its feeds

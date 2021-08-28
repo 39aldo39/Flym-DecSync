@@ -32,6 +32,7 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 import net.fred.feedex.R
 import org.decsync.flym.data.utils.PrefConstants.DECSYNC_ENABLED
 import org.decsync.flym.data.utils.PrefConstants.DECSYNC_FILE
+import org.decsync.flym.data.utils.PrefConstants.DECSYNC_MANAGE_DATA
 import org.decsync.flym.data.utils.PrefConstants.DECSYNC_USE_SAF
 import org.decsync.flym.data.utils.PrefConstants.REFRESH_ENABLED
 import org.decsync.flym.data.utils.PrefConstants.REFRESH_INTERVAL
@@ -41,6 +42,7 @@ import org.decsync.flym.ui.main.MainActivity
 import org.decsync.flym.ui.views.AutoSummaryListPreference
 import org.decsync.flym.utils.*
 import org.decsync.library.DecsyncPrefUtils
+import org.decsync.library.NativeFile
 import org.jetbrains.anko.support.v4.startActivity
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -56,6 +58,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         true
     }
 
+    @ExperimentalStdlibApi
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
 
@@ -96,6 +99,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     true
                 }
             }
+        }
+
+        findPreference<Preference>(DECSYNC_MANAGE_DATA)?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val decsyncDir = DecsyncUtils.getDecsyncDir(requireContext())
+            val params = DecsyncPrefUtils.Params(ownAppId = ownAppId)
+            DecsyncPrefUtils.manageDecsyncData(requireContext(), decsyncDir, "rss", null, params)
+            true
         }
     }
 
