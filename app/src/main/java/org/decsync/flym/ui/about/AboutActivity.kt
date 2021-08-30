@@ -40,7 +40,7 @@ class AboutActivity : AppCompatActivity() {
                 .setName("Aldo Gunsing")
                 .setSubTitle(R.string.about_screen_based_on_flym)
                 .setBrief(R.string.about_screen_info)
-                .setAppIcon(R.mipmap.ic_launcher_foreground)
+                .setAppIcon(R.drawable.ic_launcher_foreground)
                 .setAppName(R.string.app_name)
                 .addGitHubLink("39aldo39/Flym")
                 .addShareAction(R.string.app_name)
