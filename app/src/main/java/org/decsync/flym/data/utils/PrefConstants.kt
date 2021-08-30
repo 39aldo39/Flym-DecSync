@@ -59,4 +59,6 @@ object PrefConstants {
     const val UPDATE_FORCES_SAF = "update_forces_saf"
     const val DECSYNC_FILE = "decsync.directory"
     const val DECSYNC_MANAGE_DATA = "decsync.manage_data"
+
+    const val INTRO_DONE = "intro_done"
 }

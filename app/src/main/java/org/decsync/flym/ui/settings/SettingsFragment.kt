@@ -50,7 +50,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
     companion object {
         private const val CHOOSE_DECSYNC_FILE = 0
         private const val PERMISSIONS_REQUEST_DECSYNC = 2
-        const val EXTRA_SELECT_SAF_DIR = "select_saf_dir"
     }
 
     private val onRefreshChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
@@ -109,13 +108,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    override fun onBindPreferences() {
-        if (requireActivity().intent.getBooleanExtra(EXTRA_SELECT_SAF_DIR, false)) {
-            scrollToPreference(DECSYNC_ENABLED)
-            DecsyncPrefUtils.chooseDecsyncDir(this)
-        }
-    }
-
     private fun chooseDecsyncFile() {
         val intent = Intent(requireContext(), FilePickerActivity::class.java)
         intent.putExtra(FilePickerActivity.EXTRA_ALLOW_CREATE_DIR, true)
@@ -133,9 +125,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             DecsyncPrefUtils.chooseDecsyncDirResult(requireContext(), requestCode, resultCode, data) {
                 requireContext().putPrefBoolean(DECSYNC_ENABLED, true)
                 findPreference<CheckBoxPreference>(DECSYNC_ENABLED)?.isChecked = true
-                if (!requireActivity().intent.getBooleanExtra(EXTRA_SELECT_SAF_DIR, false)) {
-                    DecsyncUtils.initSync(requireContext())
-                }
+                DecsyncUtils.initSync(requireContext())
             }
         } else {
             if (requestCode == CHOOSE_DECSYNC_FILE) {

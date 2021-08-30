@@ -152,6 +152,20 @@
     <string name="decsync_disabled">DecSync support disabled</string>
     <string name="channel_error_name">Errors</string>
 
+    <!-- IntroActivity -->
+    <string name="title_activity_intro">Introduction</string>
+    <string name="intro_welcome_title">Welcome to Flym DecSync</string>
+    <string name="intro_welcome_desc">Flym DecSync is a fork of Flym which adds synchronization using DecSync</string>
+    <string name="intro_directory_title">DecSync Directory</string>
+    <string name="intro_directory_desc">To start synchronizing, all you have to do is synchronize the DecSync directory</string>
+    <string name="intro_directory_button">Choose directory</string>
+    <string name="intro_directory_checkbox">Enable DecSync synchronization</string>
+    <string name="intro_directory_select">Please select a DecSync directory</string>
+
+    <!-- SafUpdateActivity -->
+    <string name="title_activity_saf_update">Android update</string>
+    <string name="saf_update_desc">Due to an Android update you need to reselect the DecSync directory</string>
+
     <string-array name="settings_intervals">
         <item>5 minutes</item>
         <item>15 minutes</item>

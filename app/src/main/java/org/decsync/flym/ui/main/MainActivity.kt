@@ -60,6 +60,8 @@ import org.decsync.flym.ui.entrydetails.EntryDetailsFragment
 import org.decsync.flym.ui.feeds.FeedAdapter
 import org.decsync.flym.ui.feeds.FeedGroup
 import org.decsync.flym.ui.feeds.FeedListEditActivity
+import org.decsync.flym.ui.intro.IntroActivity
+import org.decsync.flym.ui.intro.SafUpdateActivity
 import org.decsync.flym.ui.settings.SettingsActivity
 import org.decsync.flym.ui.settings.SettingsFragment
 import org.decsync.flym.utils.*
@@ -101,6 +103,27 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
         setupNoActionBarTheme()
 
         super.onCreate(savedInstanceState)
+
+        if (Build.VERSION.SDK_INT >= 29 && !Environment.isExternalStorageLegacy()) {
+            if (getPrefBoolean(PrefConstants.DECSYNC_ENABLED, false) &&
+                !getPrefBoolean(PrefConstants.DECSYNC_USE_SAF, false)) {
+                putPrefBoolean(PrefConstants.DECSYNC_ENABLED, false)
+                putPrefBoolean(PrefConstants.UPDATE_FORCES_SAF, true)
+            }
+            putPrefBoolean(PrefConstants.DECSYNC_USE_SAF, true)
+        }
+        if (!getPrefBoolean(PrefConstants.INTRO_DONE, false)) {
+            val intent = Intent(this, IntroActivity::class.java)
+            startActivity(intent)
+            super.finish()
+            return
+        }
+        if (getPrefBoolean(PrefConstants.UPDATE_FORCES_SAF, false)) {
+            val intent = Intent(this, SafUpdateActivity::class.java)
+            startActivity(intent)
+            super.finish()
+            return
+        }
 
         setContentView(R.layout.activity_main)
 
@@ -251,9 +274,12 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
         })
 
         if (savedInstanceState == null) {
-            // First open => we open the drawer for you
-            if (getPrefBoolean(PrefConstants.FIRST_OPEN, true)) {
+            val firstOpen = getPrefBoolean(PrefConstants.FIRST_OPEN, true)
+            if (firstOpen) {
                 putPrefBoolean(PrefConstants.FIRST_OPEN, false)
+            }
+            // First open and no DecSync => we open the drawer for you
+            if (firstOpen && !getPrefBoolean(PrefConstants.DECSYNC_ENABLED, false)) {
                 openDrawer()
 
                 showAlertDialog(R.string.welcome_title) { goToFeedSearch() }
@@ -262,27 +288,6 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
             }
 
             goToEntriesList(null)
-        }
-
-        if (Build.VERSION.SDK_INT >= 29 && !Environment.isExternalStorageLegacy()) {
-            if (getPrefBoolean(PrefConstants.DECSYNC_ENABLED, false) &&
-                    !getPrefBoolean(PrefConstants.DECSYNC_USE_SAF, false)) {
-                putPrefBoolean(PrefConstants.DECSYNC_ENABLED, false)
-                putPrefBoolean(PrefConstants.UPDATE_FORCES_SAF, true)
-            }
-            putPrefBoolean(PrefConstants.DECSYNC_USE_SAF, true)
-        }
-        if (getPrefBoolean(PrefConstants.UPDATE_FORCES_SAF, false)) {
-            AlertDialog.Builder(this)
-                    .setTitle(R.string.saf_update)
-                    .setPositiveButton(android.R.string.ok) { _, _ ->
-                        putPrefBoolean(PrefConstants.UPDATE_FORCES_SAF, false)
-                        startActivity<SettingsActivity>(SettingsFragment.EXTRA_SELECT_SAF_DIR to true)
-                    }
-                    .setNegativeButton(R.string.disable_decsync) { _, _ ->
-                        putPrefBoolean(PrefConstants.UPDATE_FORCES_SAF, false)
-                    }
-                    .show()
         }
 
         if (getPrefBoolean(PrefConstants.REFRESH_ON_STARTUP, defValue = true)) {

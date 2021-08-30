@@ -14,4 +14,8 @@
     <dimen name="recycler_view_vertical_padding">8dp</dimen>
     <dimen name="recycler_view_bottom_padding_with_nav">73dp</dimen>
 
+    <!-- IntroActivity -->
+    <dimen name="intro_title">30sp</dimen>
+    <dimen name="intro_desc">16sp</dimen>
+
 </resources>

@@ -126,6 +126,7 @@ dependencies {
     implementation 'org.decsync:libdecsync:2.0.0'
     implementation 'com.nononsenseapps:filepicker:4.2.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
+    implementation 'com.github.AppIntro:AppIntro:6.0.0'
 
     testImplementation 'junit:junit:4.13.2'
 }

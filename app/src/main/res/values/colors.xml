@@ -10,6 +10,10 @@
 
     <color name="status_bar_background">#52000000</color>
 
+    <color name="bg_intro_welcome">#00695C</color>
+    <color name="bg_intro_directory">#0277BD</color>
+    <color name="img_intro_directory">#404040</color>
+
     <!-- Dark Theme specific colors -->
     <color name="colorPrimaryDark">#00665C</color>
     <color name="colorBackground">#202020</color>
