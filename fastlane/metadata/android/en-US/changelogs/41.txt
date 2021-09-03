@@ -1,0 +1,2 @@
+- Add DecSync support
+- Rename from 'Flym' to 'Flym DecSync'
