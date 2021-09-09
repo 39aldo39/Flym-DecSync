@@ -42,7 +42,7 @@ class AboutActivity : AppCompatActivity() {
                 .setBrief(R.string.about_screen_info)
                 .setAppIcon(R.drawable.ic_launcher_foreground)
                 .setAppName(R.string.app_name)
-                .addGitHubLink("39aldo39/Flym")
+                .addGitHubLink("39aldo39/Flym-DecSync")
                 .addShareAction(R.string.app_name)
                 .setWrapScrollView(true)
                 .setLinksAnimated(true)
