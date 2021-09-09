@@ -1,6 +1,10 @@
 Flym DecSync
 ============
 
+[<img src="https://f-droid.org/badge/get-it-on.png"
+      alt="Get it on F-Droid"
+      height="80">](https://f-droid.org/app/org.decsync.flym)
+
 Flym DecSync is a fork of [Flym](https://github.com/FredJul/Flym) which adds synchronization using [DecSync](https://github.com/39aldo39/DecSync). To start synchronizing, all you have to do is synchronize your selected DecSync directory, using for example [Syncthing](https://syncthing.net).
 
 Donations
