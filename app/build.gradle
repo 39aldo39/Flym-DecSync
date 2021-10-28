@@ -13,8 +13,8 @@ android {
         applicationId "org.decsync.flym"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 43
-        versionName "2.6.2"
+        versionCode 44
+        versionName "2.7.0"
     }
 
     compileOptions {
