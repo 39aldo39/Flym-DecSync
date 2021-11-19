@@ -634,9 +634,9 @@ class MainActivity : AppCompatActivity(), MainNavigator, AnkoLogger {
             encoding = "utf-8"
             created = Date()
             outlines = feeds[null]?.map { feed ->
-                Outline(feed.title, if (feed.link.isNotBlank()) URL(feed.link) else null, null).apply {
+                Outline(feed.title, if (!feed.isGroup && feed.link.isNotBlank()) URL(feed.link) else null, null).apply {
                     children = feeds[feed.id]?.map {
-                        Outline(it.title, if (it.link.isNotBlank()) URL(it.link) else null, null).apply {
+                        Outline(it.title, if (!feed.isGroup && it.link.isNotBlank()) URL(it.link) else null, null).apply {
                             if (it.retrieveFullText) {
                                 attributes.add(Attribute(RETRIEVE_FULLTEXT_OPML_ATTR, "true"))
                             }
