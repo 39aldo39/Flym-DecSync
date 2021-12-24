@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import net.fred.feedex.R
 import org.decsync.flym.App
 import org.decsync.flym.data.entities.Feed
@@ -25,6 +26,8 @@ import java.util.Timer
 import java.util.TimerTask
 
 
+@ExperimentalStdlibApi
+@ObsoleteCoroutinesApi
 class DiscoverActivity : AppCompatActivity(), FeedManagementInterface {
 
     companion object {
@@ -136,7 +139,7 @@ class DiscoverActivity : AppCompatActivity(), FeedManagementInterface {
     override fun addFeed(view: View, title: String, link: String) {
         doAsync {
             val feedToAdd = Feed(link = link, title = title)
-            org.decsync.flym.App.db.feedDao().insert(feedToAdd)
+            App.db.feedDao().insert(feedToAdd)
             uiThread {
                 view.snackbar(R.string.feed_added)
             }
@@ -145,7 +148,7 @@ class DiscoverActivity : AppCompatActivity(), FeedManagementInterface {
 
     override fun deleteFeed(view: View, feed: SearchFeedResult) {
         doAsync {
-            org.decsync.flym.App.db.feedDao().deleteByLink(feed.link)
+            App.db.feedDao().deleteByLink(feed.link)
         }
     }
 

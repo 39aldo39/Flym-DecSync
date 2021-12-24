@@ -36,8 +36,6 @@ import com.rometools.rome.io.XmlReader
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import net.dankito.readability4j.extended.Readability4JExtended
 import net.fred.feedex.R
-import org.decsync.flym.App
-import org.decsync.flym.App.Companion.context
 import org.decsync.flym.data.entities.Entry
 import org.decsync.flym.data.entities.Feed
 import org.decsync.flym.data.entities.Task
@@ -51,6 +49,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okio.buffer
 import okio.sink
+import org.decsync.flym.App
 import org.jetbrains.anko.*
 import org.jsoup.Jsoup
 import java.io.File
@@ -64,6 +63,8 @@ import java.util.concurrent.TimeUnit
 import kotlin.math.max
 
 
+@ExperimentalStdlibApi
+@ObsoleteCoroutinesApi
 class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 
     companion object : AnkoLogger {
@@ -88,7 +89,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
         private const val THREAD_NUMBER = 3
         private const val MAX_TASK_ATTEMPT = 3
 
-        private val IMAGE_FOLDER_FILE = File(org.decsync.flym.App.context.cacheDir, "images/")
+        private val IMAGE_FOLDER_FILE = File(App.context.cacheDir, "images/")
         private val IMAGE_FOLDER = IMAGE_FOLDER_FILE.absolutePath + '/'
         private const val TEMP_PREFIX = "TEMP__"
         private const val ID_SEPARATOR = "__"
@@ -145,10 +146,10 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                     val acceptMinDate = max(readEntriesKeepDate, unreadEntriesKeepDate)
 
                     var newCount = 0
-                    if (feedId == 0L || org.decsync.flym.App.db.feedDao().findById(feedId)?.isGroup == true) {
+                    if (feedId == 0L || App.db.feedDao().findById(feedId)?.isGroup == true) {
                         newCount = refreshFeeds(feedId, acceptMinDate)
                     } else {
-                        org.decsync.flym.App.db.feedDao().findById(feedId)?.link?.let { link ->
+                        App.db.feedDao().findById(feedId)?.link?.let { link ->
                             try {
                                 newCount = refreshFeed(feedId, link, acceptMinDate)
                             } catch (e: Exception) {
@@ -169,25 +170,25 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
         private fun showRefreshNotification(itemCount: Int = 0) {
 
             val shouldDisplayNotification =
-                    context.getPrefBoolean(PrefConstants.REFRESH_NOTIFICATION_ENABLED, true)
+                    App.context.getPrefBoolean(PrefConstants.REFRESH_NOTIFICATION_ENABLED, true)
 
             if (shouldDisplayNotification && itemCount > 0) {
                 if (!MainActivity.isInForeground) {
-                    val unread = org.decsync.flym.App.db.entryDao().countUnread
+                    val unread = App.db.entryDao().countUnread
 
                     if (unread > 0) {
-                        val text = context.resources.getQuantityString(
+                        val text = App.context.resources.getQuantityString(
                                 R.plurals.number_of_new_entries,
                                 unread.toInt(),
                                 unread
                         )
 
                         val notificationIntent = Intent(
-                                context,
+                                App.context,
                                 MainActivity::class.java
                         ).putExtra(MainActivity.EXTRA_FROM_NOTIF, true)
                         val contentIntent = PendingIntent.getActivity(
-                                context, 0, notificationIntent,
+                                App.context, 0, notificationIntent,
                                 PendingIntent.FLAG_UPDATE_CURRENT
                         )
 
@@ -197,43 +198,43 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             val channel = NotificationChannel(
                                     channelId,
-                                    context.getString(R.string.app_name),
+                                    App.context.getString(R.string.app_name),
                                     NotificationManager.IMPORTANCE_DEFAULT
                             )
-                            context.notificationManager.createNotificationChannel(channel)
+                            App.context.notificationManager.createNotificationChannel(channel)
                         }
 
-                        val notifBuilder = NotificationCompat.Builder(context, channelId)
+                        val notifBuilder = NotificationCompat.Builder(App.context, channelId)
                                 .setContentIntent(contentIntent)
                                 .setSmallIcon(R.drawable.ic_statusbar_rss)
                                 .setLargeIcon(
                                         BitmapFactory.decodeResource(
-                                                context.resources,
+                                                App.context.resources,
                                                 R.mipmap.ic_launcher
                                         )
                                 )
                                 .setTicker(text)
                                 .setWhen(System.currentTimeMillis())
                                 .setAutoCancel(true)
-                                .setContentTitle(context.getString(R.string.flym_feeds))
+                                .setContentTitle(App.context.getString(R.string.flym_feeds))
                                 .setContentText(text)
 
-                        context.notificationManager.notify(0, notifBuilder.build())
+                        App.context.notificationManager.notify(0, notifBuilder.build())
                     }
                 } else {
-                    context.notificationManager.cancel(0)
+                    App.context.notificationManager.cancel(0)
                 }
             }
         }
 
         fun shouldDownloadPictures(): Boolean {
-            val fetchPictureMode = context.getPrefString(PrefConstants.PRELOAD_IMAGE_MODE, PrefConstants.PRELOAD_IMAGE_MODE__WIFI_ONLY)
+            val fetchPictureMode = App.context.getPrefString(PrefConstants.PRELOAD_IMAGE_MODE, PrefConstants.PRELOAD_IMAGE_MODE__WIFI_ONLY)
 
-            if (context.getPrefBoolean(PrefConstants.DISPLAY_IMAGES, true)) {
+            if (App.context.getPrefBoolean(PrefConstants.DISPLAY_IMAGES, true)) {
                 if (PrefConstants.PRELOAD_IMAGE_MODE__ALWAYS == fetchPictureMode) {
                     return true
                 } else if (PrefConstants.PRELOAD_IMAGE_MODE__WIFI_ONLY == fetchPictureMode
-                        && context.connectivityManager.activeNetworkInfo?.type == ConnectivityManager.TYPE_WIFI) {
+                        && App.context.connectivityManager.activeNetworkInfo?.type == ConnectivityManager.TYPE_WIFI) {
                     return true
                 }
             }
@@ -269,20 +270,20 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                     }
                 }
 
-                org.decsync.flym.App.db.taskDao().insert(*newTasks.toTypedArray())
+                App.db.taskDao().insert(*newTasks.toTypedArray())
             }
         }
 
         fun addEntriesToMobilize(entryIds: List<String>) {
             val newTasks = entryIds.map { Task(entryId = it) }
 
-            org.decsync.flym.App.db.taskDao().insert(*newTasks.toTypedArray())
+            App.db.taskDao().insert(*newTasks.toTypedArray())
         }
 
 
         private fun mobilizeAllEntries() {
 
-            val tasks = org.decsync.flym.App.db.taskDao().mobilizeTasks
+            val tasks = App.db.taskDao().mobilizeTasks
             val imgUrlsToDownload = mutableMapOf<String, List<String>>()
 
             val downloadPictures = shouldDownloadPictures()
@@ -290,14 +291,14 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
             for (task in tasks) {
                 var success = false
 
-                org.decsync.flym.App.db.entryDao().findById(task.entryId)?.link?.let { link ->
+                App.db.entryDao().findById(task.entryId)?.link?.let { link ->
                     try {
                         createCall(link).execute().use { response ->
                             response.body?.byteStream()?.let { input ->
                                 Readability4JExtended(link, Jsoup.parse(input, null, link)).parse().articleContent?.html()?.let {
                                     val mobilizedHtml = HtmlUtils.improveHtmlContent(it, getBaseUrl(link))
 
-                                    org.decsync.flym.App.db.entryDao().findById(task.entryId)?.let { entry ->
+                                    App.db.entryDao().findById(task.entryId)?.let { entry ->
                                         val entryDescription = entry.description
                                         if (entryDescription == null || HtmlCompat.fromHtml(mobilizedHtml, HtmlCompat.FROM_HTML_MODE_LEGACY).length > HtmlCompat.fromHtml(entryDescription, HtmlCompat.FROM_HTML_MODE_LEGACY).length) { // If the retrieved text is smaller than the original one, then we certainly failed...
                                             if (downloadPictures) {
@@ -315,9 +316,9 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                                             success = true
 
                                             entry.mobilizedContent = mobilizedHtml
-                                            org.decsync.flym.App.db.entryDao().update(entry)
+                                            App.db.entryDao().update(entry)
 
-                                            org.decsync.flym.App.db.taskDao().delete(task)
+                                            App.db.taskDao().delete(task)
                                         }
                                     }
                                 }
@@ -330,10 +331,10 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 
                 if (!success) {
                     if (task.numberAttempt + 1 > MAX_TASK_ATTEMPT) {
-                        org.decsync.flym.App.db.taskDao().delete(task)
+                        App.db.taskDao().delete(task)
                     } else {
                         task.numberAttempt += 1
-                        org.decsync.flym.App.db.taskDao().update(task)
+                        App.db.taskDao().update(task)
                     }
                 }
             }
@@ -343,19 +344,19 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 
         private fun downloadAllImages() {
             if (shouldDownloadPictures()) {
-                val tasks = org.decsync.flym.App.db.taskDao().downloadTasks
+                val tasks = App.db.taskDao().downloadTasks
                 for (task in tasks) {
                     try {
                         downloadImage(task.entryId, task.imageLinkToDl)
 
                         // If we are here, everything is OK
-                        org.decsync.flym.App.db.taskDao().delete(task)
+                        App.db.taskDao().delete(task)
                     } catch (ignored: Exception) {
                         if (task.numberAttempt + 1 > MAX_TASK_ATTEMPT) {
-                            org.decsync.flym.App.db.taskDao().delete(task)
+                            App.db.taskDao().delete(task)
                         } else {
                             task.numberAttempt += 1
-                            org.decsync.flym.App.db.taskDao().insert(task)
+                            App.db.taskDao().insert(task)
                         }
                     }
                 }
@@ -374,9 +375,9 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
             var globalResult = 0
             val feeds: List<Feed>
             if (feedId == 0L) {
-                feeds = org.decsync.flym.App.db.feedDao().allNonGroupFeeds
+                feeds = App.db.feedDao().allNonGroupFeeds
             } else {
-                feeds = org.decsync.flym.App.db.feedDao().allFeedsInGroup(feedId)
+                feeds = App.db.feedDao().allFeedsInGroup(feedId)
             }
 
             for (feed in feeds) {
@@ -415,32 +416,32 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
                 createCall(feedLink).execute().use { response ->
                     val input = SyndFeedInput()
                     val romeFeed = input.build(XmlReader(response.body!!.byteStream()))
-                    entries.addAll(romeFeed.entries.asSequence().filter { it.publishedDate?.time ?: Long.MAX_VALUE > acceptMinDate }.map { it.toDbFormat(context, feedId) })
-                    org.decsync.flym.App.db.feedDao().findById(feedId)?.let { feed ->
+                    entries.addAll(romeFeed.entries.asSequence().filter { it.publishedDate?.time ?: Long.MAX_VALUE > acceptMinDate }.map { it.toDbFormat(App.context, feedId) })
+                    App.db.feedDao().findById(feedId)?.let { feed ->
                         val previousFeedState = feed.copy()
                         feed.update(romeFeed)
                         if (feed != previousFeedState) {
-                            org.decsync.flym.App.db.feedDao().update(feed)
+                            App.db.feedDao().update(feed)
                         }
                     }
                 }
             } catch (t: Throwable) {
-                org.decsync.flym.App.db.feedDao().setFetchError(feedId)
+                App.db.feedDao().setFetchError(feedId)
             }
 
 
             // First we remove the entries that we already have in db (no update to save data)
-            val existingIds = org.decsync.flym.App.db.entryDao().idsForFeed(feedId)
+            val existingIds = App.db.entryDao().idsForFeed(feedId)
             entries.removeAll { it.id in existingIds }
 
             // Second, we filter items with same title than one we already have
-            if (context.getPrefBoolean(PrefConstants.REMOVE_DUPLICATES, true)) {
-                val existingTitles = org.decsync.flym.App.db.entryDao().findAlreadyExistingTitles(entries.mapNotNull { it.title })
+            if (App.context.getPrefBoolean(PrefConstants.REMOVE_DUPLICATES, true)) {
+                val existingTitles = App.db.entryDao().findAlreadyExistingTitles(entries.mapNotNull { it.title })
                 entries.removeAll { it.title in existingTitles }
             }
 
             // Third, we filter items containing forbidden keywords
-            val filterKeywordString = context.getPrefString(PrefConstants.FILTER_KEYWORDS, "")!!
+            val filterKeywordString = App.context.getPrefString(PrefConstants.FILTER_KEYWORDS, "")!!
             if (filterKeywordString.isNotBlank()) {
                 val keywordLists = filterKeywordString.split(',').map { it.trim() }
 
@@ -494,9 +495,9 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
             }
 
             // Insert everything
-            org.decsync.flym.App.db.entryDao().insert(*entriesToInsert.toTypedArray())
+            App.db.entryDao().insert(*entriesToInsert.toTypedArray())
 
-            if (org.decsync.flym.App.db.feedDao().findById(feedId)?.retrieveFullText == true) {
+            if (App.db.feedDao().findById(feedId)?.retrieveFullText == true) {
                 addEntriesToMobilize(entries.map { it.id })
             }
 
@@ -507,7 +508,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 
         private fun deleteOldEntries(keepDateBorderTime: Long, read: Long) {
             if (keepDateBorderTime > 0) {
-                org.decsync.flym.App.db.entryDao().deleteOlderThan(keepDateBorderTime, read)
+                App.db.entryDao().deleteOlderThan(keepDateBorderTime, read)
                 // Delete the cache files
                 deleteEntriesImagesCache(keepDateBorderTime)
             }
@@ -547,7 +548,7 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
             if (IMAGE_FOLDER_FILE.exists()) {
 
                 // We need to exclude favorite entries images to this cleanup
-                val favoriteIds = org.decsync.flym.App.db.entryDao().favoriteIds
+                val favoriteIds = App.db.entryDao().favoriteIds
 
                 IMAGE_FOLDER_FILE.listFiles()?.forEach { file ->
                     // If old file and not part of a favorite entry
@@ -571,8 +572,6 @@ class FetcherService : IntentService(FetcherService::class.java.simpleName) {
 
     private val handler = Handler()
 
-    @ExperimentalStdlibApi
-    @ObsoleteCoroutinesApi
     public override fun onHandleIntent(intent: Intent?) {
         if (intent == null) { // No intent, we quit
             return

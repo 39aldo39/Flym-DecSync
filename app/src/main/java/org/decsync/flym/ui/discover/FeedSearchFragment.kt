@@ -16,6 +16,7 @@ import androidx.core.text.HtmlCompat
 import androidx.core.text.toSpannable
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import net.fred.feedex.R
 import org.decsync.flym.App
 import org.decsync.flym.GlideApp
@@ -31,6 +32,8 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
+@ExperimentalStdlibApi
+@ObsoleteCoroutinesApi
 class FeedSearchFragment : Fragment(), AdapterView.OnItemClickListener {
 
     companion object {
@@ -119,7 +122,7 @@ class FeedSearchFragment : Fragment(), AdapterView.OnItemClickListener {
                                     val feedTitle = HtmlCompat.fromHtml(entry.get(FEED_SEARCH_TITLE).toString(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
                                     val feedDescription = HtmlCompat.fromHtml(entry.get(FEED_SEARCH_DESC).toString(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
                                     val feedIconUrl = if (entry.has(FEED_SEARCH_ICON_URL)) HtmlCompat.fromHtml(entry.get(FEED_SEARCH_ICON_URL).toString(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString() else null
-                                    val feedAdded = org.decsync.flym.App.db.feedDao().findByLink(url) != null
+                                    val feedAdded = App.db.feedDao().findByLink(url) != null
                                     val feedResult = SearchFeedResult(feedIconUrl, url, feedTitle, feedDescription, feedAdded)
                                     Log.d(TAG, feedResult.toString())
                                     array.add(feedResult)

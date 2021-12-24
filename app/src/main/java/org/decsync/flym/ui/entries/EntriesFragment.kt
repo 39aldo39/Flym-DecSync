@@ -47,6 +47,7 @@ import kotlinx.android.synthetic.main.fragment_entries.coordinator
 import kotlinx.android.synthetic.main.fragment_entries.refresh_layout
 import kotlinx.android.synthetic.main.fragment_entries.toolbar
 import kotlinx.android.synthetic.main.view_entry.view.*
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import net.fred.feedex.R
 import org.decsync.flym.App
 import org.decsync.flym.data.entities.EntryWithFeed
@@ -66,6 +67,8 @@ import q.rorbin.badgeview.QBadgeView
 import java.util.*
 
 
+@ExperimentalStdlibApi
+@ObsoleteCoroutinesApi
 class EntriesFragment : Fragment(R.layout.fragment_entries) {
 
     companion object {
@@ -116,9 +119,9 @@ class EntriesFragment : Fragment(R.layout.fragment_entries) {
 
                 doAsync {
                     if (entryWithFeed.entry.favorite) {
-                        org.decsync.flym.App.db.entryDao().markAsFavorite(entryWithFeed.entry.id)
+                        App.db.entryDao().markAsFavorite(entryWithFeed.entry.id)
                     } else {
-                        org.decsync.flym.App.db.entryDao().markAsNotFavorite(entryWithFeed.entry.id)
+                        App.db.entryDao().markAsNotFavorite(entryWithFeed.entry.id)
                     }
                 }
             }
@@ -187,7 +190,7 @@ class EntriesFragment : Fragment(R.layout.fragment_entries) {
                     doAsync {
                         // TODO check if limit still needed
                         entryIds.withIndex().groupBy { it.index / 300 }.map { pair -> pair.value.map { it.value } }.forEach {
-                            org.decsync.flym.App.db.entryDao().markAsRead(it)
+                            App.db.entryDao().markAsRead(it)
                         }
                     }
 
@@ -197,7 +200,7 @@ class EntriesFragment : Fragment(R.layout.fragment_entries) {
                                 doAsync {
                                     // TODO check if limit still needed
                                     entryIds.withIndex().groupBy { it.index / 300 }.map { pair -> pair.value.map { it.value } }.forEach {
-                                        org.decsync.flym.App.db.entryDao().markAsUnread(it)
+                                        App.db.entryDao().markAsUnread(it)
                                     }
 
                                     uiThread {
@@ -229,18 +232,18 @@ class EntriesFragment : Fragment(R.layout.fragment_entries) {
         isDesc = context?.getPrefBoolean(PrefConstants.SORT_ORDER, true)!!
         entryIdsLiveData?.removeObservers(viewLifecycleOwner)
         entryIdsLiveData = when {
-            searchText != null -> org.decsync.flym.App.db.entryDao().observeIdsBySearch(searchText!!, isDesc)
-            feed?.isGroup == true && bottom_navigation.selectedItemId == R.id.unreads -> org.decsync.flym.App.db.entryDao().observeUnreadIdsByGroup(feed!!.id, listDisplayDate, isDesc)
-            feed?.isGroup == true && bottom_navigation.selectedItemId == R.id.favorites -> org.decsync.flym.App.db.entryDao().observeFavoriteIdsByGroup(feed!!.id, listDisplayDate, isDesc)
-            feed?.isGroup == true -> org.decsync.flym.App.db.entryDao().observeIdsByGroup(feed!!.id, listDisplayDate, isDesc)
+            searchText != null -> App.db.entryDao().observeIdsBySearch(searchText!!, isDesc)
+            feed?.isGroup == true && bottom_navigation.selectedItemId == R.id.unreads -> App.db.entryDao().observeUnreadIdsByGroup(feed!!.id, listDisplayDate, isDesc)
+            feed?.isGroup == true && bottom_navigation.selectedItemId == R.id.favorites -> App.db.entryDao().observeFavoriteIdsByGroup(feed!!.id, listDisplayDate, isDesc)
+            feed?.isGroup == true -> App.db.entryDao().observeIdsByGroup(feed!!.id, listDisplayDate, isDesc)
 
-            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && bottom_navigation.selectedItemId == R.id.unreads -> org.decsync.flym.App.db.entryDao().observeUnreadIdsByFeed(feed!!.id, listDisplayDate, isDesc)
-            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && bottom_navigation.selectedItemId == R.id.favorites -> org.decsync.flym.App.db.entryDao().observeFavoriteIdsByFeed(feed!!.id, listDisplayDate, isDesc)
-            feed != null && feed?.id != Feed.ALL_ENTRIES_ID -> org.decsync.flym.App.db.entryDao().observeIdsByFeed(feed!!.id, listDisplayDate, isDesc)
+            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && bottom_navigation.selectedItemId == R.id.unreads -> App.db.entryDao().observeUnreadIdsByFeed(feed!!.id, listDisplayDate, isDesc)
+            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && bottom_navigation.selectedItemId == R.id.favorites -> App.db.entryDao().observeFavoriteIdsByFeed(feed!!.id, listDisplayDate, isDesc)
+            feed != null && feed?.id != Feed.ALL_ENTRIES_ID -> App.db.entryDao().observeIdsByFeed(feed!!.id, listDisplayDate, isDesc)
 
-            bottom_navigation.selectedItemId == R.id.unreads -> org.decsync.flym.App.db.entryDao().observeAllUnreadIds(listDisplayDate, isDesc)
-            bottom_navigation.selectedItemId == R.id.favorites -> org.decsync.flym.App.db.entryDao().observeAllFavoriteIds(listDisplayDate, isDesc)
-            else -> org.decsync.flym.App.db.entryDao().observeAllIds(listDisplayDate, isDesc)
+            bottom_navigation.selectedItemId == R.id.unreads -> App.db.entryDao().observeAllUnreadIds(listDisplayDate, isDesc)
+            bottom_navigation.selectedItemId == R.id.favorites -> App.db.entryDao().observeAllFavoriteIds(listDisplayDate, isDesc)
+            else -> App.db.entryDao().observeAllIds(listDisplayDate, isDesc)
         }
 
         entryIdsLiveData?.observe(viewLifecycleOwner, Observer { list ->
@@ -249,18 +252,18 @@ class EntriesFragment : Fragment(R.layout.fragment_entries) {
 
         entriesLiveData?.removeObservers(viewLifecycleOwner)
         entriesLiveData = LivePagedListBuilder(when {
-            searchText != null -> org.decsync.flym.App.db.entryDao().observeSearch(searchText!!, isDesc)
-            feed?.isGroup == true && bottom_navigation.selectedItemId == R.id.unreads -> org.decsync.flym.App.db.entryDao().observeUnreadsByGroup(feed!!.id, listDisplayDate, isDesc)
-            feed?.isGroup == true && bottom_navigation.selectedItemId == R.id.favorites -> org.decsync.flym.App.db.entryDao().observeFavoritesByGroup(feed!!.id, listDisplayDate, isDesc)
-            feed?.isGroup == true -> org.decsync.flym.App.db.entryDao().observeByGroup(feed!!.id, listDisplayDate, isDesc)
+            searchText != null -> App.db.entryDao().observeSearch(searchText!!, isDesc)
+            feed?.isGroup == true && bottom_navigation.selectedItemId == R.id.unreads -> App.db.entryDao().observeUnreadsByGroup(feed!!.id, listDisplayDate, isDesc)
+            feed?.isGroup == true && bottom_navigation.selectedItemId == R.id.favorites -> App.db.entryDao().observeFavoritesByGroup(feed!!.id, listDisplayDate, isDesc)
+            feed?.isGroup == true -> App.db.entryDao().observeByGroup(feed!!.id, listDisplayDate, isDesc)
 
-            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && bottom_navigation.selectedItemId == R.id.unreads -> org.decsync.flym.App.db.entryDao().observeUnreadsByFeed(feed!!.id, listDisplayDate, isDesc)
-            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && bottom_navigation.selectedItemId == R.id.favorites -> org.decsync.flym.App.db.entryDao().observeFavoritesByFeed(feed!!.id, listDisplayDate, isDesc)
-            feed != null && feed?.id != Feed.ALL_ENTRIES_ID -> org.decsync.flym.App.db.entryDao().observeByFeed(feed!!.id, listDisplayDate, isDesc)
+            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && bottom_navigation.selectedItemId == R.id.unreads -> App.db.entryDao().observeUnreadsByFeed(feed!!.id, listDisplayDate, isDesc)
+            feed != null && feed?.id != Feed.ALL_ENTRIES_ID && bottom_navigation.selectedItemId == R.id.favorites -> App.db.entryDao().observeFavoritesByFeed(feed!!.id, listDisplayDate, isDesc)
+            feed != null && feed?.id != Feed.ALL_ENTRIES_ID -> App.db.entryDao().observeByFeed(feed!!.id, listDisplayDate, isDesc)
 
-            bottom_navigation.selectedItemId == R.id.unreads -> org.decsync.flym.App.db.entryDao().observeAllUnreads(listDisplayDate, isDesc)
-            bottom_navigation.selectedItemId == R.id.favorites -> org.decsync.flym.App.db.entryDao().observeAllFavorites(listDisplayDate, isDesc)
-            else -> org.decsync.flym.App.db.entryDao().observeAll(listDisplayDate, isDesc)
+            bottom_navigation.selectedItemId == R.id.unreads -> App.db.entryDao().observeAllUnreads(listDisplayDate, isDesc)
+            bottom_navigation.selectedItemId == R.id.favorites -> App.db.entryDao().observeAllFavorites(listDisplayDate, isDesc)
+            else -> App.db.entryDao().observeAll(listDisplayDate, isDesc)
         }, 30).build()
 
         entriesLiveData?.observe(viewLifecycleOwner, Observer { pagedList ->
@@ -269,9 +272,9 @@ class EntriesFragment : Fragment(R.layout.fragment_entries) {
 
         newCountLiveData?.removeObservers(viewLifecycleOwner)
         newCountLiveData = when {
-            feed?.isGroup == true -> org.decsync.flym.App.db.entryDao().observeNewEntriesCountByGroup(feed!!.id, listDisplayDate)
-            feed != null && feed?.id != Feed.ALL_ENTRIES_ID -> org.decsync.flym.App.db.entryDao().observeNewEntriesCountByFeed(feed!!.id, listDisplayDate)
-            else -> org.decsync.flym.App.db.entryDao().observeNewEntriesCount(listDisplayDate)
+            feed?.isGroup == true -> App.db.entryDao().observeNewEntriesCountByGroup(feed!!.id, listDisplayDate)
+            feed != null && feed?.id != Feed.ALL_ENTRIES_ID -> App.db.entryDao().observeNewEntriesCountByFeed(feed!!.id, listDisplayDate)
+            else -> App.db.entryDao().observeNewEntriesCount(listDisplayDate)
         }
 
         newCountLiveData?.observe(viewLifecycleOwner, Observer { count ->
@@ -447,10 +450,10 @@ class EntriesFragment : Fragment(R.layout.fragment_entries) {
                     doAsync {
                         val snackbarMessage: Int
                         if (entryWithFeed.entry.read) {
-                            org.decsync.flym.App.db.entryDao().markAsRead(listOf(entryWithFeed.entry.id))
+                            App.db.entryDao().markAsRead(listOf(entryWithFeed.entry.id))
                             snackbarMessage = R.string.marked_as_read
                         } else {
-                            org.decsync.flym.App.db.entryDao().markAsUnread(listOf(entryWithFeed.entry.id))
+                            App.db.entryDao().markAsUnread(listOf(entryWithFeed.entry.id))
                             snackbarMessage = R.string.marked_as_unread
                         }
 
@@ -459,9 +462,9 @@ class EntriesFragment : Fragment(R.layout.fragment_entries) {
                                 .setAction(R.string.undo) { _ ->
                                     doAsync {
                                         if (entryWithFeed.entry.read) {
-                                            org.decsync.flym.App.db.entryDao().markAsUnread(listOf(entryWithFeed.entry.id))
+                                            App.db.entryDao().markAsUnread(listOf(entryWithFeed.entry.id))
                                         } else {
-                                            org.decsync.flym.App.db.entryDao().markAsRead(listOf(entryWithFeed.entry.id))
+                                            App.db.entryDao().markAsRead(listOf(entryWithFeed.entry.id))
                                         }
                                     }
                                 }

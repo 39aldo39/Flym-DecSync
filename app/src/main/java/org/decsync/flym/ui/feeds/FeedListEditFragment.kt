@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_feed_list_edit.view.*
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import net.fred.feedex.R
 import org.decsync.flym.App
 import org.decsync.flym.data.entities.Feed
@@ -37,6 +38,8 @@ import org.decsync.flym.ui.views.DragNDropListener
 import org.jetbrains.anko.doAsync
 
 
+@ExperimentalStdlibApi
+@ObsoleteCoroutinesApi
 class FeedListEditFragment : Fragment() {
 
     private val feedGroups = mutableListOf<FeedGroup>()
@@ -90,7 +93,7 @@ class FeedListEditFragment : Fragment() {
             }
         }
 
-        org.decsync.flym.App.db.feedDao().observeAllWithCount.observe(this, Observer { nullableFeeds ->
+        App.db.feedDao().observeAllWithCount.observe(this, Observer { nullableFeeds ->
             nullableFeeds?.let { feeds ->
                 feedGroups.clear()
 
@@ -133,7 +136,7 @@ class FeedListEditFragment : Fragment() {
                                         title = groupName
                                         isGroup = true
                                     }
-                                    org.decsync.flym.App.db.feedDao().insert(newGroup)
+                                    App.db.feedDao().insert(newGroup)
                                 }
                             }
                         }
@@ -150,7 +153,7 @@ class FeedListEditFragment : Fragment() {
         fromFeed.displayPriority = newDisplayPriority
 
         doAsync {
-            org.decsync.flym.App.db.feedDao().update(fromFeed)
+            App.db.feedDao().update(fromFeed)
         }
     }
 }

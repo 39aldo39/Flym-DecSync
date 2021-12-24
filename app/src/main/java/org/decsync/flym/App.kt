@@ -41,6 +41,8 @@ import org.decsync.library.items.Rss
 import java.util.concurrent.Executors
 
 
+@ExperimentalStdlibApi
+@ObsoleteCoroutinesApi
 class App : Application() {
 
     companion object {
@@ -53,21 +55,19 @@ class App : Application() {
         lateinit var db: AppDatabase
             private set
 
-        @ExperimentalStdlibApi
-        @ObsoleteCoroutinesApi
         private abstract class MyDecsyncObserver<T> : DecsyncObserver(), Observer<List<T>> {
             abstract fun toDecsyncItem(item: T): DecsyncItem
 
             override fun isDecsyncEnabled(): Boolean {
-                return org.decsync.flym.App.Companion.context.getPrefBoolean(PrefConstants.DECSYNC_ENABLED, false)
+                return context.getPrefBoolean(PrefConstants.DECSYNC_ENABLED, false)
             }
 
             override fun setEntries(entries: List<Decsync.EntryWithPath>) {
-                DecsyncUtils.withDecsync(org.decsync.flym.App.Companion.context) { setEntries(entries) }
+                DecsyncUtils.withDecsync(context) { setEntries(entries) }
             }
 
             override fun executeStoredEntries(storedEntries: List<Decsync.StoredEntry>) {
-                DecsyncUtils.withDecsync(org.decsync.flym.App.Companion.context) { executeStoredEntries(storedEntries, Extra()) }
+                DecsyncUtils.withDecsync(context) { executeStoredEntries(storedEntries, Extra()) }
             }
 
             override fun onChanged(newList: List<T>) {
@@ -75,40 +75,30 @@ class App : Application() {
             }
         }
 
-        @ExperimentalStdlibApi
-        @ObsoleteCoroutinesApi
-        private val articleObserver = object: org.decsync.flym.App.Companion.MyDecsyncObserver<DecsyncArticle>() {
+        private val articleObserver = object: Companion.MyDecsyncObserver<DecsyncArticle>() {
             override fun toDecsyncItem(item: DecsyncArticle): Rss.Article = item.getRssArticle()
         }
-        @ExperimentalStdlibApi
-        @ObsoleteCoroutinesApi
-        private val feedObserver = object: org.decsync.flym.App.Companion.MyDecsyncObserver<DecsyncFeed>() {
+        private val feedObserver = object: Companion.MyDecsyncObserver<DecsyncFeed>() {
             override fun toDecsyncItem(item: DecsyncFeed): Rss.Feed = item.getRssFeed()
         }
-        @ExperimentalStdlibApi
-        @ObsoleteCoroutinesApi
-        private val categoryObserver = object: org.decsync.flym.App.Companion.MyDecsyncObserver<DecsyncCategory>() {
+        private val categoryObserver = object: Companion.MyDecsyncObserver<DecsyncCategory>() {
             override fun toDecsyncItem(item: DecsyncCategory): Rss.Category = item.getRssCategory()
         }
 
-        @ExperimentalStdlibApi
-        @ObsoleteCoroutinesApi
         fun initSync() {
-            org.decsync.flym.App.Companion.articleObserver.initSync()
-            org.decsync.flym.App.Companion.feedObserver.initSync()
-            org.decsync.flym.App.Companion.categoryObserver.initSync()
+            articleObserver.initSync()
+            feedObserver.initSync()
+            categoryObserver.initSync()
         }
     }
 
-    @ExperimentalStdlibApi
-    @ObsoleteCoroutinesApi
     override fun onCreate() {
         super.onCreate()
 
-        org.decsync.flym.App.Companion.context = applicationContext
-        org.decsync.flym.App.Companion.db = AppDatabase.createDatabase(org.decsync.flym.App.Companion.context)
+        context = applicationContext
+        db = AppDatabase.createDatabase(context)
 
-        org.decsync.flym.App.Companion.context.putPrefBoolean(PrefConstants.IS_REFRESHING, false) // init
+        context.putPrefBoolean(PrefConstants.IS_REFRESHING, false) // init
 
         // Enable strict mode to find performance issues in debug build
         if (BuildConfig.DEBUG) {
@@ -132,8 +122,8 @@ class App : Application() {
         }
 
         // Add DecSync observers
-        org.decsync.flym.App.Companion.db.entryDao().observeAllDecsyncArticles.observeForever(org.decsync.flym.App.Companion.articleObserver)
-        org.decsync.flym.App.Companion.db.feedDao().observeAllDecsyncFeeds.observeForever(org.decsync.flym.App.Companion.feedObserver)
-        org.decsync.flym.App.Companion.db.feedDao().observeAllDecsyncCategories.observeForever(org.decsync.flym.App.Companion.categoryObserver)
+        db.entryDao().observeAllDecsyncArticles.observeForever(articleObserver)
+        db.feedDao().observeAllDecsyncFeeds.observeForever(feedObserver)
+        db.feedDao().observeAllDecsyncCategories.observeForever(categoryObserver)
     }
 }

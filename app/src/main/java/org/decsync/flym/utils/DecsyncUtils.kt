@@ -109,7 +109,7 @@ object DecsyncUtils {
             executeStoredEntriesForPathExact(listOf("feeds", "subscriptions"), Extra())
 
             // Behaves like we just inserted everything in the database
-            org.decsync.flym.App.initSync()
+            App.initSync()
 
             context.startService(Intent(context, FetcherService::class.java)
                     .setAction(FetcherService.ACTION_REFRESH_FEEDS))

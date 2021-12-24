@@ -31,6 +31,8 @@ import org.decsync.flym.utils.getPrefString
 import org.jetbrains.anko.doAsync
 import kotlin.math.max
 
+@ExperimentalStdlibApi
+@ObsoleteCoroutinesApi
 class AutoRefreshJobService : JobService() {
 
     companion object {
@@ -65,8 +67,6 @@ class AutoRefreshJobService : JobService() {
         }
     }
 
-    @ExperimentalStdlibApi
-    @ObsoleteCoroutinesApi
     override fun onStartJob(params: JobParameters): Boolean {
         if (!ignoreNextJob && !getPrefBoolean(PrefConstants.IS_REFRESHING, false)) {
             doAsync {

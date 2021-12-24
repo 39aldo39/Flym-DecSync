@@ -30,6 +30,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.core.content.FileProvider.getUriForFile
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import net.fred.feedex.R
 import org.decsync.flym.data.entities.EntryWithFeed
 import org.decsync.flym.data.utils.PrefConstants
@@ -45,6 +46,8 @@ import java.io.File
 import java.io.IOException
 
 
+@ExperimentalStdlibApi
+@ObsoleteCoroutinesApi
 class EntryDetailsView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : WebView(context, attrs, defStyleAttr) {
 
     private val TEXT_HTML = "text/html"

@@ -11,7 +11,7 @@ data class DecsyncFeed(
 ) {
     fun getRssFeed(): Rss.Feed {
         return Rss.Feed(feedLink, feedTitle, groupId) {
-            groupId?.let { org.decsync.flym.App.db.feedDao().findById(it)?.link }
+            groupId?.let { App.db.feedDao().findById(it)?.link }
         }
     }
 }

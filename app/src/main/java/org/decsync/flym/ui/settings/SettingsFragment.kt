@@ -45,6 +45,8 @@ import org.decsync.library.DecsyncPrefUtils
 import org.decsync.library.NativeFile
 import org.jetbrains.anko.support.v4.startActivity
 
+@ExperimentalStdlibApi
+@ObsoleteCoroutinesApi
 class SettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
@@ -57,7 +59,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         true
     }
 
-    @ExperimentalStdlibApi
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
 
@@ -117,8 +118,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         startActivityForResult(intent, CHOOSE_DECSYNC_FILE)
     }
 
-    @ExperimentalStdlibApi
-    @ObsoleteCoroutinesApi
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requireContext().getPrefBoolean(DECSYNC_USE_SAF, false)) {

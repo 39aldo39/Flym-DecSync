@@ -21,10 +21,13 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import net.fred.feedex.R
 import org.decsync.flym.utils.setupNoActionBarTheme
 import org.jetbrains.anko.backgroundColor
 
+@ExperimentalStdlibApi
+@ObsoleteCoroutinesApi
 class EntryDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

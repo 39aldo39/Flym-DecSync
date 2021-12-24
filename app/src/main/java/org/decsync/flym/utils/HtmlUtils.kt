@@ -19,6 +19,7 @@ package org.decsync.flym.utils
 
 import android.content.Intent
 import android.text.TextUtils
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import org.decsync.flym.App
 import org.decsync.flym.service.FetcherService
 import org.jetbrains.anko.doAsync
@@ -98,6 +99,8 @@ object HtmlUtils {
         return images
     }
 
+    @ExperimentalStdlibApi
+    @ObsoleteCoroutinesApi
     fun replaceImageURLs(content: String, itemId: String): String {
         @Suppress("NAME_SHADOWING")
         var content = content
@@ -122,7 +125,7 @@ object HtmlUtils {
             if (!imagesToDl.isEmpty()) {
                 doAsync {
                     FetcherService.addImagesToDownload(mapOf(itemId to imagesToDl))
-                    org.decsync.flym.App.context.startService(Intent(org.decsync.flym.App.context, FetcherService::class.java).setAction(FetcherService.ACTION_DOWNLOAD_IMAGES))
+                    App.context.startService(Intent(App.context, FetcherService::class.java).setAction(FetcherService.ACTION_DOWNLOAD_IMAGES))
                 }
             }
         }

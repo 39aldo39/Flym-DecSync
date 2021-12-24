@@ -19,7 +19,7 @@ object DecsyncListeners {
         for (entry in entries) {
             val uri = entry.key.jsonPrimitive.content
             val value = entry.value.jsonPrimitive.boolean
-            val id = org.decsync.flym.App.db.entryDao().idForUri(uri)
+            val id = App.db.entryDao().idForUri(uri)
             if (id == null) {
                 Log.i(TAG, "Unknown article $uri")
                 continue
@@ -31,10 +31,10 @@ object DecsyncListeners {
             }
         }
         if (readIds.isNotEmpty()) {
-            org.decsync.flym.App.db.entryDao().markAsRead(readIds)
+            App.db.entryDao().markAsRead(readIds)
         }
         if (unreadIds.isNotEmpty()) {
-            org.decsync.flym.App.db.entryDao().markAsUnread(unreadIds)
+            App.db.entryDao().markAsUnread(unreadIds)
         }
     }
 
@@ -45,7 +45,7 @@ object DecsyncListeners {
         for (entry in entries) {
             val uri = entry.key.jsonPrimitive.content
             val value = entry.value.jsonPrimitive.boolean
-            val id = org.decsync.flym.App.db.entryDao().idForUri(uri)
+            val id = App.db.entryDao().idForUri(uri)
             if (id == null) {
                 Log.i(TAG, "Unknown article $uri")
                 continue
@@ -57,10 +57,10 @@ object DecsyncListeners {
             }
         }
         if (markedIds.isNotEmpty()) {
-            org.decsync.flym.App.db.entryDao().markAsFavorite(markedIds)
+            App.db.entryDao().markAsFavorite(markedIds)
         }
         if (unmarkedIds.isNotEmpty()) {
-            org.decsync.flym.App.db.entryDao().markAsNotFavorite(unmarkedIds)
+            App.db.entryDao().markAsNotFavorite(unmarkedIds)
         }
     }
 
@@ -69,16 +69,16 @@ object DecsyncListeners {
         val link = entry.key.jsonPrimitive.content
         val subscribed = entry.value.jsonPrimitive.boolean
         if (subscribed) {
-            if (org.decsync.flym.App.db.feedDao().findByLink(link) == null) {
-                org.decsync.flym.App.db.feedDao().insert(Feed(link = link))
+            if (App.db.feedDao().findByLink(link) == null) {
+                App.db.feedDao().insert(Feed(link = link))
             }
         } else {
-            val feed = org.decsync.flym.App.db.feedDao().findByLink(link) ?: run {
+            val feed = App.db.feedDao().findByLink(link) ?: run {
                 Log.i(TAG, "Unknown feed $link")
                 return
             }
             val groupId = feed.groupId
-            org.decsync.flym.App.db.feedDao().delete(feed)
+            App.db.feedDao().delete(feed)
             removeGroupIfEmpty(groupId)
         }
     }
@@ -87,13 +87,13 @@ object DecsyncListeners {
         Log.d(TAG, "Execute rename entry $entry")
         val link = entry.key.jsonPrimitive.content
         val name = entry.value.jsonPrimitive.content
-        val feed = org.decsync.flym.App.db.feedDao().findByLink(link) ?: run {
+        val feed = App.db.feedDao().findByLink(link) ?: run {
             Log.i(TAG, "Unknown feed $link")
             return
         }
         if (feed.title != name) {
             feed.title = name
-            org.decsync.flym.App.db.feedDao().update(feed)
+            App.db.feedDao().update(feed)
         }
     }
 
@@ -101,20 +101,20 @@ object DecsyncListeners {
         Log.d(TAG, "Execute move entry $entry")
         val link = entry.key.jsonPrimitive.content
         val catId = entry.value.jsonPrimitive.contentOrNull
-        val feed = org.decsync.flym.App.db.feedDao().findByLink(link) ?: run {
+        val feed = App.db.feedDao().findByLink(link) ?: run {
             Log.i(TAG, "Unknown feed $link")
             return
         }
         val groupId = catId?.let {
-            org.decsync.flym.App.db.feedDao().findByLink(catId)?.id ?: run {
+            App.db.feedDao().findByLink(catId)?.id ?: run {
                 val group = Feed(link = catId, title = catId, isGroup = true)
-                org.decsync.flym.App.db.feedDao().insert(group)[0]
+                App.db.feedDao().insert(group)[0]
             }
         }
         if (feed.groupId != groupId) {
             val oldGroupId = feed.groupId
             feed.groupId = groupId
-            org.decsync.flym.App.db.feedDao().update(feed)
+            App.db.feedDao().update(feed)
             removeGroupIfEmpty(oldGroupId)
         }
     }
@@ -123,13 +123,13 @@ object DecsyncListeners {
         Log.d(TAG, "Execute category rename entry $entry")
         val catId = entry.key.jsonPrimitive.content
         val name = entry.value.jsonPrimitive.content
-        val group = org.decsync.flym.App.db.feedDao().findByLink(catId) ?: run {
+        val group = App.db.feedDao().findByLink(catId) ?: run {
             Log.i(TAG, "Unknown category $catId")
             return
         }
         if (group.title != name) {
             group.title = name
-            org.decsync.flym.App.db.feedDao().update(group)
+            App.db.feedDao().update(group)
         }
     }
 
@@ -139,9 +139,9 @@ object DecsyncListeners {
 
     private fun removeGroupIfEmpty(groupId: Long?) {
         if (groupId == null) return
-        if (org.decsync.flym.App.db.feedDao().allFeedsInGroup(groupId).isEmpty()) {
-            val group = org.decsync.flym.App.db.feedDao().findById(groupId) ?: return
-            org.decsync.flym.App.db.feedDao().delete(group)
+        if (App.db.feedDao().allFeedsInGroup(groupId).isEmpty()) {
+            val group = App.db.feedDao().findById(groupId) ?: return
+            App.db.feedDao().delete(group)
         }
     }
 }
