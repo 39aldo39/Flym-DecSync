@@ -1,0 +1,1 @@
+Fix icons (#4)
